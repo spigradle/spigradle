@@ -1,0 +1,35 @@
+plugins {
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+group 'kr.entree'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly gradleApi()
+    compileOnly localGroovy()
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.25'
+    implementation group: 'org.ow2.asm', name: 'asm', version: '7.2'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+def packageName = "${project.group}.spigradle"
+
+shadowJar {
+    def prefix = "${packageName}.libs"
+    [
+            'org.yaml.snakeyaml': 'snakeyaml',
+            'org.objectweb.asm' : 'asm'
+    ].each {
+        relocate(it.key, "${prefix}.$it.value")
+    }
+    archiveClassifier.set("")
+    minimize()
+}
+
+tasks.build.dependsOn shadowJar
