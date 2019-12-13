@@ -12,6 +12,8 @@ import org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandl
  */
 class SpigradleProject {
     static String DEFAULT_SPIGOT_VERSION = '1.14.4-R0.1-SNAPSHOT'
+    static String DEFAULT_PROTOCOL_LIB_VERSION = '4.4.0'
+    static String DEFAULT_VAULT_VERSION = '1.7'
     final Project project
 
     SpigradleProject(project) {
@@ -39,7 +41,7 @@ class SpigradleProject {
                 'paper'      : [
                         'paper-repo': 'https://papermc.io/repo/repository/maven-public/'
                 ],
-                'protocollib': [
+                'protocolLib': [
                         'protocollib-repo': 'http://repo.dmulloy2.net/nexus/repository/public/'
                 ],
                 'jitpack'    : [
@@ -50,34 +52,36 @@ class SpigradleProject {
             spigot()
             bungeecord()
             paper()
-            protocollib()
+            protocolLib()
             jitpack()
         }
     }
 
     def setupDependencies() {
-        def protocolLibDependency = createDependency(
-                'com.comphenix.protocol',
-                'ProtocolLib',
-                versionProcessor()
+        def spigotVersionParser = versionParserWithDefault(
+                DEFAULT_SPIGOT_VERSION,
+                taggedVersionParser()
         )
         setupDependencies([
                 'spigot'     : createDependency(
                         'org.spigotmc',
                         'spigot-api',
-                        spigotVersionProcessor()
+                        spigotVersionParser
                 ),
                 'paper'      : createDependency(
                         'com.destroystokyo.paper',
                         'paper-api',
-                        spigotVersionProcessor()
+                        spigotVersionParser
                 ),
-                'protocollib': protocolLibDependency,
-                'protocolib' : protocolLibDependency,
+                'protocolLib': createDependency(
+                        'com.comphenix.protocol',
+                        'ProtocolLib',
+                        versionParserWithDefault(DEFAULT_PROTOCOL_LIB_VERSION)
+                ),
                 'vault'      : createDependency(
                         'com.github.MilkBowl',
                         'VaultAPI',
-                        versionProcessor()
+                        versionParserWithDefault(DEFAULT_VAULT_VERSION)
                 )
         ])
     }
@@ -105,25 +109,34 @@ class SpigradleProject {
         }
     }
 
-    static Closure createDependency(String group, String artifact, Closure<String> versionProcessor) {
+    static Closure createDependency(String group, String artifact, Closure<String> versionParser) {
         return { DependencyHandler handler, Object... args ->
-            handler.compileOnly "$group:$artifact:${versionProcessor.call(args)}"
+            handler.compileOnly "$group:$artifact:${versionParser.call(args)}"
         }
     }
 
-    static Closure<String> versionProcessor() {
+    static Closure<String> versionParser() {
         return { Object... args ->
             return args.join('.')
         }
     }
 
-    static Closure<String> taggedVersionProcessor() {
+    static Closure<String> versionParserWithDefault(String defaultVersion, Closure<String> parser = versionParser()) {
+        return { Object... args ->
+            if (args.length <= 0) {
+                return defaultVersion
+            }
+            return parser.call(args)
+        }
+    }
+
+    static Closure<String> taggedVersionParser() {
         return { Object... args ->
             def builder = new StringBuilder()
             if (args.length == 1 && args[0] instanceof CharSequence) {
                 builder.append(args[0].toString())
             } else if (args.length > 1) {
-                builder.append(versionProcessor().call(args))
+                builder.append(versionParser().call(args))
             }
             if (builder.length() > 0) {
                 def separators = builder.count('-')
@@ -137,15 +150,6 @@ class SpigradleProject {
                 return builder.toString()
             }
             return '+'
-        }
-    }
-
-    static Closure<String> spigotVersionProcessor() {
-        return { Object... args ->
-            if (args.length <= 0) {
-                return DEFAULT_SPIGOT_VERSION
-            }
-            return taggedVersionProcessor().call(args)
         }
     }
 }
