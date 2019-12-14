@@ -111,7 +111,7 @@ class SpigradleProject {
 
     static Closure createDependency(String group, String artifact, Closure<String> versionParser) {
         return { DependencyHandler handler, Object... args ->
-            handler.compileOnly "$group:$artifact:${versionParser.call(args)}"
+            handler.create("$group:$artifact:${versionParser.call(args)}")
         }
     }
 

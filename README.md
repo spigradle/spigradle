@@ -20,8 +20,8 @@ repositories {
 }
 
 dependencies {
-    paper()
-    protocolLib()
+    compileOnly paper('1.15')
+    compileOnly protocolLib()
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
