@@ -50,7 +50,7 @@ class PluginYamlGenerater extends DefaultTask {
 
     def createMap(InspectorResult inspected) {
         def attributes = [
-                'main'   : attr.main.getOrElse(inspected.mainClass),
+                'main'   : attr.main.getOrElse(inspected.getMainOrThrow()),
                 'name'   : attr.name.getOrElse(project.name),
                 'version': attr.version.getOrElse(project.version)
         ]
