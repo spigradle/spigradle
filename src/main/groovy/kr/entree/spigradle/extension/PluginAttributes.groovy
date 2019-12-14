@@ -1,10 +1,9 @@
 package kr.entree.spigradle.extension
 
 import kr.entree.spigradle.util.attr.Command
-import kr.entree.spigradle.util.attr.Load
+
 import kr.entree.spigradle.util.attr.Permission
 import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
@@ -26,7 +25,7 @@ class PluginAttributes {
     final NamedDomainObjectContainer<Permission> permissions
     final Property<String> description
     final Property<String> apiVersion
-    final Property<Load> load
+    final Property<String> load
     final Property<String> website
     final Property<String> prefix
 
@@ -43,7 +42,7 @@ class PluginAttributes {
         permissions = factory.domainObjectContainer(Permission)
         description = factory.property(String)
         apiVersion = factory.property(String)
-        load = factory.property(Load)
+        load = factory.property(String)
         website = factory.property(String)
         prefix = factory.property(String)
     }
