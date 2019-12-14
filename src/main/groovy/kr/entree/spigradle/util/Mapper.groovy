@@ -29,10 +29,6 @@ abstract class Mapper {
             value.entrySet().each {
                 value[it.key] = map(it.value)
             }
-        } else if (value instanceof List) {
-            value.eachWithIndex { val, i ->
-                value[i] = map(val)
-            }
         } else if (value instanceof Collection) {
             def newCollection = []
             value.each {

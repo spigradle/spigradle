@@ -1,10 +1,11 @@
 plugins {
     id 'groovy'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id 'com.gradle.plugin-publish' version '0.10.1'
 }
 
 group 'kr.entree'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -30,6 +31,19 @@ shadowJar {
     }
     archiveClassifier.set("")
     minimize()
+}
+
+pluginBundle {
+    website = 'https://github.com/EntryPointKR/Spigradle'
+    vcsUrl = 'https://github.com/EntryPointKR/Spigradle'
+    tags = ['spigot', 'minecraft']
+    plugins {
+        spigradle {
+            id = 'kr.entree.spigradle'
+            displayName = 'Spigradle'
+            description = 'Gradle plugin for Spigot plugin development.'
+        }
+    }
 }
 
 tasks.build.dependsOn shadowJar
