@@ -1,6 +1,6 @@
-package kr.entree.spigradle.util
+package kr.entree.spigradle.util.inspector
 
-import kr.entree.spigradle.util.inspector.ClassInspector
+
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.AbstractCompile
 import org.objectweb.asm.ClassReader
@@ -27,7 +27,7 @@ class ByteInspector {
                 .findAll { it.isDirectory() })
     }
 
-    InspectorResult inspect() {
+    InspectorResult doInspect() {
         def result = new InspectorResult()
         def targets = new HashSet([SPIGOT_PLUGIN_NAME])
         directories.find { directory ->

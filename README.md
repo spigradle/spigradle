@@ -2,12 +2,37 @@
 
 Gradle plugin for Spigot plugin development.
 
+## Apply plugin
+
+Two ways to apply the plugin.
+
+Recommended:
+
+```groovy
+plugin {
+    id 'kr.entree.spigradle' version '1.0.2'
+}
+```
+
+The other option:
+
+```groovy
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'kr.entree:spigradle:1.0.2'
+    }
+}
+```
+
 ## Example
 
 ```groovy
 plugins {
     id 'java'
-    id 'spigradle'
+    id 'kr.entree.spigradle' version '1.0.1'
 }
 
 group 'org.example'
@@ -22,7 +47,7 @@ repositories {
 dependencies {
     compileOnly paper('1.15')
     compileOnly protocolLib()
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 spigot {
@@ -37,9 +62,9 @@ spigot {
 }
 ```
 
-The Spigradle will find your main class that extends JavaPlugin and generate a plugin.yml automatically.
+We don't need to specify a main class that extends JavaPlugin. Spigradle will find it and generate a plugin.yml automatically.
 
-You can also specify your main class manually in spigot {} block.
+You can also specify it manually in spigot {} block.
 
 ## Requirements
 
