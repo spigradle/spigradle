@@ -37,7 +37,7 @@ shadowJar {
     minimize()
 }
 
-final def VCS_URL = 'https://github.com/EntryPointKR/Spigradle'
+final def VCS_URL = 'https://github.com/EntryPointKR/Spigradle.git'
 
 pluginBundle {
     website = 'https://github.com/EntryPointKR/Spigradle'
