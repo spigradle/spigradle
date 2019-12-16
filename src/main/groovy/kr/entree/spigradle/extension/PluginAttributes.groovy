@@ -1,7 +1,6 @@
 package kr.entree.spigradle.extension
 
 import kr.entree.spigradle.util.attr.Command
-
 import kr.entree.spigradle.util.attr.Permission
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.model.ObjectFactory

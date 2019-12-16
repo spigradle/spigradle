@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.inspector
 
-import kr.entree.spigradle.util.InspectorResult
+
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
 

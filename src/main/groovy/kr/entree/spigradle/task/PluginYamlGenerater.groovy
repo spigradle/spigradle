@@ -1,13 +1,12 @@
 package kr.entree.spigradle.task
 
 import kr.entree.spigradle.extension.PluginAttributes
-import kr.entree.spigradle.util.ByteInspector
-import kr.entree.spigradle.util.InspectorResult
 import kr.entree.spigradle.util.Mapper
+import kr.entree.spigradle.util.inspector.ByteInspector
+import kr.entree.spigradle.util.inspector.InspectorResult
 import org.gradle.api.DefaultTask
 import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.internal.file.collections.FileTreeAdapter
-import org.gradle.api.internal.file.collections.GeneratedSingletonFileTree
+import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -26,25 +25,18 @@ class PluginYamlGenerater extends DefaultTask {
 
     @TaskAction
     def createPluginYaml() {
-        def writer = new StringWriter()
-        writePluginYaml(writer)
+        def file = new File(temporaryDir, 'plugin.yml')
+        writePluginYaml(file.newWriter(encoding))
         project.tasks.findAll {
             it instanceof Jar
         } each {
-            it.from createFileTree('plugin.yml') {
-                it.write(writer.toString().getBytes(encoding))
-            }
+            it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
+            it.from file
         }
     }
 
-    def createFileTree(name, writer) {
-        return new FileTreeAdapter(new GeneratedSingletonFileTree(
-                temporaryDirFactory, name, writer
-        ))
-    }
-
-    def writePluginYaml(writer) {
-        def inspected = new ByteInspector(project).inspect()
+    def writePluginYaml(Writer writer) {
+        def inspected = new ByteInspector(project).doInspect()
         createYaml().dump(createMap(inspected), writer)
     }
 

@@ -1,14 +1,17 @@
 plugins {
     id 'groovy'
+    id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'com.gradle.plugin-publish' version '0.10.1'
+    id 'com.jfrog.bintray' version '1.8.4'
 }
 
 group 'kr.entree'
-version '1.0.1'
+version '1.0.2'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -29,19 +32,54 @@ shadowJar {
     ].each {
         relocate(it.key, "${prefix}.$it.value")
     }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     archiveClassifier.set("")
     minimize()
 }
 
+final def VCS_URL = 'https://github.com/EntryPointKR/Spigradle'
+
 pluginBundle {
     website = 'https://github.com/EntryPointKR/Spigradle'
-    vcsUrl = 'https://github.com/EntryPointKR/Spigradle'
+    vcsUrl = VCS_URL
     tags = ['spigot', 'minecraft']
     plugins {
         spigradle {
             id = 'kr.entree.spigradle'
             displayName = 'Spigradle'
             description = 'Gradle plugin for Spigot plugin development.'
+        }
+    }
+}
+
+bintray {
+    user = project.findProperty('BINTRAY_USER')
+    key = project.findProperty('BINTRAY_KEY')
+    publications = ['SpigradlePublication']
+    publish = true
+    pkg {
+        repo = 'Spigradle'
+        name = 'spigradle'
+        desc = 'Gradle plugin for Spigot plugin development.'
+        websiteUrl = 'https://github.com/EntryPointKR/Spigradle'
+        issueTrackerUrl = 'https://github.com/EntryPointKR/Spigradle/issues'
+        licenses = ['MIT']
+        vcsUrl = VCS_URL
+        version {
+            name = project.version
+            released = new Date()
+            vcsTag = project.version
+        }
+    }
+}
+
+publishing {
+    publications {
+        SpigradlePublication(MavenPublication) {
+            from components.java
+            groupId 'kr.entree'
+            artifactId 'spigradle'
+            version project.version
         }
     }
 }
