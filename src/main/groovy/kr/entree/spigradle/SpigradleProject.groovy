@@ -4,8 +4,7 @@ import kr.entree.spigradle.extension.PluginAttributes
 import kr.entree.spigradle.task.PluginYamlGenerater
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler
-import org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler
+import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.plugins.JavaPlugin
 
 /**
@@ -90,7 +89,7 @@ class SpigradleProject {
     }
 
     def setupRepositories(Map<String, Map<String, String>> map) {
-        def handler = project.repositories as DefaultRepositoryHandler
+        def handler = project.repositories as RepositoryHandler
         map.each { entry ->
             handler.ext[entry.key] = {
                 entry.value.each { repos ->
@@ -104,7 +103,7 @@ class SpigradleProject {
     }
 
     def setupDependencies(Map<String, Closure> map) {
-        def handler = project.dependencies as DefaultDependencyHandler
+        def handler = project.dependencies as DependencyHandler
         map.each {
             handler.ext[it.key] = { Object... args ->
                 return it.value.call(handler, args)
