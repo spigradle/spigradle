@@ -27,7 +27,7 @@ class SpigradleProject {
             description = 'Auto generate a plugin.yml file.'
             attr = attributes
         }
-        project.jar.dependsOn task
+        project.tasks.findByName('jar')?.dependsOn(task)
     }
 
     def setupRepositories() {
