@@ -87,4 +87,7 @@ publishing {
     }
 }
 
-tasks.build.dependsOn shadowJar
+jar {
+    dependsOn shadowJar
+    enabled = false
+}
