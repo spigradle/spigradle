@@ -28,7 +28,9 @@ class PluginYamlGenerater extends DefaultTask {
     @TaskAction
     def createPluginYaml() {
         def file = new File(temporaryDir, 'plugin.yml')
-        writePluginYaml(file.newWriter(encoding))
+        file.newWriter(encoding).withCloseable {
+            writePluginYaml(it)
+        }
         project.tasks.withType(Jar) {
             it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
             it.from file
