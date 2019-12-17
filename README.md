@@ -25,6 +25,8 @@ buildscript {
         classpath 'kr.entree:spigradle:1.0.2'
     }
 }
+
+apply plugin: 'kr.entree.spigradle'
 ```
 
 ## Example
@@ -32,7 +34,7 @@ buildscript {
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.0.1'
+    id 'kr.entree.spigradle' version '1.0.2'
 }
 
 group 'org.example'
