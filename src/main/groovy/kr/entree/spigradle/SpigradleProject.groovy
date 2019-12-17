@@ -6,6 +6,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler
 import org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler
+import org.gradle.api.plugins.JavaPlugin
 
 /**
  * Created by JunHyung Lim on 2019-12-13
@@ -27,7 +28,9 @@ class SpigradleProject {
             description = 'Auto generate a plugin.yml file.'
             attr = attributes
         }
-        project.tasks.findByName('jar')?.dependsOn(task)
+        project.plugins.withType(JavaPlugin) {
+            project.jar.dependsOn task
+        }
     }
 
     def setupRepositories() {
