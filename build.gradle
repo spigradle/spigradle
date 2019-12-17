@@ -76,10 +76,10 @@ bintray {
 publishing {
     publications {
         SpigradlePublication(MavenPublication) {
-            from components.java
             groupId 'kr.entree'
             artifactId 'spigradle'
             version project.version
+            project.shadow.component(it)
         }
     }
 }

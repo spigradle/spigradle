@@ -14,6 +14,8 @@ import org.gradle.jvm.tasks.Jar
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 
+import static java.util.Objects.requireNonNull
+
 /**
  * Created by JunHyung Lim on 2019-12-12
  */
@@ -41,8 +43,13 @@ class PluginYamlGenerater extends DefaultTask {
     }
 
     def createMap(InspectorResult inspected) {
+        Object
         def attributes = [
-                'main'   : attr.main.getOrElse(inspected.getMainOrThrow()),
+                'main'   : requireNonNull(
+                        attr.main.getOrElse(inspected.mainClass),
+                        'Spigradle couldn\'t find a main class automatically. ' +
+                                'Please set a \'main\' property in spigot {} block in build.gradle.'
+                ),
                 'name'   : attr.name.getOrElse(project.name),
                 'version': attr.version.getOrElse(project.version)
         ]
