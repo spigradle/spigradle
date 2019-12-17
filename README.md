@@ -9,7 +9,7 @@ Two ways to apply the plugin.
 Recommended:
 
 ```groovy
-plugin {
+plugins {
     id 'kr.entree.spigradle' version '1.0.2'
 }
 ```
