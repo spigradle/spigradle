@@ -29,6 +29,16 @@ buildscript {
 apply plugin: 'kr.entree.spigradle'
 ```
 
+## Requirements
+
+**Spigradle requires Gradle 6.0.1+**
+
+To update gradle wrapper:
+
+```
+gradlew wrapper --gradle-version 6.0.1 --distribution-type all
+```
+
 ## Example
 
 ```groovy
@@ -67,16 +77,6 @@ spigot {
 We don't need to specify a main class that extends JavaPlugin. Spigradle will find it and generate a plugin.yml automatically.
 
 You can also specify it manually in spigot {} block.
-
-## Requirements
-
-**Spigradle requires Gradle 6.0.1+**
-
-To update gradle wrapper:
-
-```
-gradlew wrapper --gradle-version 6.0.1 --distribution-type all
-```
 
 ## Properties
 
