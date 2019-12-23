@@ -6,7 +6,6 @@ import kr.entree.spigradle.util.inspector.ByteInspector
 import kr.entree.spigradle.util.inspector.InspectorResult
 import org.gradle.api.DefaultTask
 import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -32,7 +31,6 @@ class PluginYamlGenerater extends DefaultTask {
             writePluginYaml(it)
         }
         project.tasks.withType(Jar) {
-            it.duplicatesStrategy = DuplicatesStrategy.INCLUDE
             it.from file
         }
     }

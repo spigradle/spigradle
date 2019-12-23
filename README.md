@@ -1,6 +1,6 @@
 # Spigradle
 
-Gradle plugin for Spigot plugin development.
+Gradle plugin for developing Spigot plugin.
 
 ## Apply plugin
 
@@ -97,6 +97,10 @@ jitpack()
 spigot()
 
 paper()
+
+bukkit()
+
+craftbukkit()
 
 protocolLib()
 
