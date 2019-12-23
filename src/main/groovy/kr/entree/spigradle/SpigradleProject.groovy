@@ -75,6 +75,16 @@ class SpigradleProject {
                         'paper-api',
                         spigotVersionParser
                 ),
+                'bukkit'     : createDependency(
+                        'org.bukkit',
+                        'bukkit',
+                        spigotVersionParser
+                ),
+                'craftbukkit': createDependency(
+                        'org.bukkit',
+                        'craftbukkit',
+                        spigotVersionParser
+                ),
                 'protocolLib': createDependency(
                         'com.comphenix.protocol',
                         'ProtocolLib',
