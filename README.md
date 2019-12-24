@@ -10,7 +10,7 @@ Recommended:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.0.3'
+    id 'kr.entree.spigradle' version '1.0.4'
 }
 ```
 
@@ -22,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.0.3'
+        classpath 'kr.entree:spigradle:1.0.4'
     }
 }
 
@@ -44,7 +44,7 @@ gradlew wrapper --gradle-version 6.0.1 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.0.3'
+    id 'kr.entree.spigradle' version '1.0.4'
 }
 
 group 'org.example'
@@ -54,11 +54,14 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    protocolLib()
+    jitpack() // For vault
 }
 
 dependencies {
-    compileOnly paper('1.15')
+    compileOnly paper('1.15.1') // Or spigot()
     compileOnly protocolLib()
+    compileOnly vault()
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -69,7 +72,7 @@ spigot {
             description = 'Give command.'
         }
     }
-    depend = ['ProtocolLib']
+    depend = ['ProtocolLib', 'Vault']
     authors = ['Me']
 }
 ```
@@ -91,6 +94,8 @@ paper()
 protocolLib()
 
 jitpack()
+
+vault() `Same as jitpack()`
 
 ### dependencies
 

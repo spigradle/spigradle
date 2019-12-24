@@ -33,6 +33,9 @@ class SpigradleProject {
     }
 
     def setupRepositories() {
+        def jitPack = [
+                'jitpack-repo': 'https://jitpack.io'
+        ]
         setupRepositories([
                 'spigot'     : [
                         'spigot-repo': 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
@@ -46,16 +49,13 @@ class SpigradleProject {
                 'protocolLib': [
                         'protocollib-repo': 'http://repo.dmulloy2.net/nexus/repository/public/'
                 ],
-                'jitpack'    : [
-                        'jitpack.io': 'https://jitpack.io'
-                ]
+                'jitpack'    : jitPack,
+                'vault'      : jitPack
         ])
         project.repositories.with {
             spigot()
             bungeecord()
             paper()
-            protocolLib()
-            jitpack()
         }
     }
 
