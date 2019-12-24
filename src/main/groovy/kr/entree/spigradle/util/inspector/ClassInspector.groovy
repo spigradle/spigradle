@@ -17,14 +17,6 @@ class ClassInspector extends ClassVisitor {
         this.targets = targets
     }
 
-    static def isPublic(int access) {
-        return (access & Opcodes.ACC_PUBLIC) != 0
-    }
-
-    static def isNotAbstract(int access) {
-        return (access & Opcodes.ACC_ABSTRACT) == 0
-    }
-
     @Override
     void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
         if (targets.contains(superName)) {
@@ -34,5 +26,13 @@ class ClassInspector extends ClassVisitor {
                 targets.add(name)
             }
         }
+    }
+
+    static def isPublic(int access) {
+        return (access & Opcodes.ACC_PUBLIC) != 0
+    }
+
+    static def isNotAbstract(int access) {
+        return (access & Opcodes.ACC_ABSTRACT) == 0
     }
 }

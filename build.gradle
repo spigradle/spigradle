@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'kr.entree'
-version '1.0.3'
+version '1.0.4'
 
 repositories {
     mavenCentral()
@@ -47,7 +47,7 @@ pluginBundle {
         spigradle {
             id = 'kr.entree.spigradle'
             displayName = 'Spigradle'
-            description = 'Gradle plugin for Spigot plugin development.'
+            description = 'Gradle plugin for developing Spigot plugin.'
         }
     }
 }
@@ -60,7 +60,7 @@ bintray {
     pkg {
         repo = 'Spigradle'
         name = 'spigradle'
-        desc = 'Gradle plugin for Spigot plugin development.'
+        desc = 'Gradle plugin for developing Spigot plugin.'
         websiteUrl = 'https://github.com/EntryPointKR/Spigradle'
         issueTrackerUrl = 'https://github.com/EntryPointKR/Spigradle/issues'
         licenses = ['MIT']
