@@ -66,7 +66,10 @@ class PluginYamlGenerater extends DefaultTask {
                 value = property.getOrNull()
             }
             if (checkValid(value)) {
-                def key = it.name.toLowerCase()
+                def key = it.name.replaceAll(
+                        '([a-z])([A-Z]+)',
+                        '$1-$2'
+                ).toLowerCase()
                 attributes[key] = value
             }
         }
