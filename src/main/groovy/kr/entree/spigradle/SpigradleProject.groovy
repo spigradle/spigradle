@@ -47,7 +47,7 @@ class SpigradleProject {
                         'paper-repo': 'https://papermc.io/repo/repository/maven-public/'
                 ],
                 'protocolLib': [
-                        'protocollib-repo': 'http://repo.dmulloy2.net/nexus/repository/public/'
+                        'protocollib-repo': 'https://repo.dmulloy2.net/nexus/repository/public/'
                 ],
                 'jitpack'    : jitPack,
                 'vault'      : jitPack
