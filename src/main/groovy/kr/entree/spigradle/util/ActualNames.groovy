@@ -7,7 +7,7 @@ import java.lang.reflect.Field
  */
 class ActualNames {
     static String get(Field field) {
-        def actualName = field.getAnnotation(ActualName.class)
+        def actualName = field.getAnnotation(ActualName)
         return actualName != null ? actualName.value() : field.name
     }
 }
