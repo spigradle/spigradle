@@ -11,10 +11,6 @@ import org.gradle.api.plugins.JavaPlugin
  * Created by JunHyung Lim on 2019-12-13
  */
 class SpigradleProject {
-    static String DEFAULT_SPIGOT_VERSION = '1.14.4-R0.1-SNAPSHOT'
-    static String DEFAULT_PROTOCOL_LIB_VERSION = '4.4.0'
-    static String DEFAULT_VAULT_VERSION = '1.7'
-    static String DEFAULT_LUCKPERMS_VERSION = '4.4'
     final Project project
 
     SpigradleProject(project) {
@@ -65,44 +61,59 @@ class SpigradleProject {
 
     def setupDependencies() {
         def spigotVersionParser = versionParserWithDefault(
-                DEFAULT_SPIGOT_VERSION,
+                '1.14.4-R0.1-SNAPSHOT',
                 taggedVersionParser()
         )
         setupDependencies([
-                'spigot'     : createDependency(
+                'spigot'       : createDependency(
                         'org.spigotmc',
                         'spigot-api',
                         spigotVersionParser
                 ),
-                'paper'      : createDependency(
+                'paper'        : createDependency(
                         'com.destroystokyo.paper',
                         'paper-api',
                         spigotVersionParser
                 ),
-                'bukkit'     : createDependency(
+                'bukkit'       : createDependency(
                         'org.bukkit',
                         'bukkit',
                         spigotVersionParser
                 ),
-                'craftbukkit': createDependency(
+                'craftbukkit'  : createDependency(
                         'org.bukkit',
                         'craftbukkit',
                         spigotVersionParser
                 ),
-                'protocolLib': createDependency(
+                'protocolLib'  : createDependency(
                         'com.comphenix.protocol',
                         'ProtocolLib',
-                        versionParserWithDefault(DEFAULT_PROTOCOL_LIB_VERSION)
+                        versionParserWithDefault('4.4.0')
                 ),
-                'vault'      : createDependency(
+                'vault'        : createDependency(
                         'com.github.MilkBowl',
                         'VaultAPI',
-                        versionParserWithDefault(DEFAULT_VAULT_VERSION)
+                        versionParserWithDefault('1.7')
                 ),
-                'luckPerms'  : createDependency(
+                'luckPerms'    : createDependency(
                         'me.lucko.luckperms',
                         'luckperms-api',
-                        versionParserWithDefault(DEFAULT_LUCKPERMS_VERSION)
+                        versionParserWithDefault('5.0')
+                ),
+                'worldedit'    : createDependency(
+                        'com.sk89q.worldedit',
+                        'worldedit-bukkit',
+                        versionParserWithDefault('7.1.0')
+                ),
+                'worldguard'   : createDependency(
+                        'com.sk89q.worldguard',
+                        'worldguard-bukkit',
+                        versionParserWithDefault('7.0.2')
+                ),
+                'commandhelper': createDependency(
+                        'com.sk89q',
+                        'commandhelper',
+                        versionParserWithDefault('3.3.4-SNAPSHOT')
                 )
         ])
     }
@@ -142,7 +153,7 @@ class SpigradleProject {
         }
     }
 
-    static Closure<String> versionParserWithDefault(String defaultVersion, Closure<String> parser = versionParser()) {
+    static Closure<String> versionParserWithDefault(String defaultVersion = '+', Closure<String> parser = versionParser()) {
         return { Object... args ->
             if (args.length <= 0) {
                 return defaultVersion
