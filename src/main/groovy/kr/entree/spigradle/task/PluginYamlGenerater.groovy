@@ -2,6 +2,7 @@ package kr.entree.spigradle.task
 
 import kr.entree.spigradle.extension.PluginAttributes
 import kr.entree.spigradle.util.Mapper
+import kr.entree.spigradle.util.ActualNames
 import kr.entree.spigradle.util.inspector.ByteInspector
 import kr.entree.spigradle.util.inspector.InspectorResult
 import org.gradle.api.DefaultTask
@@ -66,7 +67,7 @@ class PluginYamlGenerater extends DefaultTask {
                 value = property.getOrNull()
             }
             if (checkValid(value)) {
-                def key = it.name.replaceAll(
+                def key = ActualNames.get(it).replaceAll(
                         '([a-z])([A-Z]+)',
                         '$1-$2'
                 ).toLowerCase()
