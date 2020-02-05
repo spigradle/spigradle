@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull
  */
 class PluginYamlGenerater extends DefaultTask {
     @Input
-    PluginAttributes attr
+    PluginAttributes attributes
     @Input
     String encoding = 'UTF-8'
 
@@ -44,18 +44,18 @@ class PluginYamlGenerater extends DefaultTask {
         Object
         def attributes = [
                 'main'   : requireNonNull(
-                        attr.main.getOrElse(inspected.mainClass),
+                        attributes.main.getOrElse(inspected.mainClass),
                         'Spigradle couldn\'t find a main class automatically. ' +
                                 'Please set a \'main\' property in spigot {} block in build.gradle.'
                 ),
-                'name'   : attr.name.getOrElse(project.name),
-                'version': attr.version.getOrElse(project.version)
+                'name'   : attributes.name.getOrElse(project.name),
+                'version': attributes.version.getOrElse(project.version)
         ]
         PluginAttributes.declaredFields.grep {
             !it.synthetic
         }.each {
             it.setAccessible(true)
-            def property = it.get(attr)
+            def property = it.get(this.attributes)
             def value = null
             if (property instanceof NamedDomainObjectContainer) {
                 def map = property.getAsMap()
