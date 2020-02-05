@@ -1,5 +1,6 @@
 package kr.entree.spigradle.util.attr
 
+import kr.entree.spigradle.util.ActualName
 import kr.entree.spigradle.util.Mapper
 
 
@@ -9,7 +10,8 @@ import kr.entree.spigradle.util.Mapper
 class Permission extends Mapper {
     final String name
     String description
-    boolean defaults
+    @ActualName('default')
+    String defaults
     Map<String, Boolean> children
 
     Permission(String name) {

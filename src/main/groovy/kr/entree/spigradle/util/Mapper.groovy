@@ -16,7 +16,7 @@ abstract class Mapper {
             it.setAccessible(true)
             def value = it.get(this)
             if (value != null) {
-                map[it.name] = Mapper.map(value)
+                map[ActualNames.get(it)] = Mapper.map(value)
             }
         }
         return map
