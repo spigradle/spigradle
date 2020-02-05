@@ -66,14 +66,28 @@ dependencies {
 }
 
 spigot {
+    depend = ['ProtocolLib']
+    authors = ['Me']
     commands {
         give {
             aliases = ['i']
             description = 'Give command.'
+            permission = 'test.foo'
+            permissionMessage = 'You do not have permission!'
+            usage = '/<command> [test|stop]'
         }
     }
-    depend = ['ProtocolLib', 'Vault']
-    authors = ['Me']
+    permissions {
+        'test.foo' {
+            description = 'Allows foo command'
+            defaults = 'true'
+        }
+        'test.*' {
+            description = 'Wildcard permission'
+            defaults = 'op'
+            children = ['test.foo': true]
+        }
+    }
 }
 ```
 
@@ -101,7 +115,7 @@ enginehub()
 
 ### dependencies
 
-spigot()
+spigot() `1.14.4-R0.1-SNAPSHOT is default version`
 
 paper()
 
@@ -109,11 +123,17 @@ bukkit()
 
 craftbukkit()
 
-protocolLib()
+protocolLib() `4.4.0`
 
-vault()
+vault() `1.7`
 
-luckPerms()
+luckPerms() `5.0`
+
+worldedit() `7.1.0`
+
+worldguard() `7.0.2`
+
+commandhelper() `3.3.4-SNAPSHOT`
 
 ### spigot
 
@@ -147,6 +167,6 @@ prefix
 
 ### createPluginYaml
 
-attr
+attributes
 
 encoding
