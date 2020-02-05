@@ -1,4 +1,4 @@
-# Spigradle
+# Spigradle &middot; [ ![Download](https://api.bintray.com/packages/entrypointkr/Spigradle/spigradle/images/download.svg?version=latest) ](https://bintray.com/entrypointkr/Spigradle/spigradle/_latestVersion) [![License](https://img.shields.io/github/license/EntryPointKR/Spigradle.svg)](https://github.com/EntryPointKR/Spigradle/blob/master/LICENSE) 
 
 Gradle plugin for developing Spigot plugin.
 
@@ -129,7 +129,7 @@ loadBefore
 
 commands
 
-permission
+permissions
 
 description
 
