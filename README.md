@@ -97,6 +97,8 @@ jitpack()
 
 vault() `Same as jitpack()`
 
+enginehub()
+
 ### dependencies
 
 spigot()
@@ -110,6 +112,8 @@ craftbukkit()
 protocolLib()
 
 vault()
+
+luckPerms()
 
 ### spigot
 

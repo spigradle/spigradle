@@ -14,6 +14,7 @@ class SpigradleProject {
     static String DEFAULT_SPIGOT_VERSION = '1.14.4-R0.1-SNAPSHOT'
     static String DEFAULT_PROTOCOL_LIB_VERSION = '4.4.0'
     static String DEFAULT_VAULT_VERSION = '1.7'
+    static String DEFAULT_LUCKPERMS_VERSION = '4.4'
     final Project project
 
     SpigradleProject(project) {
@@ -21,11 +22,11 @@ class SpigradleProject {
     }
 
     def setupPlugin() {
-        def attributes = project.extensions.create('spigot', PluginAttributes)
+        def attrs = project.extensions.create('spigot', PluginAttributes)
         def task = project.task('createPluginYaml', type: PluginYamlGenerater) {
             group = 'Spigradle'
             description = 'Auto generate a plugin.yml file.'
-            attr = attributes
+            attributes = attrs
         }
         project.plugins.withType(JavaPlugin) {
             project.jar.dependsOn task
@@ -50,7 +51,10 @@ class SpigradleProject {
                         'protocollib-repo': 'https://repo.dmulloy2.net/nexus/repository/public/'
                 ],
                 'jitpack'    : jitPack,
-                'vault'      : jitPack
+                'vault'      : jitPack,
+                'enginehub'  : [
+                        'enginehub-repo': 'https://maven.enginehub.org/repo/'
+                ]
         ])
         project.repositories.with {
             spigot()
@@ -94,6 +98,11 @@ class SpigradleProject {
                         'com.github.MilkBowl',
                         'VaultAPI',
                         versionParserWithDefault(DEFAULT_VAULT_VERSION)
+                ),
+                'luckPerms'  : createDependency(
+                        'me.lucko.luckperms',
+                        'luckperms-api',
+                        versionParserWithDefault(DEFAULT_LUCKPERMS_VERSION)
                 )
         ])
     }
