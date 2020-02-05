@@ -17,9 +17,9 @@ repositories {
 dependencies {
     compileOnly gradleApi()
     compileOnly localGroovy()
-    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.25'
-    implementation group: 'org.ow2.asm', name: 'asm', version: '7.2'
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.yaml:snakeyaml:1.25'
+    implementation 'org.ow2.asm:asm:7.2'
+    testImplementation 'junit:junit:4.12'
 }
 
 final def PACKAGE_NAME = "${project.group}.spigradle"
@@ -76,9 +76,10 @@ bintray {
 publishing {
     publications {
         SpigradlePublication(MavenPublication) {
-            shadow.component(it)
+            from components.java
             artifactId 'spigradle'
             afterEvaluate {
+                artifact shadowJar
                 artifact publishPluginJar
                 artifact publishPluginJavaDocsJar
                 artifact publishPluginGroovyDocsJar
