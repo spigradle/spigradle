@@ -1,13 +1,13 @@
 plugins {
     id 'groovy'
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '5.1.0'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
     id 'com.gradle.plugin-publish' version '0.10.1'
     id 'com.jfrog.bintray' version '1.8.4'
 }
 
 group 'kr.entree'
-version '1.0.7-SNAPSHOT'
+version '1.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly gradleApi()
-    compileOnly localGroovy()
+    shadow gradleApi()
+    shadow localGroovy()
     implementation 'org.yaml:snakeyaml:1.25'
     implementation 'org.ow2.asm:asm:7.2'
     testImplementation 'junit:junit:4.12'
@@ -75,11 +75,9 @@ bintray {
 
 publishing {
     publications {
-        SpigradlePublication(MavenPublication) {
-            from components.java
-            artifactId 'spigradle'
+        spigradle(MavenPublication) { MavenPublication publication ->
+            shadow.component(publication)
             afterEvaluate {
-                artifact shadowJar
                 artifact publishPluginJar
                 artifact publishPluginJavaDocsJar
                 artifact publishPluginGroovyDocsJar
