@@ -1,5 +1,6 @@
 package kr.entree.spigradle.util.attr
 
+import kr.entree.spigradle.util.ActualName
 import kr.entree.spigradle.util.Mapper
 
 
@@ -12,6 +13,7 @@ class Command extends Mapper {
     String description
     String usage
     String permission
+    @ActualName('permission-message')
     String permissionMessage
 
     Command(String name) {

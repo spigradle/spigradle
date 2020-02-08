@@ -1,8 +1,8 @@
 package kr.entree.spigradle.task
 
 import kr.entree.spigradle.extension.PluginAttributes
-import kr.entree.spigradle.util.Mapper
 import kr.entree.spigradle.util.ActualNames
+import kr.entree.spigradle.util.Mapper
 import kr.entree.spigradle.util.inspector.ByteInspector
 import kr.entree.spigradle.util.inspector.InspectorResult
 import org.gradle.api.DefaultTask
