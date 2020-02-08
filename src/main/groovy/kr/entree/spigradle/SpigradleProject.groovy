@@ -1,7 +1,7 @@
 package kr.entree.spigradle
 
 import kr.entree.spigradle.extension.PluginAttributes
-import kr.entree.spigradle.task.PluginYamlGenerater
+import kr.entree.spigradle.task.SpigotPluginYamlCreateTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
@@ -19,7 +19,7 @@ class SpigradleProject {
 
     def setupPlugin() {
         def attrs = project.extensions.create('spigot', PluginAttributes, project)
-        def task = project.task('createPluginYaml', type: PluginYamlGenerater) {
+        def task = project.task('spigotPluginYaml', type: SpigotPluginYamlCreateTask) {
             group = 'Spigradle'
             description = 'Auto generate a plugin.yml file.'
             attributes = attrs

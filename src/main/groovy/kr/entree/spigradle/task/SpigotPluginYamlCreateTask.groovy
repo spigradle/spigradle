@@ -19,7 +19,7 @@ import static java.util.Objects.requireNonNull
 /**
  * Created by JunHyung Lim on 2019-12-12
  */
-class PluginYamlGenerater extends DefaultTask {
+class SpigotPluginYamlCreateTask extends DefaultTask {
     @Input
     PluginAttributes attributes
     @Input
