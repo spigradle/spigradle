@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'kr.entree'
-version '1.1-SNAPSHOT'
+version '1.1'
 
 repositories {
     mavenCentral()
@@ -55,13 +55,14 @@ pluginBundle {
 bintray {
     user = project.findProperty('BINTRAY_USER')
     key = project.findProperty('BINTRAY_KEY')
-    publications = ['SpigradlePublication']
+    publications = ['spigradle']
     publish = true
     pkg {
         repo = 'Spigradle'
         name = 'spigradle'
         desc = 'Gradle plugin for developing Spigot plugin.'
         websiteUrl = 'https://github.com/EntryPointKR/Spigradle'
+        githubRepo = 'https://github.com/EntryPointKR/Spigradle'
         issueTrackerUrl = 'https://github.com/EntryPointKR/Spigradle/issues'
         licenses = ['MIT']
         vcsUrl = VCS_URL

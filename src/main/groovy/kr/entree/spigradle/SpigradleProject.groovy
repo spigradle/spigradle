@@ -18,7 +18,7 @@ class SpigradleProject {
     }
 
     def setupPlugin() {
-        def attrs = project.extensions.create('spigot', PluginAttributes)
+        def attrs = project.extensions.create('spigot', PluginAttributes, project)
         def task = project.task('createPluginYaml', type: PluginYamlGenerater) {
             group = 'Spigradle'
             description = 'Auto generate a plugin.yml file.'
