@@ -20,9 +20,10 @@ class PluginAttributes {
     Property<String> name
     Property<String> version
     ListProperty<String> authors
-    ListProperty<String> depend
+    @ActualName('depend')
+    ListProperty<String> depends
     @ActualName('softdepend')
-    ListProperty<String> softDepend
+    ListProperty<String> softDepends
     @ActualName('loadbefore')
     ListProperty<String> loadBefore
     NamedDomainObjectContainer<Command> commands
@@ -40,8 +41,8 @@ class PluginAttributes {
         name = factory.property(String)
         version = factory.property(String)
         authors = factory.listProperty(String)
-        depend = factory.listProperty(String)
-        softDepend = factory.listProperty(String)
+        depends = factory.listProperty(String)
+        softDepends = factory.listProperty(String)
         loadBefore = factory.listProperty(String)
         commands = project.container(Command)
         permissions = project.container(Permission)
