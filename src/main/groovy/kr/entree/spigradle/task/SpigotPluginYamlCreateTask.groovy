@@ -1,8 +1,8 @@
 package kr.entree.spigradle.task
 
 import kr.entree.spigradle.extension.PluginAttributes
-import kr.entree.spigradle.util.ActualNames
-import kr.entree.spigradle.util.Mapper
+import kr.entree.spigradle.util.mapper.ActualNames
+import kr.entree.spigradle.util.mapper.Mapper
 import kr.entree.spigradle.util.inspector.ByteInspector
 import kr.entree.spigradle.util.inspector.InspectorResult
 import org.gradle.api.DefaultTask
@@ -14,6 +14,9 @@ import org.gradle.jvm.tasks.Jar
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 
+import java.lang.reflect.Field
+import java.lang.reflect.Modifier
+
 import static java.util.Objects.requireNonNull
 
 /**
@@ -24,6 +27,8 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
     PluginAttributes attributes
     @Input
     String encoding = 'UTF-8'
+    @Input
+    Yaml yaml = createYaml()
 
     @TaskAction
     def createPluginYaml() {
@@ -38,7 +43,7 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
 
     def writePluginYaml(Writer writer) {
         def inspected = new ByteInspector(project).doInspect()
-        createYaml().dump(createMap(inspected), writer)
+        yaml.dump(createMap(inspected), writer)
     }
 
     def createMap(InspectorResult inspected) {
@@ -52,8 +57,8 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
                 'name'   : attributes.name.getOrElse(project.name),
                 'version': attributes.version.getOrElse(project.version)
         ]
-        PluginAttributes.declaredFields.grep {
-            !it.synthetic
+        PluginAttributes.declaredFields.grep { Field field ->
+            !field.synthetic && !Modifier.isStatic(field.modifiers)
         }.each {
             it.setAccessible(true)
             def property = it.get(this.attributes)

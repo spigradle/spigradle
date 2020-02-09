@@ -1,13 +1,13 @@
 package kr.entree.spigradle.util.attr
 
-import kr.entree.spigradle.util.ActualName
-import kr.entree.spigradle.util.Mapper
-
+import kr.entree.spigradle.util.annotation.ActualName
+import kr.entree.spigradle.util.annotation.MappingObject
 
 /**
  * Created by JunHyung Lim on 2019-12-13
  */
-class Permission extends Mapper {
+@MappingObject
+class Permission {
     final String name
     String description
     @ActualName('default')
@@ -16,10 +16,5 @@ class Permission extends Mapper {
 
     Permission(String name) {
         this.name = name
-    }
-
-    @Override
-    Class<?> thisClass() {
-        return Permission
     }
 }
