@@ -62,7 +62,7 @@ dependencies {
     compileOnly paper('1.15.1') // Or spigot()
     compileOnly protocolLib()
     compileOnly vault()
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 spigot {
