@@ -17,7 +17,7 @@ class Enums {
         } catch (IllegalArgumentException ex) {
             def values = type.values() as List<T>
             def availables = aliases.keySet() + values.collect { it.name() }
-            throw new IllegalArgumentException("Available enum constants: [${availables.join(', ')}]", ex)
+            throw new IllegalArgumentException("Available '${type.simpleName}' enum names: [${availables.join(', ')}]", ex)
         }
     }
 }
