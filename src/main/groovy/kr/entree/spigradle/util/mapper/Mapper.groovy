@@ -1,6 +1,7 @@
 package kr.entree.spigradle.util.mapper
 
 import kr.entree.spigradle.util.annotation.MappingObject
+import org.gradle.api.NamedDomainObjectContainer
 
 import java.lang.reflect.Modifier
 
@@ -8,30 +9,37 @@ import java.lang.reflect.Modifier
  * Created by JunHyung Lim on 2019-12-13
  */
 class Mapper {
-    static Object map(Object object) {
-        def mappingObject = object.getClass().getAnnotation(MappingObject)
+    static Object mapping(Object object, Boolean ignoreEmpty = true, Class<?> type = object.getClass()) {
+        def mappingObject = type.getAnnotation(MappingObject)
         if (mappingObject != null) {
             def map = new LinkedHashMap<String, Object>()
-            object.getClass().declaredFields.findAll {
+            type.declaredFields.findAll {
                 !it.synthetic && !Modifier.isFinal(it.modifiers) && !Modifier.isStatic(it.modifiers)
             }.each {
                 it.setAccessible(true)
-                def value = it.get(object)
+                def value = mapping(it.get(object), ignoreEmpty)
                 if (value != null) {
-                    map[ActualNames.get(it)] = Mapper.map(value)
+                    map[ActualNames.get(it)] = value
                 }
             }
             return map
+        } else if (object instanceof NamedDomainObjectContainer) {
+            def map = object.getAsMap()
+            return mapping(map, ignoreEmpty)
         } else if (object instanceof Map) {
-            object.entrySet().each {
-                object[it.key] = map(it.value)
+            if (ignoreEmpty && object.isEmpty()) {
+                return null
             }
+            return object.collectEntries {
+                [it.key, mapping(it.value, ignoreEmpty)]
+            }.findAll { it.value != null }
         } else if (object instanceof Collection) {
-            def list = new ArrayList()
-            object.each {
-                list.add(map(it))
+            if (ignoreEmpty && object.isEmpty()) {
+                return null
             }
-            return list
+            return object.collect {
+                mapping(it, ignoreEmpty)
+            }.findAll { it != null }
         } else if (object instanceof Enum) {
             return ActualNames.get(object)
         }

@@ -12,7 +12,7 @@ class Permission {
     String description
     @ActualName('default')
     String defaults
-    Map<String, Boolean> children
+    Map<String, Boolean> children = new HashMap<>()
 
     Permission(String name) {
         this.name = name

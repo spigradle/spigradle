@@ -10,7 +10,7 @@ Recommended:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.0.6'
+    id 'kr.entree.spigradle' version '1.1'
 }
 ```
 
@@ -22,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.0.6'
+        classpath 'kr.entree:spigradle:1.1'
     }
 }
 
@@ -31,12 +31,12 @@ apply plugin: 'kr.entree.spigradle'
 
 ## Requirements
 
-**Spigradle requires Gradle 6.0.1+**
+**Spigradle requires Gradle 6.0+**
 
 To update gradle wrapper:
 
 ```
-gradlew wrapper --gradle-version 6.0.1 --distribution-type all
+gradlew wrapper --gradle-version 6.1.1 --distribution-type all
 ```
 
 ## Example
@@ -44,7 +44,7 @@ gradlew wrapper --gradle-version 6.0.1 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.0.6'
+    id 'kr.entree.spigradle' version '1.1'
 }
 
 group 'org.example'
@@ -95,6 +95,8 @@ We don't need to specify a main class that extends JavaPlugin. Spigradle will fi
 
 You can also specify it manually in spigot {} block.
 
+Configuring the spigot {} block is just optional: nothing to configure it, Spigradle will still work.
+
 ## Properties
 
 ### repositories
@@ -115,7 +117,7 @@ enginehub()
 
 ### dependencies
 
-spigot() `1.14.4-R0.1-SNAPSHOT is default version`
+spigot() `1.14.4-R0.1-SNAPSHOT = Default version`
 
 paper()
 
@@ -165,8 +167,10 @@ website
 
 prefix
 
-### createPluginYaml
+### spigotPluginYaml
 
 attributes
 
 encoding
+
+yaml

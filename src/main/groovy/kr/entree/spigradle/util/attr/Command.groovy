@@ -9,12 +9,12 @@ import kr.entree.spigradle.util.annotation.MappingObject
 @MappingObject
 class Command {
     final String name
-    String[] aliases
     String description
     String usage
     String permission
     @ActualName('permission-message')
     String permissionMessage
+    List<String> aliases = new ArrayList<>()
 
     Command(String name) {
         this.name = name
