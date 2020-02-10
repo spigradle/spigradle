@@ -33,8 +33,8 @@ class PluginAttributes {
     List<String> softDepends = new ArrayList<>()
     @ActualName('loadbefore')
     List<String> loadBefore = new ArrayList<>()
-    NamedDomainObjectContainer<Command> commands
-    NamedDomainObjectContainer<Permission> permissions
+    final NamedDomainObjectContainer<Command> commands
+    final NamedDomainObjectContainer<Permission> permissions
     static Load POST_WORLD = Load.POST_WORLD
     static Load STARTUP = Load.STARTUP
 

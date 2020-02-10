@@ -14,7 +14,7 @@ class Mapper {
         if (mappingObject != null) {
             def map = new LinkedHashMap<String, Object>()
             type.declaredFields.findAll {
-                !it.synthetic && !Modifier.isFinal(it.modifiers) && !Modifier.isStatic(it.modifiers)
+                !it.synthetic && !Modifier.isStatic(it.modifiers)
             }.each {
                 it.setAccessible(true)
                 def value = mapping(it.get(object), ignoreEmpty)
