@@ -148,9 +148,9 @@ version
 
 authors
 
-depend
+depends
 
-softDepend
+softDepends
 
 loadBefore
 
