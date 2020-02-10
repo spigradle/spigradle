@@ -4,9 +4,9 @@ Gradle plugin for developing Spigot plugin.
 
 ## Apply plugin
 
-Two ways to apply the plugin.
+There is two ways for apply the plugin.
 
-Recommended:
+Recommend:
 
 ```groovy
 plugins {
@@ -31,12 +31,12 @@ apply plugin: 'kr.entree.spigradle'
 
 ## Requirements
 
-**Spigradle requires Gradle 6.0+**
+**Spigradle requires Gradle 5.0+**
 
 To update gradle wrapper:
 
 ```
-gradlew wrapper --gradle-version 6.1.1 --distribution-type all
+gradlew wrapper --gradle-version 5.6.4 --distribution-type all
 ```
 
 ## Example
@@ -66,8 +66,9 @@ dependencies {
 }
 
 spigot {
-    depend = ['ProtocolLib']
     authors = ['Me']
+    depends = ['ProtocolLib']
+    load = STARTUP
     commands {
         give {
             aliases = ['i']
@@ -95,7 +96,7 @@ We don't need to specify a main class that extends JavaPlugin. Spigradle will fi
 
 You can also specify it manually in spigot {} block.
 
-Configuring the spigot {} block is just optional: nothing to configure it, Spigradle will still work.
+**Configuring the spigot {} block is just optional: without it, Spigradle will still work.**
 
 ## Properties
 
@@ -161,7 +162,7 @@ description
 
 apiVersion
 
-load `STARTUP, POSTWORLD`
+load `STARTUP, POST_WORLD`
 
 website
 
