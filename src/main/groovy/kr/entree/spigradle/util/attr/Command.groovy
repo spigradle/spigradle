@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.attr
 
-import kr.entree.spigradle.util.annotation.ActualName
+import kr.entree.spigradle.util.annotation.RenameTo
 import kr.entree.spigradle.util.annotation.MappingObject
 
 /**
@@ -8,11 +8,11 @@ import kr.entree.spigradle.util.annotation.MappingObject
  */
 @MappingObject
 class Command {
-    final String name
+    final transient String name
     String description
     String usage
     String permission
-    @ActualName('permission-message')
+    @RenameTo('permission-message')
     String permissionMessage
     List<String> aliases = new ArrayList<>()
 

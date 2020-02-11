@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.mapper
 
-import kr.entree.spigradle.util.annotation.ActualName
+import kr.entree.spigradle.util.annotation.RenameTo
 
 import java.lang.reflect.Field
 
@@ -9,7 +9,7 @@ import java.lang.reflect.Field
  */
 class ActualNames {
     static String getOrDefault(Field field, Object defValue = null) {
-        def actualName = field.getAnnotation(ActualName)
+        def actualName = field.getAnnotation(RenameTo)
         return actualName != null ? actualName.value() : defValue
     }
 

@@ -1,7 +1,7 @@
 package kr.entree.spigradle.extension
 
 import kr.entree.spigradle.util.Enums
-import kr.entree.spigradle.util.annotation.ActualName
+import kr.entree.spigradle.util.annotation.RenameTo
 import kr.entree.spigradle.util.attr.Command
 import kr.entree.spigradle.util.attr.Load
 import kr.entree.spigradle.util.attr.Permission
@@ -17,15 +17,15 @@ abstract class PluginAttributes {
     String description
     String website
     List<String> authors
-    @ActualName('api-version')
+    @RenameTo('api-version')
     String apiVersion
     Load load
     String prefix
-    @ActualName('depend')
+    @RenameTo('depend')
     List<String> depends = new ArrayList<>()
-    @ActualName('softdepend')
+    @RenameTo('softdepend')
     List<String> softDepends = new ArrayList<>()
-    @ActualName('loadbefore')
+    @RenameTo('loadbefore')
     List<String> loadBefore = new ArrayList<>()
     final NamedDomainObjectContainer<Command> commands
     final NamedDomainObjectContainer<Permission> permissions
