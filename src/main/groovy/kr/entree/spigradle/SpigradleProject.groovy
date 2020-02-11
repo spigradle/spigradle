@@ -1,11 +1,14 @@
 package kr.entree.spigradle
 
-import kr.entree.spigradle.extension.PluginAttributes
+
+import kr.entree.spigradle.extension.PluginAttributesLegacy
+import kr.entree.spigradle.extension.PluginAttributesModern
 import kr.entree.spigradle.task.SpigotPluginYamlCreateTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.util.GradleVersion
 
 /**
  * Created by JunHyung Lim on 2019-12-13
@@ -18,7 +21,8 @@ class SpigradleProject {
     }
 
     def setupPlugin() {
-        def attrs = project.extensions.create('spigot', PluginAttributes, project)
+        def attrType = canSupportNamedDsl() ? PluginAttributesModern : PluginAttributesLegacy
+        def attrs = project.extensions.create('spigot', attrType, project)
         def task = project.task('spigotPluginYaml', type: SpigotPluginYamlCreateTask) {
             group = 'Spigradle'
             description = 'Auto generate a plugin.yml file.'
@@ -183,5 +187,9 @@ class SpigradleProject {
             }
             return '+'
         }
+    }
+
+    static boolean canSupportNamedDsl() {
+        return GradleVersion.current() >= GradleVersion.version('6.0')
     }
 }

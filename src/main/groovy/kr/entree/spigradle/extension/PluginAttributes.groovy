@@ -2,21 +2,15 @@ package kr.entree.spigradle.extension
 
 import kr.entree.spigradle.util.Enums
 import kr.entree.spigradle.util.annotation.ActualName
-import kr.entree.spigradle.util.annotation.MappingObject
 import kr.entree.spigradle.util.attr.Command
 import kr.entree.spigradle.util.attr.Load
 import kr.entree.spigradle.util.attr.Permission
-import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
-import org.gradle.api.Project
-
-import javax.inject.Inject
 
 /**
  * Created by JunHyung Lim on 2019-12-12
  */
-@MappingObject
-class PluginAttributes {
+abstract class PluginAttributes {
     String main
     String name
     String version
@@ -38,18 +32,9 @@ class PluginAttributes {
     static Load POST_WORLD = Load.POST_WORLD
     static Load STARTUP = Load.STARTUP
 
-    @Inject
-    PluginAttributes(Project project) {
-        commands = project.container(Command)
-        permissions = project.container(Permission)
-    }
-
-    def commands(Action<NamedDomainObjectContainer<Command>> configure) {
-        configure.execute(commands)
-    }
-
-    def permissions(Action<NamedDomainObjectContainer<Permission>> configure) {
-        configure.execute(permissions)
+    PluginAttributes(NamedDomainObjectContainer<Command> commands, NamedDomainObjectContainer<Permission> permissions) {
+        this.commands = commands
+        this.permissions = permissions
     }
 
     def setLoad(String name) {
