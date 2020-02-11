@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.attr
 
-import kr.entree.spigradle.util.annotation.ActualName
+import kr.entree.spigradle.util.annotation.RenameTo
 import kr.entree.spigradle.util.annotation.MappingObject
 
 /**
@@ -8,9 +8,9 @@ import kr.entree.spigradle.util.annotation.MappingObject
  */
 @MappingObject
 class Permission {
-    final String name
+    final transient String name
     String description
-    @ActualName('default')
+    @RenameTo('default')
     String defaults
     Map<String, Boolean> children = new HashMap<>()
 

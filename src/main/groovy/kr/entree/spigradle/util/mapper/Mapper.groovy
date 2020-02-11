@@ -56,7 +56,8 @@ class Mapper {
         def parent = type
         while (parent != null && parent != Object) {
             ret += parent.declaredFields.findAll {
-                !it.synthetic && !Modifier.isStatic(it.modifiers)
+                !it.synthetic && !Modifier.isTransient(it.modifiers) &&
+                        !Modifier.isStatic(it.modifiers)
             }
             parent = parent.superclass
         }
