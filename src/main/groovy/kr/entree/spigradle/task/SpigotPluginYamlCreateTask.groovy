@@ -47,7 +47,7 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
             name = name ?: project.name
             version = version ?: project.version
         }
-        def yamlMap = Mapper.mapping(attributes, true, PluginAttributes) as Map<String, Object>
+        def yamlMap = Mapper.mapping(attributes, true) as Map<String, Object>
         if (yamlMap.main == null) {
             throw new IllegalArgumentException(
                     """\

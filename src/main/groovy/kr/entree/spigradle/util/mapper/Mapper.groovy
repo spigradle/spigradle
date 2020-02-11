@@ -3,19 +3,19 @@ package kr.entree.spigradle.util.mapper
 import kr.entree.spigradle.util.annotation.MappingObject
 import org.gradle.api.NamedDomainObjectContainer
 
+import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
 /**
  * Created by JunHyung Lim on 2019-12-13
  */
 class Mapper {
-    static Object mapping(Object object, Boolean ignoreEmpty = true, Class<?> type = object.getClass()) {
-        def mappingObject = type.getAnnotation(MappingObject)
+    static Object mapping(Object object, Boolean ignoreEmpty = true) {
+        def mappingObject = object.getClass().getAnnotation(MappingObject)
         if (mappingObject != null) {
+            def type = getType(mappingObject) ?: object.getClass()
             def map = new LinkedHashMap<String, Object>()
-            type.declaredFields.findAll {
-                !it.synthetic && !Modifier.isStatic(it.modifiers)
-            }.each {
+            getFields(type).each {
                 it.setAccessible(true)
                 def value = mapping(it.get(object), ignoreEmpty)
                 if (value != null) {
@@ -44,5 +44,22 @@ class Mapper {
             return ActualNames.get(object)
         }
         return object
+    }
+
+    static Class<?> getType(MappingObject mappingObject) {
+        def type = mappingObject.value()
+        return type != Void ? type : null
+    }
+
+    static List<Field> getFields(Class<?> type) {
+        def ret = []
+        def parent = type
+        while (parent != null && parent != Object) {
+            ret += parent.declaredFields.findAll {
+                !it.synthetic && !Modifier.isStatic(it.modifiers)
+            }
+            parent = parent.superclass
+        }
+        return ret
     }
 }
