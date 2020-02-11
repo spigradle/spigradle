@@ -33,10 +33,12 @@ apply plugin: 'kr.entree.spigradle'
 
 **Spigradle requires Gradle 5.0+**
 
-To update gradle wrapper:
+IntelliJ's default version of gradle wrapper already 5.2.1.
+
+If you want fully IDE support in DSL, just go to 6.0+ (currently latest 6.1.1)
 
 ```
-gradlew wrapper --gradle-version 5.6.4 --distribution-type all
+gradlew wrapper --gradle-version 6.1.1 --distribution-type all
 ```
 
 ## Example
