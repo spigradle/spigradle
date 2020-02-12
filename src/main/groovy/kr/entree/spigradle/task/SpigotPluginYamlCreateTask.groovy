@@ -53,21 +53,25 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
 
     static def validateYamlMap(Map<String, Object> yamlMap) {
         if (yamlMap.main == null) {
-            throw new IllegalArgumentException(
-                    """\
-                        Spigradle couldn\'t find a main class automatically.
-                        Please set a 'main' property in spigot {} block in build.gradle\
-                    """.stripIndent()
-            )
+            throw new IllegalArgumentException("""\
+                Spigradle couldn\'t find a main class automatically.
+                Please set a 'main' property in spigot {} block in build.gradle\
+            """.stripIndent())
         }
         if (yamlMap.'api-version' != null) {
             def rawApiVersion = yamlMap.'api-version'.toString()
             Version.parse(rawApiVersion).with {
                 if (major < 1 || minor < 13) {
-                    throw new IllegalArgumentException("""Invalid api-version configured:'$rawApiVersion'\nIt should be 1.13 or higher!""")
+                    throw new IllegalArgumentException("""\
+                        Invalid api-version configured:'$rawApiVersion'
+                        It should be 1.13 or higher or empty!\
+                    """.stripIndent())
                 }
                 if (major == 1 && (13..15).contains(minor) && patch != null) {
-                    throw new IllegalArgumentException("""Invalid api-version configured:'$rawApiVersion'\nValid format: $major.$minor""")
+                    throw new IllegalArgumentException("""\
+                        Invalid api-version configured:'$rawApiVersion'
+                        Valid format: $major.$minor
+                    """.stripIndent())
                 }
             }
         }
