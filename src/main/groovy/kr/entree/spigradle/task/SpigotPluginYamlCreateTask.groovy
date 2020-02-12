@@ -1,6 +1,7 @@
 package kr.entree.spigradle.task
 
 import kr.entree.spigradle.extension.PluginAttributes
+import kr.entree.spigradle.util.Version
 import kr.entree.spigradle.util.inspector.ByteInspector
 import kr.entree.spigradle.util.inspector.InspectorResult
 import kr.entree.spigradle.util.mapper.Mapper
@@ -11,8 +12,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.jvm.tasks.Jar
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
-
-import static java.util.Objects.requireNonNull
 
 /**
  * Created by JunHyung Lim on 2019-12-12
@@ -48,6 +47,11 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
             version = version ?: project.version
         }
         def yamlMap = Mapper.mapping(attributes, true) as Map<String, Object>
+        validateYamlMap(yamlMap)
+        return yamlMap
+    }
+
+    static def validateYamlMap(Map<String, Object> yamlMap) {
         if (yamlMap.main == null) {
             throw new IllegalArgumentException(
                     """\
@@ -56,10 +60,17 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
                     """.stripIndent()
             )
         }
-        requireNonNull(
-                yamlMap.main,
-        )
-        return yamlMap
+        if (yamlMap.'api-version' != null) {
+            def rawApiVersion = yamlMap.'api-version'.toString()
+            Version.parse(rawApiVersion).with {
+                if (major < 1 || minor < 13) {
+                    throw new IllegalArgumentException("""Invalid api-version configured:'$rawApiVersion'\nIt should be 1.13 or higher!""")
+                }
+                if (major == 1 && (13..15).contains(minor) && patch != null) {
+                    throw new IllegalArgumentException("""Invalid api-version configured:'$rawApiVersion'\nValid format: $major.$minor""")
+                }
+            }
+        }
     }
 
     static Yaml createYaml() {
