@@ -64,7 +64,7 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
                 if (major < 1 || minor < 13) {
                     throw new IllegalArgumentException("""\
                         Invalid api-version configured:'$rawApiVersion'
-                        It should be 1.13 or higher or empty!\
+                        It should be 1.13 or higher or null!\
                     """.stripIndent())
                 }
                 if (major == 1 && (13..15).contains(minor) && patch != null) {
