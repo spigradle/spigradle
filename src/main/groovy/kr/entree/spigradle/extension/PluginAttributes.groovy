@@ -1,5 +1,6 @@
 package kr.entree.spigradle.extension
 
+import kr.entree.spigradle.util.APIVersion
 import kr.entree.spigradle.util.Enums
 import kr.entree.spigradle.util.annotation.RenameTo
 import kr.entree.spigradle.util.attr.Command
@@ -39,5 +40,13 @@ abstract class PluginAttributes {
 
     def setLoad(String name) {
         load = Enums.get(Load, name)
+    }
+
+    def setApiVersion(APIVersion apiVersion) {
+        this.apiVersion = apiVersion.toString()
+    }
+
+    def setApiVersion(String apiVersion) {
+        this.apiVersion = apiVersion
     }
 }
