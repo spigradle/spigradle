@@ -1,11 +1,11 @@
 package kr.entree.spigradle.extension
 
-import kr.entree.spigradle.util.APIVersion
 import kr.entree.spigradle.util.Enums
+import kr.entree.spigradle.util.Version
 import kr.entree.spigradle.util.annotation.RenameTo
-import kr.entree.spigradle.util.attr.Command
-import kr.entree.spigradle.util.attr.Load
-import kr.entree.spigradle.util.attr.Permission
+import kr.entree.spigradle.util.attribute.Command
+import kr.entree.spigradle.util.attribute.Load
+import kr.entree.spigradle.util.attribute.Permission
 import org.gradle.api.NamedDomainObjectContainer
 
 /**
@@ -42,7 +42,7 @@ abstract class PluginAttributes {
         load = Enums.get(Load, name)
     }
 
-    def setApiVersion(APIVersion apiVersion) {
+    def setApiVersion(Version apiVersion) {
         this.apiVersion = apiVersion.toString()
     }
 

@@ -1,4 +1,4 @@
-package kr.entree.spigradle.util.attr
+package kr.entree.spigradle.util.attribute
 
 import kr.entree.spigradle.util.annotation.RenameTo
 
