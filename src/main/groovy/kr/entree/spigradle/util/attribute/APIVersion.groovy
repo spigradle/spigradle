@@ -1,4 +1,6 @@
-package kr.entree.spigradle.util
+package kr.entree.spigradle.util.attribute
+
+import kr.entree.spigradle.util.Version
 
 /**
  * Created by JunHyung Lim on 2020-02-12
