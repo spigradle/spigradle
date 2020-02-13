@@ -6,13 +6,13 @@ import kr.entree.spigradle.task.SpigotPluginYamlCreateTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.api.tasks.bundling.Jar
 import org.gradle.util.GradleVersion
 
 /**
  * Created by JunHyung Lim on 2019-12-13
  */
 class SpigradleProject {
-    public static final String RESOURCE_TASK_NAME = 'processResources'
     final Project project
 
     SpigradleProject(project) {
@@ -27,7 +27,7 @@ class SpigradleProject {
             description = 'Auto generate a plugin.yml file.'
             attributes = attrs
         }
-        project.tasks.findByName(RESOURCE_TASK_NAME)?.with {
+        project.tasks.withType(Jar) {
             it.dependsOn task
         }
     }
