@@ -7,12 +7,12 @@ import kr.entree.spigradle.util.inspector.InspectorResult
 import kr.entree.spigradle.util.mapper.Mapper
 import kr.entree.spigradle.util.yaml.SpigradleRepresenter
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.CopySpec
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.bundling.Jar
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
-
-import static kr.entree.spigradle.SpigradleProject.RESOURCE_TASK_NAME
 
 /**
  * Created by JunHyung Lim on 2019-12-12
@@ -24,6 +24,8 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
     String encoding = 'UTF-8'
     @Input
     Yaml yaml = createYaml()
+    @Input
+    Map<CopySpec, Boolean> includeTasks = new HashMap<>()
 
     @TaskAction
     def createPluginYaml() {
@@ -31,9 +33,24 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         file.newWriter(encoding).withCloseable {
             writePluginYaml(it)
         }
-        project.tasks.findByName(RESOURCE_TASK_NAME)?.with {
+        project.tasks.withType(Jar).findAll {
+            includeTasks.getOrDefault(it, true)
+        }.each {
             it.from file
         }
+        includeTasks.findAll { it.value }.each {
+            it.key.from file
+        }
+    }
+
+    def include(copySpec, Boolean whether = true) {
+        if (copySpec instanceof CopySpec) {
+            includeTasks.put(copySpec, whether)
+        }
+    }
+
+    def exclude(copySpec, Boolean whether = true) {
+        include(copySpec, !whether)
     }
 
     def writePluginYaml(Writer writer) {
