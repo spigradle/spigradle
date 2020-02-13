@@ -1,19 +1,18 @@
 package kr.entree.spigradle
 
-
 import kr.entree.spigradle.extension.PluginAttributesLegacy
 import kr.entree.spigradle.extension.PluginAttributesModern
 import kr.entree.spigradle.task.SpigotPluginYamlCreateTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
-import org.gradle.api.plugins.JavaPlugin
 import org.gradle.util.GradleVersion
 
 /**
  * Created by JunHyung Lim on 2019-12-13
  */
 class SpigradleProject {
+    public static final String RESOURCE_TASK_NAME = 'processResources'
     final Project project
 
     SpigradleProject(project) {
@@ -28,8 +27,8 @@ class SpigradleProject {
             description = 'Auto generate a plugin.yml file.'
             attributes = attrs
         }
-        project.plugins.withType(JavaPlugin) {
-            project.jar.dependsOn task
+        project.tasks.findByName(RESOURCE_TASK_NAME)?.with {
+            it.dependsOn task
         }
     }
 
