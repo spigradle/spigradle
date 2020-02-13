@@ -33,14 +33,19 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         file.newWriter(encoding).withCloseable {
             writePluginYaml(it)
         }
-        project.tasks.withType(Jar).findAll {
+        (getJarTasks() + getFlattenIncludeTasks())
+                .each { it.from file }
+    }
+
+    private Collection<CopySpec> getJarTasks() {
+        return project.tasks.withType(Jar).findAll {
             includeTasks.getOrDefault(it, true)
-        }.each {
-            it.from file
         }
-        includeTasks.findAll { it.value }.each {
-            it.key.from file
-        }
+    }
+
+    private Collection<CopySpec> getFlattenIncludeTasks() {
+        return includeTasks.findAll { it.value }
+                .collect { it.key }
     }
 
     def include(copySpec, Boolean whether = true) {
