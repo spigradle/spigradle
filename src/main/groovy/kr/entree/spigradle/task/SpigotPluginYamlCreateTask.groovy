@@ -9,9 +9,10 @@ import kr.entree.spigradle.util.yaml.SpigradleRepresenter
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import org.gradle.jvm.tasks.Jar
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
+
+import static kr.entree.spigradle.SpigradleProject.RESOURCE_TASK_NAME
 
 /**
  * Created by JunHyung Lim on 2019-12-12
@@ -30,7 +31,7 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         file.newWriter(encoding).withCloseable {
             writePluginYaml(it)
         }
-        project.tasks.withType(Jar) {
+        project.tasks.findByName(RESOURCE_TASK_NAME)?.with {
             it.from file
         }
     }
