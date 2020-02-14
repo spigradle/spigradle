@@ -33,8 +33,9 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         file.newWriter(encoding).withCloseable {
             writePluginYaml(it)
         }
-        (getJarTasks() + getFlattenIncludeTasks())
-                .each { it.from file }
+        (getJarTasks() + getFlattenIncludeTasks()).each {
+            it.from file
+        }
     }
 
     private Collection<CopySpec> getJarTasks() {
