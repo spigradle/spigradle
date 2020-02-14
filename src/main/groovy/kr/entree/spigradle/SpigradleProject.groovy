@@ -7,6 +7,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.api.tasks.compile.AbstractCompile
 import org.gradle.util.GradleVersion
 
 /**
@@ -29,6 +30,9 @@ class SpigradleProject {
         }
         project.tasks.withType(Jar) {
             it.dependsOn task
+        }
+        project.tasks.withType(AbstractCompile).first()?.with {
+            task.dependsOn it
         }
     }
 
