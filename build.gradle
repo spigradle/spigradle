@@ -53,8 +53,8 @@ pluginBundle {
 }
 
 bintray {
-    user = project.findProperty('BINTRAY_USER')
-    key = project.findProperty('BINTRAY_KEY')
+    user = project.findProperty('bintray.publish.user')
+    key = project.findProperty('bintray.publish.key')
     publications = ['spigradle']
     publish = true
     pkg {
