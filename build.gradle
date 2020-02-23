@@ -64,7 +64,7 @@ bintray {
         websiteUrl = 'https://github.com/EntryPointKR/Spigradle'
         githubRepo = 'https://github.com/EntryPointKR/Spigradle'
         issueTrackerUrl = 'https://github.com/EntryPointKR/Spigradle/issues'
-        licenses = ['MIT']
+        licenses = ['Apache-2.0']
         vcsUrl = VCS_URL
         version {
             name = project.version
