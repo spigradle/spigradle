@@ -32,6 +32,7 @@ class SpigradleProject {
             it.dependsOn task
         }
         def compileTasks = project.tasks.withType(AbstractCompile)
+        println(compileTasks)
         if (!compileTasks.isEmpty()) {
             compileTasks.first()?.with {
                 task.dependsOn it
