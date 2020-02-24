@@ -10,7 +10,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.1.1'
+    id 'kr.entree.spigradle' version '1.1.2'
 }
 ```
 
@@ -22,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.1.1'
+        classpath 'kr.entree:spigradle:1.1.2'
     }
 }
 
@@ -46,7 +46,7 @@ gradlew wrapper --gradle-version 6.1.1 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.1.1'
+    id 'kr.entree.spigradle' version '1.1.2'
 }
 
 group 'org.example'
@@ -127,6 +127,10 @@ paper()
 bukkit()
 
 craftbukkit()
+
+spigotAll() `NMS contains spigot`
+
+minecraftServer() `No default version, net.minecraft.server`
 
 protocolLib() `4.4.0`
 

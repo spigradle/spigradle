@@ -75,52 +75,62 @@ class SpigradleProject {
                 taggedVersionParser()
         )
         setupDependencies([
-                'spigot'       : createDependency(
+                'spigot'         : createDependency(
                         'org.spigotmc',
                         'spigot-api',
                         spigotVersionParser
                 ),
-                'paper'        : createDependency(
+                'paper'          : createDependency(
                         'com.destroystokyo.paper',
                         'paper-api',
                         spigotVersionParser
                 ),
-                'bukkit'       : createDependency(
+                'bukkit'         : createDependency(
                         'org.bukkit',
                         'bukkit',
                         spigotVersionParser
                 ),
-                'craftbukkit'  : createDependency(
+                'craftbukkit'    : createDependency(
                         'org.bukkit',
                         'craftbukkit',
                         spigotVersionParser
                 ),
-                'protocolLib'  : createDependency(
+                'spigotAll'      : createDependency(
+                        'org.spigotmc',
+                        'spigot',
+                        spigotVersionParser
+                ),
+                'minecraftServer': createDependency(
+                        'org.spigotmc',
+                        'minecraft-server',
+                        versionParser()
+                ),
+                'protocolLib'    : createDependency(
                         'com.comphenix.protocol',
                         'ProtocolLib',
                         versionParserWithDefault('4.4.0')
                 ),
-                'vault'        : createDependency(
+                'vault'          : createDependency(
                         'com.github.MilkBowl',
                         'VaultAPI',
                         versionParserWithDefault('1.7')
                 ),
-                'luckPerms'    : createDependency(
+                'luckPerms'      : createDependency(
                         'me.lucko.luckperms',
                         'luckperms-api',
                         versionParserWithDefault('5.0')
                 ),
-                'worldedit'    : createDependency(
+                'worldedit'      : createDependency(
                         'com.sk89q.worldedit',
                         'worldedit-bukkit',
                         versionParserWithDefault('7.1.0')
                 ),
-                'worldguard'   : createDependency(
+                'worldguard'     : createDependency(
                         'com.sk89q.worldguard',
                         'worldguard-bukkit',
                         versionParserWithDefault('7.0.2')
                 ),
-                'commandhelper': createDependency(
+                'commandhelper'  : createDependency(
                         'com.sk89q',
                         'commandhelper',
                         versionParserWithDefault('3.3.4-SNAPSHOT')
