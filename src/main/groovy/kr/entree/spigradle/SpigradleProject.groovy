@@ -40,27 +40,14 @@ class SpigradleProject {
     }
 
     def setupRepositories() {
-        def jitPack = [
-                'jitpack-repo': 'https://jitpack.io'
-        ]
         setupRepositories([
-                'spigot'     : [
-                        'spigot-repo': 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
-                ],
-                'bungeecord' : [
-                        'bungeecord-repo': 'https://oss.sonatype.org/content/repositories/snapshots'
-                ],
-                'paper'      : [
-                        'paper-repo': 'https://papermc.io/repo/repository/maven-public/'
-                ],
-                'protocolLib': [
-                        'protocollib-repo': 'https://repo.dmulloy2.net/nexus/repository/public/'
-                ],
-                'jitpack'    : jitPack,
-                'vault'      : jitPack,
-                'enginehub'  : [
-                        'enginehub-repo': 'https://maven.enginehub.org/repo/'
-                ]
+                'spigot'     : Repositories.SPIGOT,
+                'bungeecord' : Repositories.BUNGEECORD,
+                'paper'      : Repositories.PAPER,
+                'protocolLib': Repositories.PROTOCOL_LIB,
+                'jitpack'    : Repositories.JITPACK,
+                'vault'      : Repositories.JITPACK,
+                'enginehub'  : Repositories.ENGINEHUB
         ])
         project.repositories.with {
             spigot()
@@ -138,16 +125,13 @@ class SpigradleProject {
         ])
     }
 
-    def setupRepositories(Map<String, Map<String, String>> map) {
+    def setupRepositories(Map<String, String> map) {
         def handler = project.repositories as RepositoryHandler
         map.each { entry ->
-            handler.ext[entry.key] = {
-                entry.value.each { repos ->
-                    handler.maven {
-                        name = repos.key
-                        url = repos.value
-                    }
-                }
+            def key = entry.key
+            def address = entry.value
+            handler.ext[key] = handler.maven {
+                url address
             }
         }
     }
