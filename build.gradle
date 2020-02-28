@@ -93,3 +93,8 @@ jar {
     dependsOn shadowJar
     enabled = false
 }
+
+// Do not make relation with java
+compileGroovy.classpath = sourceSets.main.compileClasspath
+// Kotlin compiler includes groovy classpath
+compileKotlin.classpath += files(sourceSets.main.groovy.classesDirectory)
