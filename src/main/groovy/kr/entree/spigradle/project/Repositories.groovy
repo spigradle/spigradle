@@ -1,4 +1,4 @@
-package kr.entree.spigradle.util
+package kr.entree.spigradle.project;
 
 /**
  * Created by JunHyung Lim on 2020-02-28
