@@ -10,7 +10,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.1.2'
+    id 'kr.entree.spigradle' version '1.1.3'
 }
 ```
 
@@ -22,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.1.2'
+        classpath 'kr.entree:spigradle:1.1.3'
     }
 }
 
@@ -46,7 +46,7 @@ gradlew wrapper --gradle-version 6.1.1 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.1.2'
+    id 'kr.entree.spigradle' version '1.1.3'
 }
 
 group 'org.example'
