@@ -2,6 +2,7 @@ package kr.entree.spigradle
 
 import kr.entree.spigradle.extension.PluginAttributesLegacy
 import kr.entree.spigradle.extension.PluginAttributesModern
+import kr.entree.spigradle.project.Dependency
 import kr.entree.spigradle.project.Repositories
 import kr.entree.spigradle.task.SpigotPluginYamlCreateTask
 import org.gradle.api.Project
@@ -62,19 +63,19 @@ class SpigradleProject {
     def setupDependencies() {
         setupDependencies([
                 // Bukkit
-                'spigot'         : SPIGOT.formatter(),
-                'spigotAll'      : SPIGOT_ALL.formatter(),
-                'minecraftServer': MINECRAFT_SERVER.formatter(),
-                'paper'          : PAPER.formatter(),
-                'bukkit'         : BUKKIT.formatter(),
-                'craftbukkit'    : CRAFT_BUKKIT.formatter(),
+                'spigot'         : SPIGOT,
+                'spigotAll'      : SPIGOT_ALL,
+                'minecraftServer': MINECRAFT_SERVER,
+                'paper'          : PAPER,
+                'bukkit'         : BUKKIT,
+                'craftbukkit'    : CRAFT_BUKKIT,
                 // Plugin
-                'protocolLib'    : PROTOCOL_LIB.formatter(),
-                'vault'          : VAULT.formatter(),
-                'luckPerms'      : LUCK_PERMS.formatter(),
-                'worldedit'      : WORLD_EDIT.formatter(),
-                'worldguard'     : WORLD_GUARD.formatter(),
-                'commandhelper'  : COMMAND_HELPER.formatter()
+                'protocolLib'    : PROTOCOL_LIB,
+                'vault'          : VAULT,
+                'luckPerms'      : LUCK_PERMS,
+                'worldedit'      : WORLD_EDIT,
+                'worldguard'     : WORLD_GUARD,
+                'commandhelper'  : COMMAND_HELPER
         ])
     }
 
@@ -91,12 +92,13 @@ class SpigradleProject {
         }
     }
 
-    def setupDependencies(Map<String, Closure<String>> map) {
+    def setupDependencies(Map<String, Object> map) {
         def handler = project.dependencies as DependencyHandler
         map.each {
-            handler.ext[it.key] = { Object... args ->
-                return it.value.call(handler, args)
-            }
+            def value = it.value
+            handler.ext[it.key] = value instanceof Dependency
+                    ? value.formatter()
+                    : { String version -> value.call(handler, version) }
         }
     }
 
