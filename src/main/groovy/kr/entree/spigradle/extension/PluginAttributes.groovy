@@ -38,6 +38,10 @@ abstract class PluginAttributes {
         this.permissions = permissions
     }
 
+    def setLoad(Load load) {
+        this.load = load
+    }
+
     def setLoad(String name) {
         load = Enums.get(Load, name)
     }
