@@ -11,7 +11,7 @@ class Dependency {
     String defaultVersion
     Closure<String> versionAdjuster
     public static final Closure<String> SPIGOT_VERSION_ADJUSTER = { String version -> adjustSpigotVersion(version) }
-    public static final Closure<String> NULL_ADJUSTER = { String version -> null }
+    public static final Closure<String> IDENTITY_ADJUSTER = { String version -> version }
 
     Dependency(String groupId, String artifactId, String defaultVersion, Closure<String> versionAdjuster) {
         this.groupId = groupId
@@ -24,7 +24,7 @@ class Dependency {
             String groupId,
             String artifactId,
             String defaultVersion,
-            Closure<String> versionAdjuster = NULL_ADJUSTER
+            Closure<String> versionAdjuster = IDENTITY_ADJUSTER
     ) {
         return new Dependency(groupId, artifactId, defaultVersion, versionAdjuster)
     }
