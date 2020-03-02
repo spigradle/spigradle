@@ -28,3 +28,7 @@ fun RepositoryHandler.jitpack(configure: MavenArtifactRepository.() -> Unit = {}
 fun RepositoryHandler.vault(configure: MavenArtifactRepository.() -> Unit = {}) = jitpack(configure)
 
 fun RepositoryHandler.enginehub(configure: MavenArtifactRepository.() -> Unit = {}) = maven(Repositories.ENGINEHUB, configure)
+
+fun RepositoryHandler.codemc(configure: MavenArtifactRepository.() -> Unit = {}) = maven(Repositories.CODE_MC, configure)
+
+fun RepositoryHandler.bStats(configure: MavenArtifactRepository.() -> Unit = {}) = codemc(configure)

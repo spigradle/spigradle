@@ -63,6 +63,16 @@ class Dependencies {
             'commandhelper',
             '3.3.4-SNAPSHOT'
     )
+    public static final Dependency BSTATS = dependency(
+            'org.bstats',
+            'bstats-bukkit',
+            '1.7'
+    )
+    public static final Dependency BSTATS_LITE = dependency(
+            'org.bstats',
+            'bstats-bukkit-lite',
+            '1.7'
+    )
     public static final Dependency[] values = [
             SPIGOT, SPIGOT_ALL, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,

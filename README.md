@@ -10,7 +10,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.1.4'
+    id 'kr.entree.spigradle' version '1.1.5'
 }
 ```
 
@@ -22,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.1.4'
+        classpath 'kr.entree:spigradle:1.1.5'
     }
 }
 
@@ -46,7 +46,7 @@ gradlew wrapper --gradle-version 6.1.1 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.1.4'
+    id 'kr.entree.spigradle' version '1.1.5'
 }
 
 group 'org.example'
@@ -118,6 +118,10 @@ vault() `Same as jitpack()`
 
 enginehub()
 
+codemc()
+
+bStats() `Same as codemc()`
+
 ### dependencies
 
 spigot() `1.14.4-R0.1-SNAPSHOT = Default version`
@@ -143,6 +147,10 @@ worldedit() `7.1.0`
 worldguard() `7.0.2`
 
 commandhelper() `3.3.4-SNAPSHOT`
+
+bStats() `1.7`
+
+bStatsLite()
 
 ### spigot
 

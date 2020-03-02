@@ -28,3 +28,7 @@ fun DependencyHandler.worldedit(version: String = "") = WORLD_EDIT.format(versio
 fun DependencyHandler.worldguard(version: String = "") = WORLD_GUARD.format(version)
 
 fun DependencyHandler.commandhelper(version: String = "") = COMMAND_HELPER.format(version)
+
+fun DependencyHandler.bStats(version: String = "") = BSTATS.format(version)
+
+fun DependencyHandler.bStatsLite(version: String = "") = BSTATS_LITE.format(version)
