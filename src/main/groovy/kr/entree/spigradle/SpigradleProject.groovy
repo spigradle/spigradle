@@ -51,7 +51,9 @@ class SpigradleProject {
                 'protocolLib': Repositories.PROTOCOL_LIB,
                 'jitpack'    : Repositories.JITPACK,
                 'vault'      : Repositories.JITPACK,
-                'enginehub'  : Repositories.ENGINEHUB
+                'enginehub'  : Repositories.ENGINEHUB,
+                'codemc'     : Repositories.CODE_MC,
+                'bStats'     : Repositories.CODE_MC
         ])
         project.repositories.with {
             spigot()
@@ -75,7 +77,9 @@ class SpigradleProject {
                 'luckPerms'      : LUCK_PERMS,
                 'worldedit'      : WORLD_EDIT,
                 'worldguard'     : WORLD_GUARD,
-                'commandhelper'  : COMMAND_HELPER
+                'commandhelper'  : COMMAND_HELPER,
+                'bStats'         : BSTATS,
+                'bStatsLite'     : BSTATS_LITE
         ])
     }
 
