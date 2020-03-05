@@ -79,7 +79,8 @@ class SpigradleProject {
                 'worldguard'     : WORLD_GUARD,
                 'commandhelper'  : COMMAND_HELPER,
                 'bStats'         : BSTATS,
-                'bStatsLite'     : BSTATS_LITE
+                'bStatsLite'     : BSTATS_LITE,
+                'lombok'         : LOMBOK
         ])
     }
 

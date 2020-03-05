@@ -32,3 +32,5 @@ fun DependencyHandler.commandhelper(version: String = "") = COMMAND_HELPER.forma
 fun DependencyHandler.bStats(version: String = "") = BSTATS.format(version)
 
 fun DependencyHandler.bStatsLite(version: String = "") = BSTATS_LITE.format(version)
+
+fun DependencyHandler.lombok(version: String = "") = LOMBOK.format(version)
