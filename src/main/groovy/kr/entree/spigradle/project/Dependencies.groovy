@@ -68,14 +68,17 @@ class Dependencies {
             'bstats-bukkit',
             '1.7'
     )
-    public static final Dependency BSTATS_LITE = dependency(
-            'org.bstats',
-            'bstats-bukkit-lite',
-            '1.7'
+    public static final Dependency BSTATS_LITE = dependency(BSTATS) {
+        artifactId = 'bstats-bukkit-lite'
+    }
+    public static final Dependency LOMBOK = dependency(
+            'org.projectlombok',
+            'lombok',
+            '1.18.12'
     )
     public static final Dependency[] values = [
             SPIGOT, SPIGOT_ALL, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,
-            WORLD_GUARD, COMMAND_HELPER
+            WORLD_GUARD, COMMAND_HELPER, BSTATS, BSTATS_LITE, LOMBOK
     ]
 }
