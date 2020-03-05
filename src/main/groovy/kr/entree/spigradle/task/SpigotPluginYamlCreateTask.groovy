@@ -79,7 +79,9 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         if (yamlMap.main == null) {
             throw new IllegalArgumentException("""\
                 Spigradle couldn\'t find a main class automatically.
-                Please set a 'main' property in spigot {} block in build.gradle\
+                Please set a 'main' property in spigot {} block in build.gradle
+                Or just disable the spigotPluginYaml task like below.
+                "spigotPluginYaml.enabled = false"\
             """.stripIndent())
         }
         if (yamlMap.'api-version' != null) {
