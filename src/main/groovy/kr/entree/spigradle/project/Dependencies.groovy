@@ -1,5 +1,7 @@
 package kr.entree.spigradle.project
 
+import kr.entree.spigradle.SpigradleMeta
+
 import static kr.entree.spigradle.project.Dependency.SPIGOT_VERSION_ADJUSTER
 import static kr.entree.spigradle.project.Dependency.dependency
 
@@ -10,7 +12,7 @@ class Dependencies {
     public static final Dependency SPIGRADLE = dependency(
             'kr.entree',
             'spigradle',
-            '1.2.0-SNAPSHOT' // TODO: Separate
+            SpigradleMeta.VERSION
     )
     // Bukkit
     public static final Dependency SPIGOT = dependency(
