@@ -81,10 +81,11 @@ class SpigradleProject {
                 'commandhelper'  : COMMAND_HELPER,
                 'bStats'         : BSTATS,
                 'bStatsLite'     : BSTATS_LITE,
-                'lombok'         : LOMBOK
+                'lombok'         : LOMBOK,
+                'spigradle'      : SPIGRADLE
         ])
         project.dependencies {
-            compileOnly SPIGRADLE.format()
+            compileOnly spigradle()
         }
     }
 
