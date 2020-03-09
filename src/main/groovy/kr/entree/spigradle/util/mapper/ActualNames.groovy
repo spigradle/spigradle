@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.mapper
 
-import kr.entree.spigradle.util.annotation.RenameTo
+import kr.entree.spigradle.annotation.RenameTo
 
 import java.lang.reflect.Field
 

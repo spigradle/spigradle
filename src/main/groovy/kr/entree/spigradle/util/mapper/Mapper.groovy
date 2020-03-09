@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.mapper
 
-import kr.entree.spigradle.util.annotation.MappingObject
+import kr.entree.spigradle.annotation.MappingObject
 import org.gradle.api.NamedDomainObjectContainer
 
 import java.lang.reflect.Field

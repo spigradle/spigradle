@@ -1,4 +1,4 @@
-package kr.entree.spigradle.util.annotation
+package kr.entree.spigradle.annotation
 
 import java.lang.annotation.ElementType
 import java.lang.annotation.Retention

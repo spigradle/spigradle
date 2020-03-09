@@ -1,6 +1,6 @@
 package kr.entree.spigradle.util.attribute
 
-import kr.entree.spigradle.util.annotation.RenameTo
+import kr.entree.spigradle.annotation.RenameTo
 
 /**
  * Created by JunHyung Lim on 2020-02-09
