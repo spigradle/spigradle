@@ -1,7 +1,10 @@
 package kr.entree.spigradle.kotlin.dependency
 
+import kr.entree.spigradle.SpigradleMeta
 import kr.entree.spigradle.project.Dependencies.*
 import org.gradle.api.artifacts.dsl.DependencyHandler
+
+fun DependencyHandler.spigradle(version: String = SpigradleMeta.VERSION) = SPIGRADLE.format(version)
 
 fun DependencyHandler.spigotmc(artifactId: String, version: String) = "${SPIGOT.groupId}:$artifactId:$version"
 

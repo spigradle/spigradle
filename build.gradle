@@ -19,9 +19,8 @@ version '1.2.0-SNAPSHOT'
 
 ['publish', 'generateMeta'].each {
     def buildFileName = "gradle/${it}.gradle"
-    def buildFile = file(buildFileName)
-    if (buildFile.isFile()) {
-        apply from: buildFile
+    if (file(buildFileName).isFile()) {
+        apply from: buildFileName
     } else {
         apply from: "${buildFileName}.kts"
     }
