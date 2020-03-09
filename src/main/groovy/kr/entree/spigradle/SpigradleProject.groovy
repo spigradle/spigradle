@@ -55,10 +55,11 @@ class SpigradleProject {
                 'codemc'     : Repositories.CODE_MC,
                 'bStats'     : Repositories.CODE_MC
         ])
-        project.repositories.with {
+        project.repositories {
             spigot()
             bungeecord()
             paper()
+            jcenter()
         }
     }
 
@@ -82,6 +83,9 @@ class SpigradleProject {
                 'bStatsLite'     : BSTATS_LITE,
                 'lombok'         : LOMBOK
         ])
+        project.dependencies {
+            compileOnly SPIGRADLE.format()
+        }
     }
 
     def setupRepositories(Map<String, String> map) {

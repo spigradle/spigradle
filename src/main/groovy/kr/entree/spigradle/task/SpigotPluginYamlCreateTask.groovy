@@ -3,7 +3,7 @@ package kr.entree.spigradle.task
 import kr.entree.spigradle.extension.PluginAttributes
 import kr.entree.spigradle.util.Version
 import kr.entree.spigradle.util.inspector.ByteInspector
-import kr.entree.spigradle.util.inspector.InspectorResult
+import kr.entree.spigradle.util.inspector.InspectorContext
 import kr.entree.spigradle.util.mapper.Mapper
 import kr.entree.spigradle.util.yaml.SpigradleRepresenter
 import org.gradle.api.DefaultTask
@@ -64,7 +64,7 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         yaml.dump(createMap(inspected), writer)
     }
 
-    def createMap(InspectorResult inspected) {
+    def createMap(InspectorContext inspected) {
         attributes.with {
             main = main ?: inspected.mainClass
             name = name ?: project.name
@@ -79,8 +79,8 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         if (yamlMap.main == null) {
             throw new IllegalArgumentException("""\
                 Spigradle couldn\'t find a main class automatically.
-                Please set a 'main' property in spigot {} block in build.gradle
-                Or just disable the spigotPluginYaml task like below.
+                Please set a 'main' property in spigot {} block in build.gradle,
+                or just disable the spigotPluginYaml task like below.
                 "spigotPluginYaml.enabled = false"\
             """.stripIndent())
         }

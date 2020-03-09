@@ -7,6 +7,11 @@ import static kr.entree.spigradle.project.Dependency.dependency
  * Created by JunHyung Lim on 2020-02-29
  */
 class Dependencies {
+    public static final Dependency SPIGRADLE = dependency(
+            'kr.entree',
+            'spigradle',
+            '1.2.0-SNAPSHOT' // TODO: Separate
+    )
     // Bukkit
     public static final Dependency SPIGOT = dependency(
             'org.spigotmc',
