@@ -1,0 +1,53 @@
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
+apply plugin: 'com.gradle.plugin-publish'
+
+final def VCS_URL = 'https://github.com/EntryPointKR/Spigradle.git'
+
+bintray {
+    user = project.findProperty('bintray.publish.user')
+    key = project.findProperty('bintray.publish.key')
+    publications = ['spigradle']
+    publish = true
+    pkg {
+        repo = 'Spigradle'
+        name = 'spigradle'
+        desc = 'Gradle plugin for developing Spigot plugin.'
+        websiteUrl = 'https://github.com/EntryPointKR/Spigradle'
+        githubRepo = 'https://github.com/EntryPointKR/Spigradle'
+        issueTrackerUrl = 'https://github.com/EntryPointKR/Spigradle/issues'
+        licenses = ['Apache-2.0']
+        vcsUrl = VCS_URL
+        version {
+            name = project.version
+            released = new Date()
+            vcsTag = project.version
+        }
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/EntryPointKR/Spigradle'
+    vcsUrl = VCS_URL
+    tags = ['spigot', 'minecraft']
+    plugins {
+        spigradle {
+            id = 'kr.entree.spigradle'
+            displayName = 'Spigradle'
+            description = 'Gradle plugin for developing Spigot plugin.'
+        }
+    }
+}
+
+publishing {
+    publications {
+        spigradle(MavenPublication) { MavenPublication publication ->
+            shadow.component(publication)
+            afterEvaluate {
+                artifact publishPluginJar
+                artifact publishPluginJavaDocsJar
+                artifact publishPluginGroovyDocsJar
+            }
+        }
+    }
+}
