@@ -1,10 +1,9 @@
 package kr.entree.spigradle.task
 
-import kr.entree.spigradle.extension.PluginAttributes
-import kr.entree.spigradle.util.Version
 import kr.entree.spigradle.asm.ByteInspector
-import kr.entree.spigradle.asm.InspectorContext
+import kr.entree.spigradle.extension.PluginAttributes
 import kr.entree.spigradle.mapper.Mapper
+import kr.entree.spigradle.util.Version
 import kr.entree.spigradle.yaml.SpigradleRepresenter
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.CopySpec
@@ -31,7 +30,7 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
     def createPluginYaml() {
         def file = new File(temporaryDir, 'plugin.yml')
         file.newWriter(encoding).withCloseable {
-            writePluginYaml(it)
+            yaml.dump(createMap(), it)
         }
         (getJarTasks() + getFlattenIncludeTasks()).each {
             it.from file
@@ -59,16 +58,14 @@ class SpigotPluginYamlCreateTask extends DefaultTask {
         include(copySpec, !whether)
     }
 
-    def writePluginYaml(Writer writer) {
-        def inspected = new ByteInspector(project).doInspect()
-        yaml.dump(createMap(inspected), writer)
-    }
-
-    def createMap(InspectorContext inspected) {
+    def createMap() {
         attributes.with {
-            main = main ?: inspected.mainClass
             name = name ?: project.name
             version = version ?: project.version
+        }
+        if (attributes.main == null) {
+            def inspected = new ByteInspector(project).doInspect()
+            attributes.main = inspected.mainClass
         }
         def yamlMap = Mapper.mapping(attributes, true) as Map<String, Object>
         validateYamlMap(yamlMap)
