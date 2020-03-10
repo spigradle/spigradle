@@ -11,8 +11,8 @@ bintray {
     publish = true
     pkg {
         repo = 'Spigradle'
-        name = 'spigradle'
-        desc = 'Gradle plugin for developing Spigot plugin.'
+        name = project.name
+        desc = project.description
         websiteUrl = 'https://github.com/EntryPointKR/Spigradle'
         githubRepo = 'https://github.com/EntryPointKR/Spigradle'
         issueTrackerUrl = 'https://github.com/EntryPointKR/Spigradle/issues'
