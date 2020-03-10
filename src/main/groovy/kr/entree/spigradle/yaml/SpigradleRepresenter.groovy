@@ -1,4 +1,4 @@
-package kr.entree.spigradle.util.yaml
+package kr.entree.spigradle.yaml
 
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.nodes.Node

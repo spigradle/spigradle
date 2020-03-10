@@ -1,5 +1,7 @@
-package kr.entree.spigradle.util.inspector
+package kr.entree.spigradle.asm.visitor
 
+import kr.entree.spigradle.asm.ByteInspector
+import kr.entree.spigradle.asm.InspectorContext
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
@@ -35,6 +37,7 @@ class ClassInspector extends ClassVisitor {
     AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
         if (!lastClassName.isEmpty() && descriptor == ByteInspector.PLUGIN_ANNOTATION_NAME) {
             context.mainClass = lastClassName
+            context.pluginsAnnotationFound = true
         }
         return null
     }

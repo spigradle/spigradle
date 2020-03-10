@@ -2,10 +2,10 @@ package kr.entree.spigradle.task
 
 import kr.entree.spigradle.extension.PluginAttributes
 import kr.entree.spigradle.util.Version
-import kr.entree.spigradle.util.inspector.ByteInspector
-import kr.entree.spigradle.util.inspector.InspectorContext
-import kr.entree.spigradle.util.mapper.Mapper
-import kr.entree.spigradle.util.yaml.SpigradleRepresenter
+import kr.entree.spigradle.asm.ByteInspector
+import kr.entree.spigradle.asm.InspectorContext
+import kr.entree.spigradle.mapper.Mapper
+import kr.entree.spigradle.yaml.SpigradleRepresenter
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.CopySpec
 import org.gradle.api.tasks.Input

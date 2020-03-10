@@ -3,9 +3,9 @@ package kr.entree.spigradle.extension
 import kr.entree.spigradle.annotation.RenameTo
 import kr.entree.spigradle.util.Enums
 import kr.entree.spigradle.util.Version
-import kr.entree.spigradle.util.attribute.Command
-import kr.entree.spigradle.util.attribute.Load
-import kr.entree.spigradle.util.attribute.Permission
+import kr.entree.spigradle.attribute.Command
+import kr.entree.spigradle.attribute.Load
+import kr.entree.spigradle.attribute.Permission
 import org.gradle.api.NamedDomainObjectContainer
 
 /**
