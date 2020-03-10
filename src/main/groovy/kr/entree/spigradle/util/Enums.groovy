@@ -1,7 +1,6 @@
 package kr.entree.spigradle.util
 
-
-import kr.entree.spigradle.util.mapper.ActualNames
+import kr.entree.spigradle.mapper.ActualNames
 
 /**
  * Created by JunHyung Lim on 2020-02-09

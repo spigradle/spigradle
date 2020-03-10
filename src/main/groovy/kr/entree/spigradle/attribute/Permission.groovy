@@ -1,4 +1,4 @@
-package kr.entree.spigradle.util.attribute
+package kr.entree.spigradle.attribute
 
 import kr.entree.spigradle.annotation.MappingObject
 import kr.entree.spigradle.annotation.RenameTo
@@ -7,16 +7,14 @@ import kr.entree.spigradle.annotation.RenameTo
  * Created by JunHyung Lim on 2019-12-13
  */
 @MappingObject
-class Command {
+class Permission {
     final transient String name
     String description
-    String usage
-    String permission
-    @RenameTo('permission-message')
-    String permissionMessage
-    List<String> aliases = new ArrayList<>()
+    @RenameTo('default')
+    String defaults
+    Map<String, Boolean> children = new HashMap<>()
 
-    Command(String name) {
+    Permission(String name) {
         this.name = name
     }
 }

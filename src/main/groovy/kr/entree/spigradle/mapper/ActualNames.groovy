@@ -1,4 +1,4 @@
-package kr.entree.spigradle.util.mapper
+package kr.entree.spigradle.mapper
 
 import kr.entree.spigradle.annotation.RenameTo
 
