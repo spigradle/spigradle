@@ -19,7 +19,7 @@ import static org.objectweb.asm.ClassWriter.COMPUTE_FRAMES
  */
 class ByteInspector {
     public static final def SPIGOT_PLUGIN_NAME = 'org/bukkit/plugin/java/JavaPlugin'
-    public static final def PLUGIN_ANNOTATION_NAME = 'Lkr/entree/spigradle/annotation/Plugin;'
+    public static final def PLUGIN_ANNOTATION_NAME = 'Lkr/entree/spigradle/Plugin;'
     final Collection<File> directories
 
     ByteInspector(directories) {
