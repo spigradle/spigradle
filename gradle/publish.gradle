@@ -29,12 +29,12 @@ bintray {
 pluginBundle {
     website = 'https://github.com/EntryPointKR/Spigradle'
     vcsUrl = VCS_URL
-    tags = ['spigot', 'minecraft']
+    tags = ['minecraft', 'paper', 'spigot', 'bukkit']
     plugins {
         spigradle {
             id = 'kr.entree.spigradle'
             displayName = 'Spigradle'
-            description = 'Gradle plugin for developing Spigot plugin.'
+            description = project.description
         }
     }
 }

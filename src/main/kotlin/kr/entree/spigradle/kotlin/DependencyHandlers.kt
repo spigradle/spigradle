@@ -1,4 +1,4 @@
-package kr.entree.spigradle.kotlin.dependency
+package kr.entree.spigradle.kotlin
 
 import kr.entree.spigradle.SpigradleMeta
 import kr.entree.spigradle.project.Dependencies.*
