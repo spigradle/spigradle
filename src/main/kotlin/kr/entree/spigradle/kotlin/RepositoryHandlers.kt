@@ -1,4 +1,4 @@
-package kr.entree.spigradle.kotlin.repository
+package kr.entree.spigradle.kotlin
 
 import kr.entree.spigradle.project.Repositories
 import org.gradle.api.artifacts.dsl.RepositoryHandler
