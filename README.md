@@ -194,7 +194,7 @@ Spigradle can smartly generate a plugin.yml.
 
 In plugin.yml properties, spigradle will set:
 
-- main: Spigradle will find a main class that extends JavaPlugin (or presented by @Plugin annotation)
+- main: Spigradle will find a main class that extends JavaPlugin (or presented by @Plugin annotation) in your project.
 - name: project.name in gradle.
 - version: project.version in gradle.
 
@@ -262,7 +262,7 @@ Also, we can manually set these properties in spigot {} block.
 
 | Name         | Description                                   |
 |--------------|-----------------------------------------------|
-| attributes   | Attributes, plugin.yml                        |
-| encoding     | Encoding, plugin.yml                          |
+| attributes   | Attributes for plugin.yml                     |
+| encoding     | Encoding for plugin.yml                       |
 | yaml         | For customizing yaml style                    |
 | includeTasks | Where plugin.yml should be included, excluded |
