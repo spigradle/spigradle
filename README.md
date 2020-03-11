@@ -200,7 +200,7 @@ In plugin.yml properties, spigradle will set:
 
 So if you create a simple plugin that just uses main, name, version in plugin.yml, then just apply the Spigradle without configuring and you're all set.
 
-Also, we can manually set these properties in spigot {} block.
+Also, we can manually set these properties in [spigot {} block](https://github.com/EntryPointKR/Spigradle#spigot).
 
 ## Repositories
 
