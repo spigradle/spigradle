@@ -30,8 +30,8 @@ abstract class PluginAttributes {
     List<String> loadBefore = new ArrayList<>()
     final NamedDomainObjectContainer<Command> commands
     final NamedDomainObjectContainer<Permission> permissions
-    static Load POST_WORLD = Load.POST_WORLD
-    static Load STARTUP = Load.STARTUP
+    public static final Load POST_WORLD = Load.POST_WORLD
+    public static final Load STARTUP = Load.STARTUP
 
     PluginAttributes(NamedDomainObjectContainer<Command> commands, NamedDomainObjectContainer<Permission> permissions) {
         this.commands = commands
