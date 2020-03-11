@@ -198,7 +198,7 @@ In plugin.yml properties, spigradle will set:
 - name: project.name in gradle.
 - version: project.version in gradle.
 
-So if you create a simple plugin that just using main, name, version in plugin.yml then just apply the Spigradle without configuring, you all set.
+So if you create a simple plugin that just uses main, name, version in plugin.yml, then just apply the Spigradle without configuring and you're all set.
 
 Also, we can manually set these properties in spigot {} block.
 
