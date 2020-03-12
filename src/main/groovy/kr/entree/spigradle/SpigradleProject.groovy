@@ -8,6 +8,7 @@ import kr.entree.spigradle.task.SpigotPluginYamlCreateTask
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.api.tasks.compile.AbstractCompile
 import org.gradle.util.GradleVersion
@@ -84,8 +85,10 @@ class SpigradleProject {
                 'lombok'         : LOMBOK,
                 'spigradle'      : SPIGRADLE
         ])
-        project.dependencies {
-            compileOnly spigradle()
+        project.afterEvaluate {
+            project.dependencies.with {
+                add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, SPIGRADLE.format())
+            }
         }
     }
 
