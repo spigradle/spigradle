@@ -69,6 +69,7 @@ class SpigradleProject {
                 // Bukkit
                 'spigot'         : SPIGOT,
                 'spigotAll'      : SPIGOT_ALL,
+                'bungeecord'     : BUNGEECORD,
                 'minecraftServer': MINECRAFT_SERVER,
                 'paper'          : PAPER,
                 'bukkit'         : BUKKIT,

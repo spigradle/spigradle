@@ -18,15 +18,20 @@ class Dependencies {
     public static final Dependency SPIGOT = dependency(
             'org.spigotmc',
             'spigot-api',
-            '1.14.4-R0.1-SNAPSHOT',
+            '1.15.2-R0.1-SNAPSHOT',
             SPIGOT_VERSION_ADJUSTER
     )
     public static final Dependency SPIGOT_ALL = dependency(SPIGOT) {
         artifactId = 'spigot'
     }
+    public static final Dependency BUNGEECORD = dependency(
+            'net.md-5',
+            'bungeecord-api',
+            '1.15-SNAPSHOT'
+    )
     public static final Dependency MINECRAFT_SERVER = dependency(SPIGOT) {
         artifactId = 'minecraft-server'
-        defaultVersion = '1.14.4-SNAPSHOT'
+        defaultVersion = '1.15.2-SNAPSHOT'
     }
     public static final Dependency PAPER = dependency(SPIGOT) {
         groupId = 'com.destroystokyo.paper'
@@ -84,7 +89,7 @@ class Dependencies {
             '1.18.12'
     )
     public static final Dependency[] values = [
-            SPIGOT, SPIGOT_ALL, MINECRAFT_SERVER, PAPER, BUKKIT,
+            SPIGOT, SPIGOT_ALL, BUNGEECORD, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,
             WORLD_GUARD, COMMAND_HELPER, BSTATS, BSTATS_LITE, LOMBOK
     ]
