@@ -56,8 +56,8 @@ class Dependencies {
             '1.7'
     )
     public static final Dependency LUCK_PERMS = dependency(
-            'me.lucko.luckperms',
-            'luckperms-api',
+            'net.luckperms',
+            'api',
             '5.0'
     )
     public static final Dependency WORLD_EDIT = dependency(
