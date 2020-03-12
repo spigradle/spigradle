@@ -136,6 +136,7 @@ spigot {
 <p>
 
 ```kotlin
+import kr.entree.spigradle.attribute.*
 import kr.entree.spigradle.kotlin.*
 
 plugins {
