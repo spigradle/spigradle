@@ -10,7 +10,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.1.5'
+    id 'kr.entree.spigradle' version '1.2.0'
 }
 ```
 
@@ -19,7 +19,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version "1.1.5"
+    id("kr.entree.spigradle") version "1.2.0"
 }
 ```
 
@@ -33,7 +33,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.1.5'
+        classpath 'kr.entree:spigradle:1.2.0'
     }
 }
 
@@ -49,7 +49,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.1.5")
+        classpath("kr.entree:spigradle:1.2.0")
     }
 }
 
@@ -79,7 +79,7 @@ gradlew wrapper --gradle-version 6.2.2 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.1.5'
+    id 'kr.entree.spigradle' version '1.2.0'
 }
 
 group 'org.example'
@@ -140,7 +140,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.70"
-    id("kr.entree.spigradle") version "1.1.5"
+    id("kr.entree.spigradle") version "1.2.0"
 }
 
 group = "org.example"
@@ -194,7 +194,7 @@ Spigradle can smartly generate a plugin.yml.
 
 In plugin.yml properties, spigradle will set:
 
-- main: Spigradle will find a main class that extends JavaPlugin (or presented by @Plugin annotation) in your project.
+- main: Spigradle will find a main class that extends JavaPlugin (or presented by @kr.entree.spigradle.Plugin annotation) in your project.
 - name: project.name in gradle.
 - version: project.version in gradle.
 
