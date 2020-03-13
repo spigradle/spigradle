@@ -10,7 +10,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.2.0'
+    id 'kr.entree.spigradle' version '1.2.1'
 }
 ```
 
@@ -19,7 +19,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version "1.2.0"
+    id("kr.entree.spigradle") version "1.2.1"
 }
 ```
 
@@ -33,7 +33,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.2.0'
+        classpath 'kr.entree:spigradle:1.2.1'
     }
 }
 
@@ -49,7 +49,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.2.0")
+        classpath("kr.entree:spigradle:1.2.1")
     }
 }
 
@@ -79,7 +79,7 @@ gradlew wrapper --gradle-version 6.2.2 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.2.0'
+    id 'kr.entree.spigradle' version '1.2.1'
 }
 
 group 'org.example'
@@ -141,7 +141,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.70"
-    id("kr.entree.spigradle") version "1.2.0"
+    id("kr.entree.spigradle") version "1.2.1"
 }
 
 group = "org.example"
@@ -219,12 +219,13 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 
 |  Name             |  Signature                                      | Default version          |
 |-------------------|-------------------------------------------------|--------------------------|
-| spigot(version)   | org.spigotmc:spigot-api:$version                | 1.14.4-R0.1-SNAPSHOT     |
-| spigotAll()       | org.spigotmc:spigot:$version                    | 1.14.4-R0.1-SNAPSHOT     |
-| minecraftServer() | org.spigotmc:minecraft-server:$version          | 1.14.4-SNAPSHOT          |
-| paper()           | com.destroystokyo.paper:paper-api:$version      | 1.14.4-R0.1-SNAPSHOT     |
-| bukkit()          | org.bukkit:bukkit:$version                      | 1.14.4-R0.1-SNAPSHOT     |
-| craftbukkit()     | org.bukkit:craftbukkit:$version                 | 1.14.4-R0.1-SNAPSHOT     |
+| spigot(version)   | org.spigotmc:spigot-api:$version                | 1.15.2-R0.1-SNAPSHOT     |
+| spigotAll()       | org.spigotmc:spigot:$version                    | 1.15.2-R0.1-SNAPSHOT     |
+| bungeecord()      | net.md-5:bungeecord-api:$version                | 1.15-SNAPSHOT
+| minecraftServer() | org.spigotmc:minecraft-server:$version          | 1.15.2-SNAPSHOT          |
+| paper()           | com.destroystokyo.paper:paper-api:$version      | 1.15.2-R0.1-SNAPSHOT     |
+| bukkit()          | org.bukkit:bukkit:$version                      | 1.15.2-R0.1-SNAPSHOT     |
+| craftbukkit()     | org.bukkit:craftbukkit:$version                 | 1.15.2-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version               | 1.18.12                  |
 | spigradle()       | kr.entree:spigradle:$version                    | What version you applied |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version     | 4.4.0                    |
@@ -248,7 +249,7 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 | description |                                                |
 | website     |                                                |
 | authors     |                                                |
-| apiVersion  | "1.13" or "1.14" or "1.15" or ...              |
+| apiVersion  | 1.13 or 1.14 or 1.15...                        |
 | load        | Load.POSTWORLD or Load.STARTUP                 |
 | prefix      |                                                |
 | depends     |                                                |
