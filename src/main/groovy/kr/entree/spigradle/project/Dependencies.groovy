@@ -2,18 +2,12 @@ package kr.entree.spigradle.project
 
 import kr.entree.spigradle.SpigradleMeta
 
-import static kr.entree.spigradle.project.Dependency.SPIGOT_VERSION_ADJUSTER
-import static kr.entree.spigradle.project.Dependency.dependency
+import static kr.entree.spigradle.project.Dependency.*
 
 /**
  * Created by JunHyung Lim on 2020-02-29
  */
 class Dependencies {
-    public static final Dependency SPIGRADLE = dependency(
-            'kr.entree',
-            'spigradle',
-            SpigradleMeta.VERSION
-    )
     // Bukkit
     public static final Dependency SPIGOT = dependency(
             'org.spigotmc',
@@ -27,11 +21,13 @@ class Dependencies {
     public static final Dependency BUNGEECORD = dependency(
             'net.md-5',
             'bungeecord-api',
-            '1.15-SNAPSHOT'
+            '1.15-SNAPSHOT',
+            SNAPSHOT_APPENDER
     )
     public static final Dependency MINECRAFT_SERVER = dependency(SPIGOT) {
         artifactId = 'minecraft-server'
         defaultVersion = '1.15.2-SNAPSHOT'
+        versionAdjuster = SNAPSHOT_APPENDER
     }
     public static final Dependency PAPER = dependency(SPIGOT) {
         groupId = 'com.destroystokyo.paper'
@@ -88,6 +84,12 @@ class Dependencies {
             'lombok',
             '1.18.12'
     )
+    public static final Dependency SPIGRADLE = dependency(
+            'kr.entree',
+            'spigradle',
+            SpigradleMeta.VERSION
+    )
+
     public static final Dependency[] values = [
             SPIGOT, SPIGOT_ALL, BUNGEECORD, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,

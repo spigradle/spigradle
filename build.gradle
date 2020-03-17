@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'kr.entree'
-version '1.2.1'
+version '1.2.2'
 description = 'Gradle plugin for developing Spigot plugin.'
 
 ['publish', 'generateMeta'].each {

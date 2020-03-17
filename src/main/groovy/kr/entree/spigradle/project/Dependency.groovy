@@ -1,7 +1,4 @@
 package kr.entree.spigradle.project
-
-import org.jetbrains.annotations.Nullable
-
 /**
  * Created by JunHyung Lim on 2020-02-29
  */
@@ -10,7 +7,8 @@ class Dependency {
     String artifactId
     String defaultVersion
     Closure<String> versionAdjuster
-    public static final Closure<String> SPIGOT_VERSION_ADJUSTER = { String version -> adjustSpigotVersion(version) }
+    public static final Closure<String> SPIGOT_VERSION_ADJUSTER = createVersionAdjuster('R0.1', 'SNAPSHOT')
+    public static final Closure<String> SNAPSHOT_APPENDER = createVersionAdjuster('SNAPSHOT')
     public static final Closure<String> IDENTITY_ADJUSTER = { String version -> version }
 
     Dependency(String groupId, String artifactId, String defaultVersion, Closure<String> versionAdjuster) {
@@ -46,20 +44,18 @@ class Dependency {
         return { String version -> format(version) }
     }
 
-    @Nullable
-    static String adjustSpigotVersion(String string) {
-        if (string == null || string.isBlank()) return null
-        def pieces = string.split('-')
-        def builder = new StringBuilder()
-        builder.with {
-            append(string)
-            if (pieces.length <= 1) {
-                append('-').append("R0.1")
+    static Closure<String> createVersionAdjuster(String... tags) {
+        return { String input ->
+            if (input == null || input.isBlank()) return null
+            def pieces = input.split('-', -1)
+            def builder = new StringBuilder()
+            builder.with {
+                append(input)
+                for (int i = pieces.size() - 1; i < tags.size(); i++) {
+                    append('-').append(tags[i])
+                }
             }
-            if (pieces.length <= 2) {
-                append('-').append("SNAPSHOT")
-            }
+            return builder.toString()
         }
-        return builder.toString()
     }
 }
