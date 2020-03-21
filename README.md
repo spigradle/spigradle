@@ -268,3 +268,9 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 | encoding     | Encoding for plugin.yml                       |
 | yaml         | For customizing yaml style                    |
 | includeTasks | Where plugin.yml should be included, excluded |
+
+## Suppoters
+
+<a href="https://www.jetbrains.com/?from=Spigradle"> 
+    <img src="assets/jetbrains.svg" alt="JetBrains OS License"/>
+</a>
