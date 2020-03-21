@@ -2,6 +2,19 @@
 
 Gradle plugin for developing Spigot plugin.
 
+## Table of contents
+
+- [Apply plugin](#apply-plugin)
+- [Requirements](#requirements)
+- [Full Example](#full-example)
+- [Repositories](#repositories)
+- [Dependencies](#dependencies)
+- [Extensions](#extensions)
+  - [spigot](#spigot)
+- [Tasks](#tasks)
+  - [spigotPluginYaml](#spigotpluginyaml)
+- [Supporters](#suppoters)
+
 ## Apply plugin
 
 There is two ways for apply the plugin.
