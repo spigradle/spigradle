@@ -66,16 +66,17 @@ class Dependencies {
             'worldguard-bukkit',
             '7.0.2'
     )
-    public static final Dependency ESSENTIALS_X = dependency(
-            'net.ess3',
-            'EssentialsX',
-            '2.17.2'
-    )
     public static final Dependency COMMAND_HELPER = dependency(
             'com.sk89q',
             'commandhelper',
             '3.3.4-SNAPSHOT'
     )
+    public static final Dependency ESSENTIALS_X = dependency(
+            'net.ess3',
+            'EssentialsX',
+            '2.17.2'
+    )
+    // Libraries
     public static final Dependency BSTATS = dependency(
             'org.bstats',
             'bstats-bukkit',
@@ -98,6 +99,6 @@ class Dependencies {
     public static final Dependency[] values = [
             SPIGOT, SPIGOT_ALL, BUNGEECORD, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,
-            WORLD_GUARD, ESSENTIALS_X, COMMAND_HELPER, BSTATS, BSTATS_LITE, LOMBOK
+            WORLD_GUARD, COMMAND_HELPER, ESSENTIALS_X, BSTATS, BSTATS_LITE, LOMBOK
     ]
 }
