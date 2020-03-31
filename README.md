@@ -77,10 +77,10 @@ apply(plugin = "kr.entree.spigradle")
 
 IntelliJ's default gradle wrapper already 5.2.1.
 
-If you want fully IDE support in DSL, just go to 6.0+ (currently latest 6.2.2)
+If you want fully IDE support in DSL, just go to 6.0+ (currently latest 6.3)
 
 ```
-gradlew wrapper --gradle-version 6.2.2 --distribution-type all
+gradlew wrapper --gradle-version 6.3 --distribution-type all
 ```
 
 ## Full Example
@@ -107,7 +107,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly paper('1.15.1') // Or spigot()
+    compileOnly paper('1.15.2') // Or spigot()
     compileOnly protocolLib()
     compileOnly vault()
     testImplementation 'junit:junit:4.12'
@@ -167,7 +167,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly(paper("1.15.1")) // Or spigot()
+    compileOnly(paper("1.15.2")) // Or spigot()
     compileOnly(protocolLib())
     compileOnly(vault())
     testImplementation("junit:junit:4.12")
@@ -218,15 +218,16 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 
 ## Repositories
 
-|  Name         |  URL                                                           | Relations                               | Aliases  |
-|---------------|----------------------------------------------------------------|-----------------------------------------|----------|
-| spigot()      | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         |          |
-| bungeecord()  | https://oss.sonatype.org/content/repositories/snapshots/       |                                         |          |
-| paper()       | https://papermc.io/repo/repository/maven-public/               |                                         |          |
-| jitpack()     | https://jitpack.io                                             | Vault                                   | vault()  |
-| protocolLib() | https://repo.dmulloy2.net/nexus/repository/public/             |                                         |          |
-| enginehub()   | https://maven.enginehub.org/repo/                              | worldguard, worldedit, commandhelper... |          |
-| codemc()      | https://repo.codemc.org/repository/maven-public/               | BStats                                  | bStats() |
+|  Name         |  URL                                                           | Relations                               | Aliases       |
+|---------------|----------------------------------------------------------------|-----------------------------------------|---------------|
+| spigot()      | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         |               |
+| bungeecord()  | https://oss.sonatype.org/content/repositories/snapshots/       |                                         |               |
+| paper()       | https://papermc.io/repo/repository/maven-public/               |                                         |               |
+| jitpack()     | https://jitpack.io                                             | Vault                                   | vault()       |
+| protocolLib() | https://repo.dmulloy2.net/nexus/repository/public/             |                                         |               |
+| enginehub()   | https://maven.enginehub.org/repo/                              | worldguard, worldedit, commandhelper... |               |
+| codemc()      | https://repo.codemc.org/repository/maven-public/               | BStats                                  | bStats()      |
+| enderZone()   | https://ci.ender.zone/plugin/repository/everything/            | EssentialsX                             | essentialsX() |
 
 ## Dependencies
 
@@ -234,7 +235,7 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 |-------------------|-------------------------------------------------|--------------------------|
 | spigot(version)   | org.spigotmc:spigot-api:$version                | 1.15.2-R0.1-SNAPSHOT     |
 | spigotAll()       | org.spigotmc:spigot:$version                    | 1.15.2-R0.1-SNAPSHOT     |
-| bungeecord()      | net.md-5:bungeecord-api:$version                | 1.15-SNAPSHOT
+| bungeecord()      | net.md-5:bungeecord-api:$version                | 1.15-SNAPSHOT            |
 | minecraftServer() | org.spigotmc:minecraft-server:$version          | 1.15.2-SNAPSHOT          |
 | paper()           | com.destroystokyo.paper:paper-api:$version      | 1.15.2-R0.1-SNAPSHOT     |
 | bukkit()          | org.bukkit:bukkit:$version                      | 1.15.2-R0.1-SNAPSHOT     |
@@ -246,6 +247,7 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 | luckPerms()       | me.lucko.luckperms:luckperms-api:$version       | 5.0                      |
 | worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version   | 7.1.0                    |
 | worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version | 7.0.2                    |
+| essentialsX()     | net.ess3:EssentialsX:$version                   | 2.17.2                   |
 | commandhelper()   | com.sk89q:commandhelper:$version                | 3.3.4-SNAPSHOT           |
 | bStats()          | org.bstats:bstats-bukkit:$version               | 1.7                      |
 | bStatsLite()      | org.bstats:bstats-bukkit-lite:$version          | 1.7                      |
