@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "kr.entree"
-version = "1.2.2"
+version = "1.2.3"
 description = "Gradle plugin for developing Spigot plugin."
 
 arrayOf("publish", "generateMeta").forEach {

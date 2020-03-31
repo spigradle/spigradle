@@ -23,7 +23,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.2.2'
+    id 'kr.entree.spigradle' version '1.2.3'
 }
 ```
 
@@ -32,7 +32,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version "1.2.2"
+    id("kr.entree.spigradle") version "1.2.3"
 }
 ```
 
@@ -46,7 +46,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.2.2'
+        classpath 'kr.entree:spigradle:1.2.3'
     }
 }
 
@@ -62,7 +62,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.2.2")
+        classpath("kr.entree:spigradle:1.2.3")
     }
 }
 
@@ -92,7 +92,7 @@ gradlew wrapper --gradle-version 6.3 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.2.2'
+    id 'kr.entree.spigradle' version '1.2.3'
 }
 
 group 'org.example'
@@ -154,7 +154,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.70"
-    id("kr.entree.spigradle") version "1.2.2"
+    id("kr.entree.spigradle") version "1.2.3"
 }
 
 group = "org.example"
@@ -247,8 +247,8 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 | luckPerms()       | me.lucko.luckperms:luckperms-api:$version       | 5.0                      |
 | worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version   | 7.1.0                    |
 | worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version | 7.0.2                    |
-| essentialsX()     | net.ess3:EssentialsX:$version                   | 2.17.2                   |
 | commandhelper()   | com.sk89q:commandhelper:$version                | 3.3.4-SNAPSHOT           |
+| essentialsX()     | net.ess3:EssentialsX:$version                   | 2.17.2                   |
 | bStats()          | org.bstats:bstats-bukkit:$version               | 1.7                      |
 | bStatsLite()      | org.bstats:bstats-bukkit-lite:$version          | 1.7                      |
 
