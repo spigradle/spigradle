@@ -33,4 +33,6 @@ fun RepositoryHandler.codemc(configure: MavenArtifactRepository.() -> Unit = {})
 
 fun RepositoryHandler.enderZone(configure: MavenArtifactRepository.() -> Unit = {}) = maven(Repositories.ENDER_ZONE, configure)
 
+fun RepositoryHandler.essentialsX(configure: MavenArtifactRepository.() -> Unit = {}) = enderZone(configure)
+
 fun RepositoryHandler.bStats(configure: MavenArtifactRepository.() -> Unit = {}) = codemc(configure)
