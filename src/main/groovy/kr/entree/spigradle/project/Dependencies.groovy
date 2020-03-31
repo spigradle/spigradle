@@ -69,7 +69,7 @@ class Dependencies {
     public static final Dependency ESSENTIALS_X = dependency(
             'net.ess3',
             'EssentialsX',
-            '2.17.0'
+            '2.17.2'
     )
     public static final Dependency COMMAND_HELPER = dependency(
             'com.sk89q',
