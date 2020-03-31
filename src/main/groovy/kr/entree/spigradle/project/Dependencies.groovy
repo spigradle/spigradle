@@ -44,7 +44,7 @@ class Dependencies {
     public static final Dependency PROTOCOL_LIB = dependency(
             'com.comphenix.protocol',
             'ProtocolLib',
-            '4.4.0'
+            '4.5.0'
     )
     public static final Dependency VAULT = dependency(
             'com.github.MilkBowl',
@@ -65,6 +65,11 @@ class Dependencies {
             'com.sk89q.worldguard',
             'worldguard-bukkit',
             '7.0.2'
+    )
+    public static final Dependency ESSENTIALS_X = dependency(
+            'net.ess3',
+            'EssentialsX',
+            '2.17.0'
     )
     public static final Dependency COMMAND_HELPER = dependency(
             'com.sk89q',
@@ -93,6 +98,6 @@ class Dependencies {
     public static final Dependency[] values = [
             SPIGOT, SPIGOT_ALL, BUNGEECORD, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,
-            WORLD_GUARD, COMMAND_HELPER, BSTATS, BSTATS_LITE, LOMBOK
+            WORLD_GUARD, ESSENTIALS_X, COMMAND_HELPER, BSTATS, BSTATS_LITE, LOMBOK
     ]
 }
