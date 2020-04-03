@@ -35,4 +35,8 @@ fun RepositoryHandler.enderZone(configure: MavenArtifactRepository.() -> Unit = 
 
 fun RepositoryHandler.essentialsX(configure: MavenArtifactRepository.() -> Unit = {}) = enderZone(configure)
 
+fun RepositoryHandler.frostcast(configure: MavenArtifactRepository.() -> Unit = {}) = maven(Repositories.FROSTCAST, configure)
+
+fun RepositoryHandler.banManager(configure: MavenArtifactRepository.() -> Unit = {}) = frostcast(configure)
+
 fun RepositoryHandler.bStats(configure: MavenArtifactRepository.() -> Unit = {}) = codemc(configure)
