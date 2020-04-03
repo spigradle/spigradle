@@ -12,4 +12,5 @@ class Repositories {
     public static final String ENGINEHUB = 'https://maven.enginehub.org/repo/'
     public static final String CODE_MC = 'https://repo.codemc.org/repository/maven-public/'
     public static final String ENDER_ZONE = 'https://ci.ender.zone/plugin/repository/everything/'
+    public static final String FROSTCAST = 'https://ci.frostcast.net/plugin/repository/everything'
 }
