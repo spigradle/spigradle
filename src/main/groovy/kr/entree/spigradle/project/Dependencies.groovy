@@ -71,6 +71,11 @@ class Dependencies {
             'EssentialsX',
             '2.17.2'
     )
+    public static final Dependency BAN_MANAGER = dependency(
+            'me.confuser.banmanager',
+            'BanManagerBukkit',
+            '7.1.0-SNAPSHOT'
+    )
     public static final Dependency COMMAND_HELPER = dependency(
             'com.sk89q',
             'commandhelper',
