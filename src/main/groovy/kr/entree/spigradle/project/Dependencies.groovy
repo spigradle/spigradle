@@ -81,6 +81,7 @@ class Dependencies {
             'commandhelper',
             '3.3.4-SNAPSHOT'
     )
+    // Libraries
     public static final Dependency BSTATS = dependency(
             'org.bstats',
             'bstats-bukkit',
@@ -103,6 +104,6 @@ class Dependencies {
     public static final Dependency[] values = [
             SPIGOT, SPIGOT_ALL, BUNGEECORD, MINECRAFT_SERVER, PAPER, BUKKIT,
             CRAFT_BUKKIT, PROTOCOL_LIB, VAULT, LUCK_PERMS, WORLD_EDIT,
-            WORLD_GUARD, ESSENTIALS_X, COMMAND_HELPER, BSTATS, BSTATS_LITE, LOMBOK
+            WORLD_GUARD, COMMAND_HELPER, ESSENTIALS_X, BSTATS, BSTATS_LITE, LOMBOK
     ]
 }
