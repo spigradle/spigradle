@@ -54,7 +54,9 @@ class SpigradleProject {
                 'vault'      : Repositories.JITPACK,
                 'enginehub'  : Repositories.ENGINEHUB,
                 'codemc'     : Repositories.CODE_MC,
-                'bStats'     : Repositories.CODE_MC
+                'bStats'     : Repositories.CODE_MC,
+                'enderZone'  : Repositories.ENDER_ZONE,
+                'essentialsX': Repositories.ENDER_ZONE
         ])
         project.repositories {
             spigot()
@@ -81,6 +83,8 @@ class SpigradleProject {
                 'worldedit'      : WORLD_EDIT,
                 'worldguard'     : WORLD_GUARD,
                 'commandhelper'  : COMMAND_HELPER,
+                'essentialsX'    : ESSENTIALS_X,
+                // Library
                 'bStats'         : BSTATS,
                 'bStatsLite'     : BSTATS_LITE,
                 'lombok'         : LOMBOK,
