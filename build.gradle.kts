@@ -4,12 +4,12 @@ plugins {
     id("groovy")
     id("org.jetbrains.kotlin.jvm") version "1.3.70"
     id("com.github.johnrengelman.shadow") version "5.2.0"
-    id("com.gradle.plugin-publish") version "0.10.1" apply false
+    id("com.gradle.plugin-publish") version "0.11.0" apply false
     id("com.jfrog.bintray") version "1.8.4" apply false
 }
 
 group = "kr.entree"
-version = "1.2.2"
+version = "1.2.3"
 description = "Gradle plugin for developing Spigot plugin."
 
 arrayOf("publish", "generateMeta").forEach {
