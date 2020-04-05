@@ -56,7 +56,9 @@ class SpigradleProject {
                 'codemc'     : Repositories.CODE_MC,
                 'bStats'     : Repositories.CODE_MC,
                 'enderZone'  : Repositories.ENDER_ZONE,
-                'essentialsX': Repositories.ENDER_ZONE
+                'essentialsX': Repositories.ENDER_ZONE,
+                'frostcast'  : Repositories.FROSTCAST,
+                'banManager' : Repositories.FROSTCAST
         ])
         project.repositories {
             spigot()
@@ -84,6 +86,7 @@ class SpigradleProject {
                 'worldguard'     : WORLD_GUARD,
                 'commandhelper'  : COMMAND_HELPER,
                 'essentialsX'    : ESSENTIALS_X,
+                'banManager'     : BAN_MANAGER,
                 // Library
                 'bStats'         : BSTATS,
                 'bStatsLite'     : BSTATS_LITE,
