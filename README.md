@@ -23,7 +23,7 @@ Recommend:
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.2.3'
+    id 'kr.entree.spigradle' version '1.2.4'
 }
 ```
 
@@ -32,7 +32,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version "1.2.3"
+    id("kr.entree.spigradle") version "1.2.4"
 }
 ```
 
@@ -46,7 +46,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.2.3'
+        classpath 'kr.entree:spigradle:1.2.4'
     }
 }
 
@@ -62,7 +62,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.2.3")
+        classpath("kr.entree:spigradle:1.2.4")
     }
 }
 
@@ -92,7 +92,7 @@ gradlew wrapper --gradle-version 6.3 --distribution-type all
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '1.2.3'
+    id 'kr.entree.spigradle' version '1.2.4'
 }
 
 group 'org.example'
@@ -154,7 +154,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.70"
-    id("kr.entree.spigradle") version "1.2.3"
+    id("kr.entree.spigradle") version "1.2.4"
 }
 
 group = "org.example"
