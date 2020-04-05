@@ -32,9 +32,11 @@ fun DependencyHandler.worldedit(version: String = WORLD_EDIT.defaultVersion) = W
 
 fun DependencyHandler.worldguard(version: String = WORLD_GUARD.defaultVersion) = WORLD_GUARD.format(version)
 
-fun DependencyHandler.commandhelper(version: String = COMMAND_HELPER.defaultVersion) = COMMAND_HELPER.format(version)
-
 fun DependencyHandler.essentialsX(version: String = ESSENTIALS_X.defaultVersion) = ESSENTIALS_X.format(version)
+
+fun DependencyHandler.banManager(version: String = BAN_MANAGER.defaultVersion) = BAN_MANAGER.format(version)
+
+fun DependencyHandler.commandhelper(version: String = COMMAND_HELPER.defaultVersion) = COMMAND_HELPER.format(version)
 
 fun DependencyHandler.bStats(version: String = BSTATS.defaultVersion) = BSTATS.format(version)
 

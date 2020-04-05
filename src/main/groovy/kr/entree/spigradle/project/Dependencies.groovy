@@ -66,15 +66,20 @@ class Dependencies {
             'worldguard-bukkit',
             '7.0.2'
     )
-    public static final Dependency COMMAND_HELPER = dependency(
-            'com.sk89q',
-            'commandhelper',
-            '3.3.4-SNAPSHOT'
-    )
     public static final Dependency ESSENTIALS_X = dependency(
             'net.ess3',
             'EssentialsX',
             '2.17.2'
+    )
+    public static final Dependency BAN_MANAGER = dependency(
+            'me.confuser.banmanager',
+            'BanManagerBukkit',
+            '7.1.0-SNAPSHOT'
+    )
+    public static final Dependency COMMAND_HELPER = dependency(
+            'com.sk89q',
+            'commandhelper',
+            '3.3.4-SNAPSHOT'
     )
     // Libraries
     public static final Dependency BSTATS = dependency(

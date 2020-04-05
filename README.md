@@ -228,29 +228,31 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 | enginehub()   | https://maven.enginehub.org/repo/                              | worldguard, worldedit, commandhelper... |               |
 | codemc()      | https://repo.codemc.org/repository/maven-public/               | BStats                                  | bStats()      |
 | enderZone()   | https://ci.ender.zone/plugin/repository/everything/            | EssentialsX                             | essentialsX() |
+| frostcast()   | https://ci.frostcast.net/plugin/repository/everything          | BanManager                              | banManager()  |
 
 ## Dependencies
 
-|  Name             |  Signature                                      | Default version          |
-|-------------------|-------------------------------------------------|--------------------------|
-| spigot(version)   | org.spigotmc:spigot-api:$version                | 1.15.2-R0.1-SNAPSHOT     |
-| spigotAll()       | org.spigotmc:spigot:$version                    | 1.15.2-R0.1-SNAPSHOT     |
-| bungeecord()      | net.md-5:bungeecord-api:$version                | 1.15-SNAPSHOT            |
-| minecraftServer() | org.spigotmc:minecraft-server:$version          | 1.15.2-SNAPSHOT          |
-| paper()           | com.destroystokyo.paper:paper-api:$version      | 1.15.2-R0.1-SNAPSHOT     |
-| bukkit()          | org.bukkit:bukkit:$version                      | 1.15.2-R0.1-SNAPSHOT     |
-| craftbukkit()     | org.bukkit:craftbukkit:$version                 | 1.15.2-R0.1-SNAPSHOT     |
-| lombok()          | org.projectlombok:lombok:$version               | 1.18.12                  |
-| spigradle()       | kr.entree:spigradle:$version                    | What version you applied |
-| protocolLib()     | com.comphenix.protocol:ProtocolLib:$version     | 4.4.0                    |
-| vault()           | com.github.MilkBowl:VaultAPI:$version           | 1.7                      |
-| luckPerms()       | me.lucko.luckperms:luckperms-api:$version       | 5.0                      |
-| worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version   | 7.1.0                    |
-| worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version | 7.0.2                    |
-| commandhelper()   | com.sk89q:commandhelper:$version                | 3.3.4-SNAPSHOT           |
-| essentialsX()     | net.ess3:EssentialsX:$version                   | 2.17.2                   |
-| bStats()          | org.bstats:bstats-bukkit:$version               | 1.7                      |
-| bStatsLite()      | org.bstats:bstats-bukkit-lite:$version          | 1.7                      |
+|  Name             |  Signature                                       | Default version          |
+|-------------------|--------------------------------------------------|--------------------------|
+| spigot(version)   | org.spigotmc:spigot-api:$version                 | 1.15.2-R0.1-SNAPSHOT     |
+| spigotAll()       | org.spigotmc:spigot:$version                     | 1.15.2-R0.1-SNAPSHOT     |
+| bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.15-SNAPSHOT            |
+| minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.15.2-SNAPSHOT          |
+| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.15.2-R0.1-SNAPSHOT     |
+| bukkit()          | org.bukkit:bukkit:$version                       | 1.15.2-R0.1-SNAPSHOT     |
+| craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.15.2-R0.1-SNAPSHOT     |
+| lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
+| spigradle()       | kr.entree:spigradle:$version                     | What version you applied |
+| protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.4.0                    |
+| vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
+| luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.0                      |
+| worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version    | 7.1.0                    |
+| worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.2                    |
+| essentialsX()     | net.ess3:EssentialsX:$version                    | 2.17.2                   |
+| banManager()      | me.confuser.banmanager:BanManagerBukkit:$version | 7.1.0-SNAPSHOT           |
+| commandhelper()   | com.sk89q:commandhelper:$version                 | 3.3.4-SNAPSHOT           |
+| bStats()          | org.bstats:bstats-bukkit:$version                | 1.7                      |
+| bStatsLite()      | org.bstats:bstats-bukkit-lite:$version           | 1.7                      |
 
 ## Extensions
 
