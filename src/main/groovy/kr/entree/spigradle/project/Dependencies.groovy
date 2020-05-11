@@ -54,7 +54,7 @@ class Dependencies {
     public static final Dependency LUCK_PERMS = dependency(
             'net.luckperms',
             'api',
-            '5.0'
+            '5.1'
     )
     public static final Dependency WORLD_EDIT = dependency(
             'com.sk89q.worldedit',
