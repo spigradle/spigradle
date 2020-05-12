@@ -1,6 +1,6 @@
 @file:OptIn(InternalSerializationApi::class)
 
-package kr.entree.spigradle.serialization
+package kr.entree.spigradle.util
 
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.MapSerializer

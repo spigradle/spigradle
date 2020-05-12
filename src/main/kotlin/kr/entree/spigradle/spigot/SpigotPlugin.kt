@@ -3,12 +3,13 @@
 package kr.entree.spigradle.spigot
 
 import kr.entree.spigradle.data.Dependencies
-import kr.entree.spigradle.data.all
-import kr.entree.spigradle.data.format
+import kr.entree.spigradle.data.Dependency
+import kr.entree.spigradle.spigot.data.SpigotDependencies
 import kr.entree.spigradle.spigot.extension.SpigotPluginDescriptor
 import kr.entree.spigradle.task.YamlGenerateTask
 import kr.entree.spigradle.util.create
 import kr.entree.spigradle.util.findByBoth
+import kr.entree.spigradle.util.toFieldEntries
 import kr.entree.spigradle.util.withType
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -18,11 +19,9 @@ import org.gradle.language.jvm.tasks.ProcessResources
 /**
  * Created by JunHyung Lim on 2020-04-28
  */
-class SpigotPlugin : Plugin<Project> {
-    companion object {
-        const val YAML_GEN_TASK_ID = "spigotPluginYaml"
-    }
+private const val YAML_GEN_TASK_ID = "spigotPluginYaml"
 
+class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generation, Main class auto detection
     override fun apply(project: Project) {
         with(project) {
             setupTasks()
@@ -52,13 +51,16 @@ class SpigotPlugin : Plugin<Project> {
         }
     }
 
-    private fun ExtraPropertiesExtension.setupDependencies() {
-        Dependencies.all.forEach { (name, dependency) ->
-            set(name, { input: String -> dependency.format(input) })
+    private fun Project.setupDependencies() {
+        val ext = dependencies.extensions.findByBoth<ExtraPropertiesExtension>("ext") ?: return
+        listOf(Dependencies, SpigotDependencies).flatMap {
+            it.toFieldEntries<Dependency>()
+        }.forEach { (name, dependency) ->
+            ext.set(name, { input: String -> dependency.format(input) })
         }
     }
 
-    private fun ExtraPropertiesExtension.setupRepositories() {
-        TODO()
+    private fun Project.setupRepositories() {
+
     }
 }
