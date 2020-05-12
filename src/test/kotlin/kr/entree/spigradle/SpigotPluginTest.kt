@@ -1,7 +1,7 @@
 package kr.entree.spigradle
 
 import kr.entree.spigradle.spigot.extension.SpigotPluginDescriptor
-import org.junit.Test
+import kotlin.test.Test
 
 /**
  * Created by JunHyung Lim on 2020-04-29

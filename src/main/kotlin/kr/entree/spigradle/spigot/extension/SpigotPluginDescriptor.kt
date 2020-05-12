@@ -3,11 +3,10 @@
 package kr.entree.spigradle.spigot.extension
 
 import com.charleskorn.kaml.Yaml
-import kotlinx.serialization.SerialInfo
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
-import kr.entree.spigradle.serialization.NamedDomainObjectContainerSerializer
+import kr.entree.spigradle.util.NamedDomainObjectContainerSerializer
 import kr.entree.spigradle.spigot.data.Command
 import kr.entree.spigradle.spigot.data.Load
 import kr.entree.spigradle.spigot.data.Permission

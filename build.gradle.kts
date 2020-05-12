@@ -21,7 +21,6 @@ arrayOf("publish", "generateMeta").forEach {
 }
 
 repositories {
-    ext
     mavenCentral()
     jcenter()
 }
@@ -34,6 +33,7 @@ fun ExternalModuleDependency.excludeStdlib() {
 }
 
 dependencies {
+    shadow(localGroovy())
     shadow(gradleApi())
     shadow(kotlin("stdlib-jdk8"))
     shadow("com.google.guava", "guava", "29.0-jre")
@@ -44,7 +44,10 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:0.17.0") {
         excludeStdlib()
     }
-    testImplementation("junit:junit:4.12")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
 }
 
 configurations {
@@ -71,6 +74,12 @@ tasks {
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        }
+    }
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events("passed", "skipped", "failed")
         }
     }
 }
