@@ -8,7 +8,7 @@ data class Dependency(
 ) {
     fun adjustVersion(inputVersion: String?) = inputVersion?.run(versionModifier) ?: version
 
-    fun format(inputVersion: String?): String {
+    fun format(inputVersion: String? = null): String {
         return "$group:$name:${adjustVersion(inputVersion)}"
     }
 }

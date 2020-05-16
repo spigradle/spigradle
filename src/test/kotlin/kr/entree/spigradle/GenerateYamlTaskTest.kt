@@ -3,7 +3,7 @@ package kr.entree.spigradle
 import kr.entree.spigradle.internal.create
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.spigot.data.Load
-import kr.entree.spigradle.module.spigot.extension.SpigotPluginAttributes
+import kr.entree.spigradle.module.spigot.extension.SpigotPluginDescription
 import org.gradle.testfixtures.ProjectBuilder
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -31,8 +31,7 @@ class GenerateYamlTaskTest {
 
     @Test
     fun serialization() {
-        val extension = project.extensions.create<SpigotPluginAttributes>("spigot").apply {
-            init(project)
+        val extension = project.extensions.create<SpigotPluginDescription>("spigot", project).apply {
             main = "kr.entree.spigradle.Main"
             name = "Spigradle"
             version = "1.1"
@@ -66,7 +65,7 @@ class GenerateYamlTaskTest {
             }
         }
         yamlTask.apply {
-            value = extension as SpigotPluginAttributes
+            value = extension as SpigotPluginDescription
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText()
