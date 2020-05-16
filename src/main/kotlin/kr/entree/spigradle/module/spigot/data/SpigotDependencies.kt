@@ -1,6 +1,6 @@
-package kr.entree.spigradle.spigot.data
+package kr.entree.spigradle.module.spigot.data
 
-import kotlinx.serialization.SerialName
+import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.data.Dependency
 import kr.entree.spigradle.data.VersionModifier
 

@@ -1,6 +1,6 @@
-package kr.entree.spigradle.dependency
+package kr.entree.spigradle.kotlin
 
-import kr.entree.spigradle.spigot.data.SpigotDependencies
+import kr.entree.spigradle.module.spigot.data.SpigotDependencies
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
 fun DependencyHandler.spigotmc(artifactId: String, version: String? = null) =
