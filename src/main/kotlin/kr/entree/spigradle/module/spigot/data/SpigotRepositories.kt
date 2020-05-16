@@ -1,4 +1,4 @@
-package kr.entree.spigradle.spigot.data
+package kr.entree.spigradle.module.spigot.data
 
 /**
  * Created by JunHyung Lim on 2020-05-07

@@ -1,6 +1,6 @@
-package kr.entree.spigradle.repository
+package kr.entree.spigradle.kotlin
 
-import kr.entree.spigradle.spigot.data.SpigotRepositories
+import kr.entree.spigradle.module.spigot.data.SpigotRepositories
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository
 

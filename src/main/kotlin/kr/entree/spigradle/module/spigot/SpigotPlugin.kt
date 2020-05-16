@@ -1,16 +1,16 @@
 @file:Suppress("UnstableApiUsage")
 
-package kr.entree.spigradle.spigot
+package kr.entree.spigradle.module.spigot
 
 import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
-import kr.entree.spigradle.spigot.data.SpigotDependencies
-import kr.entree.spigradle.spigot.extension.SpigotPluginDescriptor
-import kr.entree.spigradle.task.YamlGenerateTask
-import kr.entree.spigradle.util.create
-import kr.entree.spigradle.util.findByBoth
-import kr.entree.spigradle.util.toFieldEntries
-import kr.entree.spigradle.util.withType
+import kr.entree.spigradle.internal.create
+import kr.entree.spigradle.internal.findByBoth
+import kr.entree.spigradle.internal.toFieldEntries
+import kr.entree.spigradle.internal.withType
+import kr.entree.spigradle.module.common.task.GenerateYamlTask
+import kr.entree.spigradle.module.spigot.data.SpigotDependencies
+import kr.entree.spigradle.module.spigot.extension.SpigotPluginAttributes
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtraPropertiesExtension
@@ -30,17 +30,17 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
         }
     }
 
-    private fun Project.setupExtensions() {
-        val descriptor = extensions.create<SpigotPluginDescriptor>("spigot")
-        tasks.findByBoth<YamlGenerateTask>(YAML_GEN_TASK_ID) {
-            serializer = { it.stringify(SpigotPluginDescriptor.serializer(), descriptor) }
+    private fun Project.setupTasks() {
+        val generateSpigotYamlTask = tasks.create<GenerateYamlTask>(YAML_GEN_TASK_ID)
+        tasks.withType<ProcessResources> {
+            from(generateSpigotYamlTask)
         }
     }
 
-    private fun Project.setupTasks() {
-        val generateSpigotYamlTask = tasks.create<YamlGenerateTask>(YAML_GEN_TASK_ID)
-        tasks.withType<ProcessResources> {
-            from(generateSpigotYamlTask.temporaryDir)
+    private fun Project.setupExtensions() {
+        val descriptor = extensions.create<SpigotPluginAttributes>("spigot")
+        tasks.findByBoth<GenerateYamlTask>(YAML_GEN_TASK_ID) {
+            value = descriptor
         }
     }
 
