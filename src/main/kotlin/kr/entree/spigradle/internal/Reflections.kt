@@ -14,6 +14,7 @@ internal inline fun <reified V> Any.toFieldEntries(
     return this::class.memberProperties.map { property ->
         val renameAnnotation = property.findAnnotation<SerialName>()
         val name = renameAnnotation?.value ?: property.name
-        keyMapper(name) to property.call(this) as V
+        val value = if (property.isConst) property.call() else property.call(this)
+        keyMapper(name) to value as V
     }
 }

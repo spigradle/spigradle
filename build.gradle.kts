@@ -1,7 +1,9 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
-    val kotlinVersion = "1.3.72"
-    kotlin("jvm") version kotlinVersion
-    id("com.github.johnrengelman.shadow") version "5.2.0"
+    groovy
+    `java-gradle-plugin`
+    kotlin("jvm") version "1.3.72"
     id("com.gradle.plugin-publish") version "0.11.0" apply false
     id("com.jfrog.bintray") version "1.8.4" apply false
 }
@@ -12,39 +14,33 @@ description = "An intelligent Gradle plugin for developing Minecraft resources."
 
 arrayOf("publish", "generateMeta").forEach {
     val buildFileName = "gradle/${it}.gradle"
-    if (file(buildFileName).isFile) {
-        apply(from = buildFileName)
-    } else {
-        apply(from = "${buildFileName}.kts")
+    runCatching {
+        if (file(buildFileName).isFile) {
+            apply(from = buildFileName)
+        } else {
+            apply(from = "${buildFileName}.kts")
+        }
+    }.onFailure {
+        throw GradleException("Error while evaluating $buildFileName")
     }
 }
 
 repositories {
-    ext
     mavenCentral()
     jcenter()
 }
 
-fun ExternalModuleDependency.excludeStdlib() {
-    exclude(module = "kotlin-stdlib")
-    exclude(module = "kotlin-stdlib-jdk7")
-    exclude(module = "kotlin-stdlib-jdk8")
-    exclude(module = "kotlin-stdlib-common")
-}
-
 dependencies {
-    ext
-    "shadow"(gradleApi())
     val jacksonVersion = "2.11.0"
-    shadow(localGroovy())
-    shadow(gradleApi())
-    shadow(kotlin("stdlib-jdk8"))
-    shadow("com.google.guava", "guava", "29.0-jre")
-    shadow("org.ow2.asm:asm:7.2")
-    shadow("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
-    shadow("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-    shadow("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
-    shadow("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    compileOnly(gradleApi())
+    compileOnly(localGroovy())
+    compileOnly(kotlin("stdlib-jdk8"))
+    compileOnly("com.google.guava:guava:29.0-jre")
+    compileOnly("org.ow2.asm:asm:7.2")
+    compileOnly("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+    compileOnly("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+    compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation(kotlin("test"))
@@ -52,36 +48,48 @@ dependencies {
     testImplementation(gradleTestKit())
 }
 
-configurations {
-    testImplementation.get().dependencies += shadow.get().dependencies
+gradlePlugin {
+    plugins {
+        create("spigot") {
+            id = "kr.entree.spigradle"
+            implementationClass = "kr.entree.spigradle.module.spigot.SpigotPlugin"
+        }
+        create("nukkit") {
+            id = "kr.entree.spigradle.nukkit"
+            implementationClass = "kr.entree.spigradle.module.nukkit.NukkitPlugin"
+        }
+        create("bungeecord") {
+            id = "kr.entree.spigradle.bungeecord"
+            implementationClass = "kr.entree.spigradle.module.bungeecord.BungeecordPlugin"
+        }
+    }
 }
 
-val packageName = "${project.group}.spigradle"
+configurations {
+    testImplementation.get().dependencies += compileOnly.get().dependencies
+    api.get().dependencies -= dependencies.gradleApi()
+}
 
 tasks {
-    shadowJar {
-        mapOf(
-                "org.yaml.snakeyaml" to "snakeyaml",
-                "org.objectweb.asm" to "asm"
-        ).forEach { (start, alias) ->
-            relocate(start, "${packageName}.libs.$alias")
-        }
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-        archiveClassifier.set("")
-    }
-    jar {
-        dependsOn(shadowJar)
-        enabled = false
-    }
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
         }
+        classpath += files(sourceSets.main.get().withConvention(GroovySourceSet::class) { groovy }.classesDirectory)
+    }
+    compileGroovy {
+        classpath = sourceSets.main.get().compileClasspath
     }
     test {
         useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
         }
+    }
+    pluginUnderTestMetadata {
+        pluginClasspath.from(sourceSets.test.get().compileClasspath)
+    }
+    jar {
+        duplicatesStrategy
     }
 }
