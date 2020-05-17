@@ -1,9 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
+    kotlin("jvm") version "1.3.72"
     groovy
     `java-gradle-plugin`
-    kotlin("jvm") version "1.3.72"
     id("com.gradle.plugin-publish") version "0.11.0" apply false
     id("com.jfrog.bintray") version "1.8.4" apply false
 }
@@ -13,13 +13,10 @@ version = "1.3.0-SNAPSHOT"
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
 arrayOf("publish", "generateMeta").forEach {
-    val buildFileName = "gradle/${it}.gradle"
+    val buildFilePrefix = "gradle/${it}.gradle"
+    val buildFileName = if (file(buildFilePrefix).isFile) buildFilePrefix else "$buildFilePrefix.kts"
     runCatching {
-        if (file(buildFileName).isFile) {
-            apply(from = buildFileName)
-        } else {
-            apply(from = "${buildFileName}.kts")
-        }
+        apply(from = buildFileName)
     }.onFailure {
         throw GradleException("Error while evaluating $buildFileName")
     }
@@ -85,11 +82,12 @@ tasks {
         testLogging {
             events("passed", "skipped", "failed")
         }
+        dependsOn(getByName("publishToMavenLocal"))
     }
     pluginUnderTestMetadata {
         pluginClasspath.from(sourceSets.test.get().compileClasspath)
     }
-    jar {
-        duplicatesStrategy
+    groovydoc {
+        enabled = false
     }
 }

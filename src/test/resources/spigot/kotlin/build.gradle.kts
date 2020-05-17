@@ -1,7 +1,7 @@
 import kr.entree.spigradle.kotlin.spigot
 
 plugins {
-    java
+    kotlin("jvm") version "1.3.72"
     id("kr.entree.spigradle")
 }
 
@@ -21,11 +21,8 @@ tasks {
     build.get().doLast {
         val pluginFile = File(spigotPluginYaml.get().temporaryDir, "plugin.yml")
         if (pluginFile.isFile) {
-            println("Hi!")
-            project.logger.info(pluginFile.readText())
-            println(pluginFile.bufferedReader().readText())
             println(pluginFile.absolutePath)
-            println("End")
+            println(pluginFile.bufferedReader().readText())
         } else {
             throw GradleException("Error!")
         }

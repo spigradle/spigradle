@@ -12,17 +12,21 @@ import kotlin.test.assertNotEquals
 class SpigotGradleTest {
     @Test
     fun kotlin() {
+        test("/spigot/kotlin")
+    }
+
+    @Test
+    fun groovy() {
+        test("/spigot/groovy")
+    }
+
+    private fun test(path: String) {
         val result = GradleRunner.create()
-                .withProjectDir(File(javaClass.getResource("/spigot/kotlin").file))
+                .withProjectDir(File(javaClass.getResource(path).file))
                 .withPluginClasspath()
                 .withArguments("build", "--stacktrace")
                 .build()
         println(result.output)
         assertNotEquals(TaskOutcome.FAILED, result.task(":spigotPluginYaml")!!.outcome)
-    }
-
-    @Test
-    fun groovy() {
-
     }
 }
