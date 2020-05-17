@@ -17,6 +17,7 @@ class SpigotGradleTest {
                 .withPluginClasspath()
                 .withArguments("build", "--stacktrace")
                 .build()
+        println(result.output)
         assertNotEquals(TaskOutcome.FAILED, result.task(":spigotPluginYaml")!!.outcome)
     }
 

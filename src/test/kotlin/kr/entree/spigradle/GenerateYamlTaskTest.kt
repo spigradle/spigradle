@@ -30,7 +30,19 @@ class GenerateYamlTaskTest {
     }
 
     @Test
-    fun serialization() {
+    fun `simple serialization`() {
+        val extension = project.extensions.create<SpigotPluginDescription>("spigot", project).apply {
+            main = "SpigradleMain"
+        }
+        yamlTask.apply {
+            value = extension
+            generate()
+        }
+        assertEquals("main: SpigradleMain\n", yamlTask.file.readText())
+    }
+
+    @Test
+    fun `detail serialization`() {
         val extension = project.extensions.create<SpigotPluginDescription>("spigot", project).apply {
             main = "kr.entree.spigradle.Main"
             name = "Spigradle"
@@ -65,7 +77,7 @@ class GenerateYamlTaskTest {
             }
         }
         yamlTask.apply {
-            value = extension as SpigotPluginDescription
+            value = extension
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText()
