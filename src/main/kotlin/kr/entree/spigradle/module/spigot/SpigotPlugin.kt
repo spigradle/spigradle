@@ -2,6 +2,7 @@
 
 package kr.entree.spigradle.module.spigot
 
+import groovy.lang.Closure
 import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
 import kr.entree.spigradle.internal.*
@@ -57,7 +58,9 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
     private fun Project.setupRepositories() {
         val ext = Groovies.getExtensionFrom(repositories)
         SpigotRepositories.toFieldEntries<String>().forEach { (name, url) ->
-            ext.set(name, { repositories.maven(url) })
+            ext.set(name, object : Closure<Any>(this, this) {
+                fun doCall() = repositories.maven(url)
+            })
         }
         SpigotRepositories.run {
             listOf(SPIGOT_MC, SONATYPE, PAPER_MC, BINTRAY_JCENTER_URL)
@@ -71,7 +74,9 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
         listOf(Dependencies, SpigotDependencies).flatMap {
             it.toFieldEntries<Dependency>()
         }.forEach { (name, dependency) ->
-            ext.set(name, { input: String -> dependency.format(input) })
+            ext.set(name, object : Closure<Any>(this, this) {
+                fun doCall(version: String?) = dependency.format(version)
+            })
         }
         dependencies.apply {
             compileOnly(Dependencies.SPIGRADLE.format())
