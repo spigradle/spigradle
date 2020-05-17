@@ -28,4 +28,9 @@ class GeneratedSubclassSerializer : StdSerializer<GeneratedSubclass>(GeneratedSu
             gen: JsonGenerator,
             provider: SerializerProvider
     ) = provider.findValueSerializer(value.publicType()).serialize(value, gen, provider)
+
+    override fun isEmpty(
+            provider: SerializerProvider,
+            value: GeneratedSubclass
+    ) = provider.findValueSerializer(value.publicType()).isEmpty(provider, value)
 }
