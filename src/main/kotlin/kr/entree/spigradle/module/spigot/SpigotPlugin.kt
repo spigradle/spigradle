@@ -7,8 +7,8 @@ import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
 import kr.entree.spigradle.internal.*
 import kr.entree.spigradle.kotlin.maven
-import kr.entree.spigradle.module.common.Messages
-import kr.entree.spigradle.module.common.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.internal.Messages
+import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.spigot.data.SpigotDependencies
