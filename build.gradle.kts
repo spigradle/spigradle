@@ -1,7 +1,9 @@
 import org.gradle.kotlin.dsl.support.useToRun
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    val kotlinVersion = "1.3.72"
+    kotlin("jvm") version kotlinVersion
+    kotlin("kapt") version kotlinVersion
     groovy
     id("com.github.johnrengelman.shadow") version "5.2.0"
     id("com.gradle.plugin-publish") version "0.11.0" apply false
@@ -37,6 +39,7 @@ dependencies {
     shadow("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     shadow("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     shadow("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    kapt("com.google.auto.service:auto-service:1.0-rc7")
     implementation("org.ow2.asm:asm:8.0.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
@@ -46,8 +49,8 @@ dependencies {
 }
 
 configurations {
+    shadow.get().dependencies += kapt.get().dependencies
     testImplementation.get().dependencies += shadow.get().dependencies
-    api.get().dependencies -= dependencies.gradleApi()
 }
 
 tasks {
@@ -69,7 +72,7 @@ tasks {
     }
     jar {
         enabled = false
-        finalizedBy(shadowJar.get())
+        finalizedBy(shadowJar)
     }
     val pluginUnderTestMetadata by registering {
         val testClasspath = sourceSets.test.get().compileClasspath

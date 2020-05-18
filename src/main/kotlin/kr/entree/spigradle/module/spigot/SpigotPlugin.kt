@@ -7,10 +7,15 @@ import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
 import kr.entree.spigradle.internal.*
 import kr.entree.spigradle.kotlin.maven
+import kr.entree.spigradle.module.common.Messages
+import kr.entree.spigradle.module.common.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.spigot.data.SpigotDependencies
 import kr.entree.spigradle.module.spigot.data.SpigotRepositories
+import kr.entree.spigradle.module.spigot.data.setLoadGroovyExtension
 import kr.entree.spigradle.module.spigot.extension.SpigotPluginDescription
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
@@ -28,6 +33,7 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
 
     override fun apply(project: Project) {
         with(project) {
+            pluginManager.apply<SpigradlePlugin>()
             setupYamlGenTask()
             setupGroovyExtensions()
         }
@@ -36,20 +42,39 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
     private fun Project.setupYamlGenTask() {
         val description = extensions.create<SpigotPluginDescription>("spigot", this)
         val generateTask = tasks.create<GenerateYamlTask>(YAML_GEN_TASK_ID)
+        Groovies.getExtensionFrom(description).setLoadGroovyExtension()
         generateTask.value = description
         val processResource = tasks.findByBoth<ProcessResources>("processResources") {
             from(generateTask.temporaryDir)
             finalizedBy(generateTask)
         } ?: return
         generateTask.doFirst {
-            if (File(processResource.temporaryDir, "plugin.yml").isFile) {
+            val descriptionFile = File(processResource.temporaryDir, "plugin.yml")
+            if (descriptionFile.isFile && descriptionFile.name == generateTask.file.name) {
                 it.enabled = false
-            }
-            description.run {
-                name = name ?: project.name
-                version = version ?: project.version.toString()
+            } else {
+                validateDescription(description, this)
             }
         }
+    }
+
+    private fun validateDescription(description: SpigotPluginDescription, project: Project) {
+        description.apply {
+            main = main ?: project.getSpigotPluginMainOrThrow()
+            name = name ?: project.name
+            version = version ?: project.version.toString()
+        }
+    }
+
+    private fun Project.getSpigotPluginMainOrThrow(): String? {
+        val found = runCatching { // get APT result or find out
+            File(project.buildDir, PLUGIN_APT_DEFAULT_PATH).readText()
+        }.getOrNull() ?: findSpigotPluginMain()
+        return found ?: throw GradleException(Messages.noMainFound("spigot", YAML_GEN_TASK_ID))
+    }
+
+    private fun findSpigotPluginMain(): String? {
+        TODO()
     }
 
     private fun Project.setupGroovyExtensions() {
@@ -81,9 +106,6 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
             ext.set(name, object : Closure<Any>(this, this) {
                 fun doCall(version: String?) = dependency.format(version)
             })
-        }
-        dependencies.apply {
-            compileOnly(Dependencies.SPIGRADLE.format())
         }
     }
 }

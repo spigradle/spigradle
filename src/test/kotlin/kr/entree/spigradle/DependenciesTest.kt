@@ -4,6 +4,7 @@ import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
 import kr.entree.spigradle.internal.toFieldEntries
 import kr.entree.spigradle.module.spigot.data.SpigotDependencies
+import kr.entree.spigradle.module.spigot.data.SpigotRepositories
 import kotlin.test.Test
 
 /**
@@ -16,6 +17,14 @@ class DependenciesTest {
             depObj.toFieldEntries<Dependency> { "${depObj.javaClass.simpleName}.$it" }
         }.forEach {
             println(it)
+        }
+    }
+
+    @Test
+    fun test() {
+        SpigotRepositories.toFieldEntries<String>().forEach { (name, string) ->
+            println(name)
+            println(string)
         }
     }
 }
