@@ -1,4 +1,4 @@
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle.internal
 
 import java.io.File
 

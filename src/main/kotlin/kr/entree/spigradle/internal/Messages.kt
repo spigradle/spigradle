@@ -1,4 +1,4 @@
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle.internal
 
 /**
  * Created by JunHyung Lim on 2020-05-18

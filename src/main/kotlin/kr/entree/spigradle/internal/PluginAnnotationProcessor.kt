@@ -1,4 +1,4 @@
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle.internal
 
 import com.google.auto.service.AutoService
 import kr.entree.spigradle.Plugin

@@ -1,6 +1,7 @@
 package kr.entree.spigradle.module.spigot.extension
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import kr.entree.spigradle.internal.MainProvider
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.module.spigot.data.Command
 import kr.entree.spigradle.module.spigot.data.Load
@@ -13,8 +14,8 @@ import org.gradle.api.Project
         "authors", "api-version", "load", "prefix", "depend",
         "softdepend", "loadbefore", "commands", "permissions"
 )
-open class SpigotPluginDescription(project: Project) {
-    var main: String? = null
+open class SpigotPluginDescription(project: Project) : MainProvider {
+    override var main: String? = null
     var name: String? = null
     var version: String? = null
     var description: String? = null
