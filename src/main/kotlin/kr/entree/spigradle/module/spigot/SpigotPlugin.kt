@@ -34,9 +34,9 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
     }
 
     private fun Project.setupYamlGenTask() {
-        val descriptor = extensions.create<SpigotPluginDescription>("spigot", this)
+        val description = extensions.create<SpigotPluginDescription>("spigot", this)
         val generateTask = tasks.create<GenerateYamlTask>(YAML_GEN_TASK_ID)
-        generateTask.value = descriptor
+        generateTask.value = description
         val processResource = tasks.findByBoth<ProcessResources>("processResources") {
             from(generateTask.temporaryDir)
             finalizedBy(generateTask)
@@ -44,6 +44,10 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
         generateTask.doFirst {
             if (File(processResource.temporaryDir, "plugin.yml").isFile) {
                 it.enabled = false
+            }
+            description.run {
+                name = name ?: project.name
+                version = version ?: project.version.toString()
             }
         }
     }
