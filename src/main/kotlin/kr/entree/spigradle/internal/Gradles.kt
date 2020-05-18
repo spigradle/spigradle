@@ -24,8 +24,12 @@ internal inline fun <reified T : Task> TaskContainer.withType(configure: T.() ->
     return withType(T::class.java).apply { forEach(configure) }
 }
 
-internal inline fun <reified T : Task> TaskContainer.findByBoth(name: String, configure: T.() -> Unit) = (findByName(name) as? T)?.apply(configure)
+internal inline fun <reified T : Task> TaskContainer.findByBoth(name: String, configure: T.() -> Unit = {}) = (findByName(name) as? T)?.apply(configure)
 
 internal inline fun <reified T : Plugin<out Any>> PluginManager.apply() = apply(T::class.java)
 
 internal fun DependencyHandler.compileOnly(notation: Any) = add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, notation)
+
+internal fun DependencyHandler.annotationProcessor(notation: Any) = add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, notation)
+
+internal fun DependencyHandler.kapt(notation: Any) = add("kapt", notation)

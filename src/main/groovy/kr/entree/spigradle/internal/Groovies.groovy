@@ -7,6 +7,6 @@ import org.gradle.api.plugins.ExtraPropertiesExtension
  */
 class Groovies {
     static ExtraPropertiesExtension getExtensionFrom(object) {
-        return object.ext
+        return object.ext // For dynamic call
     }
 }
