@@ -20,7 +20,7 @@ import java.nio.charset.Charset
 /**
  * Created by JunHyung Lim on 2020-04-28
  */
-abstract class GenerateYamlTask : DefaultTask() {
+open class GenerateYamlTask : DefaultTask() {
     @get:Internal
     lateinit var value: Any
     @get:Internal
