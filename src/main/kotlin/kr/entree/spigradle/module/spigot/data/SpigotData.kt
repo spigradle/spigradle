@@ -20,7 +20,7 @@ enum class Load {
 }
 
 @JsonPropertyOrder("description", "usage", "permission", "permission-message")
-class Command(@Transient val name: String) {
+open class Command(@Transient val name: String) {
     var description: String? = null
     var usage: String? = null
     var permission: String? = null
@@ -31,7 +31,7 @@ class Command(@Transient val name: String) {
 }
 
 @JsonPropertyOrder("description", "default", "children")
-class Permission(@Transient val name: String) {
+open class Permission(@Transient val name: String) {
     var description: String? = null
 
     @SerialName("default")
