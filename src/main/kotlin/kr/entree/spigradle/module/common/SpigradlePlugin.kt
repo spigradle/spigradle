@@ -4,6 +4,7 @@ import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.internal.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.compile.JavaCompile
 import java.io.File
 
@@ -20,8 +21,9 @@ class SpigradlePlugin : Plugin<Project> {
     }
 
     private fun Project.setupPlugins() {
+        pluginManager.apply<JavaPlugin>()
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
-            TODO("afterEvalute?")
+            plugins.apply("org.jetbrains.kotlin.kapt")
         }
     }
 

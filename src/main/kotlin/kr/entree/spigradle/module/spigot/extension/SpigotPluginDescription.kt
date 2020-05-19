@@ -35,6 +35,7 @@ open class SpigotPluginDescription(project: Project) : MainProvider {
 
     @SerialName("loadbefore")
     var loadBefore: List<String> = emptyList()
+
     val commands: NamedDomainObjectContainer<Command> = project.container(Command::class.java)
     val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class.java)
 }

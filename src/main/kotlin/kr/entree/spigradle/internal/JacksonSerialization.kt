@@ -1,8 +1,12 @@
 package kr.entree.spigradle.internal
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.internal.GeneratedSubclass
 
@@ -33,4 +37,13 @@ class GeneratedSubclassSerializer : StdSerializer<GeneratedSubclass>(GeneratedSu
             provider: SerializerProvider,
             value: GeneratedSubclass
     ) = provider.findValueSerializer(value.publicType()).isEmpty(provider, value)
+}
+
+object Jackson {
+    val GRADLE_MODULE = SimpleModule()
+            .addSerializer(NamedDomainObjectContainerSerializer())
+            .addSerializer(GeneratedSubclassSerializer())
+    val MAPPER = ObjectMapper()
+            .registerModules(KotlinModule(), GRADLE_MODULE)
+            .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
 }

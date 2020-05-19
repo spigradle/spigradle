@@ -7,8 +7,6 @@ import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
 import kr.entree.spigradle.internal.*
 import kr.entree.spigradle.kotlin.maven
-import kr.entree.spigradle.internal.Messages
-import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.spigot.data.SpigotDependencies
@@ -41,20 +39,18 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
 
     private fun Project.setupYamlGenTask() {
         val description = extensions.create<SpigotPluginDescription>("spigot", this)
-        val generateTask = tasks.create<GenerateYamlTask>(YAML_GEN_TASK_ID)
+        val generateTask = tasks.create<GenerateYamlTask>(YAML_GEN_TASK_ID) {
+            doFirst {
+                validateDescription(description, this@setupYamlGenTask)
+            }
+            afterEvaluate {
+                setOptionsToMap(description)
+            }
+        }
         Groovies.getExtensionFrom(description).setLoadGroovyExtension()
-        generateTask.value = description
-        val processResource = tasks.findByBoth<ProcessResources>("processResources") {
+        tasks.findByBoth<ProcessResources>("processResources") {
             from(generateTask.temporaryDir)
             finalizedBy(generateTask)
-        } ?: return
-        generateTask.doFirst {
-            val descriptionFile = File(processResource.temporaryDir, "plugin.yml")
-            if (descriptionFile.isFile && descriptionFile.name == generateTask.file.name) {
-                it.enabled = false
-            } else {
-                validateDescription(description, this)
-            }
         }
     }
 
