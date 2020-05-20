@@ -3,10 +3,7 @@ package kr.entree.spigradle.module.spigot
 import groovy.lang.Closure
 import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
-import kr.entree.spigradle.internal.Groovies
-import kr.entree.spigradle.internal.Messages
-import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
-import kr.entree.spigradle.internal.toFieldEntries
+import kr.entree.spigradle.internal.*
 import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.spigot.data.SpigotDependencies
@@ -17,7 +14,6 @@ import notNull
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
-import org.gradle.api.tasks.compile.AbstractCompile
 import org.gradle.kotlin.dsl.*
 import org.gradle.language.jvm.tasks.ProcessResources
 import java.io.File
@@ -30,6 +26,7 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
     companion object {
         const val YAML_GEN_TASK_NAME = "spigotPluginYaml"
         const val EXTENSION_NAME = "spigot"
+        const val BUKKIT_PLUGIN_SUPER_CLASS = "org/bukkit/plugin/java/JavaPlugin"
     }
 
     override fun apply(project: Project) {
@@ -68,14 +65,7 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
         get() = runCatching { // get APT result or find out
             val file = File(project.buildDir, PLUGIN_APT_DEFAULT_PATH)
             file.readText()
-        }.getOrNull() ?: findSpigotPluginMain()
-
-    private fun Project.findSpigotPluginMain(): String? {
-        tasks.withType<AbstractCompile>().map { it.destinationDir }.forEach {
-            println(it.absolutePath) // TODO
-        }
-        return null
-    }
+        }.getOrNull() ?: findProjectMainClass(BUKKIT_PLUGIN_SUPER_CLASS)
 
     private fun Project.setupGroovyExtensions() {
         setupRepositories()
