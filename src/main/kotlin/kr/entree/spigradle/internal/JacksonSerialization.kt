@@ -27,23 +27,27 @@ class NamedDomainObjectContainerSerializer : StdSerializer<NamedDomainObjectCont
 }
 
 class GeneratedSubclassSerializer : StdSerializer<GeneratedSubclass>(GeneratedSubclass::class.java) {
+    private fun GeneratedSubclass.findPublicType() = Class.forName(javaClass.name.substringBefore("_Decorated"))
+
     override fun serialize(
             value: GeneratedSubclass,
             gen: JsonGenerator,
             provider: SerializerProvider
-    ) = provider.findValueSerializer(value.publicType()).serialize(value, gen, provider)
+    ) {
+        provider.findValueSerializer(value.findPublicType()).serialize(value, gen, provider)
+    }
 
     override fun isEmpty(
             provider: SerializerProvider,
             value: GeneratedSubclass
-    ) = provider.findValueSerializer(value.publicType()).isEmpty(provider, value)
+    ) = provider.findValueSerializer(value.findPublicType()).isEmpty(provider, value)
 }
 
 object Jackson {
-    val GRADLE_MODULE = SimpleModule()
+    val GRADLE_MODULE: SimpleModule = SimpleModule()
             .addSerializer(NamedDomainObjectContainerSerializer())
             .addSerializer(GeneratedSubclassSerializer())
-    val MAPPER = ObjectMapper()
+    val MAPPER: ObjectMapper = ObjectMapper()
             .registerModules(KotlinModule(), GRADLE_MODULE)
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
 }
