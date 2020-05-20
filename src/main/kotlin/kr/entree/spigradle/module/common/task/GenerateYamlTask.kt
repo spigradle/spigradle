@@ -36,7 +36,7 @@ open class GenerateYamlTask : DefaultTask() {
     }
 
     fun setToOptionMap(any: Any) {
-        options = Jackson.MAPPER.convertValue<Map<String, Any>>(any).toMutableMap()
+        options.putAll(Jackson.MAPPER.convertValue<Map<String, Any>>(any).toMutableMap())
     }
 
     @TaskAction

@@ -21,12 +21,13 @@ class GenerateYamlTaskTest {
 
     @Test
     fun `simple generation`() {
-        val contents = "test contents"
+        val pairs = listOf("value" to "test contents")
         yamlTask.apply {
-            options = mutableMapOf("value" to contents)
+            options = pairs.toMap().toMutableMap()
             generate()
         }
-        assertEquals(contents, yamlTask.file.readText().trimIndent())
+        val text = pairs.joinToString { (key, value) -> "$key: $value\n" }
+        assertEquals(text, yamlTask.file.readText())
     }
 
     @Test
