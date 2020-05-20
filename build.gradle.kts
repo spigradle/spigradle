@@ -4,6 +4,7 @@ plugins {
     val kotlinVersion = "1.3.72"
     kotlin("jvm") version kotlinVersion
     kotlin("kapt") version kotlinVersion
+    `kotlin-dsl-base`
     groovy
     id("com.github.johnrengelman.shadow") version "5.2.0"
     id("com.gradle.plugin-publish") version "0.11.0" apply false

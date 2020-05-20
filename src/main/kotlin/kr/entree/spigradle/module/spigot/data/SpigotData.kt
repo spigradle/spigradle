@@ -8,7 +8,7 @@ import org.gradle.api.plugins.ExtraPropertiesExtension
 /**
  * Created by JunHyung Lim on 2020-05-11
  */
-fun ExtraPropertiesExtension.setLoadGroovyExtension() {
+fun ExtraPropertiesExtension.setSpigotExtension() {
     set("POST_WORLD", Load.POST_WORLD)
     set("STARTUP", Load.STARTUP)
 }

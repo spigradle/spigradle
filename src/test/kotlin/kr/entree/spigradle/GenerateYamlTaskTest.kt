@@ -1,9 +1,9 @@
 package kr.entree.spigradle
 
-import kr.entree.spigradle.internal.create
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.spigot.data.Load
 import kr.entree.spigradle.module.spigot.extension.SpigotPluginDescription
+import org.gradle.kotlin.dsl.create
 import org.gradle.testfixtures.ProjectBuilder
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
  */
 class GenerateYamlTaskTest {
     val project = ProjectBuilder.builder().build()
-    val yamlTask = project.tasks.create<GenerateYamlTask>("yaml")
+    val yamlTask = project.tasks.create("yaml", GenerateYamlTask::class)
 
     init {
         yamlTask.file.deleteOnExit()
@@ -23,7 +23,7 @@ class GenerateYamlTaskTest {
     fun `simple generation`() {
         val contents = "test contents"
         yamlTask.apply {
-            value = contents
+            options = mutableMapOf("value" to contents)
             generate()
         }
         assertEquals(contents, yamlTask.file.readText().trimIndent())
@@ -35,7 +35,7 @@ class GenerateYamlTaskTest {
             main = "SpigradleMain"
         }
         yamlTask.apply {
-            value = extension
+            setToOptionMap(extension)
             generate()
         }
         assertEquals("main: SpigradleMain\n", yamlTask.file.readText())
@@ -77,7 +77,7 @@ class GenerateYamlTaskTest {
             }
         }
         yamlTask.apply {
-            value = extension
+            setToOptionMap(extension)
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText()
