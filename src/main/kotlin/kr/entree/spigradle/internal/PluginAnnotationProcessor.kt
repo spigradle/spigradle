@@ -12,13 +12,13 @@ import javax.lang.model.element.TypeElement
  * Created by JunHyung Lim on 2020-05-18
  */
 const val PLUGIN_APT_RESULT_PATH_KEY = "pluginAnnotationProcessResultPath"
-const val PLUGIN_APT_DEFAULT_PATH = "spigradle/result.txt"
+const val PLUGIN_APT_DEFAULT_PATH = "spigradle/plugin-main"
 
 @SupportedAnnotationTypes("kr.entree.spigradle.Plugin")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions(PLUGIN_APT_RESULT_PATH_KEY)
 @AutoService(Processor::class)
-internal class PluginAnnotationProcessor : AbstractProcessor() {
+internal class PluginAnnotationProcessor : AbstractProcessor() { // TODO: Need to be incremental?
     var pluginName = ""
 
     override fun process(annotations: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
