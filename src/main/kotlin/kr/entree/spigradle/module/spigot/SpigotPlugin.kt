@@ -3,9 +3,13 @@ package kr.entree.spigradle.module.spigot
 import groovy.lang.Closure
 import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
-import kr.entree.spigradle.internal.*
+import kr.entree.spigradle.internal.Groovies
+import kr.entree.spigradle.internal.Messages
+import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.internal.toFieldEntries
 import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
+import kr.entree.spigradle.module.common.task.SubclassDetectionTask
 import kr.entree.spigradle.module.spigot.data.SpigotDependencies
 import kr.entree.spigradle.module.spigot.data.SpigotRepositories
 import kr.entree.spigradle.module.spigot.data.setSpigotExtension
@@ -13,9 +17,10 @@ import kr.entree.spigradle.module.spigot.extension.SpigotPluginDescription
 import notNull
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
+import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.kotlin.dsl.*
-import org.gradle.language.jvm.tasks.ProcessResources
 import java.io.File
 
 /**
@@ -25,6 +30,7 @@ import java.io.File
 class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generation, Main class auto detection
     companion object {
         const val YAML_GEN_TASK_NAME = "spigotPluginYaml"
+        const val MAIN_DETECTION_TASK_NAME = "spigotMainDetection"
         const val EXTENSION_NAME = "spigot"
         const val BUKKIT_PLUGIN_SUPER_CLASS = "org/bukkit/plugin/java/JavaPlugin"
     }
@@ -39,20 +45,35 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
 
     private fun Project.setupYamlGenTask() {
         val description = extensions.create<SpigotPluginDescription>(EXTENSION_NAME, this)
+        val detectionTask = tasks.create(MAIN_DETECTION_TASK_NAME, SubclassDetectionTask::class, BUKKIT_PLUGIN_SUPER_CLASS).apply {
+            afterEvaluate {
+                classDirectories = withConvention(JavaPluginConvention::class) {
+                    sourceSets["main"].output.classesDirs
+                }
+            }
+        }
         val generateTask = tasks.create(YAML_GEN_TASK_NAME, GenerateYamlTask::class) {
             doFirst {
                 description.setDefaults(this@setupYamlGenTask)
                 validateDescription(description)
                 setToOptionMap(description)
             }
+            afterEvaluate {
+                inputs.files(detectionTask.destination)
+                val resourceDir = withConvention(JavaPluginConvention::class) {
+                    sourceSets["main"].output.resourcesDir
+                } ?: return@afterEvaluate
+                file = File(resourceDir, "plugin.yml")
+            }
         }
         Groovies.getExtensionFrom(description).setSpigotExtension()
-        val processResources: ProcessResources by tasks
-        processResources.from(generateTask)
+        val classes: Task by tasks
+        classes.finalizedBy(generateTask)
+        generateTask.dependsOn(detectionTask) // classes -> detectionTask -> generateTask
     }
 
     private fun SpigotPluginDescription.setDefaults(project: Project) {
-        main = main ?: project.spigotPluginMain
+        main = main ?: project.mainDetectionResult
         name = name ?: project.name
         version = version ?: project.version.toString()
     }
@@ -61,11 +82,11 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
         notNull(description.main) { Messages.noMainFound(EXTENSION_NAME, YAML_GEN_TASK_NAME) }
     }
 
-    private val Project.spigotPluginMain: String?
-        get() = runCatching { // get APT result or find out
+    private val Project.mainDetectionResult: String?
+        get() = runCatching {
             val file = File(project.buildDir, PLUGIN_APT_DEFAULT_PATH)
             file.readText()
-        }.getOrNull() ?: findProjectMainClass(BUKKIT_PLUGIN_SUPER_CLASS)
+        }.getOrNull()
 
     private fun Project.setupGroovyExtensions() {
         setupRepositories()
