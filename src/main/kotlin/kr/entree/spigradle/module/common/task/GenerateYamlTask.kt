@@ -23,7 +23,7 @@ open class GenerateYamlTask : DefaultTask() {
     var encoding: String = "UTF-8"
 
     @get:OutputFile
-    var file: File = File(temporaryDir, "plugin.yml")
+    var outputFile: File = File(temporaryDir, "plugin.yml")
 
     @get:Input
     val yaml = YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
@@ -41,7 +41,7 @@ open class GenerateYamlTask : DefaultTask() {
 
     @TaskAction
     fun generate() {
-        file.bufferedWriter(Charset.forName(encoding)).use {
+        outputFile.bufferedWriter(Charset.forName(encoding)).use {
             ObjectMapper(yaml).writeValue(it, options)
         }
     }

@@ -16,7 +16,7 @@ class GenerateYamlTaskTest {
     val yamlTask = project.tasks.create("yaml", GenerateYamlTask::class)
 
     init {
-        yamlTask.file.deleteOnExit()
+        yamlTask.outputFile.deleteOnExit()
     }
 
     @Test
@@ -27,7 +27,7 @@ class GenerateYamlTaskTest {
             generate()
         }
         val text = pairs.joinToString { (key, value) -> "$key: $value\n" }
-        assertEquals(text, yamlTask.file.readText())
+        assertEquals(text, yamlTask.outputFile.readText())
     }
 
     @Test
@@ -39,7 +39,7 @@ class GenerateYamlTaskTest {
             setToOptionMap(extension)
             generate()
         }
-        assertEquals("main: SpigradleMain\n", yamlTask.file.readText())
+        assertEquals("main: SpigradleMain\n", yamlTask.outputFile.readText())
     }
 
     @Test
@@ -82,6 +82,6 @@ class GenerateYamlTaskTest {
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText()
-        assertEquals(expected, yamlTask.file.readText())
+        assertEquals(expected, yamlTask.outputFile.readText())
     }
 }

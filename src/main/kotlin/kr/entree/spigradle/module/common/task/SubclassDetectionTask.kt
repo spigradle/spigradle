@@ -7,7 +7,6 @@ import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.SkipWhenEmpty
 import org.gradle.api.tasks.TaskAction
-import org.gradle.work.Incremental
 import org.gradle.work.InputChanges
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
@@ -19,13 +18,12 @@ import javax.inject.Inject
  * Created by JunHyung Lim on 2020-05-20
  */
 open class SubclassDetectionTask @Inject constructor(private val superClassName: String) : DefaultTask() {
-    @get:Incremental
     @get:SkipWhenEmpty
     @get:InputFiles
     var classDirectories: FileCollection = project.files()
 
     @get:OutputFile
-    var destination: File = File(project.buildDir, PLUGIN_APT_DEFAULT_PATH)
+    var outputFile: File = File(project.buildDir, PLUGIN_APT_DEFAULT_PATH)
 
     @TaskAction
     fun inspect(inputChanges: InputChanges) {
@@ -41,7 +39,7 @@ open class SubclassDetectionTask @Inject constructor(private val superClassName:
             }
         }
         val detectedClass = context.detectedMainClass ?: return
-        destination.apply {
+        outputFile.apply {
             parentFile.mkdirs()
         }.writeText(detectedClass.replace('/', '.'))
     }
