@@ -47,23 +47,23 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
         val description = extensions.create<SpigotPluginDescription>(EXTENSION_NAME, this)
         val detectionTask = tasks.create(MAIN_DETECTION_TASK_NAME, SubclassDetectionTask::class, BUKKIT_PLUGIN_SUPER_CLASS).apply {
             afterEvaluate {
-                classDirectories = withConvention(JavaPluginConvention::class) {
+                classDirectories = convention.getPlugin(JavaPluginConvention::class).run {
                     sourceSets["main"].output.classesDirs
                 }
             }
         }
         val generateTask = tasks.create(YAML_GEN_TASK_NAME, GenerateYamlTask::class) {
+            inputs.files(detectionTask.outputFile)
             doFirst {
                 description.setDefaults(this@setupYamlGenTask)
                 validateDescription(description)
                 setToOptionMap(description)
             }
             afterEvaluate {
-                inputs.files(detectionTask.destination)
                 val resourceDir = withConvention(JavaPluginConvention::class) {
                     sourceSets["main"].output.resourcesDir
                 } ?: return@afterEvaluate
-                file = File(resourceDir, "plugin.yml")
+                outputFile = File(resourceDir, "plugin.yml")
             }
         }
         Groovies.getExtensionFrom(description).setSpigotExtension()
