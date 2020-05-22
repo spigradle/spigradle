@@ -1,18 +1,23 @@
 package kr.entree.spigradle.module.common
 
+import groovy.lang.Closure
 import kr.entree.spigradle.data.Dependencies
+import kr.entree.spigradle.data.Dependency
+import kr.entree.spigradle.data.Repositories.SONATYPE
+import kr.entree.spigradle.data.SpigotDependencies
+import kr.entree.spigradle.data.SpigotRepositories
+import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
+import kr.entree.spigradle.internal.toFieldEntries
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.provideDelegate
-import org.gradle.kotlin.dsl.withType
+import org.gradle.kotlin.dsl.*
 import java.io.File
 
 /**
@@ -22,7 +27,8 @@ class SpigradlePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {
             setupPlugins()
-            setupDependencies()
+            setupDefaultDependencies()
+            setupGroovyExtensions()
             setupAnnotationProcessorOptions()
         }
     }
@@ -41,8 +47,7 @@ class SpigradlePlugin : Plugin<Project> {
         }
     }
 
-    @Suppress("UnstableApiUsage")
-    private fun Project.setupDependencies() {
+    private fun Project.setupDefaultDependencies() {
         dependencies.apply {
             val spigradleNotation = Dependencies.SPIGRADLE.format()
             add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, spigradleNotation)
@@ -51,6 +56,36 @@ class SpigradlePlugin : Plugin<Project> {
             } else {
                 add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, spigradleNotation)
             }
+        }
+    }
+
+    private fun Project.setupGroovyExtensions() {
+        setupRepositoryExtensions()
+        setupDependencyExtensions()
+    }
+
+    private fun Project.setupRepositoryExtensions() {
+        val ext = Groovies.getExtensionFrom(repositories)
+        SpigotRepositories.toFieldEntries<String>().forEach { (name, url) ->
+            ext.set(name, object : Closure<Any>(this, this) {
+                fun doCall() = repositories.maven(url)
+            })
+        }
+        SpigotRepositories.run {
+            listOf(SPIGOT_MC, SONATYPE, PAPER_MC, DefaultRepositoryHandler.BINTRAY_JCENTER_URL)
+        }.forEach {
+            repositories.maven(it)
+        }
+    }
+
+    private fun Project.setupDependencyExtensions() {
+        val ext = Groovies.getExtensionFrom(dependencies)
+        listOf(Dependencies, SpigotDependencies).flatMap {
+            it.toFieldEntries<Dependency>()
+        }.forEach { (name, dependency) ->
+            ext.set(name, object : Closure<Any>(this, this) {
+                fun doCall(version: String?) = dependency.format(version)
+            })
         }
     }
 

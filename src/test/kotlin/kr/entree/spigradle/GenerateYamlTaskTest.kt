@@ -1,7 +1,7 @@
 package kr.entree.spigradle
 
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
-import kr.entree.spigradle.module.spigot.data.Load
+import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.module.spigot.extension.SpigotPluginDescription
 import org.gradle.kotlin.dsl.create
 import org.gradle.testfixtures.ProjectBuilder
@@ -23,7 +23,7 @@ class GenerateYamlTaskTest {
     fun `simple generation`() {
         val pairs = listOf("value" to "test contents")
         yamlTask.apply {
-            options = pairs.toMap().toMutableMap()
+            properties = pairs.toMap().toMutableMap()
             generate()
         }
         val text = pairs.joinToString { (key, value) -> "$key: $value\n" }

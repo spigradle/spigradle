@@ -2,9 +2,9 @@ package kr.entree.spigradle
 
 import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Dependency
+import kr.entree.spigradle.data.SpigotDependencies
+import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.toFieldEntries
-import kr.entree.spigradle.module.spigot.data.SpigotDependencies
-import kr.entree.spigradle.module.spigot.data.SpigotRepositories
 import kotlin.test.Test
 
 /**

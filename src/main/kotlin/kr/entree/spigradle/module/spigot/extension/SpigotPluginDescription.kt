@@ -1,11 +1,11 @@
 package kr.entree.spigradle.module.spigot.extension
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import kr.entree.spigradle.data.Command
+import kr.entree.spigradle.data.Load
+import kr.entree.spigradle.data.Permission
 import kr.entree.spigradle.internal.MainProvider
 import kr.entree.spigradle.internal.SerialName
-import kr.entree.spigradle.module.spigot.data.Command
-import kr.entree.spigradle.module.spigot.data.Load
-import kr.entree.spigradle.module.spigot.data.Permission
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 
@@ -15,6 +15,12 @@ import org.gradle.api.Project
         "softdepend", "loadbefore", "commands", "permissions"
 )
 open class SpigotPluginDescription(project: Project) : MainProvider {
+    init {
+        project.afterEvaluate {
+            setDefaults(this)
+        }
+    }
+
     override var main: String? = null
     var name: String? = null
     var version: String? = null
@@ -38,4 +44,9 @@ open class SpigotPluginDescription(project: Project) : MainProvider {
 
     val commands: NamedDomainObjectContainer<Command> = project.container(Command::class.java)
     val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class.java)
+
+    fun setDefaults(project: Project) {
+        name = name ?: project.name
+        version = version ?: project.version.toString()
+    }
 }

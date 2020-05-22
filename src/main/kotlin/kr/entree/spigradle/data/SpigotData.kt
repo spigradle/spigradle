@@ -1,12 +1,65 @@
-package kr.entree.spigradle.module.spigot.data
+package kr.entree.spigradle.data
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import kr.entree.spigradle.internal.SerialName
-import kr.entree.spigradle.data.Dependency
-import kr.entree.spigradle.data.VersionModifier
+import org.gradle.api.plugins.ExtraPropertiesExtension
 
 /**
- * Created by JunHyung Lim on 2020-05-07
+ * Created by JunHyung Lim on 2020-05-22
  */
+
+enum class Load {
+    @SerialName("POSTWORLD")
+    POST_WORLD,
+    STARTUP
+}
+
+@JsonPropertyOrder("description", "usage", "permission", "permission-message")
+open class Command(@Transient val name: String) {
+    var description: String? = null
+    var usage: String? = null
+    var permission: String? = null
+
+    @SerialName("permission-message")
+    var permissionMessage: String? = null
+    var aliases = emptyList<String>()
+}
+
+@JsonPropertyOrder("description", "default", "children")
+open class Permission(@Transient val name: String) {
+    var description: String? = null
+
+    @SerialName("default")
+    var defaults: String? = null
+    var children = emptyMap<String, Boolean>()
+}
+
+fun ExtraPropertiesExtension.setSpigotExtension() {
+    set("POST_WORLD", Load.POST_WORLD)
+    set("STARTUP", Load.STARTUP)
+}
+
+object SpigotRepositories {
+    @SerialName("spigotmc")
+    val SPIGOT_MC = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+
+    @SerialName("papermc")
+    val PAPER_MC = "https://papermc.io/repo/repository/maven-public/"
+    val PROTOCOL_LIB = "https://repo.dmulloy2.net/nexus/repository/public/"
+
+    @SerialName("enginehub")
+    val ENGINE_HUB = "https://maven.enginehub.org/repo/"
+
+    @SerialName("codemc")
+    val CODE_MC = "https://repo.codemc.org/repository/maven-public/"
+
+    @SerialName("enderZone")
+    val ENDER_ZONE = "https://ci.ender.zone/plugin/repository/everything/"
+
+    @SerialName("frostcast")
+    val FROSTCAST = "https://ci.frostcast.net/plugin/repository/everything"
+}
+
 object SpigotDependencies {
     val SPIGOT = Dependency(
             "org.spigotmc",

@@ -2,11 +2,16 @@ package kr.entree.spigradle.module.common.task
 
 import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import org.gradle.api.DefaultTask
+import org.gradle.api.Project
 import org.gradle.api.file.FileCollection
+import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.SkipWhenEmpty
 import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.withConvention
 import org.gradle.work.InputChanges
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
@@ -42,6 +47,15 @@ open class SubclassDetectionTask @Inject constructor(private val superClassName:
         outputFile.apply {
             parentFile.mkdirs()
         }.writeText(detectedClass.replace('/', '.'))
+    }
+
+    companion object {
+        fun create(project: Project, taskName: String, superClassName: String): SubclassDetectionTask {
+            val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
+            return project.tasks.create(taskName, SubclassDetectionTask::class, superClassName).apply {
+                classDirectories = sourceSets["main"].output.classesDirs
+            }
+        }
     }
 }
 

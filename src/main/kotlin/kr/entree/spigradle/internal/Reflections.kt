@@ -1,6 +1,5 @@
 package kr.entree.spigradle.internal
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.base.CaseFormat
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
