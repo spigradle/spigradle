@@ -1,11 +1,8 @@
 package kr.entree.spigradle.module.common
 
 import groovy.lang.Closure
-import kr.entree.spigradle.data.Dependencies
-import kr.entree.spigradle.data.Dependency
+import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
-import kr.entree.spigradle.data.SpigotDependencies
-import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
@@ -66,7 +63,9 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupRepositoryExtensions() {
         val ext = Groovies.getExtensionFrom(repositories)
-        SpigotRepositories.toFieldEntries<String>().forEach { (name, url) ->
+        listOf(Repositories, SpigotRepositories).flatMap {
+            it.toFieldEntries<String>()
+        }.forEach { (name, url) ->
             ext.set(name, object : Closure<Any>(this, this) {
                 fun doCall() = repositories.maven(url)
             })

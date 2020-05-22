@@ -68,12 +68,6 @@ open class GenerateYamlTask : DefaultTask() {
         fun create(project: Project, taskName: String, extensionName: String, data: MainProvider): GenerateYamlTask {
             val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
             return project.tasks.create(taskName, GenerateYamlTask::class) {
-                sourceSets["main"].output.resourcesDir?.let { resourceDir ->
-                    project.copy {
-                        from(outputFile)
-                        into(resourceDir)
-                    }
-                }
                 doFirst {
                     if (data.main == null) {
                         data.main = runCatching {
@@ -82,6 +76,14 @@ open class GenerateYamlTask : DefaultTask() {
                     }
                     setToOptionMap(data)
                     notNull(data.main) { Messages.noMainFound(extensionName, taskName) }
+                }
+                doLast {
+                    sourceSets["main"].output.resourcesDir?.let { resourceDir ->
+                        project.copy {
+                            from(outputFile)
+                            into(resourceDir)
+                        }
+                    }
                 }
             }
         }

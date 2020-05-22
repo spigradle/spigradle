@@ -43,22 +43,26 @@ fun ExtraPropertiesExtension.setSpigotExtension() {
 object SpigotRepositories {
     @SerialName("spigotmc")
     val SPIGOT_MC = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    val SPIGOT = SPIGOT_MC
+
+    val BUNGEECORD = Repositories.SONATYPE
 
     @SerialName("papermc")
     val PAPER_MC = "https://papermc.io/repo/repository/maven-public/"
+    val PAPER = PAPER_MC
     val PROTOCOL_LIB = "https://repo.dmulloy2.net/nexus/repository/public/"
+    val VAULT = Repositories.JITPACK
 
     @SerialName("enginehub")
     val ENGINE_HUB = "https://maven.enginehub.org/repo/"
 
     @SerialName("codemc")
     val CODE_MC = "https://repo.codemc.org/repository/maven-public/"
-
-    @SerialName("enderZone")
+    val B_STATS = CODE_MC
     val ENDER_ZONE = "https://ci.ender.zone/plugin/repository/everything/"
-
-    @SerialName("frostcast")
+    val ESSENTIALS_X = ENDER_ZONE
     val FROSTCAST = "https://ci.frostcast.net/plugin/repository/everything"
+    val BAN_MANAGER = FROSTCAST
 }
 
 object SpigotDependencies {

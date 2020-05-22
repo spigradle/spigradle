@@ -19,8 +19,8 @@ internal inline fun <reified V> Any.toFieldEntries(
     }.map { field ->
         field.isAccessible = true
         val renameAnnotation = field.findAnnotation<SerialName>()
-        val name = renameAnnotation?.value ?: field.name
+        val name = renameAnnotation?.value ?: keyMapper(field.name)
         val value = if (Modifier.isStatic(field.modifiers)) field.get(null) else field.get(this)
-        keyMapper(name) to value as V
+        name to value as V
     }
 }

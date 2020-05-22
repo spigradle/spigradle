@@ -5,7 +5,7 @@ import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.task.GenerateYamlTask
 import kr.entree.spigradle.module.common.task.SubclassDetectionTask
-import kr.entree.spigradle.module.spigot.extension.SpigotPluginDescription
+import kr.entree.spigradle.module.spigot.extension.SpigotDescription
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -33,7 +33,7 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
     }
 
     private fun Project.setupYamlGenTask() {
-        val description = extensions.create<SpigotPluginDescription>(EXTENSION_NAME, this)
+        val description = extensions.create<SpigotDescription>(EXTENSION_NAME, this)
         val detectionTask = SubclassDetectionTask.create(this, MAIN_DETECTION_TASK_NAME, BUKKIT_PLUGIN_SUPER_CLASS)
         val generateTask = GenerateYamlTask.create(this, YAML_GEN_TASK_NAME, EXTENSION_NAME, description)
         Groovies.getExtensionFrom(description).setSpigotExtension()
