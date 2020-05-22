@@ -14,7 +14,7 @@ import org.gradle.api.Project
         "authors", "api-version", "load", "prefix", "depend",
         "softdepend", "loadbefore", "commands", "permissions"
 )
-open class SpigotPluginDescription(project: Project) : MainProvider {
+open class SpigotDescription(project: Project) : MainProvider {
     init {
         project.afterEvaluate {
             setDefaults(this)
