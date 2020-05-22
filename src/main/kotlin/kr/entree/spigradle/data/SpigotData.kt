@@ -2,6 +2,7 @@ package kr.entree.spigradle.data
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import kr.entree.spigradle.internal.SerialName
+import kr.entree.spigradle.internal.Transient
 import org.gradle.api.plugins.ExtraPropertiesExtension
 
 /**
