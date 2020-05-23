@@ -77,13 +77,17 @@ tasks {
     }
     val pluginUnderTestMetadata by registering {
         val testClasspath = sourceSets.test.get().compileClasspath
-        File(temporaryDir, "plugin-under-test-metadata.properties").apply {
-            parentFile.mkdirs()
-        }.bufferedWriter().useToRun {
-            write("implementation-classpath=")
-            write(testClasspath.joinToString(File.pathSeparator) {
-                it.absolutePath.replace("\\", "/")
-            })
+        val outputFile = File(temporaryDir, "plugin-under-test-metadata.properties")
+        outputs.files(outputFile)
+        doLast {
+            outputFile.apply {
+                parentFile.mkdirs()
+            }.bufferedWriter().useToRun {
+                write("implementation-classpath=")
+                write(testClasspath.joinToString(File.pathSeparator) {
+                    it.absolutePath.replace("\\", "/")
+                })
+            }
         }
     }
     test {
