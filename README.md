@@ -245,7 +245,7 @@ Also, we can manually set these properties in [spigot {} block](https://github.c
 | spigradle()       | kr.entree:spigradle:$version                     | What version you applied |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.4.0                    |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
-| luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.0                      |
+| luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.1                      |
 | worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version    | 7.1.0                    |
 | worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.2                    |
 | essentialsX()     | net.ess3:EssentialsX:$version                    | 2.17.2                   |
