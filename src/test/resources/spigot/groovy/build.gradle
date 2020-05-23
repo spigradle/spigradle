@@ -1,5 +1,4 @@
 plugins {
-    id 'java'
     id 'kr.entree.spigradle'
 }
 
@@ -16,7 +15,7 @@ spigot {
 }
 
 build.doLast {
-    def pluginFile = new File(spigotPluginYaml.temporaryDir, 'plugin.yml')
+    def pluginFile = new File(generateSpigotDescription.temporaryDir, 'plugin.yml')
     if (pluginFile.isFile()) {
         println(pluginFile.absolutePath)
         println(pluginFile.text)

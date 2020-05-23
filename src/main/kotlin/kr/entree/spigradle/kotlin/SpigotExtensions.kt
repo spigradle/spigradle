@@ -1,5 +1,6 @@
 package kr.entree.spigradle.kotlin
 
+import kr.entree.spigradle.data.BungeeDependencies
 import kr.entree.spigradle.data.SpigotDependencies
 import kr.entree.spigradle.data.SpigotRepositories
 import org.gradle.api.artifacts.dsl.DependencyHandler
@@ -11,8 +12,6 @@ import org.gradle.kotlin.dsl.maven
  * Repositories
  */
 fun RepositoryHandler.spigotmc(configure: MavenArtifactRepository.() -> Unit = {}) = maven(SpigotRepositories.SPIGOT_MC, configure)
-
-fun RepositoryHandler.bungeecord(configure: MavenArtifactRepository.() -> Unit = {}) = sonatype(configure)
 
 fun RepositoryHandler.papermc(configure: MavenArtifactRepository.() -> Unit = {}) = maven(SpigotRepositories.PAPER_MC, configure)
 
@@ -43,8 +42,6 @@ fun DependencyHandler.spigotmc(artifactId: String, version: String? = null) =
 fun DependencyHandler.spigot(version: String? = null) = SpigotDependencies.SPIGOT.format(version)
 
 fun DependencyHandler.spigotAll(version: String? = null) = SpigotDependencies.SPIGOT_ALL.format(version)
-
-fun DependencyHandler.bungeecord(version: String? = null) = SpigotDependencies.BUNGEE_CORD.format(version)
 
 fun DependencyHandler.minecraftServer(version: String? = null) = SpigotDependencies.MINECRAFT_SERVER.format(version)
 

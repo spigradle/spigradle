@@ -1,8 +1,8 @@
 package kr.entree.spigradle
 
-import kr.entree.spigradle.module.common.task.GenerateYamlTask
+import kr.entree.spigradle.module.common.GenerateYamlTask
 import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.module.spigot.extension.SpigotDescription
+import kr.entree.spigradle.module.spigot.SpigotDescription
 import org.gradle.kotlin.dsl.create
 import org.gradle.testfixtures.ProjectBuilder
 import kotlin.test.Test

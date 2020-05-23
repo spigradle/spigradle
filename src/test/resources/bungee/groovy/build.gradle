@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+    id 'kr.entree.spigradle.bungee'
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly bungeecord()
+}
+
+bungee {
+    author = 'EntryPoint'
+}
