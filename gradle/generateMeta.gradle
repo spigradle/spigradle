@@ -2,23 +2,24 @@ def generatedSourceDir = new File(buildDir, "generated/sources/spigradle/java/ma
 
 sourceSets {
     main {
-        groovy {
+        kotlin {
             srcDir generatedSourceDir
         }
     }
 }
 
 task generateSource {
-    def source = new File(generatedSourceDir, "kr/entree/spigradle/SpigradleMeta.groovy")
+    def source = new File(generatedSourceDir, "kr/entree/spigradle/SpigradleMeta.kt")
     source.parentFile.mkdirs()
     source.newWriter().withCloseable {
         it.write("""\
                 package kr.entree.spigradle
-                class SpigradleMeta {
-                    public static final String VERSION = "${project.version}"
+
+                object SpigradleMeta {
+                    const val VERSION = "${project.version}"
                 }
             """.stripIndent())
     }
 }
 
-compileGroovy.dependsOn generateSource
+compileKotlin.dependsOn generateSource

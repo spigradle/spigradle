@@ -1,0 +1,31 @@
+main: kr.entree.spigradle.Main
+name: Spigradle
+version: 1.1
+description: This plugin does so much stuff it can't be contained!
+website: "https://github.com/EntryPointKR/Spigradle"
+authors:
+ - EntryPoint
+api-version: 1.15
+load: POSTWORLD
+prefix: Its prefix
+softdepend:
+ - ProtocolLib
+loadbefore:
+ - ABC
+commands:
+  give:
+    description: Give command.
+    usage: "/<command> [test|stop]"
+    permission: test.foo
+    permission-message: You do not have permission!
+    aliases:
+     - alias
+permissions:
+  test.*:
+    description: Wildcard permission
+    default: op
+    children:
+      test.foo: true
+  test.foo:
+    description: Allows foo command
+    default: "true"
