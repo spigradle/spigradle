@@ -4,6 +4,7 @@ import kr.entree.spigradle.module.common.GenerateYamlTask
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.module.spigot.SpigotDescription
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.support.normaliseLineSeparators
 import org.gradle.testfixtures.ProjectBuilder
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -81,7 +82,7 @@ class GenerateYamlTaskTest {
             setToOptionMap(extension)
             generate()
         }
-        val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText()
+        val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
         assertEquals(expected, yamlTask.outputFile.readText())
     }
 }
