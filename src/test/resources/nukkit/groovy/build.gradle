@@ -1,0 +1,15 @@
+plugins {
+    id 'kr.entree.spigradle.nukkit'
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly nukkit()
+}
+
+nukkit {
+    authors = ['EntryPoint']
+}

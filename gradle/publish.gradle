@@ -42,11 +42,9 @@ pluginBundle {
 publishing {
     publications {
         spigradle(MavenPublication) { MavenPublication publication ->
-            shadow.component(publication)
+            shadow.component publication
             afterEvaluate {
-                artifact publishPluginJar
-                artifact publishPluginJavaDocsJar
-                artifact publishPluginGroovyDocsJar
+                artifact kotlinSourcesJar
             }
         }
     }

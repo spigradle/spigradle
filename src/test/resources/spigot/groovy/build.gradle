@@ -1,0 +1,25 @@
+plugins {
+    id 'kr.entree.spigradle'
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly spigot()
+}
+
+spigot {
+    main = 'ABC'
+}
+
+build.doLast {
+    def pluginFile = new File(generateSpigotDescription.temporaryDir, 'plugin.yml')
+    if (pluginFile.isFile()) {
+        println(pluginFile.absolutePath)
+        println(pluginFile.text)
+    } else {
+        throw new GradleException("Error!")
+    }
+}
