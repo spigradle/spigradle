@@ -1,4 +1,4 @@
-package kr.entree.spigradle.module.common.task
+package kr.entree.spigradle.module.common
 
 import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import org.gradle.api.DefaultTask

@@ -1,7 +1,7 @@
 package kr.entree.spigradle.internal
 
 import com.google.auto.service.AutoService
-import kr.entree.spigradle.Plugin
+import kr.entree.spigradle.PluginMain
 import java.io.File
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -14,7 +14,7 @@ import javax.lang.model.element.TypeElement
 const val PLUGIN_APT_RESULT_PATH_KEY = "pluginAnnotationProcessResultPath"
 const val PLUGIN_APT_DEFAULT_PATH = "spigradle/plugin-main"
 
-@SupportedAnnotationTypes("kr.entree.spigradle.Plugin")
+@SupportedAnnotationTypes("kr.entree.spigradle.PluginMain")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions(PLUGIN_APT_RESULT_PATH_KEY)
 @AutoService(Processor::class)
@@ -30,7 +30,7 @@ internal class PluginAnnotationProcessor : AbstractProcessor() { // TODO: Need t
                 }
             }
         } else {
-            val pluginAnnotation = Plugin::class.java
+            val pluginAnnotation = PluginMain::class.java
             pluginName = roundEnv.getElementsAnnotatedWith(pluginAnnotation)
                     .filterIsInstance<QualifiedNameable>()
                     .find {

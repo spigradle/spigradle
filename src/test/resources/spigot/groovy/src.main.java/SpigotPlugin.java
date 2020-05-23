@@ -1,7 +1,7 @@
-import kr.entree.spigradle.Plugin;
+import kr.entree.spigradle.PluginMain;
 import org.bukkit.plugin.java.JavaPlugin;
 
-@Plugin
+@PluginMain
 public class SpigotPlugin extends JavaPlugin {
 
 }

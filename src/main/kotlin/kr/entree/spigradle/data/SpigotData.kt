@@ -35,17 +35,10 @@ open class Permission(@Transient val name: String) {
     var children = emptyMap<String, Boolean>()
 }
 
-fun ExtraPropertiesExtension.setSpigotExtension() {
-    set("POST_WORLD", Load.POST_WORLD)
-    set("STARTUP", Load.STARTUP)
-}
-
 object SpigotRepositories {
     @SerialName("spigotmc")
     val SPIGOT_MC = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     val SPIGOT = SPIGOT_MC
-
-    val BUNGEECORD = Repositories.SONATYPE
 
     @SerialName("papermc")
     val PAPER_MC = "https://papermc.io/repo/repository/maven-public/"
@@ -73,14 +66,6 @@ object SpigotDependencies {
             VersionModifier.SPIGOT_ADJUSTER
     )
     val SPIGOT_ALL = Dependency(SPIGOT, name = "spigot")
-
-    @SerialName("bungeecord")
-    val BUNGEE_CORD = Dependency(
-            "net.md-5",
-            "bungeecord-api",
-            "1.15-SNAPSHOT",
-            VersionModifier.SNAPSHOT_APPENDER
-    )
     val MINECRAFT_SERVER = Dependency(
             SPIGOT.group,
             "minecraft-server",

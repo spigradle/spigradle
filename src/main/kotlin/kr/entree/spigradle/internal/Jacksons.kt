@@ -61,7 +61,3 @@ internal typealias SerialName = JsonProperty
 internal typealias Transient = JsonIgnore
 
 internal typealias Serialize = JsonSerialize
-
-@Target(AnnotationTarget.PROPERTY)
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Aliases(val value: Array<String>)
