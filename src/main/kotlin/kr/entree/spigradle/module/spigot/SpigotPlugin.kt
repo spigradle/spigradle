@@ -12,7 +12,7 @@ import org.gradle.kotlin.dsl.maven
 /**
  * Created by JunHyung Lim on 2020-04-28
  */
-class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generation, Main class auto detection
+class SpigotPlugin : Plugin<Project> {
     companion object {
         const val DESC_GEN_TASK_NAME = "generateSpigotDescription"
         const val MAIN_DETECTION_TASK_NAME = "detectSpigotMain"
@@ -49,5 +49,9 @@ class SpigotPlugin : Plugin<Project> { // TODO: Shortcuts, Plugin YAML Generatio
             set("POST_WORLD", Load.POST_WORLD)
             set("STARTUP", Load.STARTUP)
         }
+    }
+
+    private fun Project.setupPrepareSpigotTask() {
+
     }
 }
