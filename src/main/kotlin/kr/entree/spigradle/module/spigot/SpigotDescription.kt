@@ -7,9 +7,9 @@ import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.Permission
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
+import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
 import kr.entree.spigradle.module.common.toolsDir
-import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import java.io.File
@@ -43,6 +43,8 @@ open class SpigotDescription(project: Project) : StandardDescription {
 
     val commands: NamedDomainObjectContainer<Command> = project.container(Command::class.java)
     val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class.java)
+
+    @Transient
     val debug: SpigotDebug = SpigotDebug(
             File(project.debugDir, "spigot/spigot.jar"),
             File(project.toolsDir, "buildtools/BuildTools.jar")

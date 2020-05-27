@@ -92,6 +92,7 @@ tasks {
     }
     test {
         useJUnitPlatform()
+        maxParallelForks = 4
         testLogging {
             events("passed", "skipped", "failed")
         }
