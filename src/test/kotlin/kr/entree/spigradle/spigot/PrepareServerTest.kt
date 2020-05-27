@@ -1,9 +1,9 @@
 package kr.entree.spigradle.spigot
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import kr.entree.spigradle.module.common.DownloadTask
-import kr.entree.spigradle.module.spigot.BuildSpigotTask
-import kr.entree.spigradle.module.spigot.RunSpigotTask
+import kr.entree.spigradle.module.common.Download
+import kr.entree.spigradle.module.spigot.BuildSpigot
+import kr.entree.spigradle.module.spigot.RunSpigot
 import org.gradle.api.file.CopySpec
 import org.gradle.kotlin.dsl.closureOf
 import org.gradle.kotlin.dsl.creating
@@ -22,12 +22,12 @@ class PrepareServerTest {
         val project = ProjectBuilder.builder().build()
         val buildToolJar = File(tempFile, "tools/BuildTools.jar").apply { parentFile.mkdirs() }
         val serverJar = File(buildToolJar.parentFile, "server/spigot.jar").apply { parentFile.mkdirs() }
-        val downloadBuildTools by project.tasks.creating(DownloadTask::class) {
+        val downloadBuildTools by project.tasks.creating(Download::class) {
             source = "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
             destination = buildToolJar
         }
-        val buildSpigot by project.tasks.creating(BuildSpigotTask::class) {
-            toolFile = downloadBuildTools.destination
+        val buildSpigot by project.tasks.creating(BuildSpigot::class) {
+            this.buildToolJar = downloadBuildTools.destination
             version = "1.15.2"
         }
         downloadBuildTools.download()
@@ -44,9 +44,9 @@ class PrepareServerTest {
             into(serverJar.parentFile)
             rename { serverJar.name }
         })
-        project.tasks.creating(RunSpigotTask::class) {
+        project.tasks.creating(RunSpigot::class) {
             eula = true
-            spigotFile = serverJar
+            spigotJar = serverJar
             args("nogui")
             exec()
         }

@@ -13,16 +13,8 @@ interface StandardDescription : MainProvider {
     var name: String?
     var version: String?
 
-    fun setDefaults(project: Project) {
+    fun init(project: Project) {
         name = name ?: project.name
         version = version ?: project.version.toString()
-    }
-}
-
-abstract class DefaultDescription(project: Project) : StandardDescription {
-    init {
-        project.afterEvaluate {
-            setDefaults(project)
-        }
     }
 }

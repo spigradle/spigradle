@@ -11,7 +11,12 @@ import java.net.URL
 /**
  * Created by JunHyung Lim on 2020-05-26
  */
-open class DownloadTask : DefaultTask() {
+open class Download : DefaultTask() {
+    init {
+        group = "spigradle"
+        description = "Download the file from the given url."
+    }
+
     @get:Input
     @SkipWhenEmpty
     lateinit var source: String

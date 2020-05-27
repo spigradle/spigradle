@@ -22,7 +22,12 @@ import javax.inject.Inject
 /**
  * Created by JunHyung Lim on 2020-05-20
  */
-open class SubclassDetectionTask @Inject constructor(private val superClassName: String) : DefaultTask() {
+open class SubclassDetection @Inject constructor(private val superClassName: String) : DefaultTask() {
+    init {
+        group = "spigradle"
+        description = "Detect the jvm subclass."
+    }
+
     @get:SkipWhenEmpty
     @get:InputFiles
     var classDirectories: FileCollection = project.files()
@@ -50,9 +55,9 @@ open class SubclassDetectionTask @Inject constructor(private val superClassName:
     }
 
     companion object {
-        fun create(project: Project, taskName: String, superClassName: String): SubclassDetectionTask {
+        fun create(project: Project, taskName: String, superClassName: String): SubclassDetection {
             val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
-            return project.tasks.create(taskName, SubclassDetectionTask::class, superClassName).apply {
+            return project.tasks.create(taskName, SubclassDetection::class, superClassName).apply {
                 classDirectories = sourceSets["main"].output.classesDirs
             }
         }
