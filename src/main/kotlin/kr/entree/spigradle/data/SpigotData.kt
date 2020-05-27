@@ -3,12 +3,10 @@ package kr.entree.spigradle.data
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
-import org.gradle.api.plugins.ExtraPropertiesExtension
 
 /**
  * Created by JunHyung Lim on 2020-05-22
  */
-
 enum class Load {
     @SerialName("POSTWORLD")
     POST_WORLD,

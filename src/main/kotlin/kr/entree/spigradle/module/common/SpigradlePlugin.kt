@@ -14,12 +14,18 @@ import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JC
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
+import org.gradle.plugins.ide.idea.IdeaPlugin
+import org.gradle.plugins.ide.idea.model.IdeaModel
 import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-18
  */
-internal fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
+fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
+
+val Project.toolsDir get() = File(projectDir, "tools")
+
+val Project.debugDir get() = File(projectDir, "debug")
 
 class SpigradlePlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -28,17 +34,19 @@ class SpigradlePlugin : Plugin<Project> {
             setupDefaultDependencies()
             setupGroovyExtensions()
             setupAnnotationProcessorOptions()
+            presentExcludeDirectories()
         }
     }
 
     @Suppress("UnstableApiUsage")
     private fun Project.setupPlugins() {
         pluginManager.apply(JavaPlugin::class)
+        pluginManager.apply(IdeaPlugin::class)
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
             plugins.apply("org.jetbrains.kotlin.kapt")
             afterEvaluate {
                 val kaptKotlin: Task by tasks
-                tasks.withType(GenerateYamlTask::class) {
+                tasks.withType(GenerateYaml::class) {
                     kaptKotlin.finalizedBy(this) // For proper task ordering
                 }
             }
@@ -94,5 +102,12 @@ class SpigradlePlugin : Plugin<Project> {
         val compileJava: JavaCompile by tasks
         val path = File(buildDir, PLUGIN_APT_DEFAULT_PATH)
         compileJava.options.compilerArgs.add("-A${PLUGIN_APT_RESULT_PATH_KEY}=${path.absolutePath}")
+    }
+
+    private fun Project.presentExcludeDirectories() {
+        val idea: IdeaModel by extensions
+        idea.module {
+            excludeDirs.addAll(listOf(toolsDir, debugDir))
+        }
     }
 }

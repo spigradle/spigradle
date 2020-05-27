@@ -1,6 +1,6 @@
 package kr.entree.spigradle
 
-import kr.entree.spigradle.module.common.GenerateYamlTask
+import kr.entree.spigradle.module.common.GenerateYaml
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.module.spigot.SpigotDescription
 import org.gradle.kotlin.dsl.create
@@ -14,7 +14,7 @@ import kotlin.test.assertEquals
  */
 class GenerateYamlTaskTest {
     val project = ProjectBuilder.builder().build()
-    val yamlTask = project.tasks.create("yaml", GenerateYamlTask::class)
+    val yamlTask = project.tasks.create("yaml", GenerateYaml::class)
 
     init {
         yamlTask.outputFile.deleteOnExit()

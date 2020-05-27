@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.convertValue
-import kr.entree.spigradle.internal.Jackson
-import kr.entree.spigradle.internal.MainProvider
-import kr.entree.spigradle.internal.Messages
-import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.internal.*
 import notNull
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -23,7 +20,7 @@ import java.nio.charset.Charset
 /**
  * Created by JunHyung Lim on 2020-04-28
  */
-internal inline fun <reified T : MainProvider> Project.setupDescGenTask(
+internal inline fun <reified T : StandardDescription> Project.setupDescGenTask(
         extensionName: String,
         yamlTaskName: String,
         detectionTaskName: String,
@@ -31,14 +28,15 @@ internal inline fun <reified T : MainProvider> Project.setupDescGenTask(
         pluginSuperClass: String
 ) {
     val description = extensions.create<T>(extensionName, this)
-    val detectionTask = SubclassDetectionTask.create(this, detectionTaskName, pluginSuperClass)
-    val generateTask = GenerateYamlTask.create(this, yamlTaskName, extensionName, descFileName, description)
+    val detectionTask = SubclassDetection.create(this, detectionTaskName, pluginSuperClass)
+    val generateTask = GenerateYaml.create(this, yamlTaskName, extensionName, descFileName, description)
     val classes: Task by tasks
+    description.init(project)
     classes.finalizedBy(detectionTask)
     detectionTask.finalizedBy(generateTask) // classes -> detectionTask -> generateTask
 }
 
-open class GenerateYamlTask : DefaultTask() {
+open class GenerateYaml : DefaultTask() {
     @get:Input
     var properties = mutableMapOf<String, Any>()
 
@@ -52,7 +50,7 @@ open class GenerateYamlTask : DefaultTask() {
     val yamlOptions = mutableMapOf<String, Boolean>()
 
     init {
-        group = "Spigradle"
+        group = "spigradle"
         description = "Generate yaml file"
     }
 
@@ -81,9 +79,9 @@ open class GenerateYamlTask : DefaultTask() {
     }
 
     companion object {
-        internal fun create(project: Project, taskName: String, extensionName: String, fileName: String, data: MainProvider): GenerateYamlTask {
+        internal fun create(project: Project, taskName: String, extensionName: String, fileName: String, data: MainProvider): GenerateYaml {
             val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
-            return project.tasks.create(taskName, GenerateYamlTask::class) {
+            return project.tasks.create(taskName, GenerateYaml::class) {
                 outputFile = File(temporaryDir, fileName)
                 doFirst {
                     if (data.main == null) {
