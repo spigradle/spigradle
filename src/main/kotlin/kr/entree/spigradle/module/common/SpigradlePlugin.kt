@@ -34,7 +34,7 @@ class SpigradlePlugin : Plugin<Project> {
             setupDefaultDependencies()
             setupGroovyExtensions()
             setupAnnotationProcessorOptions()
-            presentExcludeDirectories()
+            markExcludeDirectories()
         }
     }
 
@@ -104,7 +104,7 @@ class SpigradlePlugin : Plugin<Project> {
         compileJava.options.compilerArgs.add("-A${PLUGIN_APT_RESULT_PATH_KEY}=${path.absolutePath}")
     }
 
-    private fun Project.presentExcludeDirectories() {
+    private fun Project.markExcludeDirectories() {
         val idea: IdeaModel by extensions
         idea.module {
             excludeDirs.addAll(listOf(toolsDir, debugDir))

@@ -1,11 +1,12 @@
 package kr.entree.spigradle.module.bungee
 
 import kr.entree.spigradle.internal.StandardDescription
+import org.gradle.api.Project
 
 /**
  * Created by JunHyung Lim on 2020-05-22
  */
-open class BungeeDescription : StandardDescription {
+open class BungeeDescription(project: Project) : StandardDescription {
     override var main: String? = null
     override var name: String? = null
     override var version: String? = null
