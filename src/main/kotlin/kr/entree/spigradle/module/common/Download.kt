@@ -14,7 +14,7 @@ import java.net.URL
 open class Download : DefaultTask() {
     init {
         group = "spigradle"
-        description = "Download the file from the given url."
+        description = "Download the file from the given URL."
     }
 
     @get:Input

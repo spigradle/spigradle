@@ -1,5 +1,6 @@
 package kr.entree.spigradle.module.common
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.lang.Closure
 import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
@@ -28,6 +29,10 @@ val Project.toolsDir get() = File(projectDir, "tools")
 val Project.debugDir get() = File(projectDir, "debug")
 
 class SpigradlePlugin : Plugin<Project> {
+    companion object {
+        val mapper: ObjectMapper = ObjectMapper()
+    }
+
     override fun apply(project: Project) {
         with(project) {
             setupPlugins()
