@@ -76,12 +76,12 @@ class SpigotPlugin : Plugin<Project> {
             dependsOn(prepareSpigot)
         }
         val build by tasks
-        val prepareDebug = createPrepareDebug(debugOption).apply {
+        val preparePlugin = createPreparePlugin(debugOption).apply {
             dependsOn(build)
         }
         val debugSpigot = createDebugSpigot().apply {
-            dependsOn(prepareDebug, runSpigot)
-            runSpigot.mustRunAfter(prepareDebug)
+            dependsOn(preparePlugin, runSpigot)
+            runSpigot.mustRunAfter(preparePlugin)
         }
     }
 
@@ -153,14 +153,16 @@ class SpigotPlugin : Plugin<Project> {
         }
     }
 
-    private fun Project.createPrepareDebug(debugOption: SpigotDebug): Task {
-        return tasks.create("prepareDebug") {
+    private fun Project.createPreparePlugin(debugOption: SpigotDebug): Task {
+        return tasks.create("preparePlugin") {
             group = "spigradle"
             description = "Copy the jars into the server."
             doFirst {
                 val pluginJar = tasks.withType<Jar>().asSequence().mapNotNull {
                     it.archiveFile.orNull?.asFile
-                }.find { it.isFile } ?: throw GradleException("Couldn't find a plugin.jar")
+                }.find {
+                    it.isFile
+                } ?: throw GradleException("Couldn't find a plugin.jar")
                 copy {
                     from(pluginJar)
                     into(File(debugOption.spigotDirectory, "plugins"))
