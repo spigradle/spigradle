@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import kr.entree.spigradle.module.common.Download
 import kr.entree.spigradle.module.spigot.BuildSpigot
 import kr.entree.spigradle.module.spigot.RunSpigot
+import kr.entree.spigradle.module.spigot.SpigotDebug
 import org.gradle.api.file.CopySpec
 import org.gradle.kotlin.dsl.closureOf
 import org.gradle.kotlin.dsl.creating
@@ -22,6 +23,7 @@ class PrepareServerTest {
         val project = ProjectBuilder.builder().build()
         val buildToolJar = File(tempFile, "tools/BuildTools.jar").apply { parentFile.mkdirs() }
         val serverJar = File(buildToolJar.parentFile, "server/spigot.jar").apply { parentFile.mkdirs() }
+        val debugOption = SpigotDebug(serverJar, buildToolJar)
         val downloadBuildTools by project.tasks.creating(Download::class) {
             source = "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
             destination = buildToolJar
@@ -45,8 +47,7 @@ class PrepareServerTest {
             rename { serverJar.name }
         })
         project.tasks.creating(RunSpigot::class) {
-            eula = true
-            spigotJar = serverJar
+            spigotDebug = debugOption
             args("nogui")
             exec()
         }

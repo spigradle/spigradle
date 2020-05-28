@@ -1,14 +1,18 @@
 package kr.entree.spigradle.module.spigot
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.module.common.Download
+import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.setupDescGenTask
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.JavaExec
+import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.*
 import java.io.File
 
@@ -66,9 +70,15 @@ class SpigotPlugin : Plugin<Project> {
             destination = debugOption.buildToolJar
             dependsOn(tasks.getByName("idea"))
         }
-        val buildSpigot = tasks.create<BuildSpigot>("buildSpigot").apply {
-            buildToolJar = downloadSpigotBuildTools.destination
-            dependsOn(downloadSpigotBuildTools)
+        val buildSpigot by tasks.creating(JavaExec::class) {
+            group = "spigradle"
+            description = "Build the spigot.jar using the BuildTools."
+            doFirst {
+                args(
+                        "--rev", debugOption.buildVersion,
+                        "--output-dir", debugOption.spigotDirectory
+                )
+            }
         }
         val prepareSpigot by tasks.creating {
             group = "spigradle"
@@ -78,27 +88,61 @@ class SpigotPlugin : Plugin<Project> {
                 !debugOption.spigotJar.isFile
             }
             doFirst {
-                val buildVersion = buildSpigot.buildData["minecraftVersion"]?.toString()
-                        ?: throw GradleException("Couldn't find the value 'minecraftVersion' in BuildTools/BuildData/info.json.")
-                val resultJar = File(buildSpigot.outputDirectory, "spigot-$buildVersion.jar").apply { parentFile.mkdirs() }
+                val buildVersion = runCatching {
+                    SpigradlePlugin.mapper.readValue<Map<String, Any>>(
+                            File(debugOption.buildToolDirectory, "BuildData/info.json")
+                    )["minecraftVersion"]?.toString()
+                }.getOrElse {
+                    throw GradleException("Error while reading buildVersion in build info.json.", it)
+                }
+                val resultJar = File(
+                        debugOption.buildToolDirectory,
+                        "spigot-$buildVersion.jar"
+                ).apply { parentFile.mkdirs() }
                 copy {
                     from(resultJar)
-                    into(debugOption.spigotJar.parentFile)
+                    into(debugOption.spigotDirectory)
                     rename { debugOption.spigotJar.name }
                 }
             }
         }
-        val runSpigot by tasks.creating(RunSpigot::class) {
+        val runSpigot by tasks.creating(JavaExec::class) {
             group = "spigradle"
             description = "Startup the spigot server."
-            spigotJar = debugOption.spigotJar
             standardInput = System.`in`
             dependsOn(prepareSpigot)
             doFirst {
-                if (debugOption.eula) {
-                    eula = true
+                if (!debugOption.eula) {
+                    throw GradleException("""
+                        Please set the 'eula' property to true if you agree the Mojang EULA.
+                        https://account.mojang.com/documents/minecraft_eula
+                    """.trimIndent())
+                }
+                classpath = files(debugOption.spigotJar)
+                workingDir = debugOption.spigotDirectory
+                File(debugOption.spigotDirectory, "eula.txt").writeText("eula=true")
+            }
+        }
+        val build by tasks
+        val prepareDebug by tasks.creating {
+            group = "spigradle"
+            description = "Copy the jars into the server."
+            dependsOn(build)
+            doFirst {
+                val pluginJar = tasks.withType<Jar>().asSequence().mapNotNull {
+                    it.archiveFile.orNull?.asFile
+                }.find { it.isFile } ?: throw GradleException("Couldn't find a plugin.jar")
+                copy {
+                    from(pluginJar)
+                    into(File(debugOption.spigotDirectory, "plugins"))
                 }
             }
+        }
+        val debugSpigot by tasks.creating {
+            group = "spigradle"
+            description = "Startup the spigot server with the plugin.jar"
+            dependsOn(prepareDebug, runSpigot)
+            runSpigot.mustRunAfter(prepareDebug)
         }
     }
 }

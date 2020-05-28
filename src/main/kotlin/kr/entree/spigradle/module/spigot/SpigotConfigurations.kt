@@ -58,6 +58,17 @@ open class SpigotDescription(project: Project) : StandardDescription {
     fun debug(configure: SpigotDebug.() -> Unit) = configure(debug)
 }
 
-data class SpigotDebug(val spigotJar: File, val buildToolJar: File) {
+data class SpigotDebug(
+        var spigotJar: File,
+        var spigotDirectory: File,
+        var buildToolJar: File,
+        var buildToolDirectory: File
+) {
     var eula: Boolean = false
+    var buildVersion: String = "latest"
+
+    constructor(spigotJar: File, buildToolJar: File) : this(
+            spigotJar, spigotJar.parentFile,
+            buildToolJar, buildToolJar.parentFile
+    )
 }
