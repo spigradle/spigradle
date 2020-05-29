@@ -112,7 +112,7 @@ class SpigradlePlugin : Plugin<Project> {
     private fun Project.markExcludeDirectories() {
         val idea: IdeaModel by extensions
         idea.module {
-            excludeDirs.addAll(listOf(toolsDir, debugDir))
+            excludeDirs = setOf(toolsDir, debugDir) + excludeDirs
         }
     }
 }
