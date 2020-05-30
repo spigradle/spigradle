@@ -9,7 +9,7 @@ import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
-import kr.entree.spigradle.module.common.toolsDir
+import kr.entree.spigradle.module.common.spigotBuildToolDir
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import java.io.File
@@ -47,7 +47,7 @@ open class SpigotDescription(project: Project) : StandardDescription {
     @Transient
     val debug: SpigotDebug = SpigotDebug(
             File(project.debugDir, "spigot/spigot.jar"),
-            File(project.toolsDir, "buildtools/BuildTools.jar")
+            File(project.gradle.spigotBuildToolDir, "BuildTools.jar")
     )
 
     fun debug(configure: Closure<*>) {
@@ -60,15 +60,10 @@ open class SpigotDescription(project: Project) : StandardDescription {
 
 data class SpigotDebug(
         var spigotJar: File,
-        var spigotDirectory: File,
         var buildToolJar: File,
-        var buildToolDirectory: File
-) {
-    var eula: Boolean = false
-    var buildVersion: String = "latest"
-
-    constructor(spigotJar: File, buildToolJar: File) : this(
-            spigotJar, spigotJar.parentFile,
-            buildToolJar, buildToolJar.parentFile
-    )
-}
+        var spigotDirectory: File = spigotJar.parentFile,
+        var buildToolDirectory: File = buildToolJar.parentFile,
+        var buildToolOutputDirectory: File = buildToolJar.parentFile,
+        var eula: Boolean = false,
+        var buildVersion: String = "latest"
+)
