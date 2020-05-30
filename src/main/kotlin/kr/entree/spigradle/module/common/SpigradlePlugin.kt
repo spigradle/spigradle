@@ -12,6 +12,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
+import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
@@ -24,7 +25,7 @@ import java.io.File
  */
 fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
 
-val Project.toolsDir get() = File(projectDir, "tools")
+val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, "spigot-buildtools")
 
 val Project.debugDir get() = File(projectDir, "debug")
 
@@ -112,7 +113,7 @@ class SpigradlePlugin : Plugin<Project> {
     private fun Project.markExcludeDirectories() {
         val idea: IdeaModel by extensions
         idea.module {
-            excludeDirs = setOf(toolsDir, debugDir) + excludeDirs
+            excludeDirs = setOf(debugDir) + excludeDirs
         }
     }
 }
