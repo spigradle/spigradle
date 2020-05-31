@@ -107,7 +107,7 @@ class SpigotPlugin : Plugin<Project> {
                 workingDir = debugOption.buildToolDirectory
                 args(
                         "--rev", debugOption.buildVersion,
-                        "--output-dir", debugOption.buildToolDirectory
+                        "--output-dir", debugOption.buildToolOutputDirectory
                 )
             }
         }
