@@ -63,7 +63,7 @@ data class SpigotDebug(
         var buildToolJar: File,
         var spigotDirectory: File = spigotJar.parentFile,
         var buildToolDirectory: File = buildToolJar.parentFile,
-        var buildToolOutputDirectory: File = buildToolJar.parentFile,
+        var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
         var eula: Boolean = false,
         var buildVersion: String = "latest"
 )
