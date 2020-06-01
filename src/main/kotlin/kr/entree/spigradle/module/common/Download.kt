@@ -3,7 +3,6 @@ package kr.entree.spigradle.module.common
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
-import org.gradle.api.tasks.SkipWhenEmpty
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.net.URL
@@ -18,11 +17,9 @@ open class Download : DefaultTask() {
     }
 
     @get:Input
-    @SkipWhenEmpty
-    lateinit var source: String
+    var source: String? = null
 
     @get:OutputFile
-    @SkipWhenEmpty
     lateinit var destination: File
 
     @TaskAction

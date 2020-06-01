@@ -5,6 +5,7 @@ import groovy.lang.Closure
 import kr.entree.spigradle.data.Command
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.Permission
+import kr.entree.spigradle.data.FileEntry
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
@@ -46,8 +47,9 @@ open class SpigotDescription(project: Project) : StandardDescription {
 
     @Transient
     val debug: SpigotDebug = SpigotDebug(
-            File(project.debugDir, "spigot/spigot.jar"),
-            File(project.gradle.spigotBuildToolDir, "BuildTools.jar")
+            FileEntry(File(project.debugDir, "spigot/spigot.jar")),
+            FileEntry(File(project.debugDir, "paper/paper.jar")),
+            FileEntry(File(project.gradle.spigotBuildToolDir, "BuildTools.jar"))
     )
 
     fun debug(configure: Closure<*>) {
@@ -57,13 +59,3 @@ open class SpigotDescription(project: Project) : StandardDescription {
 
     fun debug(configure: SpigotDebug.() -> Unit) = configure(debug)
 }
-
-data class SpigotDebug(
-        var spigotJar: File,
-        var buildToolJar: File,
-        var spigotDirectory: File = spigotJar.parentFile,
-        var buildToolDirectory: File = buildToolJar.parentFile,
-        var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
-        var eula: Boolean = false,
-        var buildVersion: String = "latest"
-)
