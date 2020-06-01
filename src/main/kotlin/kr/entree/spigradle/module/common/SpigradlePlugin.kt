@@ -121,6 +121,8 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupTasks() {
         tasks.create("cleanDebug", Delete::class) {
+            group = "spigradle"
+            description = "Delete the debug directory."
             delete(debugDir)
         }
     }
