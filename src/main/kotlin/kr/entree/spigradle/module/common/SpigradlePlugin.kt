@@ -14,6 +14,7 @@ import org.gradle.api.Task
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
 import org.gradle.plugins.ide.idea.IdeaPlugin
@@ -41,6 +42,7 @@ class SpigradlePlugin : Plugin<Project> {
             setupGroovyExtensions()
             setupAnnotationProcessorOptions()
             markExcludeDirectories()
+            setupTasks()
         }
     }
 
@@ -114,6 +116,12 @@ class SpigradlePlugin : Plugin<Project> {
         val idea: IdeaModel by extensions
         idea.module {
             excludeDirs = setOf(debugDir) + excludeDirs
+        }
+    }
+
+    private fun Project.setupTasks() {
+        tasks.create("cleanDebug", Delete::class) {
+            delete(debugDir)
         }
     }
 }
