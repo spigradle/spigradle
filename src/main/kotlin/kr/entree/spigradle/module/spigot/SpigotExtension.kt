@@ -20,7 +20,7 @@ import java.io.File
         "authors", "api-version", "load", "prefix", "depend",
         "softdepend", "loadbefore", "commands", "permissions"
 )
-open class SpigotDescription(project: Project) : StandardDescription {
+open class SpigotExtension(project: Project) : StandardDescription {
     override var main: String? = null
     override var name: String? = null
     override var version: String? = null
