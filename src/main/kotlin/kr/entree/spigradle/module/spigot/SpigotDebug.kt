@@ -9,6 +9,7 @@ data class SpigotDebug(
         val paperFile: FileEntry,
         var buildToolFile: FileEntry,
         var buildToolOutputDirectory: File = File(buildToolFile.directory, "outputs"),
+        var agentPort: Int = 5005,
         var eula: Boolean = false,
         var buildVersion: String = "1.15.2"
 ) {
