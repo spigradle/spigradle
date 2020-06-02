@@ -25,7 +25,7 @@ class NukkitPlugin : Plugin<Project> {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
-            setupDescGenTask<NukkitDescription>(
+            setupDescGenTask<NukkitExtension>(
                     EXTENSION_NAME,
                     DESC_GEN_TASK_NAME,
                     MAIN_DETECTION_TASK_NAME,

@@ -18,7 +18,7 @@ import org.gradle.kotlin.dsl.container
         "authors", "api", "load", "prefix", "depend",
         "softdepend", "loadbefore", "commands", "permissions"
 )
-open class NukkitDescription(project: Project) : StandardDescription {
+open class NukkitExtension(project: Project) : StandardDescription {
     override var main: String? = null
     override var name: String? = null
     override var version: String? = null

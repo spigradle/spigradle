@@ -2,7 +2,7 @@ package kr.entree.spigradle
 
 import kr.entree.spigradle.module.common.GenerateYaml
 import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.module.spigot.SpigotDescription
+import kr.entree.spigradle.module.spigot.SpigotExtension
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.support.normaliseLineSeparators
 import org.gradle.testfixtures.ProjectBuilder
@@ -33,7 +33,7 @@ class GenerateYamlTaskTest {
 
     @Test
     fun `simple serialization`() {
-        val extension = project.extensions.create<SpigotDescription>("spigot", project).apply {
+        val extension = project.extensions.create<SpigotExtension>("spigot", project).apply {
             main = "SpigradleMain"
         }
         yamlTask.apply {
@@ -45,7 +45,7 @@ class GenerateYamlTaskTest {
 
     @Test
     fun `detail serialization`() {
-        val extension = project.extensions.create<SpigotDescription>("spigot", project).apply {
+        val extension = project.extensions.create<SpigotExtension>("spigot", project).apply {
             main = "kr.entree.spigradle.Main"
             name = "Spigradle"
             version = "1.1"
