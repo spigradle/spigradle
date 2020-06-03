@@ -1,6 +1,5 @@
 package kr.entree.spigradle.module.spigot
 
-import kr.entree.spigradle.data.FileEntry
 import java.io.File
 
 data class SpigotDebug(
