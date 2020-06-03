@@ -5,7 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kr.entree.spigradle.internal.*
-import notNull
+import kr.entree.spigradle.internal.notNull
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.Task
