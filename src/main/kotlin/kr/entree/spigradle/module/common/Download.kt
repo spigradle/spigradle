@@ -1,6 +1,7 @@
 package kr.entree.spigradle.module.common
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.internal.tasks.TaskExecutionOutcome
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
@@ -19,11 +20,22 @@ open class Download : DefaultTask() {
     @get:Input
     var source: String? = null
 
+    @get:Input
+    var skipWhenExists = true
+
     @get:OutputFile
     lateinit var destination: File
 
     @TaskAction
-    fun download() = destination.apply {
+    fun download() {
+        if (skipWhenExists && destination.isFile) {
+            state.setOutcome(TaskExecutionOutcome.SKIPPED)
+        } else {
+            downloadInternal()
+        }
+    }
+
+    private fun downloadInternal() = destination.apply {
         parentFile.mkdirs()
     }.writeBytes(URL(source).readBytes())
 }
