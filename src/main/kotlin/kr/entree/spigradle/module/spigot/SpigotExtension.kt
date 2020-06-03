@@ -5,7 +5,6 @@ import groovy.lang.Closure
 import kr.entree.spigradle.data.Command
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.Permission
-import kr.entree.spigradle.data.FileEntry
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
@@ -47,9 +46,8 @@ open class SpigotExtension(project: Project) : StandardDescription {
 
     @Transient
     val debug: SpigotDebug = SpigotDebug(
-            FileEntry(File(project.debugDir, "spigot/spigot.jar")),
-            FileEntry(File(project.debugDir, "paper/paper.jar")),
-            FileEntry(File(project.gradle.spigotBuildToolDir, "BuildTools.jar"))
+            File(project.debugDir, "spigot/server.jar"),
+            File(project.gradle.spigotBuildToolDir, "BuildTools.jar")
     )
 
     fun debug(configure: Closure<*>) {

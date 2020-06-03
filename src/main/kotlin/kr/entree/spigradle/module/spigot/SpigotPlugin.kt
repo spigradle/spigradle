@@ -1,11 +1,11 @@
 package kr.entree.spigradle.module.spigot
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import kr.entree.spigradle.data.FileEntry
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
-import kr.entree.spigradle.internal.readPluginJar
+import kr.entree.spigradle.internal.findArtifactJar
+import kr.entree.spigradle.internal.notNull
 import kr.entree.spigradle.module.common.Download
 import kr.entree.spigradle.module.common.SpigradlePlugin
 import kr.entree.spigradle.module.common.applySpigradlePlugin
@@ -15,11 +15,13 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.*
+import org.gradle.kotlin.dsl.support.useToRun
 import java.io.File
+import java.util.jar.JarFile
 
 /**
  * Created by JunHyung Lim on 2020-04-28
@@ -32,10 +34,8 @@ class SpigotPlugin : Plugin<Project> {
         const val DESC_FILE_NAME = "plugin.yml"
         const val PLUGIN_SUPER_CLASS = "org/bukkit/plugin/java/JavaPlugin"
         const val BUILD_TOOLS_URL = "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
-        val DEBUG_TASK_SPIGOT_GROUP = debugTaskGroup("Spigot")
-        val DEBUG_TASK_PAPER_GROUP = debugTaskGroup("Paper")
-
-        fun debugTaskGroup(serverName: String) = "spigradle ${serverName.toLowerCase()} debug"
+        const val TASK_GROUP = "spigradle spigot"
+        const val TASK_DEBUG_GROUP = "$TASK_GROUP debug"
     }
 
     override fun apply(project: Project) {
@@ -82,19 +82,16 @@ class SpigotPlugin : Plugin<Project> {
         val prepareSpigot = createPrepareSpigot(debugOption).apply {
             dependsOn(buildToolDownload, buildSpigot)
         }
-        val runSpigot = createRunServer("Spigot", debugOption.spigotFile, debugOption).apply {
-            group = DEBUG_TASK_SPIGOT_GROUP
+        val runSpigot = createRunServer(debugOption).apply {
             dependsOn(prepareSpigot)
         }
         val build by tasks
-        val preparePluginSpigot = createPreparePlugin("Spigot", debugOption.spigotFile, spigot).apply {
-            group = DEBUG_TASK_SPIGOT_GROUP
+        val preparePlugin = createPreparePlugin(spigot).apply {
             dependsOn(build)
         }
-        createDebugRun("Spigot").apply {
-            group = DEBUG_TASK_SPIGOT_GROUP
-            dependsOn(preparePluginSpigot, runSpigot)
-            runSpigot.mustRunAfter(preparePluginSpigot)
+        createDebugRun().apply {
+            dependsOn(preparePlugin, runSpigot)
+            runSpigot.mustRunAfter(preparePlugin)
         }
         createCleanSpigotBuild(debugOption)
         // Paper
@@ -102,17 +99,12 @@ class SpigotPlugin : Plugin<Project> {
         val preparePaper = createPreparePaper(debugOption).apply {
             dependsOn(paperClipDownload)
         }
-        val preparePluginPaper = createPreparePlugin("Paper", debugOption.paperFile, spigot).apply {
-            group = DEBUG_TASK_PAPER_GROUP
-            dependsOn(build)
-        }
-        val runPaper = createRunServer("Paper", debugOption.paperFile, debugOption).apply {
+        val runPaper = createRunServer(debugOption).apply {
             dependsOn(preparePaper)
         }
-        createDebugRun("Paper").apply {
-            group = DEBUG_TASK_PAPER_GROUP
-            dependsOn(preparePluginPaper, runPaper)
-            runPaper.mustRunAfter(preparePluginPaper)
+        createDebugRun().apply {
+            dependsOn(preparePlugin, runPaper)
+            runPaper.mustRunAfter(preparePlugin)
         }
     }
 
@@ -122,54 +114,47 @@ class SpigotPlugin : Plugin<Project> {
             description = "Download the BuildTools."
             source = BUILD_TOOLS_URL
             afterEvaluate {
-                destination = debugOption.buildToolFile.file
+                destination = debugOption.buildToolJar
             }
         }
     }
 
     private fun Project.createCleanSpigotBuild(debugOption: SpigotDebug): Delete {
         return tasks.create("cleanSpigotBuild", Delete::class).apply {
-            group = "spigradle spigot"
+            group = TASK_DEBUG_GROUP
             description = "Delete all BuildTools directories"
-            delete(debugOption.buildToolFile.directory)
+            delete(debugOption.buildToolDirectory)
             delete(debugOption.buildToolOutputDirectory)
         }
     }
 
-    private fun Project.createBuildSpigot(debugOption: SpigotDebug): JavaExec {
+    private fun Project.createBuildSpigot(options: SpigotDebug): JavaExec {
         return tasks.create("buildSpigot", JavaExec::class) {
-            group = "spigradle spigot"
+            group = TASK_DEBUG_GROUP
             description = "Build the spigot.jar using the BuildTools."
             outputs.cacheIf { true }
             afterEvaluate {
-                val (buildToolJar, buildToolDirectory) = debugOption.buildToolFile
-                outputs.dir(File(buildToolDirectory, "CraftBukkit/target/classes"))
-                classpath = files(buildToolJar)
-                workingDir = buildToolDirectory
+                outputs.dir(File(options.buildToolJar.parentFile, "CraftBukkit/target/classes"))
+                classpath = files(options.buildToolJar)
+                workingDir = options.buildToolDirectory
                 args(
-                        "--rev", debugOption.buildVersion,
-                        "--output-dir", debugOption.buildToolOutputDirectory
+                        "--rev", options.buildVersion,
+                        "--output-dir", options.buildToolOutputDirectory
                 )
             }
         }
     }
 
-    private fun Project.createPrepareSpigot(debugOption: SpigotDebug): Task {
-        return tasks.create("prepareSpigot") {
+    private fun Project.createPrepareSpigot(options: SpigotDebug): Task {
+        return tasks.create("prepareSpigot", Copy::class) {
             group = "spigradle spigot"
             description = "Copy the spigot.jar generated by BuildTools into the given path."
-            doLast {
-                val (spigotJar, spigotDir) = debugOption.spigotFile
-                val buildResultJar = runCatching {
-                    debugOption.buildToolFile.directory.findBuildResultJar()
-                }.getOrElse {
-                    throw GradleException("Error while reading buildVersion in build info.json.", it)
+            afterEvaluate {
+                from(File(options.buildToolDirectory, "Spigot/Spigot-Server/target")) {
+                    include("spigot*.jar")
                 }
-                copy {
-                    into(spigotDir)
-                    rename { spigotJar.name }
-                    from(buildResultJar)
-                }
+                into(options.serverDirectory)
+                rename { options.serverJar.name }
             }
         }
     }
@@ -180,13 +165,18 @@ class SpigotPlugin : Plugin<Project> {
 
     private fun File.findBuildResultJar() = File(this, "spigot-${readBuildVersion()}.jar")
 
-    private fun Project.createRunServer(name: String, workFile: FileEntry, debug: SpigotDebug): JavaExec {
-        val (serverJar, serverDir) = workFile
-        return tasks.create("run$name", JavaExec::class) {
-            group = debugTaskGroup(name)
-            description = "Startup the $name server."
+    private fun Project.createRunServer(debug: SpigotDebug): JavaExec {
+        val serverJar = debug.serverJar
+        return tasks.create("runSpigot", JavaExec::class) {
+            group = TASK_DEBUG_GROUP
+            description = "Startup the spigot server."
             standardInput = System.`in`
-            args("nogui", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}")
+            args("nogui")
+            afterEvaluate {
+                classpath = files(serverJar)
+                workingDir = serverJar.parentFile
+                args("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}")
+            }
             doFirst {
                 if (!debug.eula) {
                     throw GradleException("""
@@ -194,77 +184,83 @@ class SpigotPlugin : Plugin<Project> {
                         https://account.mojang.com/documents/minecraft_eula
                     """.trimIndent())
                 }
-                classpath = files(serverJar)
-                workingDir = serverDir
-                File(serverDir, "eula.txt").writeText("eula=true")
+                File(workingDir, "eula.txt").writeText("eula=true")
             }
         }
     }
 
     @OptIn(ExperimentalStdlibApi::class)
-    private fun Project.createPreparePlugin(name: String, serverJar: FileEntry, spigot: SpigotExtension): Task {
-        return tasks.create("preparePlugin$name") {
-            group = debugTaskGroup(name)
-            description = "Copy the jars into the $name server."
+    private fun Project.createPreparePlugin(spigot: SpigotExtension): Task {
+        return tasks.create("preparePlugin") {
+            group = TASK_DEBUG_GROUP
+            description = "Copy the jars into the spigot server."
             doLast {
-                val pluginsDir = File(serverJar.directory, "plugins")
-                val pluginJar = tasks.withType<Jar>().asSequence().mapNotNull {
-                    it.archiveFile.orNull?.asFile
-                }.find {
-                    it.isFile
-                } ?: throw GradleException("Couldn't find a plugin.jar")
+                val serverPluginsDir = File(spigot.debug.serverDirectory, "plugins")
+                val pluginJar = notNull(tasks.findArtifactJar()) { "Couldn't find a plugin.jar" }
                 val needPlugins = (spigot.depends + spigot.softDepends).toMutableSet()
-                (pluginsDir.listFiles() ?: emptyArray()).asSequence().mapNotNull {
-                    it.readPluginJar()["name"]?.toString()
-                }.takeWhile {
+                // Remove already had plugins
+                (serverPluginsDir.listFiles() ?: emptyArray()).asSequence().takeWhile {
                     needPlugins.isNotEmpty()
+                }.mapNotNull {
+                    it.readBukkitPluginDescription()["name"]?.toString()
                 }.forEach {
                     needPlugins -= it
                 }
                 copy {
+                    from(pluginJar)
+                    into(serverPluginsDir)
+                    // Find depend plugins from classpath and copy into server
                     project.withConvention(JavaPluginConvention::class) {
                         sourceSets["main"].compileClasspath
-                    }.asSequence().mapNotNull { file ->
-                        file.readPluginJar()["name"]?.let { pluginName ->
+                    }.asSequence().takeWhile {
+                        needPlugins.isNotEmpty()
+                    }.mapNotNull { file ->
+                        file.readBukkitPluginDescription()["name"]?.let { pluginName ->
                             file to pluginName.toString()
                         }
-                    }.takeWhile {
-                        needPlugins.isNotEmpty()
                     }.filter { (_, pluginName) ->
                         needPlugins.remove(pluginName)
                     }.forEach { (file, _) ->
                         logger.info("Plugin copied from ${file.absolutePath}")
                         from(file)
                     }
-                    from(pluginJar)
-                    into(pluginsDir)
                 }
             }
         }
     }
 
-    private fun Project.createDebugRun(name: String): Task {
-        return tasks.create("debug$name") {
-            group = debugTaskGroup(name)
-            description = "Startup the $name server with your plugin.jar"
+    private fun Project.createDebugRun(): Task {
+        return tasks.create("debugSpigot") {
+            group = TASK_DEBUG_GROUP
+            description = "Startup the Spigot server with your plugin.jar"
         }
     }
 
     private fun Project.createDownloadPaper(debug: SpigotDebug): Task {
         return tasks.create("downloadPaper", Download::class).apply {
-            group = DEBUG_TASK_PAPER_GROUP
+            group = TASK_DEBUG_GROUP
             description = "Download the Paperclip."
             afterEvaluate {
                 source = source ?: "https://papermc.io/api/v1/paper/${debug.buildVersion}/latest/download"
-                destination = debug.paperFile.file
+                destination = debug.serverJar
             }
         }
     }
 
     private fun Project.createPreparePaper(debug: SpigotDebug): Task {
         return tasks.create("preparePaper").apply {
-            group = DEBUG_TASK_PAPER_GROUP
+            group = TASK_DEBUG_GROUP
             description = "Download Paperclip for ready to run."
         }
     }
 }
+
+internal fun File.readBukkitPluginDescription() = runCatching {
+    JarFile(this).run {
+        getEntry("plugin.yml")?.run {
+            getInputStream(this)
+        }
+    }?.useToRun {
+        SpigradlePlugin.yaml.readValue<Map<String, Any>>(this)
+    }
+}.getOrNull() ?: emptyMap()
