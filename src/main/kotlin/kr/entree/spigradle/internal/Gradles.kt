@@ -12,6 +12,6 @@ internal inline fun <T> notNull(any: T?, message: () -> String = { "" }): T {
 internal fun TaskContainer.findArtifactJar() =
         withType<Jar>().mapNotNull {
             it.archiveFile.orNull?.asFile
-        }.find {
+        }.findLast {
             it.isFile
         }

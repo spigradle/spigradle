@@ -5,7 +5,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kr.entree.spigradle.internal.*
-import kr.entree.spigradle.internal.notNull
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -25,15 +24,23 @@ internal inline fun <reified T : StandardDescription> Project.setupDescGenTask(
         yamlTaskName: String,
         detectionTaskName: String,
         descFileName: String,
-        pluginSuperClass: String
+        pluginSuperClass: String,
+        taskGroupName: String = extensionName
 ) {
-    val description = extensions.create<T>(extensionName, this)
-    val detectionTask = SubclassDetection.create(this, detectionTaskName, pluginSuperClass)
-    val generateTask = GenerateYaml.create(this, yamlTaskName, extensionName, descFileName, description)
+    val description = extensions.create<T>(extensionName, this).apply {
+        group = taskGroupName
+    }
+    val detectionTask = SubclassDetection.create(this, detectionTaskName, pluginSuperClass).apply {
+        group = taskGroupName
+    }
+    val generateTask = GenerateYaml.create(this, yamlTaskName, extensionName, descFileName, description).apply {
+        group = taskGroupName
+    }
     val classes: Task by tasks
     description.init(project)
+    // classes -> detectionTask -> generateTask
     classes.finalizedBy(detectionTask)
-    detectionTask.finalizedBy(generateTask) // classes -> detectionTask -> generateTask
+    detectionTask.finalizedBy(generateTask)
 }
 
 open class GenerateYaml : DefaultTask() {
