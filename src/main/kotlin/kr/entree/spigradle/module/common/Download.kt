@@ -1,10 +1,14 @@
+@file:Suppress("UnstableApiUsage")
+
 package kr.entree.spigradle.module.common
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.internal.tasks.TaskExecutionOutcome
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
+import org.gradle.kotlin.dsl.property
 import java.io.File
 import java.net.URL
 
@@ -17,25 +21,25 @@ open class Download : DefaultTask() {
         description = "Download the file from the given URL."
     }
 
-    @get:Input
-    var source: String? = null
+    @Input
+    val source: Property<String> = project.objects.property()
 
-    @get:Input
-    var skipWhenExists = true
+    @Input
+    val skipWhenExists: Property<Boolean> = project.objects.property()
 
-    @get:OutputFile
-    lateinit var destination: File
+    @OutputFile
+    val destination: Property<File> = project.objects.property()
 
     @TaskAction
     fun download() {
-        if (skipWhenExists && destination.isFile) {
+        if (skipWhenExists.getOrElse(false) && destination.get().isFile) {
             state.setOutcome(TaskExecutionOutcome.SKIPPED)
         } else {
             downloadInternal()
         }
     }
 
-    private fun downloadInternal() = destination.apply {
+    private fun downloadInternal() = destination.get().apply {
         parentFile.mkdirs()
-    }.writeBytes(URL(source).readBytes())
+    }.writeBytes(URL(source.get()).readBytes())
 }

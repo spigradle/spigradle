@@ -19,7 +19,7 @@ spigot {
 
 tasks {
     build.get().doLast {
-        val pluginFile = File(generateSpigotDescription.get().temporaryDir, "plugin.yml")
+        val pluginFile = File(sourceSets["main"].output.resourcesDir, "plugin.yml")
         if (pluginFile.isFile) {
             println(pluginFile.absolutePath)
             println(pluginFile.bufferedReader().readText())
