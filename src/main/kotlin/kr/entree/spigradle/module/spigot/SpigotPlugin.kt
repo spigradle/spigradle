@@ -74,21 +74,23 @@ class SpigotPlugin : Plugin<Project> {
             val prepareSpigot = createPrepareSpigot(debugOption).applyToConfigure {
                 dependsOn(buildToolDownload, buildSpigot)
             }
-            val runSpigot = createRunSpigot(debugOption)
             val build by tasks
             val preparePlugin = createPreparePlugin(spigot).applyToConfigure {
                 dependsOn(build)
             }
+            val runSpigot = createRunSpigot(debugOption).applyToConfigure {
+                mustRunAfter(preparePlugin)
+            }
             createDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
-                runSpigot.configure { mustRunAfter(preparePlugin, prepareSpigot) }
+                runSpigot.get().mustRunAfter(prepareSpigot)
             }
             createCleanSpigotBuild(debugOption)
             // Paper
             val paperClipDownload = createDownloadPaper(debugOption)
             createDebugRun("Paper").applyToConfigure { // debugPaper
                 dependsOn(preparePlugin, paperClipDownload, runSpigot)
-                runSpigot.applyToConfigure { mustRunAfter(preparePlugin, paperClipDownload) }
+                runSpigot.get().mustRunAfter(paperClipDownload)
             }
         }
     }

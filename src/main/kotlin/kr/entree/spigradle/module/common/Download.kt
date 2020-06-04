@@ -40,6 +40,6 @@ open class Download : DefaultTask() {
     }
 
     private fun downloadInternal() = destination.get().apply {
-        parentFile.mkdirs()
+        parentFile?.mkdirs()
     }.writeBytes(URL(source.get()).readBytes())
 }
