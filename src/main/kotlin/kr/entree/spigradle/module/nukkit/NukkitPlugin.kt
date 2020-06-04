@@ -4,7 +4,7 @@ import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.NukkitRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.module.common.applySpigradlePlugin
-import kr.entree.spigradle.module.common.setupDescGenTask
+import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.maven
@@ -25,7 +25,7 @@ class NukkitPlugin : Plugin<Project> {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
-            setupDescGenTask<NukkitExtension>(
+            registerDescGenTask<NukkitExtension>(
                     EXTENSION_NAME,
                     DESC_GEN_TASK_NAME,
                     MAIN_DETECTION_TASK_NAME,

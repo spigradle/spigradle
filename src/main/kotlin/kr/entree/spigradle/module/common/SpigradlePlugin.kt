@@ -15,6 +15,7 @@ import org.gradle.api.Task
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
@@ -122,10 +123,14 @@ class SpigradlePlugin : Plugin<Project> {
     }
 
     private fun Project.setupTasks() {
-        tasks.create("cleanDebug", Delete::class) {
+        tasks.register("cleanDebug", Delete::class) {
             group = "spigradle"
             description = "Delete the debug directory."
             delete(debugDir)
+        }
+        tasks.register("copyArtifact", Copy::class) {
+            group = "spigradle"
+            description = "Copy the artifact into given path."
         }
     }
 }

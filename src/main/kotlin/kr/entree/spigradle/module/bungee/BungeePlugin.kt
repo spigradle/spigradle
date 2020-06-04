@@ -2,7 +2,7 @@ package kr.entree.spigradle.module.bungee
 
 import kr.entree.spigradle.data.Repositories
 import kr.entree.spigradle.module.common.applySpigradlePlugin
-import kr.entree.spigradle.module.common.setupDescGenTask
+import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.maven
@@ -23,7 +23,7 @@ class BungeePlugin : Plugin<Project> {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
-            setupDescGenTask<BungeeExtension>(
+            registerDescGenTask<BungeeExtension>(
                     EXTENSION_NAME,
                     DESC_GEN_TASK_NAME,
                     MAIN_DETECTION_TASK_NAME,

@@ -3,8 +3,9 @@ package kr.entree.spigradle.module.spigot
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
+import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.module.common.applySpigradlePlugin
-import kr.entree.spigradle.module.common.setupDescGenTask
+import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getValue
@@ -30,7 +31,7 @@ class SpigotPlugin : Plugin<Project> {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
-            setupDescGenTask<SpigotExtension>(
+            registerDescGenTask<SpigotExtension>(
                     EXTENSION_NAME,
                     DESC_GEN_TASK_NAME,
                     MAIN_DETECTION_TASK_NAME,
@@ -67,27 +68,27 @@ class SpigotPlugin : Plugin<Project> {
         with(SpigotDebugTask) {
             // Spigot
             val buildToolDownload = createDownloadBuildTool(debugOption)
-            val buildSpigot = createBuildSpigot(debugOption).apply {
+            val buildSpigot = createBuildSpigot(debugOption).applyToConfigure {
                 mustRunAfter(buildToolDownload)
             }
-            val prepareSpigot = createPrepareSpigot(debugOption).apply {
+            val prepareSpigot = createPrepareSpigot(debugOption).applyToConfigure {
                 dependsOn(buildToolDownload, buildSpigot)
             }
             val runSpigot = createRunSpigot(debugOption)
             val build by tasks
-            val preparePlugin = createPreparePlugin(spigot).apply {
+            val preparePlugin = createPreparePlugin(spigot).applyToConfigure {
                 dependsOn(build)
             }
-            createDebugRun("Spigot").apply { // debugSpigot
+            createDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
-                runSpigot.mustRunAfter(preparePlugin, prepareSpigot)
+                runSpigot.configure { mustRunAfter(preparePlugin, prepareSpigot) }
             }
             createCleanSpigotBuild(debugOption)
             // Paper
             val paperClipDownload = createDownloadPaper(debugOption)
-            createDebugRun("Paper").apply { // debugPaper
+            createDebugRun("Paper").applyToConfigure { // debugPaper
                 dependsOn(preparePlugin, paperClipDownload, runSpigot)
-                runSpigot.mustRunAfter(preparePlugin, paperClipDownload)
+                runSpigot.applyToConfigure { mustRunAfter(preparePlugin, paperClipDownload) }
             }
         }
     }
