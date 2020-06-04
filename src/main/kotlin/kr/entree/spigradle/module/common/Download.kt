@@ -25,14 +25,14 @@ open class Download : DefaultTask() {
     val source: Property<String> = project.objects.property()
 
     @Input
-    val skipWhenExists: Property<Boolean> = project.objects.property()
+    val skipWhenExists: Property<Boolean> = project.objects.property<Boolean>().convention(true)
 
     @OutputFile
     val destination: Property<File> = project.objects.property()
 
     @TaskAction
     fun download() {
-        if (skipWhenExists.getOrElse(false) && destination.get().isFile) {
+        if (skipWhenExists.get() && destination.get().isFile) {
             state.setOutcome(TaskExecutionOutcome.SKIPPED)
         } else {
             downloadInternal()
