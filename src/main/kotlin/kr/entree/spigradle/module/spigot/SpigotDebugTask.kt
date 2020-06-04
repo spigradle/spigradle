@@ -102,63 +102,19 @@ object SpigotDebugTask {
         }
     }
 
-    // TODO: Fix
-    fun Project.createFindArtifactJar(debug: SpigotDebug): TaskProvider<Task> {
-        return tasks.register("find")
-    }
-
-    fun Project.createFindDependPlugins(spigot: SpigotExtension): TaskProvider<Task> {
-        return tasks.register("findSpigotDependPlugins") {
-            group = SpigotPlugin.TASK_GROUP_DEBUG
-            description = "Find the depend spigot plugins."
-            val debug = spigot.debug
-            doLast {
-                val pluginsDir = File(debug.serverDirectory, "plugins")
-                val needPlugins = (spigot.depends + spigot.softDepends).toMutableSet()
-                // Remove already had plugins
-                (pluginsDir.listFiles { _, name ->
-                    name.endsWith(".jar")
-                } ?: emptyArray<File>()).asSequence().takeWhile {
-                    needPlugins.isNotEmpty()
-                }.mapNotNull {
-                    it.readBukkitPluginDescription()["name"]?.toString()
-                }.forEach {
-                    needPlugins -= it
-                }
-                // Find depend plugins from classpath and copy into server
-                project.withConvention(JavaPluginConvention::class) {
-                    sourceSets["main"].compileClasspath
-                }.asSequence().takeWhile {
-                    needPlugins.isNotEmpty()
-                }.mapNotNull { file ->
-                    file.readBukkitPluginDescription()["name"]?.let { pluginName ->
-                        file to pluginName.toString()
-                    }
-                }.filter { (_, pluginName) ->
-                    needPlugins.remove(pluginName)
-                }.forEach { (pluginFile, _) ->
-                    logger.info("Plugin copied from ${pluginFile.absolutePath}")
-                    copy {
-                        from(pluginFile)
-                        into(temporaryDir)
-                    }
-                }
-            }
-        }
-    }
-
     fun Project.createPreparePlugin(spigot: SpigotExtension): TaskProvider<Copy> {
-        return tasks.register("prepareSpigotPlugin", Copy::class) {
+        return tasks.register("prepareSpigotPlugins", Copy::class) {
             group = SpigotPlugin.TASK_GROUP_DEBUG
             description = "Copy the plugin jars into the server."
             doLast {
                 val serverPluginsDir = File(spigot.debug.serverDirectory, "plugins")
                 val pluginJar = notNull(tasks.findArtifactJar()) { "Couldn't find a plugin.jar" }
                 val needPlugins = (spigot.depends + spigot.softDepends).toMutableSet()
-                // Remove already had plugins
-                (serverPluginsDir.listFiles { _, name ->
+                val serverPluginFiles = serverPluginsDir.listFiles() { _, name ->
                     name.endsWith(".jar")
-                } ?: emptyArray<File>()).asSequence().takeWhile {
+                } ?: emptyArray()
+                // Remove already had plugins
+                serverPluginFiles.asSequence().takeWhile {
                     needPlugins.isNotEmpty()
                 }.mapNotNull {
                     it.readBukkitPluginDescription()["name"]?.toString()
