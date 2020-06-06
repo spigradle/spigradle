@@ -13,7 +13,10 @@ import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputFiles
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.*
 import java.io.File
 import java.nio.charset.Charset
@@ -21,8 +24,8 @@ import java.nio.charset.Charset
 /**
  * Created by JunHyung Lim on 2020-04-28
  */
-@Suppress("UnstableApiUsage")
-open class GenerateYaml : DefaultTask() {
+@Suppress("UnstableApiUsage") // TODO: Worker API?
+open class YamlGenerate : DefaultTask() {
     init {
         group = "spigradle"
         description = "Generate the yaml file"
@@ -40,10 +43,10 @@ open class GenerateYaml : DefaultTask() {
     @OutputFiles
     val outputFiles: ConfigurableFileCollection = project.objects.fileCollection()
 
-    fun serializeToProperties(provider: Provider<Map<String, Any>>) = properties.set(provider)
+    fun setAsProperties(provider: Provider<Map<String, Any>>) = properties.set(provider)
 
-    fun serializeToProperties(any: Any) = serializeToProperties(project.provider {
-        Jackson.MAPPER.convertValue<Map<String, Any>>(any).toMutableMap()
+    fun setAsProperties(any: Any) = setAsProperties(project.provider {
+        Jackson.JSON.convertValue<Map<String, Any>>(any).toMap()
     })
 
     @TaskAction
@@ -70,7 +73,7 @@ open class GenerateYaml : DefaultTask() {
                 if (turnOn) enable(it)
                 else disable(it)
             }.onFailure {
-                logger.warn("The given name '$featureEnumKey' on yamlOptions is invalid key.")
+                logger.warn("The given name '$featureEnumKey' on yamlOptions is invalid key.", it)
             }
         }
     }
@@ -100,15 +103,15 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
     detectionTask.configure { finalizedBy(generateTask) }
 }
 
-internal fun Project.registerYamlGenTask(taskName: String, extensionName: String, fileName: String, data: MainProvider): TaskProvider<GenerateYaml> {
-    return project.tasks.register(taskName, GenerateYaml::class) {
+internal fun Project.registerYamlGenTask(taskName: String, extensionName: String, fileName: String, data: MainProvider): TaskProvider<YamlGenerate> {
+    return project.tasks.register(taskName, YamlGenerate::class) {
         val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
         listOf("main", "test").mapNotNull {
             sourceSets[it].output.resourcesDir
         }.forEach { resourceDir ->
             outputFiles.from(File(resourceDir, fileName))
         }
-        serializeToProperties(provider {
+        setAsProperties(provider {
             data.apply {
                 if (main == null) {
                     main = runCatching {

@@ -1,7 +1,5 @@
 package kr.entree.spigradle.module.common
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import groovy.lang.Closure
 import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
@@ -15,7 +13,6 @@ import org.gradle.api.Task
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
-import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
@@ -33,11 +30,6 @@ val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, "spigot-buildtools
 val Project.debugDir get() = File(projectDir, "debug")
 
 class SpigradlePlugin : Plugin<Project> {
-    companion object {
-        val json: ObjectMapper = ObjectMapper()
-        val yaml: ObjectMapper = ObjectMapper(YAMLFactory())
-    }
-
     override fun apply(project: Project) {
         with(project) {
             setupPlugins()
@@ -57,7 +49,7 @@ class SpigradlePlugin : Plugin<Project> {
             plugins.apply("org.jetbrains.kotlin.kapt")
             afterEvaluate {
                 val kaptKotlin: Task by tasks
-                tasks.withType(GenerateYaml::class) {
+                tasks.withType(YamlGenerate::class) {
                     kaptKotlin.finalizedBy(this) // For proper task ordering
                 }
             }
@@ -127,10 +119,6 @@ class SpigradlePlugin : Plugin<Project> {
             group = "spigradle"
             description = "Delete the debug directory."
             delete(debugDir)
-        }
-        tasks.register("copyArtifact", Copy::class) {
-            group = "spigradle"
-            description = "Copy the artifact into given path."
         }
     }
 }

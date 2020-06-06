@@ -1,7 +1,7 @@
 package kr.entree.spigradle
 
 import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.module.common.GenerateYaml
+import kr.entree.spigradle.module.common.YamlGenerate
 import kr.entree.spigradle.module.spigot.SpigotExtension
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.support.normaliseLineSeparators
@@ -15,7 +15,7 @@ import kotlin.test.assertEquals
  */
 class GenerateYamlTaskTest {
     val project = ProjectBuilder.builder().build()
-    val yamlTask = project.tasks.create("yaml", GenerateYaml::class)
+    val yamlTask = project.tasks.create("yaml", YamlGenerate::class)
     val file get() = File(yamlTask.temporaryDir, "plugin.yml")
 
     init {
@@ -43,7 +43,7 @@ class GenerateYamlTaskTest {
         }
         yamlTask.apply {
             outputFiles.from(file)
-            serializeToProperties(extension)
+            setAsProperties(extension)
             generate()
         }
         assertEquals("main: SpigradleMain\n", file.readText())
@@ -86,7 +86,7 @@ class GenerateYamlTaskTest {
         }
         yamlTask.apply {
             outputFiles.from(file)
-            serializeToProperties(extension)
+            setAsProperties(extension)
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()

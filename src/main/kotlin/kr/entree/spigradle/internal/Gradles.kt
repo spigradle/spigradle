@@ -1,7 +1,9 @@
 package kr.entree.spigradle.internal
 
 import org.gradle.api.GradleException
+import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
@@ -24,6 +26,16 @@ internal fun lazyString(provider: () -> Any): Any = object {
     }
 }
 
-internal fun <T: Task> TaskProvider<T>.applyToConfigure(configure: T.() -> Unit): TaskProvider<T> {
+internal fun <T : Task> TaskProvider<T>.applyToConfigure(configure: T.() -> Unit): TaskProvider<T> {
     return apply { configure(configure) }
+}
+
+internal inline fun <T> Project.cachingProvider(crossinline provider: () -> T): Provider<T> {
+    var cache: T? = null
+    return provider {
+        if (cache == null) {
+            cache = provider()
+        }
+        cache
+    }
 }
