@@ -30,11 +30,23 @@ pluginBundle {
     website = 'https://github.com/EntryPointKR/Spigradle'
     vcsUrl = VCS_URL
     tags = ['minecraft', 'paper', 'spigot', 'bukkit']
+    def formatDesc = { name -> "An intelligent Gradle plugin for developing $name plugin." }
     plugins {
         spigradle {
-            id = 'kr.entree.spigradle'
-            displayName = 'Spigradle'
-            description = project.description
+            displayName = 'Spigradle Base Plugin'
+            description = 'Base plugin of Spigradle'
+        }
+        spigot {
+            displayName = 'Spigradle Spigot Plugin'
+            description = formatDesc.call('Spigot')
+        }
+        bungee {
+            displayName = 'Spigradle Bungeecord Plugin'
+            description = formatDesc.call('BungeeCord')
+        }
+        nukkit {
+            displayName = 'Spigradle Nukkit Plugin'
+            description = formatDesc.call('NukkitX')
         }
     }
 }
