@@ -6,7 +6,7 @@ plugins {
     `kotlin-dsl-base`
     `java-gradle-plugin`
     id("com.gradle.plugin-publish") version "0.11.0" apply false
-    id("com.jfrog.bintray") version "1.8.4" apply false
+    id("com.jfrog.bintray") version "1.8.5" apply false
 }
 
 group = "kr.entree"
