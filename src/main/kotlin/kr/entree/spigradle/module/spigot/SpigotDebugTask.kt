@@ -1,11 +1,9 @@
 package kr.entree.spigradle.module.spigot
 
-import com.fasterxml.jackson.module.kotlin.readValue
+import kr.entree.spigradle.internal.cachingProvider
 import kr.entree.spigradle.internal.findArtifactJar
 import kr.entree.spigradle.internal.lazyString
-import kr.entree.spigradle.internal.notNull
 import kr.entree.spigradle.module.common.Download
-import kr.entree.spigradle.module.common.SpigradlePlugin
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -16,25 +14,13 @@ import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.kotlin.dsl.withConvention
 import java.io.File
-import java.util.jar.JarFile
 
 /**
  * Created by JunHyung Lim on 2020-06-03
  */
-fun File.readBukkitPluginDescription() = runCatching {
-    JarFile(this).run {
-        getEntry("plugin.yml")?.run {
-            getInputStream(this)
-        }
-    }?.useToRun {
-        SpigradlePlugin.yaml.readValue<Map<String, Any>>(this)
-    }
-}.getOrNull() ?: emptyMap()
-
-object SpigotDebugTask {
+object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
     fun Project.createDownloadBuildTool(debugOption: SpigotDebug): TaskProvider<Download> {
         return tasks.register("downloadSpigotBuildTools", Download::class) {
             group = SpigotPlugin.TASK_GROUP_DEBUG
@@ -106,41 +92,25 @@ object SpigotDebugTask {
         return tasks.register("prepareSpigotPlugins", Copy::class) {
             group = SpigotPlugin.TASK_GROUP_DEBUG
             description = "Copy the plugin jars into the server."
-            doLast {
-                val serverPluginsDir = File(spigot.debug.serverDirectory, "plugins")
-                val pluginJar = notNull(tasks.findArtifactJar()) { "Couldn't find a plugin.jar" }
+            into(provider { File(spigot.debug.serverDirectory, "plugins") })
+            from(cachingProvider { tasks.findArtifactJar() ?: files() })
+            from(cachingProvider {
                 val needPlugins = (spigot.depends + spigot.softDepends).toMutableSet()
-                val serverPluginFiles = serverPluginsDir.listFiles() { _, name ->
-                    name.endsWith(".jar")
-                } ?: emptyArray()
                 // Remove already had plugins
-                serverPluginFiles.asSequence().takeWhile {
-                    needPlugins.isNotEmpty()
-                }.mapNotNull {
-                    it.readBukkitPluginDescription()["name"]?.toString()
-                }.forEach {
-                    needPlugins -= it
-                }
-                copy {
-                    from(pluginJar)
-                    into(serverPluginsDir)
-                    // Find depend plugins from classpath and copy into server
-                    project.withConvention(JavaPluginConvention::class) {
-                        sourceSets["main"].compileClasspath
-                    }.asSequence().takeWhile {
-                        needPlugins.isNotEmpty()
-                    }.mapNotNull { file ->
-                        file.readBukkitPluginDescription()["name"]?.let { pluginName ->
-                            file to pluginName.toString()
-                        }
-                    }.filter { (_, pluginName) ->
-                        needPlugins.remove(pluginName)
-                    }.forEach { (file, _) ->
-                        logger.info("Plugin copied from ${file.absolutePath}")
-                        from(file)
-                    }
-                }
-            }
+                destinationDir.readAllBukkitPluginDescription()
+                        .takeWhile { needPlugins.isNotEmpty() }
+                        .mapNotNull { it["name"]?.toString() }
+                        .forEach { needPlugins -= it }
+                // Find depend plugins from classpath
+                project.withConvention(JavaPluginConvention::class) {
+                    sourceSets["main"]
+                }.findBukkitPluginFromClasspath()
+                        .takeWhile { needPlugins.isNotEmpty() }
+                        .filter { (_, desc) ->
+                            val pluginName = desc["name"]?.toString()
+                            pluginName != null && needPlugins.remove(pluginName)
+                        }.mapNotNull { it.first }.toList()
+            })
         }
     }
 
