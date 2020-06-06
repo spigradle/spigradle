@@ -1,12 +1,10 @@
-import org.gradle.kotlin.dsl.support.useToRun
-
 plugins {
     val kotlinVersion = "1.3.72"
     kotlin("jvm") version kotlinVersion
     kotlin("kapt") version kotlinVersion
     groovy
     `kotlin-dsl-base`
-    id("com.github.johnrengelman.shadow") version "5.2.0"
+    `java-gradle-plugin`
     id("com.gradle.plugin-publish") version "0.11.0" apply false
     id("com.jfrog.bintray") version "1.8.4" apply false
 }
@@ -32,14 +30,12 @@ repositories {
 
 dependencies {
     val jacksonVersion = "2.11.0"
-    shadow(gradleApi())
-    shadow(localGroovy())
-    shadow(kotlin("stdlib-jdk8"))
-    shadow("com.google.guava:guava:29.0-jre")
-    shadow("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
-    shadow("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
-    shadow("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
-    shadow("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    implementation(kotlin("stdlib-jdk8"))
+    implementation("com.google.guava:guava:29.0-jre")
+    implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.ow2.asm:asm:8.0.1")
     kapt("com.google.auto.service:auto-service:1.0-rc7")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
@@ -50,8 +46,8 @@ dependencies {
 }
 
 configurations {
-    shadow.get().dependencies += kapt.get().dependencies
-    testImplementation.get().dependencies += shadow.get().dependencies
+    implementation.get().dependencies += kapt.get().dependencies
+    testImplementation.get().dependencies += implementation.get().dependencies
 }
 
 tasks {
@@ -65,41 +61,12 @@ tasks {
     compileGroovy {
         classpath = sourceSets.main.get().compileClasspath
     }
-    shadowJar {
-        val packageName = "${project.group}.spigradle"
-        relocate("org.objectweb.asm", "$packageName.lib.asm")
-        archiveClassifier.set("")
-        minimize()
-    }
-    jar {
-        enabled = false
-        finalizedBy(shadowJar)
-    }
-    val pluginUnderTestMetadata by registering {
-        val testClasspath = sourceSets.test.get().compileClasspath
-        val outputFile = File(temporaryDir, "plugin-under-test-metadata.properties")
-        outputs.files(outputFile)
-        doLast {
-            outputFile.apply {
-                parentFile.mkdirs()
-            }.bufferedWriter().useToRun {
-                write("implementation-classpath=")
-                write(testClasspath.joinToString(File.pathSeparator) {
-                    it.absolutePath.replace("\\", "/")
-                })
-            }
-        }
-    }
     test {
         useJUnitPlatform()
         maxParallelForks = 4
         testLogging {
             events("passed", "skipped", "failed")
         }
-        dependsOn(pluginUnderTestMetadata, getByName("publishToMavenLocal"))
-    }
-    afterEvaluate {
-        val testMetadataFile = pluginUnderTestMetadata.get().temporaryDir
-        dependencies.add(sourceSets.test.get().runtimeClasspathConfigurationName, files(testMetadataFile))
+        dependsOn(getByName("publishToMavenLocal"))
     }
 }
