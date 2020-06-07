@@ -1,14 +1,18 @@
 package kr.entree.spigradle.module.nukkit
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import groovy.lang.Closure
 import kr.entree.spigradle.data.Command
 import kr.entree.spigradle.data.Load
+import kr.entree.spigradle.data.NukkitDebug
 import kr.entree.spigradle.data.Permission
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
+import kr.entree.spigradle.module.common.debugDir
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.container
+import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-22
@@ -40,4 +44,16 @@ open class NukkitExtension(project: Project) : StandardDescription {
 
     val commands: NamedDomainObjectContainer<Command> = project.container(Command::class)
     val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class)
+
+    @Transient
+    val debug: NukkitDebug = NukkitDebug(
+            File(project.debugDir, "nukkit/nukkit.jar")
+    )
+
+    fun debug(configure: Closure<*>) {
+        configure.delegate = debug
+        configure.call()
+    }
+
+    fun debug(configure: NukkitDebug.() -> Unit) = configure(debug)
 }

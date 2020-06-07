@@ -6,7 +6,6 @@ import kr.entree.spigradle.internal.lazyString
 import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugin
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
 import kr.entree.spigradle.module.common.Download
-import kr.entree.spigradle.module.spigot.SpigotDebugTask.TASK_GROUP_DEBUG
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.logging.LogLevel
@@ -36,7 +35,7 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
     fun Project.registerCleanSpigotBuild(debugOption: SpigotDebug): TaskProvider<Delete> {
         return tasks.register("cleanSpigotBuild", Delete::class) {
             group = TASK_GROUP_DEBUG
-            description = "Delete all BuildTools directories"
+            description = "Delete all BuildTools directories."
             delete(debugOption.buildToolDirectory)
             delete(debugOption.buildToolOutputDirectory)
         }
@@ -80,7 +79,7 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
 
     fun Project.registerRunSpigot(debug: SpigotDebug): TaskProvider<JavaExec> {
         val serverJar = debug.serverJar
-        return registerRunServer("runSpigot", debug.agentPort).applyToConfigure {
+        return registerRunServer("runSpigot") { debug.agentPort}.applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the spigot server."
             classpath = files(provider { serverJar })
@@ -95,9 +94,8 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
         return registerPreparePlugin(
                 "prepareSpigotPlugin",
                 "name",
-                { spigot.depends + spigot.softDepends },
-                { it.readBukkitPluginDescription() }
-        ).applyToConfigure {
+                "plugin.yml"
+        ) { spigot.depends + spigot.softDepends }.applyToConfigure {
             group = TASK_GROUP_DEBUG
             into(provider { File(spigot.debug.serverDirectory, "plugins") })
         }
@@ -106,7 +104,7 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
     fun Project.registerDebugRun(name: String): TaskProvider<Task> {
         return tasks.register("debug$name") {
             group = TASK_GROUP_DEBUG
-            description = "Startup the $name server with your plugin.jar"
+            description = "Startup the $name server with your plugin.jar."
         }
     }
 

@@ -1,5 +1,7 @@
 package kr.entree.spigradle.module.common
 
+import com.fasterxml.jackson.module.kotlin.readValue
+import kr.entree.spigradle.internal.Jackson
 import kr.entree.spigradle.internal.cachingProvider
 import kr.entree.spigradle.internal.findArtifactJar
 import kr.entree.spigradle.internal.lazyString
@@ -11,14 +13,27 @@ import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.kotlin.dsl.withConvention
 import java.io.File
+import java.util.jar.JarFile
 
 /**
  * Created by JunHyung Lim on 2020-06-07
  */
+internal fun File.readYamlDescription(fileName: String) =
+        runCatching {
+            JarFile(this).run {
+                getEntry(fileName)?.run {
+                    getInputStream(this)
+                }
+            }?.useToRun {
+                Jackson.YAML.readValue<Map<String, Any>>(this)
+            }
+        }.getOrNull()
+
 object DebugTask {
-    fun Project.registerRunServer(name: String, agentPort: Int = 5005): TaskProvider<JavaExec> {
+    fun Project.registerRunServer(name: String, agentPort: () -> Int = { 5005 }): TaskProvider<JavaExec> {
         return tasks.register(name, JavaExec::class) {
             standardInput = System.`in`
             logging.captureStandardOutput(LogLevel.LIFECYCLE)
@@ -30,8 +45,8 @@ object DebugTask {
     fun Project.registerPreparePlugin(
             name: String,
             nameProperty: String,
-            dependPlugins: () -> Iterable<String>,
-            descriptionReader: (File) -> Map<String, Any>?
+            descriptionFileName: String,
+            dependPlugins: () -> Iterable<String>
     ): TaskProvider<Copy> {
         return tasks.register(name, Copy::class) {
             description = "Copy the plugin jars"
@@ -43,7 +58,7 @@ object DebugTask {
                 destinationDir.listFiles { _, name ->
                     name.endsWith(".jar")
                 }?.asSequence()?.mapNotNull {
-                    descriptionReader(it)?.get(nameProperty)?.toString()
+                    it.readYamlDescription(descriptionFileName)?.get(nameProperty)?.toString()
                 }?.takeWhile {
                     readyPlugins.containsAll(needPlugins)
                 }?.forEach { readyPlugins += it }
@@ -51,7 +66,8 @@ object DebugTask {
                 project.withConvention(JavaPluginConvention::class) {
                     sourceSets["main"].compileClasspath
                 }.asSequence().mapNotNull { depFile ->
-                    descriptionReader(depFile)?.let { desc -> depFile to desc }
+                    depFile.readYamlDescription(descriptionFileName)
+                            ?.let { desc -> depFile to desc }
                 }.takeWhile {
                     readyPlugins.containsAll(needPlugins)
                 }.filter { (_, desc) ->
