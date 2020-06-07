@@ -17,11 +17,11 @@ import java.io.File
  * Created by JunHyung Lim on 2020-06-07
  */
 object BungeeDebugTask {
-    const val TASK_GROUP_DEBUG = "bungeecord debug"
+    const val TASK_GROUP_DEBUG = "bungee debug"
     const val BUNGEECORD_URL = "https://ci.md-5.net/job/BungeeCord/lastSuccessfulBuild/artifact/bootstrap/target/BungeeCord.jar"
 
     fun Project.registerDownloadBungee(debug: BungeeDebug): TaskProvider<Download> {
-        return tasks.register("downloadDebug", Download::class) {
+        return tasks.register("downloadBungee", Download::class) {
             group = TASK_GROUP_DEBUG
             description = "Download the Bungeecord."
             source.set(BUNGEECORD_URL)
