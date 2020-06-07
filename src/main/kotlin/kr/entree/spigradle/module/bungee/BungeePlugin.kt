@@ -1,11 +1,14 @@
 package kr.entree.spigradle.module.bungee
 
 import kr.entree.spigradle.data.Repositories
+import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.maven
+import org.gradle.kotlin.dsl.provideDelegate
 
 /**
  * Created by JunHyung Lim on 2020-04-28
@@ -30,10 +33,25 @@ class BungeePlugin : Plugin<Project> {
                     DESC_FILE_NAME,
                     PLUGIN_SUPER_CLASS
             )
+            setupBungeeDebugTasks()
         }
     }
 
     private fun Project.setupDefaultRepositories() {
         repositories.maven(Repositories.SONATYPE)
+    }
+
+    private fun Project.setupBungeeDebugTasks() {
+        val bungee: BungeeExtension by extensions
+        val debugOption = bungee.debug
+        with(BungeeDebugTask) {
+            val bungeeDownload = registerDownloadBungee(debugOption)
+            val runBungee = registerRunBungee(debugOption)
+            val preparePlugin = registerPrepareBungeePlugins(bungee)
+            registerDebugBungee().applyToConfigure {
+                dependsOn(preparePlugin, bungeeDownload, runBungee)
+                runBungee.get().mustRunAfter(bungeeDownload)
+            }
+        }
     }
 }
