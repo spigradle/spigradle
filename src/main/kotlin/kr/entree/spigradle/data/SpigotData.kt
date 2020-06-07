@@ -3,10 +3,22 @@ package kr.entree.spigradle.data
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
+import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-22
  */
+data class SpigotDebug(
+        var serverJar: File,
+        var buildToolJar: File,
+        var serverDirectory: File = serverJar.parentFile,
+        var buildToolDirectory: File = buildToolJar.parentFile,
+        var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
+        var agentPort: Int = 5005,
+        var eula: Boolean = false,
+        var buildVersion: String = "1.15.2"
+)
+
 enum class Load {
     @SerialName("POSTWORLD")
     POST_WORLD,

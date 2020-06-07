@@ -22,9 +22,7 @@ class SpigotPlugin : Plugin<Project> {
         const val EXTENSION_NAME = "spigot"
         const val DESC_FILE_NAME = "plugin.yml"
         const val PLUGIN_SUPER_CLASS = "org/bukkit/plugin/java/JavaPlugin"
-        const val BUILD_TOOLS_URL = "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
         const val TASK_GROUP = "spigot"
-        const val TASK_GROUP_DEBUG = "$TASK_GROUP debug"
     }
 
     override fun apply(project: Project) {
@@ -67,28 +65,28 @@ class SpigotPlugin : Plugin<Project> {
         // debugPaper: preparePlugin -> downloadPaperclip -> runSpigot(runPaper)
         with(SpigotDebugTask) {
             // Spigot
-            val buildToolDownload = createDownloadBuildTool(debugOption)
-            val buildSpigot = createBuildSpigot(debugOption).applyToConfigure {
+            val buildToolDownload = registerDownloadBuildTool(debugOption)
+            val buildSpigot = registerBuildSpigot(debugOption).applyToConfigure {
                 mustRunAfter(buildToolDownload)
             }
-            val prepareSpigot = createPrepareSpigot(debugOption).applyToConfigure {
+            val prepareSpigot = registerPrepareSpigot(debugOption).applyToConfigure {
                 dependsOn(buildToolDownload, buildSpigot)
             }
             val build by tasks
-            val preparePlugin = createPreparePlugin(spigot).applyToConfigure {
+            val preparePlugin = registerPrepareSpigotPlugin(spigot).applyToConfigure {
                 dependsOn(build)
             }
-            val runSpigot = createRunSpigot(debugOption).applyToConfigure {
+            val runSpigot = registerRunSpigot(debugOption).applyToConfigure {
                 mustRunAfter(preparePlugin)
             }
-            createDebugRun("Spigot").applyToConfigure { // debugSpigot
+            registerDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
                 runSpigot.get().mustRunAfter(prepareSpigot)
             }
-            createCleanSpigotBuild(debugOption)
+            registerCleanSpigotBuild(debugOption)
             // Paper
-            val paperClipDownload = createDownloadPaper(debugOption)
-            createDebugRun("Paper").applyToConfigure { // debugPaper
+            val paperClipDownload = registerDownloadPaper(debugOption)
+            registerDebugRun("Paper").applyToConfigure { // debugPaper
                 dependsOn(preparePlugin, paperClipDownload, runSpigot)
                 runSpigot.get().mustRunAfter(paperClipDownload)
             }

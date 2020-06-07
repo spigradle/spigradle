@@ -5,6 +5,7 @@ import groovy.lang.Closure
 import kr.entree.spigradle.data.Command
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.Permission
+import kr.entree.spigradle.data.SpigotDebug
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
