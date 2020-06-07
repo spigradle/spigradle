@@ -2,6 +2,7 @@
 
 package kr.entree.spigradle.module.common
 
+import kr.entree.spigradle.SpigradleMeta
 import org.gradle.api.DefaultTask
 import org.gradle.api.internal.tasks.TaskExecutionOutcome
 import org.gradle.api.provider.Property
@@ -41,5 +42,8 @@ open class Download : DefaultTask() {
 
     private fun downloadInternal() = destination.get().apply {
         parentFile?.mkdirs()
-    }.writeBytes(URL(source.get()).readBytes())
+    }.writeBytes(URL(source.get()).openConnection().run {
+        setRequestProperty("User-Agent", "Spigradle/${SpigradleMeta.VERSION}")
+        getInputStream()
+    }.readBytes())
 }
