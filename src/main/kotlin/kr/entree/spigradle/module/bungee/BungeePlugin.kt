@@ -44,10 +44,13 @@ class BungeePlugin : Plugin<Project> {
     private fun Project.setupBungeeDebugTasks() {
         val bungee: BungeeExtension by extensions
         val debugOption = bungee.debug
+        val build by tasks
         with(BungeeDebugTask) {
             val bungeeDownload = registerDownloadBungee(debugOption)
             val runBungee = registerRunBungee(debugOption)
-            val preparePlugin = registerPrepareBungeePlugins(bungee)
+            val preparePlugin = registerPrepareBungeePlugins(bungee).applyToConfigure {
+                dependsOn(build)
+            }
             registerDebugBungee().applyToConfigure {
                 dependsOn(preparePlugin, bungeeDownload, runBungee)
                 runBungee.get().mustRunAfter(bungeeDownload)
