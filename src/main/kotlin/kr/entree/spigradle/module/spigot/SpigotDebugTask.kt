@@ -7,6 +7,7 @@ import kr.entree.spigradle.module.common.Download
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.logging.LogLevel
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Delete
@@ -16,6 +17,8 @@ import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withConvention
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Created by JunHyung Lim on 2020-06-03
@@ -44,13 +47,22 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
             group = SpigotPlugin.TASK_GROUP_DEBUG
             description = "Build the spigot.jar using the BuildTools."
             outputs.cacheIf { true }
-            outputs.dir(provider { File(options.buildToolJar.parentFile, "CraftBukkit/target/classes") })
+            outputs.dir(provider { File(options.buildToolDirectory, "CraftBukkit/target/classes") })
+            logging.captureStandardOutput(LogLevel.DEBUG)
             classpath = files(provider { options.buildToolJar })
             setWorkingDir(provider { options.buildToolDirectory })
             args(
                     "--rev", lazyString { options.buildVersion },
-                    "--output-dir", lazyString { options.buildToolDirectory.absolutePath }
+                    "--output-dir", lazyString { options.buildToolOutputDirectory.absolutePath }
             )
+            doFirst {
+                // Remove empty directory created by gradle for avoid buildtools failure
+                val classesDir = File(options.buildToolDirectory, "CraftBukkit/target/classes")
+                val craftbukkitDir = File(options.buildToolDirectory, "CraftBukkit")
+                if (classesDir.listFiles()?.isNotEmpty() != true) {
+                    craftbukkitDir.deleteRecursively()
+                }
+            }
         }
     }
 
@@ -73,17 +85,29 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
             description = "Startup the spigot server."
             standardInput = System.`in`
             classpath = files(provider { serverJar })
+            logging.captureStandardOutput(LogLevel.LIFECYCLE)
             setWorkingDir(provider { serverJar.parentFile })
             jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}" })
             args("nogui")
             doFirst {
-                if (!debug.eula) {
-                    throw GradleException("""
-                        Please set the 'eula' property to true if you agree the Mojang EULA.
-                        https://account.mojang.com/documents/minecraft_eula
+                File(workingDir, "eula.txt").takeIf { eulaFile ->
+                    !eulaFile.isFile && (debug.eula || logger.run {
+                        log(LogLevel.QUIET, """
+                            Are you agree the Mojang EULA? (https://account.mojang.com/documents/minecraft_eula)
+                            Your input (y)es or (n)o:
+                        """.trimIndent())
+                        readLine()?.equals("y", ignoreCase = true) == true
+                    })
+                }?.apply {
+                    writeText("""
+                        # Accepted by Spigradle
+                        # ${DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now())}
+                        eula=true
                     """.trimIndent())
-                }
-                File(workingDir, "eula.txt").writeText("eula=true")
+                } ?: throw GradleException("""
+                    Please set the 'eula' property in spigot {} block to true if you agree the Mojang EULA.
+                    https://account.mojang.com/documents/minecraft_eula
+                """.trimIndent())
             }
         }
     }
