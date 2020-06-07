@@ -30,9 +30,9 @@ object BungeeDebugTask {
     }
 
     fun Project.registerRunBungee(debug: BungeeDebug): TaskProvider<JavaExec> {
-        return registerRunServer("runBungee", debug.agentPort).applyToConfigure {
+        return registerRunServer("runBungee") { debug.agentPort }.applyToConfigure {
             group = TASK_GROUP_DEBUG
-            description = "Startup the bunge server."
+            description = "Startup the Bungeecord server."
             classpath = files(provider { debug.bungeeJar })
             setWorkingDir(provider { debug.bungeeDirectory })
         }
@@ -42,9 +42,8 @@ object BungeeDebugTask {
         return registerPreparePlugin(
                 "prepareBungeePlugin",
                 "name",
-                { bungee.depends + bungee.softDepends },
-                { it.readBungeePluginDescription() }
-        ).applyToConfigure {
+                "bungee.yml")
+        { bungee.depends + bungee.softDepends }.applyToConfigure {
             group = TASK_GROUP_DEBUG
             into(provider { File(bungee.debug.bungeeDirectory, "plugins") })
         }
@@ -53,7 +52,7 @@ object BungeeDebugTask {
     fun Project.registerDebugBungee(): TaskProvider<Task> {
         return tasks.register("debugBungee") {
             group = TASK_GROUP_DEBUG
-            description = "Startup the bungeecord with your plugin.jar"
+            description = "Startup the Bungeecord with your plugins."
         }
     }
 }

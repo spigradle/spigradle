@@ -1,5 +1,7 @@
 package kr.entree.spigradle.data
 
+import java.io.File
+
 /**
  * Created by JunHyung Lim on 2020-05-23
  */
@@ -15,3 +17,9 @@ object NukkitDependencies {
             VersionModifier.SNAPSHOT_APPENDER
     )
 }
+
+data class NukkitDebug(
+        val nukkitJar: File,
+        val nukkitDirectory: File = nukkitJar.parentFile,
+        var agentPort: Int = 5005
+)
