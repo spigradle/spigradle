@@ -43,7 +43,7 @@ class GenerateYamlTaskTest {
         }
         yamlTask.apply {
             outputFiles.from(file)
-            setAsProperties(extension)
+            serialize(extension)
             generate()
         }
         assertEquals("main: SpigradleMain\n", file.readText())
@@ -86,7 +86,7 @@ class GenerateYamlTaskTest {
         }
         yamlTask.apply {
             outputFiles.from(file)
-            setAsProperties(extension)
+            serialize(extension)
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
