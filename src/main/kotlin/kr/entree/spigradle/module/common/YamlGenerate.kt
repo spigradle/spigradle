@@ -43,11 +43,11 @@ open class YamlGenerate : DefaultTask() {
     @OutputFiles
     val outputFiles: ConfigurableFileCollection = project.objects.fileCollection()
 
-    fun setAsProperties(provider: Provider<Map<String, Any>>) = properties.set(provider)
-
-    fun setAsProperties(any: Any) = setAsProperties(project.provider {
-        Jackson.JSON.convertValue<Map<String, Any>>(any).toMap()
+    fun serialize(provider: Provider<Any>) = properties.set(provider.map {
+        Jackson.JSON.convertValue<Map<String, Any>>(it)
     })
+
+    fun serialize(any: Any) = serialize(project.provider { any })
 
     @TaskAction
     fun generate() {
@@ -111,7 +111,7 @@ internal fun Project.registerYamlGenTask(taskName: String, extensionName: String
         }.forEach { resourceDir ->
             outputFiles.from(File(resourceDir, fileName))
         }
-        setAsProperties(provider {
+        serialize(provider {
             data.apply {
                 if (main == null) {
                     main = runCatching {
