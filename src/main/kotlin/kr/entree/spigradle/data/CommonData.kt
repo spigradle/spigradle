@@ -1,7 +1,6 @@
 package kr.entree.spigradle.data
 
 import kr.entree.spigradle.SpigradleMeta
-import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-22
