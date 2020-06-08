@@ -44,6 +44,7 @@ class BungeePlugin : Plugin<Project> {
 
     private fun Project.setupDefaultRepositories() {
         repositories.maven(Repositories.SONATYPE)
+        repositories.gradlePluginPortal() // For avoid kapt error
     }
 
     private fun Project.setupBungeeDebugTasks() {
