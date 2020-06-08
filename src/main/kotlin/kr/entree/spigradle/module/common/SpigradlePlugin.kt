@@ -32,6 +32,7 @@ class SpigradlePlugin : Plugin<Project> {
         with(project) {
             setupPlugins()
             setupDefaultDependencies()
+            setupDefaultRepositories()
             setupGroovyExtensions()
             setupAnnotationProcessorOptions()
             markExcludeDirectories()
@@ -65,6 +66,10 @@ class SpigradlePlugin : Plugin<Project> {
                 add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, spigradleNotation)
             }
         }
+    }
+
+    private fun Project.setupDefaultRepositories() {
+        repositories.gradlePluginPortal() // For avoid APT error
     }
 
     private fun Project.setupGroovyExtensions() {
