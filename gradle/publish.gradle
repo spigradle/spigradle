@@ -1,4 +1,5 @@
 apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 apply plugin: 'com.gradle.plugin-publish'
 
@@ -24,6 +25,26 @@ bintray {
             vcsTag = project.version
         }
     }
+}
+
+artifactory {
+    contextUrl = 'https://oss.jfrog.org/artifactory'
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = project.findProperty('bintray.publish.user')
+            password = project.findProperty('bintray.publish.key')
+        }
+        defaults {
+            publications('spigradle')
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+    clientConfig.info.setBuildNumber(System.getProperty('build.number'))
 }
 
 pluginBundle {
