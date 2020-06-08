@@ -44,7 +44,7 @@ artifactory {
     resolve {
         repoKey = 'jcenter'
     }
-    clientConfig.info.setBuildNumber(System.getProperty('build.number'))
+    clientConfig.info.setBuildNumber(project.findProperty('build.number').toString())
 }
 
 pluginBundle {
