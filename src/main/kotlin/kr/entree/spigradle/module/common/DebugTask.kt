@@ -1,10 +1,7 @@
 package kr.entree.spigradle.module.common
 
 import com.fasterxml.jackson.module.kotlin.readValue
-import kr.entree.spigradle.internal.Jackson
-import kr.entree.spigradle.internal.cachingProvider
-import kr.entree.spigradle.internal.findArtifactJar
-import kr.entree.spigradle.internal.lazyString
+import kr.entree.spigradle.internal.*
 import org.gradle.api.Project
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.plugins.JavaPluginConvention
@@ -33,11 +30,11 @@ internal fun File.readYamlDescription(fileName: String) =
         }.getOrNull()
 
 object DebugTask {
-    fun Project.registerRunServer(name: String, agentPort: () -> Int = { 5005 }): TaskProvider<JavaExec> {
+    fun Project.registerRunServer(name: String, debug: CommonDebug): TaskProvider<JavaExec> {
         return tasks.register(name, JavaExec::class) {
             standardInput = System.`in`
             logging.captureStandardOutput(LogLevel.LIFECYCLE)
-            jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${agentPort}" })
+            jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}" })
             args("nogui")
         }
     }

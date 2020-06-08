@@ -1,5 +1,6 @@
 package kr.entree.spigradle.data
 
+import kr.entree.spigradle.internal.CommonDebug
 import java.io.File
 
 /**
@@ -21,5 +22,5 @@ object NukkitDependencies {
 data class NukkitDebug(
         val nukkitJar: File,
         val nukkitDirectory: File = nukkitJar.parentFile,
-        var agentPort: Int = 5005
-)
+        override var agentPort: Int = 5005
+) : CommonDebug

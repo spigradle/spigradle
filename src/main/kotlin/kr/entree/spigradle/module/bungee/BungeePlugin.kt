@@ -2,10 +2,12 @@ package kr.entree.spigradle.module.bungee
 
 import kr.entree.spigradle.data.Repositories
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.internal.createRunConfigurations
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.provideDelegate
@@ -22,6 +24,8 @@ class BungeePlugin : Plugin<Project> {
         const val PLUGIN_SUPER_CLASS = "net/md_5/bungee/api/plugin/Plugin"
     }
 
+    val Project.bungee get() = extensions.getByName<BungeeExtension>("bungee")
+
     override fun apply(project: Project) {
         with(project) {
             applySpigradlePlugin()
@@ -34,6 +38,7 @@ class BungeePlugin : Plugin<Project> {
                     PLUGIN_SUPER_CLASS
             )
             setupBungeeDebugTasks()
+            createRunConfigurations("Bungee", bungee.debug)
         }
     }
 

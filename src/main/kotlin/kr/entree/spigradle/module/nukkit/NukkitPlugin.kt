@@ -4,10 +4,12 @@ import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.NukkitRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.internal.createRunConfigurations
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.provideDelegate
@@ -24,6 +26,8 @@ class NukkitPlugin : Plugin<Project> {
         const val PLUGIN_SUPER_CLASS = "cn/nukkit/plugin/PluginBase"
     }
 
+    val Project.nukkit get() = extensions.getByName<NukkitExtension>(EXTENSION_NAME)
+
     override fun apply(project: Project) {
         with(project) {
             applySpigradlePlugin()
@@ -37,6 +41,7 @@ class NukkitPlugin : Plugin<Project> {
             )
             setupGroovyExtensions()
             setupNukkitDebugTasks()
+            createRunConfigurations("Nukkit", nukkit.debug)
         }
     }
 

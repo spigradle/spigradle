@@ -30,7 +30,7 @@ object NukkitDebugTask {
     }
 
     fun Project.registerRunNukkit(debug: NukkitDebug): TaskProvider<JavaExec> {
-        return registerRunServer("runNukkit") { debug.agentPort }.applyToConfigure {
+        return registerRunServer("runNukkit", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the NukkitX server."
             classpath = files(provider { debug.nukkitJar })

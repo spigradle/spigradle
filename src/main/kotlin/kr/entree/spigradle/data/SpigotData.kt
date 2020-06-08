@@ -1,6 +1,7 @@
 package kr.entree.spigradle.data
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
 import java.io.File
@@ -14,10 +15,10 @@ data class SpigotDebug(
         var serverDirectory: File = serverJar.parentFile,
         var buildToolDirectory: File = buildToolJar.parentFile,
         var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
-        var agentPort: Int = 5005,
+        override var agentPort: Int = 5005,
         var eula: Boolean = false,
         var buildVersion: String = "1.15.2"
-)
+) : CommonDebug
 
 enum class Load {
     @SerialName("POSTWORLD")

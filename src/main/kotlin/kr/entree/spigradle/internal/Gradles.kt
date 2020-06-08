@@ -3,11 +3,17 @@ package kr.entree.spigradle.internal
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.kotlin.dsl.withType
+import org.gradle.kotlin.dsl.*
+import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.gradle.plugins.ide.idea.model.IdeaProject
+import org.jetbrains.gradle.ext.ProjectSettings
+import org.jetbrains.gradle.ext.Remote
+import org.jetbrains.gradle.ext.RunConfigurationContainer
 
 internal inline fun <T> notNull(any: T?, message: () -> String = { "" }): T {
     return any ?: throw GradleException(message())
@@ -37,5 +43,23 @@ internal inline fun <T> Project.cachingProvider(crossinline provider: () -> T): 
             cache = provider()
         }
         cache
+    }
+}
+
+internal fun IdeaProject.settings(configure: ProjectSettings.() -> Unit = {}) =
+        (this as ExtensionAware).extensions.getByType(ProjectSettings::class).apply(configure)
+
+internal fun ProjectSettings.runConfigurations(configure: RunConfigurationContainer.() -> Unit) =
+        ((this as ExtensionAware).extensions["runConfigurations"] as RunConfigurationContainer).apply(configure)
+
+internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
+    val idea: IdeaModel by extensions
+    idea.project.settings {
+        runConfigurations {
+            register("Debug$name", Remote::class) {
+                host = "localhost"
+                port = debug.agentPort
+            }
+        }
     }
 }

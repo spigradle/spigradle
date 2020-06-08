@@ -3,10 +3,7 @@ package kr.entree.spigradle.module.common
 import groovy.lang.Closure
 import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
-import kr.entree.spigradle.internal.Groovies
-import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
-import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
-import kr.entree.spigradle.internal.toFieldEntries
+import kr.entree.spigradle.internal.*
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -18,6 +15,7 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.jetbrains.gradle.ext.IdeaExtPlugin
 import java.io.File
 
 /**
@@ -45,6 +43,7 @@ class SpigradlePlugin : Plugin<Project> {
     private fun Project.setupPlugins() {
         pluginManager.apply(JavaPlugin::class)
         pluginManager.apply(IdeaPlugin::class)
+        pluginManager.apply(IdeaExtPlugin::class)
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
             plugins.apply("org.jetbrains.kotlin.kapt")
             afterEvaluate {
@@ -109,6 +108,7 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.markExcludeDirectories() {
         val idea: IdeaModel by extensions
+        // Mark exclude directories
         idea.module {
             excludeDirs = setOf(debugDir) + excludeDirs
         }
