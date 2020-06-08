@@ -3,7 +3,10 @@ package kr.entree.spigradle.module.common
 import groovy.lang.Closure
 import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
-import kr.entree.spigradle.internal.*
+import kr.entree.spigradle.internal.Groovies
+import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
+import kr.entree.spigradle.internal.toFieldEntries
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -69,7 +72,7 @@ class SpigradlePlugin : Plugin<Project> {
     }
 
     private fun Project.setupDefaultRepositories() {
-        repositories.gradlePluginPortal() // For avoid APT error
+        repositories.gradlePluginPortal() // For avoid APT errors
     }
 
     private fun Project.setupGroovyExtensions() {
