@@ -1,5 +1,6 @@
 package kr.entree.spigradle.data
 
+import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import java.io.File
 
@@ -23,5 +24,5 @@ object BungeeDependencies {
 data class BungeeDebug(
         val bungeeJar: File,
         val bungeeDirectory: File = bungeeJar.parentFile,
-        var agentPort: Int = 5005
-)
+        override var agentPort: Int = 5005
+) : CommonDebug

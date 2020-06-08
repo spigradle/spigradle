@@ -18,3 +18,7 @@ interface StandardDescription : MainProvider {
         version = version ?: project.version.toString()
     }
 }
+
+interface CommonDebug {
+    var agentPort: Int
+}

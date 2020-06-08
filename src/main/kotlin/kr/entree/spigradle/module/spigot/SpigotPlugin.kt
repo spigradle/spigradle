@@ -4,10 +4,12 @@ import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.internal.createRunConfigurations
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.provideDelegate
@@ -25,6 +27,8 @@ class SpigotPlugin : Plugin<Project> {
         const val TASK_GROUP = "spigot"
     }
 
+    private val Project.spigot get() = extensions.getByName<SpigotExtension>("spigot")
+
     override fun apply(project: Project) {
         with(project) {
             applySpigradlePlugin()
@@ -38,6 +42,7 @@ class SpigotPlugin : Plugin<Project> {
             )
             setupGroovyExtensions()
             setupSpigotDebugTasks()
+            createRunConfigurations("Spigot", spigot.debug)
         }
     }
 
@@ -57,7 +62,6 @@ class SpigotPlugin : Plugin<Project> {
     }
 
     private fun Project.setupSpigotDebugTasks() {
-        val spigot: SpigotExtension by extensions
         val debugOption = spigot.debug
         // prepareSpigot: downloadBuildTools -> buildSpigot -> copySpigot
         // preparePlugin: copyArtifactJar -> copyClasspathPlugins

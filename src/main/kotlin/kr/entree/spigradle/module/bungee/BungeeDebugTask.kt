@@ -30,7 +30,7 @@ object BungeeDebugTask {
     }
 
     fun Project.registerRunBungee(debug: BungeeDebug): TaskProvider<JavaExec> {
-        return registerRunServer("runBungee") { debug.agentPort }.applyToConfigure {
+        return registerRunServer("runBungee", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the Bungeecord server."
             classpath = files(provider { debug.bungeeJar })

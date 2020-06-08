@@ -26,6 +26,7 @@ arrayOf("publish", "generateMeta").forEach { name ->
 repositories {
     mavenCentral()
     jcenter()
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -37,6 +38,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.ow2.asm:asm:8.0.1")
+    implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.7")
     kapt("com.google.auto.service:auto-service:1.0-rc7")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
