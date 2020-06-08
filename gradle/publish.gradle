@@ -29,7 +29,7 @@ bintray {
 pluginBundle {
     website = 'https://github.com/EntryPointKR/Spigradle'
     vcsUrl = VCS_URL
-    tags = ['minecraft', 'paper', 'spigot', 'bukkit']
+    tags = ['minecraft', 'paper', 'spigot', 'bukkit', 'bungeecord', 'nukkit', 'nukkitX']
     def formatDesc = { name -> "An intelligent Gradle plugin for developing $name plugin." }
     plugins {
         spigradle {
