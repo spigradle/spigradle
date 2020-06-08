@@ -57,7 +57,7 @@ object DebugTask {
                 }?.asSequence()?.mapNotNull {
                     it.readYamlDescription(descriptionFileName)?.get(nameProperty)?.toString()
                 }?.takeWhile {
-                    readyPlugins.containsAll(needPlugins)
+                    !readyPlugins.containsAll(needPlugins)
                 }?.forEach { readyPlugins += it }
                 // Find depend plugins from classpath
                 project.withConvention(JavaPluginConvention::class) {
@@ -66,7 +66,7 @@ object DebugTask {
                     depFile.readYamlDescription(descriptionFileName)
                             ?.let { desc -> depFile to desc }
                 }.takeWhile {
-                    readyPlugins.containsAll(needPlugins)
+                    !readyPlugins.containsAll(needPlugins)
                 }.filter { (_, desc) ->
                     val pluginName = desc["name"]?.toString()
                     pluginName != null && readyPlugins.add(pluginName)
