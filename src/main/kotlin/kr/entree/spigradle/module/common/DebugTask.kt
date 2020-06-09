@@ -47,7 +47,7 @@ object DebugTask {
     ): TaskProvider<Copy> {
         return tasks.register(name, Copy::class) {
             description = "Copy the plugin jars"
-            from(cachingProvider { tasks.findArtifactJar() ?: files() })
+            from(provider { tasks.findArtifactJar() ?: files() })
             from(cachingProvider {
                 val needPlugins = dependPlugins().toMutableSet()
                 val readyPlugins = mutableSetOf<String>()
