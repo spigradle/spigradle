@@ -26,7 +26,7 @@ open class Download : DefaultTask() {
     val source: Property<String> = project.objects.property()
 
     @Input
-    val skipWhenExists: Property<Boolean> = project.objects.property<Boolean>().convention(true)
+    val skipWhenExists: Property<Boolean> = project.objects.property<Boolean>().convention(false)
 
     @OutputFile
     val destination: Property<File> = project.objects.property()
