@@ -8,11 +8,11 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.kotlin.dsl.*
-import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.model.IdeaProject
 import org.jetbrains.gradle.ext.ProjectSettings
-import org.jetbrains.gradle.ext.Remote
 import org.jetbrains.gradle.ext.RunConfigurationContainer
 
 internal inline fun <T> notNull(any: T?, message: () -> String = { "" }): T {
@@ -20,7 +20,7 @@ internal inline fun <T> notNull(any: T?, message: () -> String = { "" }): T {
 }
 
 internal fun TaskContainer.findArtifactJar() =
-        withType<Jar>().mapNotNull {
+        withType<Jar>().mapNotNull { // TODO: Check shadowJar
             it.archiveFile.orNull?.asFile
         }.findLast {
             it.isFile
@@ -51,15 +51,3 @@ internal fun IdeaProject.settings(configure: ProjectSettings.() -> Unit = {}) =
 
 internal fun ProjectSettings.runConfigurations(configure: RunConfigurationContainer.() -> Unit) =
         ((this as ExtensionAware).extensions["runConfigurations"] as RunConfigurationContainer).apply(configure)
-
-internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
-    val idea: IdeaModel by extensions
-    idea.project.settings {
-        runConfigurations {
-            register("Debug$name", Remote::class) {
-                host = "localhost"
-                port = debug.agentPort
-            }
-        }
-    }
-}

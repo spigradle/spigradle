@@ -4,8 +4,8 @@ import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.applyToConfigure
-import kr.entree.spigradle.internal.createRunConfigurations
 import kr.entree.spigradle.module.common.applySpigradlePlugin
+import kr.entree.spigradle.module.common.createDebugConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -42,7 +42,7 @@ class SpigotPlugin : Plugin<Project> {
             )
             setupGroovyExtensions()
             setupSpigotDebugTasks()
-            createRunConfigurations("Spigot", spigot.debug)
+            createDebugConfigurations("Spigot", spigot.debug)
         }
     }
 

@@ -22,6 +22,7 @@ internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
             """.trimIndent()) // If input is not "y", throw up
         })
     }?.apply {
+        parentFile.mkdirs()
         writeText("""
             # Accepted by Spigradle
             # ${DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now())}

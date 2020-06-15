@@ -1,6 +1,7 @@
 package kr.entree.spigradle.internal
 
 import org.gradle.api.Project
+import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-18
@@ -20,5 +21,7 @@ interface StandardDescription : MainProvider {
 }
 
 interface CommonDebug {
+    var serverJar: File
+    var serverDirectory: File
     var agentPort: Int
 }
