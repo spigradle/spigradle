@@ -1,6 +1,5 @@
 package kr.entree.spigradle.kotlin
 
-import kr.entree.spigradle.data.BungeeDependencies
 import kr.entree.spigradle.data.SpigotDependencies
 import kr.entree.spigradle.data.SpigotRepositories
 import org.gradle.api.artifacts.dsl.DependencyHandler

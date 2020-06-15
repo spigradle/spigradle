@@ -1,11 +1,12 @@
 package kr.entree.spigradle
 
-import kr.entree.spigradle.module.common.GenerateYamlTask
 import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.module.spigot.SpigotDescription
+import kr.entree.spigradle.module.common.YamlGenerate
+import kr.entree.spigradle.module.spigot.SpigotExtension
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.support.normaliseLineSeparators
 import org.gradle.testfixtures.ProjectBuilder
+import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -14,38 +15,43 @@ import kotlin.test.assertEquals
  */
 class GenerateYamlTaskTest {
     val project = ProjectBuilder.builder().build()
-    val yamlTask = project.tasks.create("yaml", GenerateYamlTask::class)
+    val yamlTask = project.tasks.create("yaml", YamlGenerate::class)
+    val file get() = File(yamlTask.temporaryDir, "plugin.yml")
 
     init {
-        yamlTask.outputFile.deleteOnExit()
+        yamlTask.outputFiles.forEach {
+            it.deleteOnExit()
+        }
     }
 
     @Test
     fun `simple generation`() {
         val pairs = listOf("value" to "test contents")
         yamlTask.apply {
-            properties = pairs.toMap().toMutableMap()
+            properties.set(pairs.toMap().toMutableMap())
+            outputFiles.from(file)
             generate()
         }
         val text = pairs.joinToString { (key, value) -> "$key: $value\n" }
-        assertEquals(text, yamlTask.outputFile.readText())
+        assertEquals(text, file.readText())
     }
 
     @Test
     fun `simple serialization`() {
-        val extension = project.extensions.create<SpigotDescription>("spigot", project).apply {
+        val extension = project.extensions.create<SpigotExtension>("spigot", project).apply {
             main = "SpigradleMain"
         }
         yamlTask.apply {
-            setToOptionMap(extension)
+            outputFiles.from(file)
+            serialize(extension)
             generate()
         }
-        assertEquals("main: SpigradleMain\n", yamlTask.outputFile.readText())
+        assertEquals("main: SpigradleMain\n", file.readText())
     }
 
     @Test
     fun `detail serialization`() {
-        val extension = project.extensions.create<SpigotDescription>("spigot", project).apply {
+        val extension = project.extensions.create<SpigotExtension>("spigot", project).apply {
             main = "kr.entree.spigradle.Main"
             name = "Spigradle"
             version = "1.1"
@@ -79,10 +85,11 @@ class GenerateYamlTaskTest {
             }
         }
         yamlTask.apply {
-            setToOptionMap(extension)
+            outputFiles.from(file)
+            serialize(extension)
             generate()
         }
         val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
-        assertEquals(expected, yamlTask.outputFile.readText())
+        assertEquals(expected, file.readText())
     }
 }

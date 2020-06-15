@@ -18,7 +18,7 @@ const val PLUGIN_APT_DEFAULT_PATH = "spigradle/plugin-main"
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions(PLUGIN_APT_RESULT_PATH_KEY)
 @AutoService(Processor::class)
-internal class PluginAnnotationProcessor : AbstractProcessor() { // TODO: Need to be incremental?
+internal class PluginAnnotationProcessor : AbstractProcessor() {
     var pluginName = ""
 
     override fun process(annotations: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {

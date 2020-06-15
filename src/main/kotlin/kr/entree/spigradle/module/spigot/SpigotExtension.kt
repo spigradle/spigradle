@@ -1,20 +1,26 @@
 package kr.entree.spigradle.module.spigot
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import groovy.lang.Closure
 import kr.entree.spigradle.data.Command
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.Permission
-import kr.entree.spigradle.internal.DefaultDescription
+import kr.entree.spigradle.data.SpigotDebug
 import kr.entree.spigradle.internal.SerialName
+import kr.entree.spigradle.internal.StandardDescription
+import kr.entree.spigradle.internal.Transient
+import kr.entree.spigradle.module.common.debugDir
+import kr.entree.spigradle.module.common.spigotBuildToolDir
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
+import java.io.File
 
 @JsonPropertyOrder(
         "main", "name", "version", "description", "website",
         "authors", "api-version", "load", "prefix", "depend",
         "softdepend", "loadbefore", "commands", "permissions"
 )
-open class SpigotDescription(project: Project) : DefaultDescription(project) {
+open class SpigotExtension(project: Project) : StandardDescription {
     override var main: String? = null
     override var name: String? = null
     override var version: String? = null
@@ -38,4 +44,17 @@ open class SpigotDescription(project: Project) : DefaultDescription(project) {
 
     val commands: NamedDomainObjectContainer<Command> = project.container(Command::class.java)
     val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class.java)
+
+    @Transient
+    val debug: SpigotDebug = SpigotDebug(
+            File(project.debugDir, "spigot/server.jar"),
+            File(project.gradle.spigotBuildToolDir, "BuildTools.jar")
+    )
+
+    fun debug(configure: Closure<*>) {
+        configure.delegate = debug
+        configure.call()
+    }
+
+    fun debug(configure: SpigotDebug.() -> Unit) = configure(debug)
 }

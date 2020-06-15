@@ -11,34 +11,48 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
+import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
+import org.gradle.plugins.ide.idea.IdeaPlugin
+import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.jetbrains.gradle.ext.IdeaExtPlugin
 import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-18
  */
-internal fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
+fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
+
+val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, "spigot-buildtools")
+
+val Project.debugDir get() = File(projectDir, "debug")
 
 class SpigradlePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {
             setupPlugins()
             setupDefaultDependencies()
+            setupDefaultRepositories()
             setupGroovyExtensions()
             setupAnnotationProcessorOptions()
+            markExcludeDirectories()
+            setupTasks()
         }
     }
 
     @Suppress("UnstableApiUsage")
     private fun Project.setupPlugins() {
         pluginManager.apply(JavaPlugin::class)
+        pluginManager.apply(IdeaPlugin::class)
+        pluginManager.apply(IdeaExtPlugin::class)
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
             plugins.apply("org.jetbrains.kotlin.kapt")
             afterEvaluate {
                 val kaptKotlin: Task by tasks
-                tasks.withType(GenerateYamlTask::class) {
+                tasks.withType(YamlGenerate::class) {
                     kaptKotlin.finalizedBy(this) // For proper task ordering
                 }
             }
@@ -55,6 +69,10 @@ class SpigradlePlugin : Plugin<Project> {
                 add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, spigradleNotation)
             }
         }
+    }
+
+    private fun Project.setupDefaultRepositories() {
+        repositories.gradlePluginPortal() // For avoid APT errors
     }
 
     private fun Project.setupGroovyExtensions() {
@@ -94,5 +112,21 @@ class SpigradlePlugin : Plugin<Project> {
         val compileJava: JavaCompile by tasks
         val path = File(buildDir, PLUGIN_APT_DEFAULT_PATH)
         compileJava.options.compilerArgs.add("-A${PLUGIN_APT_RESULT_PATH_KEY}=${path.absolutePath}")
+    }
+
+    private fun Project.markExcludeDirectories() {
+        val idea: IdeaModel by extensions
+        // Mark exclude directories
+        idea.module {
+            excludeDirs = setOf(debugDir) + excludeDirs
+        }
+    }
+
+    private fun Project.setupTasks() {
+        tasks.register("cleanDebug", Delete::class) {
+            group = "spigradle"
+            description = "Delete the debug directory."
+            delete(debugDir)
+        }
     }
 }

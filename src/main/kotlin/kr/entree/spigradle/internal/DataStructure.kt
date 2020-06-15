@@ -1,6 +1,7 @@
 package kr.entree.spigradle.internal
 
 import org.gradle.api.Project
+import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-18
@@ -13,16 +14,14 @@ interface StandardDescription : MainProvider {
     var name: String?
     var version: String?
 
-    fun setDefaults(project: Project) {
+    fun init(project: Project) {
         name = name ?: project.name
         version = version ?: project.version.toString()
     }
 }
 
-abstract class DefaultDescription(project: Project) : StandardDescription {
-    init {
-        project.afterEvaluate {
-            setDefaults(project)
-        }
-    }
+interface CommonDebug {
+    var serverJar: File
+    var serverDirectory: File
+    var agentPort: Int
 }
