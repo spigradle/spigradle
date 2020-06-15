@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.internal.GeneratedSubclass
@@ -47,12 +48,13 @@ class GeneratedSubclassSerializer : StdSerializer<GeneratedSubclass>(GeneratedSu
 }
 
 object Jackson {
-    val GRADLE_MODULE: SimpleModule = SimpleModule()
+    val GRADLE_MODULE = SimpleModule()
             .addSerializer(NamedDomainObjectContainerSerializer())
             .addSerializer(GeneratedSubclassSerializer())
-    val MAPPER: ObjectMapper = ObjectMapper()
+    val JSON = ObjectMapper()
             .registerModules(KotlinModule(), GRADLE_MODULE)
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+    val YAML = ObjectMapper(YAMLFactory())
 }
 
 // It breaks property order, related: com.fasterxml.jackson.databind.introspect.POJOPropertiesCollector#_renameProperties()

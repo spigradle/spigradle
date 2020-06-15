@@ -3,36 +3,44 @@ package kr.entree.spigradle.module.common
 import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.file.FileCollection
+import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.plugins.JavaPluginConvention
-import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.OutputFile
-import org.gradle.api.tasks.SkipWhenEmpty
-import org.gradle.api.tasks.TaskAction
-import org.gradle.kotlin.dsl.create
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.*
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.property
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withConvention
 import org.gradle.work.InputChanges
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
 import java.io.File
-import javax.inject.Inject
 
 /**
  * Created by JunHyung Lim on 2020-05-20
  */
-open class SubclassDetectionTask @Inject constructor(private val superClassName: String) : DefaultTask() {
+@Suppress("UnstableApiUsage")
+open class SubclassDetection : DefaultTask() {
+    init {
+        group = "spigradle"
+        description = "Detect the jvm subclass."
+    }
+
+    @get:Input
+    val superClassName: Property<String> = project.objects.property()
+
     @get:SkipWhenEmpty
     @get:InputFiles
-    var classDirectories: FileCollection = project.files()
+    val classDirectories: ConfigurableFileCollection = project.objects.fileCollection()
 
     @get:OutputFile
-    var outputFile: File = File(project.buildDir, PLUGIN_APT_DEFAULT_PATH)
+    val outputFile = project.objects.property<File>()
+            .convention(File(project.buildDir, PLUGIN_APT_DEFAULT_PATH))
 
     @TaskAction
     fun inspect(inputChanges: InputChanges) {
-        val context = SubclassDetectionContext().apply { superClasses += superClassName }
+        val context = SubclassDetectionContext().apply { superClasses += superClassName.get() }
         val options = ClassReader.SKIP_CODE and ClassReader.SKIP_DEBUG and ClassReader.SKIP_FRAMES
         inputChanges.getFileChanges(classDirectories).asSequence().takeWhile {
             context.detectedMainClass == null
@@ -44,16 +52,17 @@ open class SubclassDetectionTask @Inject constructor(private val superClassName:
             }
         }
         val detectedClass = context.detectedMainClass ?: return
-        outputFile.apply {
+        outputFile.get().apply {
             parentFile.mkdirs()
         }.writeText(detectedClass.replace('/', '.'))
     }
 
     companion object {
-        fun create(project: Project, taskName: String, superClassName: String): SubclassDetectionTask {
+        fun register(project: Project, taskName: String, superName: String): TaskProvider<SubclassDetection> {
             val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
-            return project.tasks.create(taskName, SubclassDetectionTask::class, superClassName).apply {
-                classDirectories = sourceSets["main"].output.classesDirs
+            return project.tasks.register(taskName, SubclassDetection::class) {
+                superClassName.set(superName)
+                classDirectories.from(sourceSets["main"].output.classesDirs)
             }
         }
     }

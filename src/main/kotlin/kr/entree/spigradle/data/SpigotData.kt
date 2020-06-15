@@ -1,13 +1,24 @@
 package kr.entree.spigradle.data
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
-import org.gradle.api.plugins.ExtraPropertiesExtension
+import java.io.File
 
 /**
  * Created by JunHyung Lim on 2020-05-22
  */
+data class SpigotDebug(
+        override var serverJar: File,
+        var buildToolJar: File,
+        override var serverDirectory: File = serverJar.parentFile,
+        var buildToolDirectory: File = buildToolJar.parentFile,
+        var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
+        override var agentPort: Int = 5005,
+        var eula: Boolean = false,
+        var buildVersion: String = "1.15.2"
+) : CommonDebug
 
 enum class Load {
     @SerialName("POSTWORLD")
