@@ -3,7 +3,7 @@ package kr.entree.spigradle.module.spigot
 import kr.entree.spigradle.data.SpigotDebug
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.internal.lazyString
-import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugin
+import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
 import kr.entree.spigradle.module.common.Download
 import org.gradle.api.Project
@@ -79,7 +79,7 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
 
     fun Project.registerRunSpigot(debug: SpigotDebug): TaskProvider<JavaExec> {
         val serverJar = debug.serverJar
-        return registerRunServer("runSpigot", debug).applyToConfigure {
+        return registerRunServer("Spigot", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the Spigot server."
             classpath = files(provider { serverJar })
@@ -91,8 +91,8 @@ object SpigotDebugTask { // TODO: Normalize for bungeecord, nukkitX
     }
 
     fun Project.registerPrepareSpigotPlugin(spigot: SpigotExtension): TaskProvider<Copy> {
-        return registerPreparePlugin(
-                "prepareSpigotPlugin",
+        return registerPreparePlugins(
+                "prepareSpigotPlugins",
                 "name",
                 "plugin.yml"
         ) { spigot.depends + spigot.softDepends }.applyToConfigure {

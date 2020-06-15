@@ -2,7 +2,7 @@ package kr.entree.spigradle.module.nukkit
 
 import kr.entree.spigradle.data.NukkitDebug
 import kr.entree.spigradle.internal.applyToConfigure
-import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugin
+import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
 import kr.entree.spigradle.module.common.Download
 import org.gradle.api.Project
@@ -25,27 +25,27 @@ object NukkitDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Download the NukkitX"
             source.set(NUKKIT_X_URL)
-            destination.set(provider { debug.nukkitJar })
+            destination.set(provider { debug.serverJar })
         }
     }
 
     fun Project.registerRunNukkit(debug: NukkitDebug): TaskProvider<JavaExec> {
-        return registerRunServer("runNukkit", debug).applyToConfigure {
+        return registerRunServer("Nukkit", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the NukkitX server."
-            classpath = files(provider { debug.nukkitJar })
-            setWorkingDir(provider { debug.nukkitDirectory })
+            classpath = files(provider { debug.serverJar })
+            setWorkingDir(provider { debug.serverDirectory })
         }
     }
 
     fun Project.registerPrepareNukkitPlugins(nukkit: NukkitExtension): TaskProvider<Copy> {
-        return registerPreparePlugin(
+        return registerPreparePlugins(
                 "prepareNukkitPlugin",
                 "name",
                 "plugin.yml"
         ) { nukkit.depends + nukkit.softDepends }.applyToConfigure {
             group = TASK_GROUP_DEBUG
-            into(provider { File(nukkit.debug.nukkitDirectory, "plugins") })
+            into(provider { File(nukkit.debug.serverDirectory, "plugins") })
         }
     }
 

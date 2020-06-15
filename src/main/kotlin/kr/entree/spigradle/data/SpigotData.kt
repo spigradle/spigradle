@@ -10,9 +10,9 @@ import java.io.File
  * Created by JunHyung Lim on 2020-05-22
  */
 data class SpigotDebug(
-        var serverJar: File,
+        override var serverJar: File,
         var buildToolJar: File,
-        var serverDirectory: File = serverJar.parentFile,
+        override var serverDirectory: File = serverJar.parentFile,
         var buildToolDirectory: File = buildToolJar.parentFile,
         var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
         override var agentPort: Int = 5005,

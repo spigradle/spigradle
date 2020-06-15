@@ -20,7 +20,7 @@ object NukkitDependencies {
 }
 
 data class NukkitDebug(
-        val nukkitJar: File,
-        val nukkitDirectory: File = nukkitJar.parentFile,
+        override var serverJar: File,
+        override var serverDirectory: File = serverJar.parentFile,
         override var agentPort: Int = 5005
 ) : CommonDebug

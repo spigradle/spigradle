@@ -22,7 +22,7 @@ object BungeeDependencies {
 }
 
 data class BungeeDebug(
-        val bungeeJar: File,
-        val bungeeDirectory: File = bungeeJar.parentFile,
+        override var serverJar: File,
+        override var serverDirectory: File = serverJar.parentFile,
         override var agentPort: Int = 5005
 ) : CommonDebug

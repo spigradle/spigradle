@@ -2,7 +2,7 @@ package kr.entree.spigradle.module.bungee
 
 import kr.entree.spigradle.data.BungeeDebug
 import kr.entree.spigradle.internal.applyToConfigure
-import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugin
+import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
 import kr.entree.spigradle.module.common.Download
 import org.gradle.api.Project
@@ -25,27 +25,27 @@ object BungeeDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Download the Bungeecord."
             source.set(BUNGEECORD_URL)
-            destination.set(provider { debug.bungeeJar })
+            destination.set(provider { debug.serverJar })
         }
     }
 
     fun Project.registerRunBungee(debug: BungeeDebug): TaskProvider<JavaExec> {
-        return registerRunServer("runBungee", debug).applyToConfigure {
+        return registerRunServer("Bungee", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the Bungeecord server."
-            classpath = files(provider { debug.bungeeJar })
-            setWorkingDir(provider { debug.bungeeDirectory })
+            classpath = files(provider { debug.serverJar })
+            setWorkingDir(provider { debug.serverDirectory })
         }
     }
 
     fun Project.registerPrepareBungeePlugins(bungee: BungeeExtension): TaskProvider<Copy> {
-        return registerPreparePlugin(
+        return registerPreparePlugins(
                 "prepareBungeePlugin",
                 "name",
                 "bungee.yml")
         { bungee.depends + bungee.softDepends }.applyToConfigure {
             group = TASK_GROUP_DEBUG
-            into(provider { File(bungee.debug.bungeeDirectory, "plugins") })
+            into(provider { File(bungee.debug.serverDirectory, "plugins") })
         }
     }
 
