@@ -245,19 +245,7 @@ tasks {
 
 ### detectSpigotMain - [SubclassDetection](TODO)
 
-Finds main class that extends [org.bukkit.plugin.java.JavaPlugin](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/plugin/java/JavaPlugin.html).
-
-<details>
-<summary>Configuration</summary>
-
-```groovy
-detectSpigotMain {
-    superClassName = 'org.bukkit.plugin.scala.ScalaPlugin'
-    classDirectories.from(sourceSets["test"])
-}
-```
-
-</details>
+Finds the main class extends [org.bukkit.plugin.java.JavaPlugin](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/plugin/java/JavaPlugin.html).
 
 ### generateSpigotDescription - [YamlGenerate](TODO)
 
