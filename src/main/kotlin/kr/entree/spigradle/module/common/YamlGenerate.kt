@@ -100,7 +100,7 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
     description.init(project)
     // classes -> detectionTask -> generateTask
     classes.finalizedBy(detectionTask)
-    detectionTask.configure { finalizedBy(generateTask) }
+    generateTask.configure { dependsOn(detectionTask) }
 }
 
 internal fun Project.registerYamlGenTask(taskName: String, extensionName: String, fileName: String, data: MainProvider): TaskProvider<YamlGenerate> {
