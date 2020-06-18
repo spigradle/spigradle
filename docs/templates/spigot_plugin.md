@@ -36,6 +36,8 @@ gradlew wrapper --gradle-version $GRADLE_VERSION --distribution-type all
 
 ## Usage
 
+[Full Example Here](https://github.com/EntryPointKR/SpigradleSample/tree/master/spigot)
+
 Groovy DSL
 
 ```groovy
@@ -198,6 +200,8 @@ configure<SpigotExtension> {
 </details>
 
 ## Tasks
+
+All tasks supports [UP-TO-DATE checks](https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks).
 
 <details>
 <summary>Configuration Guide</summary>

@@ -82,7 +82,10 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupRepositoryExtensions() {
         val ext = Groovies.getExtensionFrom(repositories)
-        listOf(Repositories, SpigotRepositories, BungeeRepositories).flatMap {
+        listOf(
+                Repositories, SpigotRepositories,
+                BungeeRepositories, NukkitRepositories
+        ).flatMap {
             it.toFieldEntries<String>()
         }.forEach { (name, url) ->
             ext.set(name, object : Closure<Any>(this, this) {
