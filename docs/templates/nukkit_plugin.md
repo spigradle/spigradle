@@ -113,27 +113,27 @@ About description each property, See [Here](https://github.com/NukkitX/ExamplePl
 
 ```groovy
 nukkit {
-    authors = ['Me']
-    depends = ['SomePlugin']
-    api = ['1.0.5']
-    load = STARTUP
+    authors 'Me'
+    depends 'ProtocolLib', 'Vault'
+    api '1.0.5'
+    load STARTUP
     commands {
         give {
-            aliases = listOf('i')
-            description = 'Give command.'
-            permission = 'test.foo'
-            permissionMessage = 'You do not have permission!'
-            usage = '/<command> [test|stop]'
+            aliases 'giv', 'i'
+            description 'Give command.'
+            permission 'test.foo'
+            permissionMessage 'You do not have permission!'
+            usage '/<command> [test|stop]'
         }
     }
     permissions {
         'test.foo' {
-            description = 'Allows foo command'
-            defaults = 'true'
+            description 'Allows foo command'
+            defaults 'true'
         }
         'test.*' {
-            description = 'Wildcard permission'
-            defaults = 'op'
+            description 'Wildcard permission'
+            defaults 'op'
             children = ['test.foo': true]
         }
     }

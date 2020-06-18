@@ -113,10 +113,10 @@ About detail, See [Here](https://www.spigotmc.org/wiki/create-your-first-bungeec
 
 ```groovy
 bungee {
-    description = 'A Bungeecord plugin.'
-    author = 'Me'
-    depends = ['SomePlugin']
-    softDepends = ['SomeSoftPlugin']
+    description 'A Bungeecord plugin.'
+    author 'Me'
+    depends 'foo', 'bar'
+    softDepends 'soft'
 }
 ```
 

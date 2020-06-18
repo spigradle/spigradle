@@ -128,27 +128,27 @@ About detail, See [Here](https://www.spigotmc.org/wiki/plugin-yml/)
 
 ```groovy
 spigot {
-    authors = ['Me']
-    depends = ['ProtocolLib']
-    apiVersion = '1.15'
-    load = STARTUP
+    authors 'Me'
+    depends 'ProtocolLib', 'Vault'
+    apiVersion '1.15'
+    load STARTUP
     commands {
         give {
-            aliases = listOf('i')
-            description = 'Give command.'
-            permission = 'test.foo'
-            permissionMessage = 'You do not have permission!'
-            usage = '/<command> [test|stop]'
+            aliases 'giv', 'i'
+            description 'Give command.'
+            permission 'test.foo'
+            permissionMessage 'You do not have permission!'
+            usage '/<command> [test|stop]'
         }
     }
     permissions {
         'test.foo' {
-            description = 'Allows foo command'
-            defaults = 'true'
+            description 'Allows foo command'
+            defaults 'true'
         }
         'test.*' {
-            description = 'Wildcard permission'
-            defaults = 'op'
+            description 'Wildcard permission'
+            defaults 'op'
             children = ['test.foo': true]
         }
     }
