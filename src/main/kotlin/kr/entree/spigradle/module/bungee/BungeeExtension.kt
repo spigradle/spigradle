@@ -30,4 +30,12 @@ open class BungeeExtension(project: Project) : StandardDescription {
     }
 
     fun debug(configure: BungeeDebug.() -> Unit) = configure(debug)
+
+    fun depends(vararg depends: String) {
+        this.depends = depends.toList()
+    }
+
+    fun softDepends(vararg softDepends: String) {
+        this.softDepends = softDepends.toList()
+    }
 }
