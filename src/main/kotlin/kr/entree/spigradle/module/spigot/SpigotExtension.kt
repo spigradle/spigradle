@@ -57,4 +57,52 @@ open class SpigotExtension(project: Project) : StandardDescription {
     }
 
     fun debug(configure: SpigotDebug.() -> Unit) = configure(debug)
+
+    fun main(main: String?) {
+        this.main = main
+    }
+
+    fun name(name: String?) {
+        this.name = name
+    }
+
+    fun version(version: String?) {
+        this.version = version
+    }
+
+    fun description(description: String?) {
+        this.description = description
+    }
+
+    fun website(website: String?) {
+        this.website = website
+    }
+
+    fun authors(authors: List<String>) {
+        this.authors = authors
+    }
+
+    fun apiVersion(apiVersion: String?) {
+        this.apiVersion = apiVersion
+    }
+
+    fun load(load: Load?) {
+        this.load = load
+    }
+
+    fun prefix(prefix: String?) {
+        this.prefix = prefix
+    }
+
+    fun depends(depends: List<String>) {
+        this.depends = depends
+    }
+
+    fun softDepends(softDepends: List<String>) {
+        this.softDepends = softDepends
+    }
+
+    fun loadBefore(loadBefore: List<String>) {
+        this.loadBefore = loadBefore
+    }
 }
