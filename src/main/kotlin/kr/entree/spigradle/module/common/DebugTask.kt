@@ -32,7 +32,7 @@ internal fun File.readYamlDescription(fileName: String) =
 
 internal fun Project.createDebugConfigurations(name: String, debug: CommonDebug) {
     val idea: IdeaModel by extensions
-    idea.project.settings {
+    idea.project?.settings {
         runConfigurations {
             register("Debug$name", Remote::class) {
                 host = "localhost"

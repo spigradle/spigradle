@@ -32,6 +32,8 @@ gradlew wrapper --gradle-version $GRADLE_VERSION --distribution-type all
 
 ## Usage
 
+[Full Example Here](https://github.com/EntryPointKR/SpigradleSample/tree/master/nukkit)
+
 Groovy DSL
 
 ```groovy
@@ -184,6 +186,8 @@ configure<NukkitExtension> {
 
 ## Tasks
 
+All tasks supports [UP-TO-DATE checks](https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:up_to_date_checks).
+
 <details>
 <summary>Configuration Guide</summary>
 
@@ -230,7 +234,7 @@ tasks {
 
 ### detectNukkitMain - [SubclassDetection](TODO)
 
-Finds main class that extends [cn.nukkit.plugin.PluginBase](https://ci.nukkitx.com/job/NukkitX/job/Nukkit/job/master/javadoc/index.html?overview-summary.html).
+Finds the main class extends [cn.nukkit.plugin.PluginBase](https://ci.nukkitx.com/job/NukkitX/job/Nukkit/job/master/javadoc/index.html?overview-summary.html).
 
 ### generateNukkitDescription - [YamlGenerate](TODO)
 

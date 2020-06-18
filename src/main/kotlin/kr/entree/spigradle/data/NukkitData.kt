@@ -17,6 +17,7 @@ object NukkitDependencies {
             "1.0-SNAPSHOT",
             VersionModifier.SNAPSHOT_APPENDER
     )
+    val NUKKIT_X = NUKKIT
 }
 
 data class NukkitDebug(
