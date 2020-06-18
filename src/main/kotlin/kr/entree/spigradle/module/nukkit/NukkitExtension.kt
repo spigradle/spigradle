@@ -56,4 +56,24 @@ open class NukkitExtension(project: Project) : StandardDescription {
     }
 
     fun debug(configure: NukkitDebug.() -> Unit) = configure(debug)
+
+    fun authors(authors: Array<String>) {
+        this.authors = authors.toList()
+    }
+
+    fun api(vararg apis: String) {
+        this.api = apis.toList()
+    }
+
+    fun depends(vararg depends: String) {
+        this.depends = depends.toList()
+    }
+
+    fun softDepends(vararg softDepends: String) {
+        this.softDepends = softDepends.toList()
+    }
+
+    fun loadBefore(vararg loadBefore: String) {
+        this.loadBefore = loadBefore.toList()
+    }
 }
