@@ -15,7 +15,10 @@ import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.provideDelegate
 
 /**
- * Created by JunHyung Lim on 2020-04-28
+ * The Nukkit plugin that adds:
+ * - [kr.entree.spigradle.module.common.YamlGenerate] task for the 'plugin.yml' generation.
+ * - [kr.entree.spigradle.module.common.SubclassDetection] task for the main-class detection.
+ * - Debug tasks for test your plugin.
  */
 class NukkitPlugin : Plugin<Project> {
     companion object {

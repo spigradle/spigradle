@@ -5,20 +5,35 @@ import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
 import java.io.File
+import javax.inject.Inject
 
 /**
  * Created by JunHyung Lim on 2020-05-22
  */
-data class SpigotDebug(
+open class SpigotDebug(
         override var serverJar: File,
         var buildToolJar: File,
-        override var serverDirectory: File = serverJar.parentFile,
-        var buildToolDirectory: File = buildToolJar.parentFile,
-        var buildToolOutputDirectory: File = File(buildToolDirectory, "outputs"),
-        override var agentPort: Int = 5005,
-        var eula: Boolean = false,
-        var buildVersion: String = "1.15.2"
-) : CommonDebug
+        override var serverDirectory: File,
+        var buildToolDirectory: File,
+        var buildToolOutputDirectory: File,
+        override var agentPort: Int,
+        var eula: Boolean,
+        var buildVersion: String
+) : CommonDebug {
+    @Inject
+    constructor(serverJar: File, buildToolJar: File) : this(
+            serverJar, buildToolJar,
+            serverJar.parentFile, buildToolJar.parentFile,
+            File(buildToolJar.parentFile, "outputs"),
+            5005, false, "1.15.2"
+    )
+
+    var ababc: String? = "awef"
+
+    fun ttest(any: Boolean) {
+
+    }
+}
 
 enum class Load {
     @SerialName("POSTWORLD")

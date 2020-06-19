@@ -95,7 +95,7 @@ The Spigot plugin automatically finds the main class extends [JavaPlugin]((https
 
 This is powerful part of Spigradle; if we create a simple plugin that just needs main, name and version in plugin.yml, then we don't need to any configuration. Only pay attention to your unique implementation!  
 
-For performance, you can present the main class using `@kr.entree.spigradle.PluginMain`:
+Also, you can present the main class using `@kr.entree.spigradle.PluginMain`:
 
 ```java
 import kr.entree.spigradle.PluginMain;
@@ -137,8 +137,8 @@ spigot {
             aliases 'giv', 'i'
             description 'Give command.'
             permission 'test.foo'
-            permissionMessage 'You do not have permission!'
-            usage '/<command> [test|stop]'
+            permissionMessage 'You do not have the permission!'
+            usage '/<command> [item] [amount]'
         }
     }
     permissions {
@@ -362,3 +362,5 @@ task copyPluginYaml(type: Copy, dependsOn: spigotPluginYaml) {
 
 tasks.test.dependsOn(copyPluginYaml)
 ```
+
+// TODO: Migrating Tips

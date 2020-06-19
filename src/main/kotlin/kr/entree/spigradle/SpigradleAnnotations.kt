@@ -1,6 +1,10 @@
 package kr.entree.spigradle
 
 /**
- * Created by JunHyung Lim on 2020-05-15
+ * The annotation used to specify the main class.
  */
+@Target(AnnotationTarget.CLASS)
+@Retention
+annotation class PluginMain
+
 typealias Plugin = PluginMain

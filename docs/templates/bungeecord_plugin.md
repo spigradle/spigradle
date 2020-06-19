@@ -91,7 +91,7 @@ The Bungeecord plugin automatically finds the main class extends [Plugin](https:
 
 This is powerful part of Spigradle; if we create a simple plugin that just needs main, name and version in plugin.yml, then we don't need to any configuration. Only pay attention to your unique implementation!  
 
-For performance, you can present the main class using `@kr.entree.spigradle.PluginMain`:
+Also, you can present the main class using `@kr.entree.spigradle.PluginMain`:
 
 ```java
 import kr.entree.spigradle.PluginMain;
