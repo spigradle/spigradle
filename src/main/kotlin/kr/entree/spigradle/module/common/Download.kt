@@ -14,7 +14,35 @@ import java.io.File
 import java.net.URL
 
 /**
- * Created by JunHyung Lim on 2020-05-26
+ * Downloads a file from the given URL.
+ *
+ * Groovy Example:
+ *
+ * ```groovy
+ * import kr.entree.spigradle.module.common.Download
+ *
+ * task downloadSomething(type: Download) {
+ *   source = 'https://newurl.com'
+ *   destination = file("$buildDir/download/something")
+ *   skipWhenExists = true // Do not overwrite.
+ * }
+ * ```
+ *
+ * Kotlin Example:
+ *
+ * ```kotiln
+ * import kr.entree.spigradle.module.common.Download
+ *
+ * tasks {
+ *   val downloadSomething by registering(Download::class) {
+ *     source.set("https://newurl.com")
+ *     destination.set(file("$buildDir/download/something"))
+ *     skipWhenExists.set(true)
+ *   }
+ * }
+ * ```
+ *
+ * @since 1.3.0
  */
 open class Download : DefaultTask() {
     init {
@@ -22,12 +50,27 @@ open class Download : DefaultTask() {
         description = "Download the file from the given URL."
     }
 
+    /**
+     * The URL for the download.
+     */
     @Input
     val source: Property<String> = project.objects.property()
 
+    /**
+     * The option whether to skip overwrite when the destination file already exists.
+     *
+     * The download will be skipped by following cases about whether 'skipWhenExists':
+     * 1. If true, skip when the file already exists.
+     * 2. If false, skip when the task inputs changed, other word UP-TO-DATE check.
+     *
+     * Defaults to false.
+     */
     @Input
     val skipWhenExists: Property<Boolean> = project.objects.property<Boolean>().convention(false)
 
+    /**
+     * The destination where will be downloaded.
+     */
     @OutputFile
     val destination: Property<File> = project.objects.property()
 

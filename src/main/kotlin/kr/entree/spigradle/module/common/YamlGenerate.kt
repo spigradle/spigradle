@@ -22,7 +22,37 @@ import java.io.File
 import java.nio.charset.Charset
 
 /**
- * Created by JunHyung Lim on 2020-04-28
+ * Generates a YAML into the given files.
+ *
+ * Groovy Example:
+ *
+ * ```groovy
+ * import kr.entree.spigradle.module.common.YamlGenerate
+ *
+ * task generateYaml(type: YamlGenerate) {
+ *   properties.put('someProperty', 'AnyTypeOfValue')
+ *   encoding = 'UTF-16'
+ *   yamlOptions.put('WRITE_DOC_START_MARKER', true)
+ *   outputFiles.from file('result.yml')
+ * }
+ * ```
+ *
+ * Kotlin Example:
+ *
+ * ```kotlin
+ * import kr.entree.spigradle.module.common.YamlGenerate
+ *
+ * tasks {
+ *   val generateYaml by registering(YamlGenerate) {
+ *     properties.put("someProperty", "AnyTypeOfValue")
+ *     encoding.set("UTF-16")
+ *     yamlOptions.put("WRITE_DOC_START_MARKER", true)
+ *     outputFiles.from(file("result.yml"))
+ *   }
+ * }
+ * ```
+ *
+ * @since 1.3.0
  */
 @Suppress("UnstableApiUsage")
 open class YamlGenerate : DefaultTask() {
@@ -31,22 +61,44 @@ open class YamlGenerate : DefaultTask() {
         description = "Generate the yaml file"
     }
 
+    /**
+     * The property map of yaml.
+     */
     @Input
     val properties: MapProperty<String, Any> = project.objects.mapProperty()
 
+    /**
+     * The encoding of the file.
+     */
     @Input
     val encoding: Property<String> = project.objects.property<String>().convention("UTF-8")
 
+    /**
+     * The options of yaml feature. the key is Enum#name() of [com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature].
+     */
     @Input
     val yamlOptions: MapProperty<String, Boolean> = project.objects.mapProperty()
 
+    /**
+     * The files that will be output.
+     */
     @OutputFiles
     val outputFiles: ConfigurableFileCollection = project.objects.fileCollection()
 
+    /**
+     * Sets the value that will be serialized.
+     *
+     * @param provider The lazy provider of the value, pass to using `[org.gradle.api.Project.provider] { value }`
+     */
     fun serialize(provider: Provider<Any>) = properties.set(provider.map {
         Jackson.JSON.convertValue<Map<String, Any>>(it)
     })
 
+    /**
+     * Sets the value that will be serialized. it simply calls `serialize([org.gradle.api.Project.provider] { [any] }`
+     *
+     * @param any The value that will be serialized.
+     */
     fun serialize(any: Any) = serialize(project.provider { any })
 
     @TaskAction
@@ -93,14 +145,14 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
     val detectionTask = SubclassDetection.register(this, detectionTaskName, pluginSuperClass).applyToConfigure {
         group = taskGroupName
     }
-    val generateTask = registerYamlGenTask(yamlTaskName, extensionName, descFileName, description).applyToConfigure {
+    val generationTask = registerYamlGenTask(yamlTaskName, extensionName, descFileName, description).applyToConfigure {
         group = taskGroupName
     }
     val classes: Task by tasks
     description.init(project)
     // classes -> detectionTask -> generateTask
-    classes.finalizedBy(detectionTask)
-    detectionTask.configure { finalizedBy(generateTask) }
+    generationTask.configure { dependsOn(detectionTask) }
+    classes.finalizedBy(generationTask)
 }
 
 internal fun Project.registerYamlGenTask(taskName: String, extensionName: String, fileName: String, data: MainProvider): TaskProvider<YamlGenerate> {

@@ -12,10 +12,78 @@ import kr.entree.spigradle.module.common.debugDir
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.container
+import org.gradle.kotlin.dsl.newInstance
 import java.io.File
 
 /**
- * Created by JunHyung Lim on 2020-05-22
+ * Nukkit configuration for the 'plugin.yml' description, and debug settings.
+ *
+ * Groovy Example:
+ * ```groovy
+ * spigot {
+ *   authors 'Me'
+ *   depends 'ProtocolLib', 'Vault'
+ *   api '1.0.5'
+ *   load STARTUP
+ *   commands {
+ *     give {
+ *       aliases 'giv', 'i'
+ *       description 'Give command.'
+ *       permission 'test.foo'
+ *       permissionMessage 'You do not have the permission!'
+ *       usage '/<command> [item] [amount]'
+ *     }
+ *   }
+ *   permissions {
+ *     'test.foo' {
+ *       description 'Allows foo command'
+ *       defaults 'true'
+ *     }
+ *     'test.*' {
+ *       description 'Wildcard permission'
+ *       defaults 'op'
+ *       children = ['test.foo': true]
+ *     }
+ *   }
+ *   debug {
+ *     eula = true
+ *   }
+ * }
+ * ```
+ *
+ * Kotlin Example:
+ * ```kotlin
+ * import kr.entree.spigradle.data.Load
+ *
+ * spigot {
+ *   authors = "Me"
+ *   depends = listOf("ProtocolLib", "Vault")
+ *   api = listOf("1.0.5")
+ *   load = Load.STARTUP
+ *   commands {
+ *     create("give") {
+ *       aliases = listOf("giv", "i")
+ *       description = "Give command."
+ *       permission = "test.foo"
+ *       permissionMessage = "You do not have the permission!"
+ *       usage = "/<command> [item] [amount]"
+ *     }
+ *   }
+ *   permissions {
+ *     create("test.foo") {
+ *       description = "Allows foo command"
+ *       defaults = "true"
+ *     }
+ *     create("test.*") {
+ *       description = "Wildcard permission"
+ *       defaults = "op"
+ *       children = mapOf("test.foo" to true)
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * See: [https://github.com/NukkitX/ExamplePlugin/blob/master/src/main/resources/plugin.yml#L1]
  */
 @JsonPropertyOrder(
         "main", "name", "version", "description", "website",
@@ -46,9 +114,7 @@ open class NukkitExtension(project: Project) : StandardDescription {
     val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class)
 
     @Transient
-    val debug: NukkitDebug = NukkitDebug(
-            File(project.debugDir, "nukkit/nukkit.jar")
-    )
+    val debug: NukkitDebug = project.objects.newInstance(File(project.debugDir, "nukkit/nukkit.jar"))
 
     fun debug(configure: Closure<*>) {
         configure.delegate = debug

@@ -18,7 +18,33 @@ import org.objectweb.asm.Opcodes
 import java.io.File
 
 /**
- * Created by JunHyung Lim on 2020-05-20
+ * Finds the main class that extends the given super-class.
+ *
+ * Groovy Example:
+ *
+ * ```groovy
+ * import kr.entree.spigradle.module.common.SubclassDetection
+ *
+ * task findSubclass(type: SubclassDetection) {
+ *   superClassName = 'com.my.sample.SuperType'
+ *   classDirectories.from sourceSets.main.output.classesDirs
+ *   outputFile = file('result.txt')
+ * }
+ * ```
+ *
+ * ```kotiln
+ * import kr.entree.spigradle.module.common.SubclassDetection
+ *
+ * tasks {
+ *   val findSubclass(type: SubclassDetection) {
+ *     superClassName.set("com.my.sample.SuperType")
+ *     classDirectories.from(sourceSets["main"].output.classesDirs)
+ *     outputFile.set(file("result.txt"))
+ *   }
+ * }
+ * ```
+ *
+ * @since 1.3.0
  */
 @Suppress("UnstableApiUsage")
 open class SubclassDetection : DefaultTask() {
@@ -27,13 +53,22 @@ open class SubclassDetection : DefaultTask() {
         description = "Detect the jvm subclass."
     }
 
+    /**
+     * The name of super-class used to detect a sub-class.
+     */
     @get:Input
     val superClassName: Property<String> = project.objects.property()
 
+    /**
+     * The class directories used to target of the sub-class detection.
+     */
     @get:SkipWhenEmpty
     @get:InputFiles
     val classDirectories: ConfigurableFileCollection = project.objects.fileCollection()
 
+    /**
+     * The path of plain text includes the detection result.
+     */
     @get:OutputFile
     val outputFile = project.objects.property<File>()
             .convention(File(project.buildDir, PLUGIN_APT_DEFAULT_PATH))

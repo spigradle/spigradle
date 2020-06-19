@@ -1,0 +1,31 @@
+apply plugin: 'org.jetbrains.dokka'
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+    configuration {
+        moduleName = project.name
+        jdkVersion = 8
+        sourceLink {
+            path = 'src/main/kotlin'
+            url = 'https://github.com/EntryPointKR/Spigradle/tree/master/src/main/kotlin'
+            lineSuffix = "#L"
+        }
+        externalDocumentationLink {
+            url = new URL("https://docs.gradle.org/current/javadoc/")
+            packageListUrl = new URL("https://docs.gradle.org/current/javadoc/package-list")
+        }
+        externalDocumentationLink {
+            url = new URL("https://docs.groovy-lang.org/latest/html/gapi/")
+            packageListUrl = new URL("https://docs.groovy-lang.org/latest/html/gapi/package-list")
+        }
+        externalDocumentationLink {
+            url = new URL("https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/latest/")
+            packageListUrl = new URL("https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/latest/package-list")
+        }
+        externalDocumentationLink {
+            url = new URL("https://hub.spigotmc.org/javadocs/spigot/")
+            packageListUrl = new URL("https://hub.spigotmc.org/javadocs/spigot/package-list")
+        }
+    }
+}

@@ -3,6 +3,7 @@ package kr.entree.spigradle.data
 import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import java.io.File
+import javax.inject.Inject
 
 /**
  * Created by JunHyung Lim on 2020-05-23
@@ -21,8 +22,11 @@ object BungeeDependencies {
     )
 }
 
-data class BungeeDebug(
+open class BungeeDebug(
         override var serverJar: File,
-        override var serverDirectory: File = serverJar.parentFile,
-        override var agentPort: Int = 5005
-) : CommonDebug
+        override var serverDirectory: File,
+        override var agentPort: Int
+) : CommonDebug {
+    @Inject
+    constructor(serverJar: File) : this(serverJar, serverJar.parentFile, 5005)
+}
