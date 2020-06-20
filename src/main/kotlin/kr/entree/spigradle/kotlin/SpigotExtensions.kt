@@ -89,81 +89,113 @@ fun DependencyHandler.spigotmc(artifactId: String, version: String? = null) =
 
 /**
  * The dependency shortcut for Spigot-API
+ *
+ * @param version Defaults to [SpigotDependencies.SPIGOT].version
  */
 fun DependencyHandler.spigot(version: String? = null) = SpigotDependencies.SPIGOT.format(version)
 
 /**
  * The dependency shortcut for Spigot, requires repository mavenLocal() published by BuildTools.
+ *
+ * @param version Defaults to [SpigotDependencies.SPIGOT_ALL].version
  */
 fun DependencyHandler.spigotAll(version: String? = null) = SpigotDependencies.SPIGOT_ALL.format(version)
 
 /**
  * The dependency shortcut for the NMS, requires repository mavenLocal() published by BuildTools.
+ *
+ * @param version Defaults to [SpigotDependencies.MINECRAFT_SERVER].version
  */
 fun DependencyHandler.minecraftServer(version: String? = null) = SpigotDependencies.MINECRAFT_SERVER.format(version)
 
 /**
  * The dependency shortcut for Paper, requires repository papermc()
+ *
+ * @param version Defaults to [SpigotDependencies.PAPER].version
  */
 fun DependencyHandler.paper(version: String? = null) = SpigotDependencies.PAPER.format(version)
 
 /**
  * The dependency shortcut for Bukkit, requires repository mavenLocal() published by BuildTools.
+ *
+ * @param version Defaults to [SpigotDependencies.BUKKIT].version
  */
 fun DependencyHandler.bukkit(version: String? = null) = SpigotDependencies.BUKKIT.format(version)
 
 /**
  * The dependency shortcut for CraftBukkit, requires repository mavenLocal() published by BuildTools.
+ *
+ * @param version Defaults to [SpigotDependencies.CRAFT_BUKKIT].version
  */
 fun DependencyHandler.craftbukkit(version: String? = null) = SpigotDependencies.CRAFT_BUKKIT.format(version)
 
 /**
  * The dependency shortcut for ProtocolLib, requires repository protocolLib()
+ *
+ * @param version Defaults to [SpigotDependencies.PROTOCOL_LIB].version
  */
 fun DependencyHandler.protocolLib(version: String? = null) = SpigotDependencies.PROTOCOL_LIB.format(version)
 
 /**
  * The dependency shortcut for Vault, requires repository jitpack() or vault()
+ *
+ * @param version Defaults to [SpigotDependencies.VAULT].version
  */
 fun DependencyHandler.vault(version: String? = null) = SpigotDependencies.VAULT.format(version)
 
 /**
  * The dependency shortcut for LuckPerms, requires repository mavenCentral().
+ *
+ * @param version Defaults to [SpigotDependencies.LUCK_PERMS].version
  */
 fun DependencyHandler.luckPerms(version: String? = null) = SpigotDependencies.LUCK_PERMS.format(version)
 
 /**
  * The dependency shortcut for WorldEdit, requires repository enginehub().
+ *
+ * @param version Defaults to [SpigotDependencies.WORLD_EDIT].version
  */
 fun DependencyHandler.worldedit(version: String? = null) = SpigotDependencies.WORLD_EDIT.format(version)
 
 /**
  * The dependency shortcut for WorldGuard, requires repository enginehub().
+ *
+ * @param version Defaults to [SpigotDependencies.WORLD_GUARD].version
  */
 fun DependencyHandler.worldguard(version: String? = null) = SpigotDependencies.WORLD_GUARD.format(version)
 
 /**
  * The dependency shortcut for EssentialsX, requires repository enderZone() or essentialsX().
+ *
+ * @param version Defaults to [SpigotDependencies.ESSENTIALS_X].version
  */
 fun DependencyHandler.essentialsX(version: String? = null) = SpigotDependencies.ESSENTIALS_X.format(version)
 
 /**
  * The dependency shortcut for BanManager, requires repository frostcast() or banManager().
+ *
+ * @param version Defaults to [SpigotDependencies.BAN_MANAGER].version
  */
 fun DependencyHandler.banManager(version: String? = null) = SpigotDependencies.BAN_MANAGER.format(version)
 
 /**
  * The dependency shortcut for CommandHelper, requires repository enginehub().
+ *
+ * @param version Defaults to [SpigotDependencies.COMMAND_HELPER].version
  */
 fun DependencyHandler.commandhelper(version: String? = null) = SpigotDependencies.COMMAND_HELPER.format(version)
 
 /**
  * The dependency shortcut for BStats, requires repository codemc() or bStats().
+ *
+ * @param version Defaults to [SpigotDependencies.B_STATS].version
  */
 fun DependencyHandler.bStats(version: String? = null) = SpigotDependencies.B_STATS.format(version)
 
 /**
  * The dependency shortcut for BStats-Lite, requires repository codemc() or bStats().
+ *
+ * @param version Defaults to [SpigotDependencies.B_STATS_LITE].version
  */
 fun DependencyHandler.bStatsLite(version: String? = null) = SpigotDependencies.B_STATS_LITE.format(version)
 

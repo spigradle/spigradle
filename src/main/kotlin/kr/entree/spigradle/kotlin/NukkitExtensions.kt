@@ -30,5 +30,7 @@ fun RepositoryHandler.nukkitX(configure: MavenArtifactRepository.() -> Unit = {}
 
 /**
  * The dependency shortcut for Nukkit, NukkitX, requires repository NukkitX.
+ *
+ * @param version Defaults to [NukkitDependencies.NUKKIT].version
  */
 fun DependencyHandler.nukkit(version: String? = null) = NukkitDependencies.NUKKIT.format(version)

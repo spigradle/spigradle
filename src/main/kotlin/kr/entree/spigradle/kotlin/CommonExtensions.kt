@@ -35,10 +35,14 @@ fun RepositoryHandler.jitpack(configure: MavenArtifactRepository.() -> Unit = {}
 
 /**
  * The dependency shortcut for Spigradle.
+ *
+ * @param version Defaults to [Dependencies.SPIGRADLE].version
  */
 fun DependencyHandler.spigradle(version: String? = null) = Dependencies.SPIGRADLE.format(version)
 
 /**
  * The dependency shortcut for Lombok.
+ *
+ * @param version Defaults to [Dependencies.LOMBOK].version
  */
 fun DependencyHandler.lombok(version: String? = null) = Dependencies.LOMBOK.format(version)
