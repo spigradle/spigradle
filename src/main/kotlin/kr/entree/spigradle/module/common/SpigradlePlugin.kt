@@ -27,7 +27,6 @@ import kr.entree.spigradle.kotlin.mockBukkit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
@@ -38,8 +37,6 @@ import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import java.io.File
-import kotlin.reflect.full.declaredMemberExtensionFunctions
-import kotlin.reflect.full.memberExtensionFunctions
 
 /**
  * Created by JunHyung Lim on 2020-05-18
@@ -129,7 +126,7 @@ class SpigradlePlugin : Plugin<Project> {
                 fun doCall(version: String?) = dependency.format(version)
             })
         }
-        ext.set("mockBukkit", object: Closure<Any>(this, this) {
+        ext.set("mockBukkit", object : Closure<Any>(this, this) {
             fun doCall(spigotVersion: String? = null, mockBukkitVersion: String? = null) =
                     dependencies.mockBukkit(spigotVersion, mockBukkitVersion)
         }) // Can be replaced by reflection to SpigotExtensionsKt

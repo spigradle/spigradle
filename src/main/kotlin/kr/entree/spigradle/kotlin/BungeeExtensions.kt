@@ -28,5 +28,7 @@ fun RepositoryHandler.bungeecord(configure: MavenArtifactRepository.() -> Unit =
 
 /**
  * The dependency shortcut for Bungeecord, requires repository sonatype() or bungeecord().
+ *
+ * @param version Defaults to [BungeeDependencies.BUNGEE_CORD].version
  */
 fun DependencyHandler.bungeecord(version: String? = null) = BungeeDependencies.BUNGEE_CORD.format(version)
