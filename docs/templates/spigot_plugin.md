@@ -1,10 +1,16 @@
 # Spigot plugin - Spigradle
 
+1. Main class detection
+2. Debugging tasks
+3. plugin.yml generation
+4. dep & repo shortcuts
+
+
 The [Spigot](https://www.spigotmc.org/wiki/about-spigot/) plugin provides you to:
 
 - Generate 'plugin.yml' with less configuration.
 
-- Shortcuts for dependency and repository.
+- Shortcuts for [dependency](TODO) and [repository](TODO).
 
 - Tasks for build and run Spigot with your plugins for debug.
 

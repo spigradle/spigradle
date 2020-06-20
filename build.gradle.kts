@@ -9,7 +9,7 @@ plugins {
     id("com.jfrog.bintray") version "1.8.5" apply false
     id("com.jfrog.artifactory") version "4.15.2" apply false
     id("org.jetbrains.dokka") version "0.10.0" apply false
-    id("com.eden.orchidPlugin") version "0.21.0" apply false
+    id("com.eden.orchidPlugin") version "0.21.0" apply false // TODO?
 }
 
 group = "kr.entree"
