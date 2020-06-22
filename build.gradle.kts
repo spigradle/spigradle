@@ -1,28 +1,36 @@
 plugins {
-    val kotlinVersion = "1.3.72"
-    kotlin("jvm") version kotlinVersion
-    kotlin("kapt") version kotlinVersion
+    kotlin("jvm")
+    kotlin("kapt")
     groovy
     `kotlin-dsl-base`
     `java-gradle-plugin`
-    id("com.gradle.plugin-publish") version "0.11.0" apply false
-    id("com.jfrog.bintray") version "1.8.5" apply false
-    id("com.jfrog.artifactory") version "4.15.2" apply false
-    id("org.jetbrains.dokka") version "0.10.0" apply false
-    id("com.eden.orchidPlugin") version "0.21.0" apply false // TODO?
+    `spigradle-meta`
+    `spigradle-publish`
+    `spigradle-docs`
 }
 
 group = "kr.entree"
 version = "1.3.0-SNAPSHOT"
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
-arrayOf("publish", "generateMeta", "docs").forEach { name ->
-    val buildFilePrefix = "gradle/${name}.gradle"
-    val buildFileName = if (file(buildFilePrefix).isFile) buildFilePrefix else "$buildFilePrefix.kts"
-    runCatching {
-        apply(from = buildFileName)
-    }.onFailure {
-        throw GradleException("Error while evaluating $buildFileName", it)
+gradlePlugin {
+    plugins {
+        create("spigradle") {
+            id = "kr.entree.spigradle.base"
+            implementationClass = "kr.entree.spigradle.module.common.SpigradlePlugin"
+        }
+        create("spigot") {
+            id = "kr.entree.spigradle"
+            implementationClass = "kr.entree.spigradle.module.spigot.SpigotPlugin"
+        }
+        create("bungee") {
+            id = "kr.entree.spigradle.bungee"
+            implementationClass = "kr.entree.spigradle.module.bungee.BungeePlugin"
+        }
+        create("nukkit") {
+            id = "kr.entree.spigradle.nukkit"
+            implementationClass = "kr.entree.spigradle.module.nukkit.NukkitPlugin"
+        }
     }
 }
 
