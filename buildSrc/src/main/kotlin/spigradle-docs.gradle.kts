@@ -38,25 +38,4 @@ val updatePluginDocs by tasks.registering {
     doLast {
         // TODO
     }
-
-    gradlePlugin {
-        plugins {
-            spigradle {
-                id = 'kr.entree.spigradle.base'
-                implementationClass = 'kr.entree.spigradle.module.common.SpigradlePlugin'
-            }
-            spigot {
-                id = 'kr.entree.spigradle'
-                implementationClass = 'kr.entree.spigradle.module.spigot.SpigotPlugin'
-            }
-            bungee {
-                id = 'kr.entree.spigradle.bungee'
-                implementationClass = 'kr.entree.spigradle.module.bungee.BungeePlugin'
-            }
-            nukkit {
-                id = 'kr.entree.spigradle.nukkit'
-                implementationClass = 'kr.entree.spigradle.module.nukkit.NukkitPlugin'
-            }
-        }
-    }
 }
