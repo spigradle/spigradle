@@ -43,12 +43,6 @@ open class SpigotDebug(
             File(buildToolJar.parentFile, "outputs"),
             5005, false, "1.15.2"
     )
-
-    var ababc: String? = "awef"
-
-    fun ttest(any: Boolean) {
-
-    }
 }
 
 enum class Load {

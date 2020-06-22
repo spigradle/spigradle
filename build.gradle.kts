@@ -61,6 +61,10 @@ dependencies {
     testImplementation(gradleTestKit())
 }
 
+kotlinDslPluginOptions {
+    experimentalWarning.set(false)
+}
+
 configurations {
     implementation.get().dependencies += kapt.get().dependencies
     testImplementation.get().dependencies += implementation.get().dependencies

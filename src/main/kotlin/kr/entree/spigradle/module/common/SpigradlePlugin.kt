@@ -126,12 +126,6 @@ class SpigradlePlugin : Plugin<Project> {
                 fun doCall(version: String?) = dependency.format(version)
             })
         }
-        ext.set("mockBukkit", object : Closure<Any>(this, this) {
-            fun doCall(spigotVersion: String? = null, mockBukkitVersion: String? = null) =
-                    dependencies.mockBukkit(spigotVersion, mockBukkitVersion)
-
-            fun doCall(spigotVersion: String? = null) = doCall(spigotVersion, null)
-        }) // Can be replaced by reflection to SpigotExtensionsKt
     }
 
     private fun Project.setupAnnotationProcessorOptions() {
