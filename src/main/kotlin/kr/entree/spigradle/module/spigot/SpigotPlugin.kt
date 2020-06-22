@@ -16,10 +16,12 @@
 
 package kr.entree.spigradle.module.spigot
 
+import groovy.lang.Closure
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.kotlin.mockBukkit
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.createDebugConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
@@ -52,6 +54,7 @@ class SpigotPlugin : Plugin<Project> {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
+            setupDefaultDependencies()
             registerDescGenTask<SpigotExtension>(
                     EXTENSION_NAME,
                     DESC_GEN_TASK_NAME,
@@ -71,6 +74,14 @@ class SpigotPlugin : Plugin<Project> {
         }.forEach {
             repositories.maven(it)
         }
+    }
+
+    private fun Project.setupDefaultDependencies() {
+        val ext = Groovies.getExtensionFrom(dependencies)
+        ext.set("mockBukkit", object : Closure<Any>(this, this) {
+            fun doCall(vararg arguments: String) =
+                    dependencies.mockBukkit(arguments.getOrNull(0), arguments.getOrNull(1))
+        }) // Can be replaced by reflection to SpigotExtensionsKt
     }
 
     private fun Project.setupGroovyExtensions() {
