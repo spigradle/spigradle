@@ -1,0 +1,1 @@
+rootProject.buildFileName = "spigradle-build.gradle.kts"
