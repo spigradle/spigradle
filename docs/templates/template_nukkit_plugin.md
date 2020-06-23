@@ -24,6 +24,8 @@ The [NukkitX](https://github.com/NukkitX/Nukkit#introduction) plugin provides yo
 
 - [Tasks](#tasks)
 
+- [See also](#see-also)
+
 ## Requirements
 
 The plugin requires Gradle 5.0+, recommends the latest.
@@ -299,3 +301,10 @@ NOTE: Use `debugNukkit` instead of `runNukkit` if you need prepare process like 
 ### cleanDebug
 
 Deletes all server files.
+
+## See also
+
+- [The Spigot plugin](docs/spigot_plugin.md)
+- [The Bungeecord plugin](docs/bungeecord_plugin.md)
+- [README.md](../README.md)
+- [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
