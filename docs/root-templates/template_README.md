@@ -16,6 +16,7 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 - [Requirements](#requirements)
 - [Dependencies](#dependencies)
 - [Repositories](#repositories)
+- [See also](#see-also)
 - [Supporters](#supporters)
 - [The Spigot plugin](docs/spigot_plugin.md)
 - [The Bungeecord plugin](docs/bungeecord_plugin.md)
@@ -292,6 +293,13 @@ dependencies {
     compileOnly(spigot("1.15.2")) // or just spigot()
 }
 ```
+
+## See also
+
+- [The Spigot plugin](docs/spigot_plugin.md)
+- [The Bungeecord plugin](docs/bungeecord_plugin.md)
+- [The Nukkit plugin](docs/nukkit_plugin.md)
+- [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 
 ## Supporters
 

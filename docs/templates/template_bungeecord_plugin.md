@@ -24,6 +24,8 @@ The [Bungeecord](https://www.spigotmc.org/wiki/about-bungeecord/) plugin provide
 
 - [Tasks](#tasks)
 
+- [See also](#see-also)
+
 ## Requirements
 
 The plugin requires Gradle 5.0+, recommends the latest.
@@ -258,3 +260,10 @@ NOTE: Use `debugBungee` instead of `runBungee` if you need prepare process like 
 ### cleanDebug
 
 Deletes all server files.
+
+## See also
+
+- [The Spigot plugin](docs/spigot_plugin.md)
+- [The Nukkit plugin](docs/nukkit_plugin.md)
+- [README.md](../README.md)
+- [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
