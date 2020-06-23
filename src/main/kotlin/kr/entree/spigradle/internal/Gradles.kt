@@ -16,10 +16,12 @@
 
 package kr.entree.spigradle.internal
 
+import groovy.lang.GroovyObject
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.api.plugins.ExtraPropertiesExtension
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskProvider
@@ -69,3 +71,5 @@ internal fun IdeaProject.settings(configure: ProjectSettings.() -> Unit = {}) =
 
 internal fun ProjectSettings.runConfigurations(configure: RunConfigurationContainer.() -> Unit) =
         ((this as ExtensionAware).extensions["runConfigurations"] as RunConfigurationContainer).apply(configure)
+
+internal val Any.groovyExtension get() = (this as GroovyObject).getProperty("ext") as ExtraPropertiesExtension

@@ -10,7 +10,6 @@ plugins {
     id("com.gradle.plugin-publish")
     id("com.eden.orchidPlugin")
     `maven-publish`
-    `java-gradle-plugin`
 }
 
 val spigradleVcsUrl = "https://github.com/EntryPointKR/Spigradle.git"

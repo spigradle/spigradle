@@ -18,8 +18,8 @@ package kr.entree.spigradle.module.nukkit
 
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.NukkitRepositories
-import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.internal.groovyExtension
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.createDebugConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
@@ -69,7 +69,7 @@ class NukkitPlugin : Plugin<Project> {
     }
 
     private fun Project.setupGroovyExtensions() {
-        Groovies.getExtensionFrom(extensions.getByName(EXTENSION_NAME)).apply {
+        extensions.getByName(EXTENSION_NAME).groovyExtension.apply {
             set("POST_WORLD", Load.POST_WORLD)
             set("STARTUP", Load.STARTUP)
         }

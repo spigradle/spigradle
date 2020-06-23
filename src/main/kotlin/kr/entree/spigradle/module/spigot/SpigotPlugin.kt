@@ -19,8 +19,8 @@ package kr.entree.spigradle.module.spigot
 import groovy.lang.Closure
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotRepositories
-import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.internal.groovyExtension
 import kr.entree.spigradle.kotlin.mockBukkit
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.createDebugConfigurations
@@ -77,7 +77,7 @@ class SpigotPlugin : Plugin<Project> {
     }
 
     private fun Project.setupDefaultDependencies() {
-        val ext = Groovies.getExtensionFrom(dependencies)
+        val ext = dependencies.groovyExtension
         ext.set("mockBukkit", object : Closure<Any>(this, this) {
             fun doCall(vararg arguments: String) =
                     dependencies.mockBukkit(arguments.getOrNull(0), arguments.getOrNull(1))
@@ -85,7 +85,7 @@ class SpigotPlugin : Plugin<Project> {
     }
 
     private fun Project.setupGroovyExtensions() {
-        Groovies.getExtensionFrom(spigot).apply {
+        spigot.groovyExtension.apply {
             set("POST_WORLD", Load.POST_WORLD)
             set("STARTUP", Load.STARTUP)
         }
