@@ -4,7 +4,7 @@ The [Spigot](https://www.spigotmc.org/wiki/about-spigot/) plugin provides you to
 
 - Generate 'plugin.yml' with less configuration.
 
-- Shortcuts for [dependency](TODO) and [repository](TODO).
+- Shortcuts for [dependency](../README.md#dependencies) and [repository](../README.md#repositories).
 
 - Tasks for run server with your plugin for debug.
 
@@ -48,14 +48,14 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version $SPIGRADLE_VERSION
+    id 'kr.entree.spigradle' version '$SPIGRADLE_VERSION'
 }
 ```
 Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version $SPIGRADLE_VERSION
+    id("kr.entree.spigradle") version '$SPIGRADLE_VERSION'
 }
 ```
 

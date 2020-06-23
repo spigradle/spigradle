@@ -4,7 +4,7 @@ The [NukkitX](https://github.com/NukkitX/Nukkit#introduction) plugin provides yo
 
 - Generate 'plugin.yml' with less configuration.
 
-- Shortcuts for [dependency](TODO) and [repository](TODO).
+- Shortcuts for [dependency](../README.md#dependencies) and [repository](../README.md#repositories).
 
 - Tasks for run server with your plugins for debug.
 
@@ -42,14 +42,14 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle.nukkit' version $SPIGRADLE_VERSION
+    id 'kr.entree.spigradle.nukkit' version '$SPIGRADLE_VERSION'
 }
 ```
 Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.nukkit") version $SPIGRADLE_VERSION
+    id("kr.entree.spigradle.nukkit") version '$SPIGRADLE_VERSION'
 }
 ```
 
