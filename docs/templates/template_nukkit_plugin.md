@@ -49,7 +49,7 @@ Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.nukkit") version '$SPIGRADLE_VERSION'
+    id("kr.entree.spigradle.nukkit") version "$SPIGRADLE_VERSION"
 }
 ```
 

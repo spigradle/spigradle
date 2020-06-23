@@ -51,7 +51,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version '1.3.0-SNAPSHOT'
+    id("kr.entree.spigradle") version "1.3.0-SNAPSHOT"
 }
 ```
 
@@ -114,7 +114,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.bungee") version '1.3.0-SNAPSHOT'
+    id("kr.entree.spigradle.bungee") version "1.3.0-SNAPSHOT"
 }
 ```
 
@@ -177,7 +177,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.nukkit") version '1.3.0-SNAPSHOT'
+    id("kr.entree.spigradle.nukkit") version "1.3.0-SNAPSHOT"
 }
 ```
 
