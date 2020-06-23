@@ -63,7 +63,7 @@ Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version '1.3.0-SNAPSHOT'
+    id("kr.entree.spigradle") version "1.3.0-SNAPSHOT"
 }
 ```
 

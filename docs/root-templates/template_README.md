@@ -43,7 +43,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version '$SPIGRADLE_VERSION'
+    id("kr.entree.spigradle") version "$SPIGRADLE_VERSION"
 }
 ```
 
@@ -104,7 +104,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.bungee") version '$SPIGRADLE_VERSION'
+    id("kr.entree.spigradle.bungee") version "$SPIGRADLE_VERSION"
 }
 ```
 
@@ -165,7 +165,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.nukkit") version '$SPIGRADLE_VERSION'
+    id("kr.entree.spigradle.nukkit") version "$SPIGRADLE_VERSION"
 }
 ```
 

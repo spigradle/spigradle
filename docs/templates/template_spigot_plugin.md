@@ -55,7 +55,7 @@ Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version '$SPIGRADLE_VERSION'
+    id("kr.entree.spigradle") version "$SPIGRADLE_VERSION"
 }
 ```
 
