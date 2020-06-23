@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm")
     kotlin("kapt")
-    groovy
     `kotlin-dsl-base`
     `java-gradle-plugin`
     `spigradle-meta`
@@ -75,11 +74,6 @@ tasks {
         kotlinOptions {
             freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
         }
-        @Suppress("UnstableApiUsage")
-        classpath += files(sourceSets.main.get().withConvention(GroovySourceSet::class) { groovy }.classesDirectory)
-    }
-    compileGroovy {
-        classpath = sourceSets.main.get().compileClasspath
     }
     test {
         useJUnitPlatform()

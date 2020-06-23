@@ -19,9 +19,9 @@ package kr.entree.spigradle.module.common
 import groovy.lang.Closure
 import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
-import kr.entree.spigradle.internal.Groovies
 import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
+import kr.entree.spigradle.internal.groovyExtension
 import kr.entree.spigradle.internal.toFieldEntries
 import kr.entree.spigradle.kotlin.mockBukkit
 import org.gradle.api.Plugin
@@ -98,7 +98,7 @@ class SpigradlePlugin : Plugin<Project> {
     }
 
     private fun Project.setupRepositoryExtensions() {
-        val ext = Groovies.getExtensionFrom(repositories)
+        val ext = repositories.groovyExtension
         listOf(
                 Repositories, SpigotRepositories,
                 BungeeRepositories, NukkitRepositories
@@ -115,7 +115,7 @@ class SpigradlePlugin : Plugin<Project> {
     }
 
     private fun Project.setupDependencyExtensions() {
-        val ext = Groovies.getExtensionFrom(dependencies)
+        val ext = dependencies.groovyExtension
         listOf(
                 Dependencies, SpigotDependencies,
                 BungeeDependencies, NukkitDependencies
