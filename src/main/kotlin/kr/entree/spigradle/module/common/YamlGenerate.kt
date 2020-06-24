@@ -165,7 +165,9 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
         group = taskGroupName
     }
     val classes: Task by tasks
-    description.init(project)
+    project.afterEvaluate {
+        description.init(this)
+    }
     // classes -> detectionTask -> generateTask
     generationTask.configure { dependsOn(detectionTask) }
     classes.finalizedBy(generationTask)

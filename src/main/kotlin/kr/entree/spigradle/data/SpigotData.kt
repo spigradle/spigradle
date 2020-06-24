@@ -123,6 +123,7 @@ object SpigotDependencies {
             "VaultAPI",
             "1.7"
     )
+    val VAULT_ALL = Dependency(VAULT, name = "Vault", version = "1.7.2")
     val LUCK_PERMS = Dependency(
             "net.luckperms",
             "api",
