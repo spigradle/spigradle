@@ -43,5 +43,5 @@ open class NukkitDebug(
         override var agentPort: Int
 ) : CommonDebug {
     @Inject
-    constructor(serverJar: File) : this(serverJar, (serverJar), 5005)
+    constructor(serverJar: File) : this(serverJar, serverJar.parentFile, 5005)
 }
