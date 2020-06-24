@@ -106,8 +106,13 @@ object DebugTask {
                     !readyPlugins.containsAll(needPlugins)
                 }.filter { (_, desc) ->
                     val pluginName = desc["name"]?.toString()
-                    pluginName != null && readyPlugins.add(pluginName)
-                }.mapNotNull { it.first }.toList()
+                    pluginName != null && pluginName in needPlugins
+                            && readyPlugins.add(pluginName)
+                }.mapNotNull { it.first }.toList().apply {
+                    (needPlugins - readyPlugins).forEach {
+                        logger.error("Unable to resolve the plugin dependency: $it")
+                    }
+                }
             })
         }
     }
