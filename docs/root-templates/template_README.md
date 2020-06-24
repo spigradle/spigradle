@@ -8,14 +8,14 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 
 - Debug tasks
 
-- Shortcuts for repository and dependency
+- Shortcuts for [repository](#repositories) and [dependency](#dependencies)
 
 ## Table of contents
 
 - [Plugins](#plugins)
 - [Requirements](#requirements)
-- [Dependencies](#dependencies)
 - [Repositories](#repositories)
+- [Dependencies](#dependencies)
 - [See also](#see-also)
 - [Supporters](#supporters)
 - [The Spigot plugin](docs/spigot_plugin.md)
