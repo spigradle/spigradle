@@ -1,7 +1,6 @@
 plugins {
-    kotlin("jvm")
-    kotlin("kapt")
-    `kotlin-dsl-base`
+    `kotlin-dsl`
+    `kotlin-kapt`
     `java-gradle-plugin`
     `spigradle-meta`
     `spigradle-publish`
@@ -58,10 +57,6 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit5"))
     testImplementation(gradleTestKit())
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
 }
 
 configurations {
