@@ -28,7 +28,9 @@ bintray {
         issueTrackerUrl = "https://github.com/EntryPointKR/Spigradle/issues"
         setLicenses("Apache-2.0")
         vcsUrl = spigradleVcsUrl
-        version.apply {
+    }
+    project.afterEvaluate {
+        pkg.version.apply {
             name = project.version.toString()
             released = Date().toString()
             vcsTag = project.version.toString()
