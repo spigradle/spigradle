@@ -456,7 +456,7 @@ tasks.test.dependsOn(copyPluginYaml)
 
 - The annotation `@Plugin` renamed to `@PluginMain`.
 
-- The task `spigotPluginYaml` renamed to `generateSpigotDescription`, it no longer generates `plugin.yml` into `build/tmp/generateSpigotDescription` by default.
+- The task `spigotPluginYaml` renamed to `generateSpigotDescription`
 
 ## See also
 
@@ -465,4 +465,4 @@ tasks.test.dependsOn(copyPluginYaml)
 - [The Bungeecord plugin](docs/bungeecord_plugin.md)
 - [The Nukkit plugin](docs/nukkit_plugin.md)
 - [README.md](../README.md)
-- [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html) 
+- [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
