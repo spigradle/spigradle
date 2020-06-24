@@ -304,7 +304,7 @@ Deletes all server files.
 
 ## See also
 
-- [The Spigot plugin](docs/spigot_plugin.md)
-- [The Bungeecord plugin](docs/bungeecord_plugin.md)
+- [The Spigot plugin](spigot_plugin.md)
+- [The Bungeecord plugin](bungeecord_plugin.md)
 - [README.md](../README.md)
 - [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)

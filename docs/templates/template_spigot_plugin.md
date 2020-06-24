@@ -131,9 +131,9 @@ The reason of naming `@PluginMain` instead of `@Plugin`, the name `Plugin` alrea
 
 Run your plugin with just execute single gradle task.
 
-The `debugSpigot` performs to build Spigot using BuildTools, copy it with your plugins into the default path `debug/spigot`, and run it.
+The `debugSpigot` performs to build Spigot using BuildTools, copy it with your plugins into the default path `debug/spigot/server.jar`, and run it.
 
-The `debugPaper` performs to download Paperclip, copy it with your plugins into the default path `debug/paper`, and run it.
+The `debugPaper` performs to download Paperclip, copy it with your plugins into the same path `debug/spigot/server.jar`, and run it.
 
 > Those tasks copy your plugin and its dependency plugins.
 
@@ -410,7 +410,7 @@ tasks.test.dependsOn(copyPluginYaml)
 
 ## See also
 
-- [The Bungeecord plugin](docs/bungeecord_plugin.md)
-- [The Nukkit plugin](docs/nukkit_plugin.md)
+- [The Bungeecord plugin](bungeecord_plugin.md)
+- [The Nukkit plugin](nukkit_plugin.md)
 - [README.md](../README.md)
 - [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
