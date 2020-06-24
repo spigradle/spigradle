@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "kr.entree"
-version = "1.3.0-SNAPSHOT"
+version = "1.3.0"
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
 gradlePlugin {

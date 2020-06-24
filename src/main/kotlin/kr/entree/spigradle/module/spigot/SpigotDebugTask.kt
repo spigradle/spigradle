@@ -78,7 +78,7 @@ object SpigotDebugTask {
                 if (classesDir.listFiles()?.isNotEmpty() != true) {
                     craftbukkitDir.deleteRecursively()
                 }
-                logger.lifecycle("It may take a while. To see build logs, add '-d' or '--debug'.")
+                logger.lifecycle("It may take a while. To see build logs, start with the option '-d' or '--debug'.")
             }
         }
     }
