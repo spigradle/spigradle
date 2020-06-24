@@ -179,6 +179,7 @@ internal fun Project.registerYamlGenTask(taskName: String, extensionName: String
         }.forEach { resourceDir ->
             outputFiles.from(File(resourceDir, fileName))
         }
+        outputFiles.from(File(temporaryDir, fileName))
         serialize(provider {
             data.apply {
                 if (main == null) {
