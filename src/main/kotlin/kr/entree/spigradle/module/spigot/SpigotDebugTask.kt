@@ -61,10 +61,11 @@ object SpigotDebugTask {
         return tasks.register("buildSpigot", JavaExec::class) {
             group = TASK_GROUP_DEBUG
             description = "Build the Spigot using the BuildTools."
+            minHeapSize = "512M"
+            classpath = files(provider { options.buildToolJar })
             outputs.cacheIf { true }
             outputs.dir(provider { File(options.buildToolDirectory, "CraftBukkit/target/classes") })
             logging.captureStandardOutput(LogLevel.DEBUG)
-            classpath = files(provider { options.buildToolJar })
             setWorkingDir(provider { options.buildToolDirectory })
             args(
                     "--rev", lazyString { options.buildVersion },
