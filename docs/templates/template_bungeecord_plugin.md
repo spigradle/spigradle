@@ -263,7 +263,7 @@ Deletes all server files.
 
 ## See also
 
-- [The Spigot plugin](docs/spigot_plugin.md)
-- [The Nukkit plugin](docs/nukkit_plugin.md)
+- [The Spigot plugin](spigot_plugin.md)
+- [The Nukkit plugin](nukkit_plugin.md)
 - [README.md](../README.md)
 - [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
