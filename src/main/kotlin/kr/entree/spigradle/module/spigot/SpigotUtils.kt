@@ -32,10 +32,10 @@ internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
                 Are you agree the Mojang EULA? (https://account.mojang.com/documents/minecraft_eula)
                 Your input (y)es or (n)o:
             """.trimIndent())
-            readLine().equals("y", ignoreCase = true) || throw GradleException("""
+            readLine()?.matches(Regex("(?i)y(es)?$")) == true || throw GradleException("""
                 Please set the 'eula' property in spigot {} block to true if you agree the Mojang EULA.
                 https://account.mojang.com/documents/minecraft_eula
-            """.trimIndent()) // If input is not "y", throw up
+            """.trimIndent()) // If input is not "y(es)", throw up
         })
     }?.apply {
         parentFile.mkdirs()
