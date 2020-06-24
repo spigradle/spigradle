@@ -45,7 +45,7 @@ The plugin requires Gradle 5.0+, recommends the latest.
 To update your gradle wrapper:
 
 ```
-gradlew wrapper --gradle-version 6.5 --distribution-type all
+gradlew wrapper --gradle-version 6.4.1 --distribution-type all
 ```
 
 ## Usage
