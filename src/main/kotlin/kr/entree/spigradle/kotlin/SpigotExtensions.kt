@@ -137,11 +137,26 @@ fun DependencyHandler.craftbukkit(version: String? = null) = SpigotDependencies.
 fun DependencyHandler.protocolLib(version: String? = null) = SpigotDependencies.PROTOCOL_LIB.format(version)
 
 /**
- * The dependency shortcut for Vault, requires repository jitpack() or vault()
+ * The dependency shortcut for Vault-API, requires repository jitpack() or vault()
  *
  * @param version Defaults to [SpigotDependencies.VAULT].version
  */
 fun DependencyHandler.vault(version: String? = null) = SpigotDependencies.VAULT.format(version)
+
+/**
+ * The dependency shortcut for Vault, requires repository jitpack() or vault()
+ *
+ * Maybe need to disable the option `transitive` for the imports you don't want:
+ *
+ * ```groovy
+ * compileOnly(vaultAll()) { // or vaultAll("specificVersion")
+ *   transitive = false
+ * }
+ * ```
+ *
+ * @param version Defaults to [SpigotDependencies.VAULT_ALL].version
+ */
+fun DependencyHandler.vaultAll(version: String? = null) = SpigotDependencies.VAULT_ALL.format(version)
 
 /**
  * The dependency shortcut for LuckPerms, requires repository mavenCentral().
