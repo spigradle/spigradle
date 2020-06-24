@@ -266,6 +266,7 @@ repositories {
 | spigradle()       | kr.entree:spigradle:$version                     | $SPIGRADLE_VERSION       |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.4.0                    |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
+| vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.2                    |
 | luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.1                      |
 | worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version    | 7.1.0                    |
 | worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.2                    |
