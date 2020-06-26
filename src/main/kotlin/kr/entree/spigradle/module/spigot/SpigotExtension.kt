@@ -29,7 +29,9 @@ import kr.entree.spigradle.module.common.debugDir
 import kr.entree.spigradle.module.common.spigotBuildToolDir
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.container
 import org.gradle.kotlin.dsl.newInstance
+import org.gradle.util.ConfigureUtil
 import java.io.File
 
 /**
@@ -201,7 +203,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
      *
      * See: [https://www.spigotmc.org/wiki/plugin-yml/]
      */
-    val commands: NamedDomainObjectContainer<Command> = project.container(Command::class.java)
+    val commands: NamedDomainObjectContainer<Command> = project.run { container { objects.newInstance(it) } }
 
     /**
      * DSL container for the [permissions] configuration.
@@ -228,7 +230,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
      *
      * See: [https://www.spigotmc.org/wiki/plugin-yml/]
      */
-    val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class.java)
+    val permissions: NamedDomainObjectContainer<Permission> = project.run { container { objects.newInstance(it) } }
 
     /**
      * Configuration for the debug tasks like 'debugSpigot', 'buildSpigot'
@@ -248,11 +250,34 @@ open class SpigotExtension(project: Project) : StandardDescription {
     )
 
     /**
+     * Groovy DSL helper for [commands] configuration.
+     */
+    fun commands(closure: Closure<*>) {
+        ConfigureUtil.configure(closure, commands)
+    }
+
+    /**
+     * Kotlin DSL helper for [commands] configuration.
+     */
+    fun commands(configure: NamedDomainObjectContainer<Command>.() -> Unit) = configure(commands)
+
+    /**
+     * Groovy DSL helper for [permissions] configuration.
+     */
+    fun permissions(closure: Closure<*>) {
+        ConfigureUtil.configure(closure, permissions)
+    }
+
+    /**
+     * Kotlin DSL helper for [permissions] configuration.
+     */
+    fun permissions(configure: NamedDomainObjectContainer<Permission>.() -> Unit) = configure(permissions)
+
+    /**
      * Groovy DSL helper for [debug] configuration.
      */
     fun debug(configure: Closure<*>) {
-        configure.delegate = debug
-        configure.call()
+        ConfigureUtil.configure(configure, debug)
     }
 
     /**

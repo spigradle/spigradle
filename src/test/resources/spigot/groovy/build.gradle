@@ -1,4 +1,7 @@
+import kr.entree.spigradle.data.*
+
 plugins {
+    id 'java'
     id 'kr.entree.spigradle'
 }
 
@@ -11,7 +14,30 @@ dependencies {
 }
 
 spigot {
-    main = 'ABC'
+    description 'A sample plugin'
+    depends 'ProtocolLib', 'Vault'
+    load Load.STARTUP
+    load STARTUP
+    load POSTWORLD
+    commands {
+        give {
+            aliases 'giv', 'i'
+            description 'A give command.'
+            permission 'sample.give'
+            permissionMessage 'You do not have the permission.'
+        }
+    }
+    permissions {
+        'sample.give' {
+            description 'Allows give command'
+            defaults 'true'
+        }
+        'sample.*' {
+            description 'Wildcard permission'
+            defaults 'op'
+            children 'test.foo': true
+        }
+    }
 }
 
 build.doLast {

@@ -155,9 +155,7 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
         pluginSuperClass: String,
         taskGroupName: String = extensionName
 ) {
-    val description = extensions.create<T>(extensionName, this).apply {
-        group = taskGroupName
-    }
+    val description = extensions.create<T>(extensionName, this)
     val detectionTask = SubclassDetection.register(this, detectionTaskName, pluginSuperClass).applyToConfigure {
         group = taskGroupName
     }

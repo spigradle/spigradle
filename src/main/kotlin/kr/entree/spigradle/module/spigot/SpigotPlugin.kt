@@ -87,6 +87,7 @@ class SpigotPlugin : Plugin<Project> {
     private fun Project.setupGroovyExtensions() {
         spigot.groovyExtension.apply {
             set("POST_WORLD", Load.POST_WORLD)
+            set("POSTWORLD", Load.POST_WORLD)
             set("STARTUP", Load.STARTUP)
         }
     }
