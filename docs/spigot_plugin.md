@@ -34,6 +34,8 @@ The [Spigot](https://www.spigotmc.org/wiki/about-spigot/) plugin provides you to
 
 - [Migration Tips](#migration-tips)
 
+- [Templates](#templates)
+
 - [See also](#see-also)
 
 ## Requirements
@@ -462,9 +464,9 @@ tasks.test.dependsOn(copyPluginYaml)
 
 The templates you can quickly start to develop a Spigot plugin.
 
-[spigot-plugin-template](https://github.com/Silthus/spigot-plugin-template) by @Silthus
+[spigot-plugin-template](https://github.com/Silthus/spigot-plugin-template) by [@Silthus](https://github.com/Silthus)
 
-[BukkitJavaGradle](https://github.com/PluginTemplates/BukkitJavaGradle) by @portlek
+[BukkitJavaGradle](https://github.com/PluginTemplates/BukkitJavaGradle) by [@portlek](https://github.com/portlek)
 
 ## See also
 
