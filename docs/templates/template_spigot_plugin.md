@@ -408,6 +408,12 @@ tasks.test.dependsOn(copyPluginYaml)
 
 - The task `spigotPluginYaml` renamed to `generateSpigotDescription`
 
+## Templates
+
+[spigot-plugin-template](https://github.com/Silthus/spigot-plugin-template) by @Silthus
+
+[BukkitJavaGradle](https://github.com/PluginTemplates/BukkitJavaGradle) by @portlek
+
 ## See also
 
 - [The Bungeecord plugin](bungeecord_plugin.md)
