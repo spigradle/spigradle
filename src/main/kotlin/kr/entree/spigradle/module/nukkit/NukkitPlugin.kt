@@ -71,6 +71,7 @@ class NukkitPlugin : Plugin<Project> {
     private fun Project.setupGroovyExtensions() {
         extensions.getByName(EXTENSION_NAME).groovyExtension.apply {
             set("POST_WORLD", Load.POST_WORLD)
+            set("POSTWORLD", Load.POST_WORLD)
             set("STARTUP", Load.STARTUP)
         }
     }

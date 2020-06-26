@@ -22,6 +22,7 @@ import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.module.common.debugDir
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.newInstance
+import org.gradle.util.ConfigureUtil
 import java.io.File
 
 /**
@@ -66,8 +67,7 @@ open class BungeeExtension(project: Project) : StandardDescription {
     val debug: BungeeDebug = project.objects.newInstance(File(project.debugDir, "bungee/bungee.jar"))
 
     fun debug(configure: Closure<*>) {
-        configure.delegate = debug
-        configure.call()
+        ConfigureUtil.configure(configure, debug)
     }
 
     fun debug(configure: BungeeDebug.() -> Unit) = configure(debug)

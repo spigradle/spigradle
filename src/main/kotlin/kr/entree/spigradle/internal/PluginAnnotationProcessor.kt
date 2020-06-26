@@ -41,9 +41,7 @@ internal class PluginAnnotationProcessor : AbstractProcessor() {
         if (roundEnv.processingOver() && pluginName.isNotBlank()) {
             File(processingEnv.options[PLUGIN_APT_RESULT_PATH_KEY] ?: "build/$PLUGIN_APT_DEFAULT_PATH").apply {
                 parentFile.mkdirs()
-                bufferedWriter().use {
-                    it.write(pluginName)
-                }
+                writeText(pluginName)
             }
         } else {
             val pluginAnnotation = PluginMain::class.java

@@ -23,7 +23,6 @@ import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
 import kr.entree.spigradle.internal.groovyExtension
 import kr.entree.spigradle.internal.toFieldEntries
-import kr.entree.spigradle.kotlin.mockBukkit
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task

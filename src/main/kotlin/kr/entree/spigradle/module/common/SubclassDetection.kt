@@ -114,6 +114,9 @@ open class SubclassDetection : DefaultTask() {
             return project.tasks.register(taskName, SubclassDetection::class) {
                 superClassName.set(superName)
                 classDirectories.from(sourceSets["main"].output.classesDirs)
+                onlyIf {
+                    !File(project.buildDir, PLUGIN_APT_DEFAULT_PATH).isFile
+                }
             }
         }
     }

@@ -52,7 +52,7 @@ enum class Load {
 }
 
 @JsonPropertyOrder("description", "usage", "permission", "permission-message")
-open class Command(@Transient val name: String) {
+open class Command @Inject constructor(@Transient val name: String) {
     var description: String? = null
     var usage: String? = null
     var permission: String? = null
@@ -60,10 +60,14 @@ open class Command(@Transient val name: String) {
     @SerialName("permission-message")
     var permissionMessage: String? = null
     var aliases = emptyList<String>()
+
+    fun aliases(vararg aliases: String) {
+        this.aliases = aliases.toList()
+    }
 }
 
 @JsonPropertyOrder("description", "default", "children")
-open class Permission(@Transient val name: String) {
+open class Permission @Inject constructor(@Transient val name: String) {
     var description: String? = null
 
     @SerialName("default")

@@ -29,6 +29,7 @@ import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.container
 import org.gradle.kotlin.dsl.newInstance
+import org.gradle.util.ConfigureUtil
 import java.io.File
 
 /**
@@ -126,15 +127,14 @@ open class NukkitExtension(project: Project) : StandardDescription {
     @SerialName("loadbefore")
     var loadBefore: List<String> = emptyList()
 
-    val commands: NamedDomainObjectContainer<Command> = project.container(Command::class)
-    val permissions: NamedDomainObjectContainer<Permission> = project.container(Permission::class)
+    val commands: NamedDomainObjectContainer<Command> = project.container { project.objects.newInstance(it) }
+    val permissions: NamedDomainObjectContainer<Permission> = project.container { project.objects.newInstance(it) }
 
     @Transient
     val debug: NukkitDebug = project.objects.newInstance(File(project.debugDir, "nukkit/nukkit.jar"))
 
     fun debug(configure: Closure<*>) {
-        configure.delegate = debug
-        configure.call()
+        ConfigureUtil.configure(configure, debug)
     }
 
     fun debug(configure: NukkitDebug.() -> Unit) = configure(debug)
