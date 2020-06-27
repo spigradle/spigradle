@@ -34,7 +34,7 @@ The [Spigot](https://www.spigotmc.org/wiki/about-spigot/) plugin provides you to
 
 ## Requirements
 
-The plugin requires Gradle 5.0+, recommends the latest.
+The plugin requires Gradle 5.4.2+, recommends the latest.
 
 To update your gradle wrapper:
 
