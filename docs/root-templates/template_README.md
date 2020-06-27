@@ -210,7 +210,7 @@ apply(plugin = "kr.entree.spigradle.nukkit")
 
 ## Requirements
 
-All the plugins requires Gradle 5.0+, recommends the latest.
+All the plugins requires Gradle 5.4.2+, recommends the latest.
 
 To update your gradle wrapper:
 
