@@ -42,7 +42,7 @@ artifactory {
     setContextUrl("https://oss.jfrog.org/artifactory")
     publish(closureOf<PublisherConfig> {
         repository(closureOf<GroovyObject> {
-            repoKey = "oss-snapshot-local"
+            repoKey = if (version.toString().endsWith("-SNAPSHOT")) "oss-snapshot-local" else "oss-release-local"
             username = findProperty("bintray.publish.user")
             password = findProperty("bintray.publish.key")
         })
