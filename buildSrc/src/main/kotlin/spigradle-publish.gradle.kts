@@ -93,3 +93,5 @@ pluginBundle {
         }
     }
 }
+
+tasks["publish"].dependsOn(tasks["jar"])
