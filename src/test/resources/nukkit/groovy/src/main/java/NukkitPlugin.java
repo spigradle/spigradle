@@ -1,7 +1,7 @@
 import cn.nukkit.plugin.PluginBase;
-import kr.entree.spigradle.PluginMain;
+import kr.entree.spigradle.Plugin;
 
-@PluginMain
+@Plugin
 public class NukkitPlugin extends PluginBase {
 
 }

@@ -15,5 +15,3 @@
  */
 
 package kr.entree.spigradle
-
-typealias Plugin = PluginMain

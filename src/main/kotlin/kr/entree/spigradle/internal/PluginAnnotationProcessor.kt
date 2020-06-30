@@ -17,7 +17,7 @@
 package kr.entree.spigradle.internal
 
 import com.google.auto.service.AutoService
-import kr.entree.spigradle.PluginMain
+import kr.entree.spigradle.Plugin
 import java.io.File
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
@@ -44,7 +44,7 @@ internal class PluginAnnotationProcessor : AbstractProcessor() {
                 writeText(pluginName)
             }
         } else {
-            val pluginAnnotation = PluginMain::class.java
+            val pluginAnnotation = Plugin::class.java
             pluginName = roundEnv.getElementsAnnotatedWith(pluginAnnotation)
                     .filterIsInstance<QualifiedNameable>()
                     .find {
