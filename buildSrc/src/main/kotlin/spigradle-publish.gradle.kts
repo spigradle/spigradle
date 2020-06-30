@@ -93,3 +93,5 @@ pluginBundle {
         }
     }
 }
+
+tasks.register<VersionTask>("setVersion")
