@@ -1,3 +1,5 @@
+import kr.entree.spigradle.build.VersionTask
+
 plugins {
     `kotlin-dsl`
     `kotlin-kapt`
@@ -8,6 +10,7 @@ plugins {
 }
 
 group = "kr.entree"
+version = VersionTask.readVersion()
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
 gradlePlugin {

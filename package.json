@@ -22,7 +22,9 @@
       "@commitlint/config-conventional"
     ],
     "rules": {
-      "body-max-line-length": [0]
+      "body-max-line-length": [
+        0
+      ]
     }
   },
   "release": {
@@ -35,12 +37,18 @@
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/changelog",
-      "gradle-semantic-release-plugin",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "./gradlew setVersion --build-version ${nextRelease.version}",
+          "publishCmd": "./gradlew jar"
+        }
+      ],
       [
         "@semantic-release/git",
         {
           "assets": [
-            "gradle.properties",
+            "version.txt",
             "CHANGELOG.md"
           ]
         }
@@ -54,5 +62,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "@semantic-release/exec": "^5.0.0"
   }
 }

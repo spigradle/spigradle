@@ -94,4 +94,4 @@ pluginBundle {
     }
 }
 
-tasks["publish"].dependsOn(tasks["jar"])
+tasks.register<VersionTask>("setVersion")
