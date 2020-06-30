@@ -42,7 +42,7 @@
         "@semantic-release/exec",
         {
           "prepareCmd": "./gradlew setVersion --build-version ${nextRelease.version}",
-          "publishCmd": "./gradlew jar"
+          "publishCmd": "./gradlew assemble"
         }
       ],
       [
