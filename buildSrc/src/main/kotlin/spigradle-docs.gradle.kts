@@ -13,7 +13,7 @@ tasks {
             jdkVersion = 8
             sourceLink {
                 path = "src/main/kotlin"
-                url = "https://github.com/EntryPointKR/Spigradle/tree/master/src/main/kotlin"
+                url = "https://github.com/spigradle/spigradle/tree/master/src/main/kotlin"
                 lineSuffix = "#L"
             }
             externalDocumentationLink {

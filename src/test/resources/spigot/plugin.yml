@@ -2,7 +2,7 @@ main: kr.entree.spigradle.Main
 name: Spigradle
 version: 1.1
 description: This plugin does so much stuff it can't be contained!
-website: "https://github.com/EntryPointKR/Spigradle"
+website: "https://github.com/spigradle/spigradle"
 authors:
  - EntryPoint
 api-version: 1.15

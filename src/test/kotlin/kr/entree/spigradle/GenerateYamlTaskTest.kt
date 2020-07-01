@@ -56,7 +56,7 @@ class GenerateYamlTaskTest {
             name = "Spigradle"
             version = "1.1"
             description = "This plugin does so much stuff it can't be contained!"
-            website = "https://github.com/EntryPointKR/Spigradle"
+            website = "https://github.com/spigradle/spigradle"
             authors = listOf("EntryPoint")
             apiVersion = "1.15"
             load = Load.POST_WORLD

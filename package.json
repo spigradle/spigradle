@@ -29,7 +29,7 @@
     }
   },
   "release": {
-    "repositoryUrl": "https://github.com/EntryPointKR/Spigradle",
+    "repositoryUrl": "https://github.com/spigradle/spigradle",
     "branches": [
       "master"
     ],

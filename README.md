@@ -25,7 +25,7 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 - [The Spigot plugin](docs/spigot_plugin.md)
 - [The Bungeecord plugin](docs/bungeecord_plugin.md)
 - [The Nukkit plugin](docs/nukkit_plugin.md)
-- [Sample](https://github.com/EntryPointKR/SpigradleSample)
+- [Sample](https://github.com/spigradle/spigradle-sample)
 
 ## Plugins
 
@@ -37,7 +37,7 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 
 [Documentation](docs/spigot_plugin.md)
 
-[Demo](https://github.com/EntryPointKR/SpigradleSample/tree/master/spigot)
+[Demo](https://github.com/spigradle/spigradle-sample/tree/master/spigot)
 
 Groovy DSL
 
@@ -100,7 +100,7 @@ apply(plugin = "kr.entree.spigradle")
 
 [Documentation](docs/spigot_plugin.md)
 
-[Demo](https://github.com/EntryPointKR/SpigradleSample/tree/master/bungeecord)
+[Demo](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord)
 
 Groovy DSL
 
@@ -163,7 +163,7 @@ apply(plugin = "kr.entree.spigradle.bungee")
 
 [Documentation](docs/nukkit_plugin.md)
 
-[Demo](https://github.com/EntryPointKR/SpigradleSample/tree/master/nukkit)
+[Demo](https://github.com/spigradle/spigradle-sample/tree/master/nukkit)
 
 Groovy DSL
 
