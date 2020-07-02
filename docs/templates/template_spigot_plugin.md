@@ -289,7 +289,7 @@ tasks {
 
 Finds the main class extends [org.bukkit.plugin.java.JavaPlugin](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/plugin/java/JavaPlugin.html).
 
-### spigotPluginYaml - [YamlGenerate](TODO)
+### generateSpigotDescription - [YamlGenerate](TODO)
 
 *Depends on: `detectSpigotMain`*
 
@@ -401,6 +401,11 @@ task copyPluginYaml(type: Copy, dependsOn: spigotPluginYaml) {
 
 tasks.test.dependsOn(copyPluginYaml)
 ```
+
+## Migration Tips
+
+- The task `spigotPluginYaml` renamed to `generateSpigotDescription`
+- The annotation `@Plugin` repackaged to `@kr.entree.spigradle.annotations.Plugin`.
 
 ## Templates
 

@@ -40,7 +40,7 @@ import org.gradle.kotlin.dsl.provideDelegate
  */
 class SpigotPlugin : Plugin<Project> {
     companion object {
-        const val DESC_GEN_TASK_NAME = "spigotPluginYaml"
+        const val DESC_GEN_TASK_NAME = "generateSpigotDescription"
         const val MAIN_DETECTION_TASK_NAME = "detectSpigotMain"
         const val EXTENSION_NAME = "spigot"
         const val DESC_FILE_NAME = "plugin.yml"
