@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "kr.entree"
-version = VersionTask.readVersion()
+version = VersionTask.readVersion(project)
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
 gradlePlugin {
