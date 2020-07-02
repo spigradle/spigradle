@@ -79,7 +79,7 @@ object DebugTask {
     fun Project.registerPreparePlugins(
             name: String,
             nameProperty: String,
-            descriptionFileName: String,
+            descFileName: String,
             dependPlugins: () -> Iterable<String>
     ): TaskProvider<Copy> {
         return tasks.register(name, Copy::class) {
@@ -92,7 +92,7 @@ object DebugTask {
                 destinationDir.listFiles { _, name ->
                     name.endsWith(".jar")
                 }?.asSequence()?.mapNotNull {
-                    it.readYamlDescription(descriptionFileName)?.get(nameProperty)?.toString()
+                    it.readYamlDescription(descFileName)?.get(nameProperty)?.toString()
                 }?.takeWhile {
                     !readyPlugins.containsAll(needPlugins)
                 }?.forEach { readyPlugins += it }
@@ -100,7 +100,7 @@ object DebugTask {
                 project.withConvention(JavaPluginConvention::class) {
                     sourceSets["main"].compileClasspath
                 }.asSequence().mapNotNull { depFile ->
-                    depFile.readYamlDescription(descriptionFileName)
+                    depFile.readYamlDescription(descFileName)
                             ?.let { desc -> depFile to desc }
                 }.takeWhile {
                     !readyPlugins.containsAll(needPlugins)

@@ -28,7 +28,6 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.api.tasks.bundling.Jar
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.model.IdeaProject
 import org.jetbrains.gradle.ext.ProjectSettings
 import org.jetbrains.gradle.ext.RunConfigurationContainer
@@ -38,13 +37,11 @@ internal inline fun <T> notNull(any: T?, message: () -> String = { "" }): T {
 }
 
 internal fun TaskContainer.findArtifactJar() =
-        withType<Jar>().filter {
-            it.isEnabled
-        }.mapNotNull {
-            it.archiveFile.orNull?.asFile
-        }.findLast {
-            it.isFile
-        }
+        listOf(findByName("shadowJar"), findByName("jar")).asSequence()
+                .filter { it?.didWork == true }
+                .filterIsInstance<Jar>()
+                .mapNotNull { it.archiveFile.orNull?.asFile }
+                .firstOrNull()
 
 internal fun lazyString(provider: () -> Any): Any = object {
     override fun toString(): String {
