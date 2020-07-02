@@ -43,7 +43,7 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.3.1'
+    id 'kr.entree.spigradle' version '1.4.0'
 }
 ```
 
@@ -52,7 +52,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version "1.3.1"
+    id("kr.entree.spigradle") version "1.4.0"
 }
 ```
 
@@ -67,7 +67,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.3.1'
+        classpath 'kr.entree:spigradle:1.4.0'
     }
 }
 
@@ -85,7 +85,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.3.1")
+        classpath("kr.entree:spigradle:1.4.0")
     }
 }
 
@@ -106,7 +106,7 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle.bungee' version '1.3.1'
+    id 'kr.entree.spigradle.bungee' version '1.4.0'
 }
 ```
 
@@ -115,7 +115,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.bungee") version "1.3.1"
+    id("kr.entree.spigradle.bungee") version "1.4.0"
 }
 ```
 
@@ -130,7 +130,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.3.1'
+        classpath 'kr.entree:spigradle:1.4.0'
     }
 }
 
@@ -148,7 +148,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.3.1")
+        classpath("kr.entree:spigradle:1.4.0")
     }
 }
 
@@ -169,7 +169,7 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle.nukkit' version '1.3.1'
+    id 'kr.entree.spigradle.nukkit' version '1.4.0'
 }
 ```
 
@@ -178,7 +178,7 @@ plugins {
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.nukkit") version "1.3.1"
+    id("kr.entree.spigradle.nukkit") version "1.4.0"
 }
 ```
 
@@ -193,7 +193,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.3.1'
+        classpath 'kr.entree:spigradle:1.4.0'
     }
 }
 
@@ -211,7 +211,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.3.1")
+        classpath("kr.entree:spigradle:1.4.0")
     }
 }
 
@@ -281,7 +281,7 @@ repositories {
 | bukkit()          | org.bukkit:bukkit:$version                       | 1.15.2-R0.1-SNAPSHOT     |
 | craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.15.2-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
-| spigradle()       | kr.entree:spigradle:$version                     | 1.3.1       |
+| spigradle()       | kr.entree:spigradle:$version                     | 1.4.0       |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.4.0                    |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
 | vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.2                    |

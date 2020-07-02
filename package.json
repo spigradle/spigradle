@@ -42,7 +42,7 @@
         "@semantic-release/exec",
         {
           "prepareCmd": "./gradlew setVersion --build-version ${nextRelease.version}",
-          "publishCmd": "./gradlew clean bintrayUpload publishPlugins artifactoryPublish"
+          "publishCmd": "./gradlew clean bintrayUpload publishPlugins artifactoryPublish updateTemplateDocs"
         }
       ],
       [
@@ -50,7 +50,9 @@
         {
           "assets": [
             "version.txt",
-            "CHANGELOG.md"
+            "CHANGELOG.md",
+            "README.md",
+            "docs/*.md"
           ]
         }
       ],
