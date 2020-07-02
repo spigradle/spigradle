@@ -1,7 +1,7 @@
-import kr.entree.spigradle.Plugin;
+import kr.entree.spigradle.PluginMain;
 import net.md_5.bungee.api.plugin.Plugin;
 
-@Plugin
+@PluginMain
 public class BungeePlugin extends Plugin {
 
 }
