@@ -58,10 +58,16 @@ artifactory {
     clientConfig.info.buildNumber = findProperty("build.number")?.toString()
 }
 
+val spigradleDocsJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("docs")
+    from("$projectDir/docs/*.md")
+}
+
 publishing {
     publications {
         create("spigradle", MavenPublication::class) {
             from(components["java"])
+            artifact(spigradleDocsJar.get())
             afterEvaluate {
                 artifact(tasks.getByName<Jar>("kotlinSourcesJar"))
             }
