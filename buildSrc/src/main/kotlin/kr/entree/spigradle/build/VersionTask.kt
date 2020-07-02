@@ -40,5 +40,6 @@ open class VersionTask : DefaultTask() {
     @TaskAction
     fun execute() {
         getVersionFile(project).writeText(version.get())
+        project.version = version.get()
     }
 }

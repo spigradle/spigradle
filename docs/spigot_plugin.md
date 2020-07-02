@@ -58,14 +58,14 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle' version '1.4.0'
+    id 'kr.entree.spigradle' version '1.4.1'
 }
 ```
 Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle") version "1.4.0"
+    id("kr.entree.spigradle") version "1.4.1"
 }
 ```
 
@@ -78,7 +78,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:1.4.0'
+        classpath 'kr.entree:spigradle:1.4.1'
     }
 }
 
@@ -96,7 +96,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:1.4.0")
+        classpath("kr.entree:spigradle:1.4.1")
     }
 }
 
