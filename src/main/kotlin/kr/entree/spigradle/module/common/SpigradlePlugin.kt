@@ -17,10 +17,10 @@
 package kr.entree.spigradle.module.common
 
 import groovy.lang.Closure
+import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_RESULT_PATH_KEY
 import kr.entree.spigradle.data.*
 import kr.entree.spigradle.data.Repositories.SONATYPE
-import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
-import kr.entree.spigradle.internal.PLUGIN_APT_RESULT_PATH_KEY
 import kr.entree.spigradle.internal.groovyExtension
 import kr.entree.spigradle.internal.toFieldEntries
 import org.gradle.api.Plugin
@@ -77,12 +77,12 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupDefaultDependencies() {
         dependencies.apply {
-            val spigradleNotation = Dependencies.SPIGRADLE.format()
-            add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, spigradleNotation)
+            val notation = Dependencies.SPIGRADLE_ANNOTATIONS.format()
+            add(JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME, notation)
             if (project.configurations.findByName("kapt") != null) {
-                add("kapt", spigradleNotation)
+                add("kapt", notation)
             } else {
-                add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, spigradleNotation)
+                add(JavaPlugin.ANNOTATION_PROCESSOR_CONFIGURATION_NAME, notation)
             }
         }
     }
@@ -130,7 +130,7 @@ class SpigradlePlugin : Plugin<Project> {
     private fun Project.setupAnnotationProcessorOptions() {
         val compileJava: JavaCompile by tasks
         val path = File(buildDir, PLUGIN_APT_DEFAULT_PATH)
-        compileJava.options.compilerArgs.add("-A${PLUGIN_APT_RESULT_PATH_KEY}=${path.absolutePath}")
+        compileJava.options.compilerArgs.add("-A$PLUGIN_APT_RESULT_PATH_KEY=${path.absolutePath}")
     }
 
     private fun Project.markExcludeDirectories() {

@@ -12,7 +12,7 @@ plugins {
     `maven-publish`
 }
 
-val spigradleVcsUrl = "https://github.com/EntryPointKR/Spigradle.git"
+val spigradleVcsUrl = "https://github.com/spigradle/spigradle.git"
 
 bintray {
     user = findProperty("bintray.publish.user")?.toString()
@@ -23,9 +23,9 @@ bintray {
         repo = "Spigradle"
         name = project.name
         desc = project.description
-        websiteUrl = "https://github.com/EntryPointKR/Spigradle"
-        githubRepo = "https://github.com/EntryPointKR/Spigradle"
-        issueTrackerUrl = "https://github.com/EntryPointKR/Spigradle/issues"
+        websiteUrl = "https://github.com/spigradle/spigradle"
+        githubRepo = "https://github.com/spigradle/spigradle"
+        issueTrackerUrl = "https://github.com/spigradle/spigradle/issues"
         setLicenses("Apache-2.0")
         vcsUrl = spigradleVcsUrl
     }
@@ -70,7 +70,7 @@ publishing {
 }
 
 pluginBundle {
-    website = "https://github.com/EntryPointKR/Spigradle"
+    website = "https://github.com/spigradle/spigradle"
     vcsUrl = spigradleVcsUrl
     tags = listOf("minecraft", "paper", "spigot", "bukkit", "bungeecord", "nukkit", "nukkitX")
     fun formatDesc(name: String) = "An intelligent Gradle plugin for developing $name plugin."

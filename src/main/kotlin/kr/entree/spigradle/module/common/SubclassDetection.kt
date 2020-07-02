@@ -16,7 +16,7 @@
 
 package kr.entree.spigradle.module.common
 
-import kr.entree.spigradle.internal.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
