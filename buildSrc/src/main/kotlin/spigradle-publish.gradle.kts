@@ -59,8 +59,12 @@ artifactory {
 }
 
 val spigradleDocsJar by tasks.registering(Jar::class) {
+    group = "spigradle build"
     archiveClassifier.set("docs")
-    from("$projectDir/docs/*.md")
+    from("$projectDir/docs") {
+        include("*.md")
+    }
+    from("$projectDir/CHANGELOG.md")
 }
 
 publishing {
