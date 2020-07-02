@@ -44,7 +44,7 @@ gradlew wrapper --gradle-version $GRADLE_VERSION --distribution-type all
 
 ## Usage
 
-[Full Example Here](https://github.com/EntryPointKR/SpigradleSample/tree/master/spigot)
+[Full Example Here](https://github.com/spigradle/spigradle-sample/tree/master/spigot)
 
 Groovy DSL
 

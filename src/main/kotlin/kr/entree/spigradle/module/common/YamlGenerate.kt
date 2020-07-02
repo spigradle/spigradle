@@ -36,6 +36,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.*
 import java.io.File
 import java.nio.charset.Charset
+import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
 
 /**
  * Generates a YAML into the given files.
