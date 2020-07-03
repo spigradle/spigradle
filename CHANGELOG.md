@@ -1,3 +1,25 @@
+# [2.0.0](https://github.com/spigradle/spigradle/compare/v1.4.1...v2.0.0) (2020-07-03)
+
+
+### Bug Fixes
+
+* rename task 'spigotPluginYaml' to 'generateSpigotDescription' ([728ccf6](https://github.com/spigradle/spigradle/commit/728ccf62bcfef394b153662b19251018640ddafd))
+
+
+### chore
+
+* change annotations @Plugin, @PluginMain package ([aebfe46](https://github.com/spigradle/spigradle/commit/aebfe467d092ee3724849417007e5defcd2f096c))
+
+
+### BREAKING CHANGES
+
+* the annotations @Plugin and @PluginMain repackaged to `kr.entree.spigradle.annotations`
+
+Signed-off-by: JunHyung Lim <entrypointkr@gmail.com>
+* task 'spigotPluginYaml' renamed to 'GenerateSpigotDescription'. Sorry about the breaking change in 1.3.
+
+Signed-off-by: JunHyung Lim <entrypointkr@gmail.com>
+
 ## [1.4.1](https://github.com/spigradle/spigradle/compare/v1.4.0...v1.4.1) (2020-07-02)
 
 ### Bug Fixes
