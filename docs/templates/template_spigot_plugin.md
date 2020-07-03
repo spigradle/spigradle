@@ -109,10 +109,10 @@ You can configure all properties of `plugin.yml` in [spigot {} block](#configura
 
 The plugin automatically finds the main class extends [JavaPlugin]((https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/plugin/java/JavaPlugin.html)), and set the 'main' property to the class found.  
 
-You may present the main class using `@kr.entree.spigradle.PluginMain`:
+You may present the main class using `@kr.entree.spigradle.annotations.PluginMain`:
 
 ```java
-import kr.entree.spigradle.PluginMain;
+import kr.entree.spigradle.annotations.PluginMain;
 
 @PluginMain
 public class SamplePlugin extends JavaPlugin { }
@@ -156,7 +156,7 @@ More information: [Tasks](#tasks)
 
 The description of your plugin for a `plugin.yml`.
 
-[The 'main' property will be set to the class auto-detected or presented by `@kr.entree.spigradle.PluginMain`.](#main-class-detection)
+[The 'main' property will be set to the class auto-detected or presented by `@kr.entree.spigradle.annotations.PluginMain`.](#main-class-detection)
 
 About the `plugin.yml`, See [plugin-yml wiki](https://www.spigotmc.org/wiki/plugin-yml/)
 
