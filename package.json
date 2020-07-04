@@ -45,7 +45,7 @@
         "@semantic-release/exec",
         {
           "prepareCmd": "./gradlew setVersion --build-version ${nextRelease.version} updateTemplateDocs",
-          "publishCmd": "./gradlew clean bintrayUpload publishPlugins artifactoryPublish"
+          "publishCmd": "./gradlew clean bintrayUpload publishPlugins"
         }
       ],
       [
