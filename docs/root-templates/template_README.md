@@ -2,13 +2,17 @@
 
 An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and NukkitX.
 
-- Description file generation: `plugin.yml` or `bungee.yml`
+## Benefits
+
+- Description file generation: `plugin.yml` and/or `bungee.yml`
 
 - Main class detection
 
 - Debug tasks
 
 - Shortcuts for [repository](#repositories) and [dependency](#dependencies)
+
+![code](assets/spigradle.png)
 
 ## Table of contents
 
