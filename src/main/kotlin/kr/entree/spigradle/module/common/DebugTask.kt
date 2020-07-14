@@ -28,6 +28,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.*
 import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.jetbrains.gradle.ext.JarApplication
 import org.jetbrains.gradle.ext.Remote
 import java.io.File
 import java.util.jar.JarFile
@@ -53,6 +54,10 @@ internal fun Project.createDebugConfigurations(name: String, debug: CommonDebug)
             register("Debug$name", Remote::class) {
                 host = "localhost"
                 port = debug.agentPort
+            }
+            register("Run$name", JarApplication::class) {
+                jarPath = debug.serverJar.absolutePath
+                workingDirectory = debug.serverDirectory.absolutePath
             }
         }
     }
