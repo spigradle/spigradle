@@ -357,7 +357,7 @@ class SamplePlugin : JavaPlugin()
 
 If you use Gradle, the following reasons why no [spigot-annotations](https://hub.spigotmc.org/stash/projects/SPIGOT/repos/plugin-annotations/browse):
 
-1. Duplicated information of the `name` and `version`, those already provided in `build.gradle` and `settings.gradle`.
+1. Duplicate information of the `name` and `version`, these already provided in `build.gradle` and `settings.gradle`.
 2. The Annotation doesn't suit for providing complex information like `commands` and `permissions`.
 3. Using Gradle, we can configure all things programmatically.
 
