@@ -12,7 +12,19 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 
 - Shortcuts for [repository](#repositories) and [dependency](#dependencies)
 
-![code](assets/spigradle.png)
+```groovy
+plugins {
+    id 'java'
+    id 'kr.entree.spigradle' version '$SPIGRADLE_VERSION'
+}
+
+group 'org.sample'
+version '1.0-SNAPSHOT'
+
+dependencies {
+    compileOnly spigot('1.15.2')
+}
+```
 
 ## Table of contents
 
@@ -33,13 +45,21 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 
 [Documentation](docs/spigot_plugin.md)
 
-[Demo](https://github.com/spigradle/spigradle-sample/tree/master/spigot)
+#### Demo
+
+- [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/spigot/spigot.gradle)
+- [Kotlin - build.gradle.kts](https://github.com/spigradle/spigradle-sample/tree/master/spigot-kotlin/spigot-kotlin.gradle.kts)
 
 Groovy DSL
 
 ```groovy
 plugins {
+    id 'java'
     id 'kr.entree.spigradle' version '$SPIGRADLE_VERSION'
+}
+
+dependencies {
+    compileOnly spigot('1.15.2')
 }
 ```
 
@@ -47,8 +67,16 @@ plugins {
 <summary>Kotlin DSL</summary>
 
 ```kotlin
+import kr.entree.spigradle.kotlin.*
+
 plugins {
+    kotlin("jvm") version "$KOTLIN_VERSION"
     id("kr.entree.spigradle") version "$SPIGRADLE_VERSION"
+}
+
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+    compileOnly(spigot("1.15.2"))
 }
 ```
 
@@ -94,13 +122,20 @@ apply(plugin = "kr.entree.spigradle")
 
 [Documentation](docs/spigot_plugin.md)
 
-[Demo](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord)
+#### Demo
+- [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord/bungeecord.gradle)
+- [Kotlin - build.gradle.kts](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord-kotlin/bungeecord-kotlin.gradle.kts)
 
 Groovy DSL
 
 ```groovy
 plugins {
+    id 'java'
     id 'kr.entree.spigradle.bungee' version '$SPIGRADLE_VERSION'
+}
+
+dependencies {
+    compileOnly bungeecord('1.15')
 }
 ```
 
@@ -109,7 +144,13 @@ plugins {
 
 ```kotlin
 plugins {
+    kotlin("jvm") version "$KOTLIN_VERSION"
     id("kr.entree.spigradle.bungee") version "$SPIGRADLE_VERSION"
+}
+
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+    compileOnly(bungeecord("1.15"))
 }
 ```
 
@@ -155,13 +196,21 @@ apply(plugin = "kr.entree.spigradle.bungee")
 
 [Documentation](docs/nukkit_plugin.md)
 
-[Demo](https://github.com/spigradle/spigradle-sample/tree/master/nukkit)
+#### Demo
+
+- [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/nukkit/nukkit.gradle)
+- [Kotlin - build.gradle.kts](https://github.com/spigradle/spigradle-sample/tree/master/nukkit-kotlin/nukkit-kotlin.gradle.kts)
 
 Groovy DSL
 
 ```groovy
 plugins {
+    id 'java'
     id 'kr.entree.spigradle.nukkit' version '$SPIGRADLE_VERSION'
+}
+
+dependencies {
+    compileOnly nukkit('1.0')
 }
 ```
 
@@ -170,7 +219,13 @@ plugins {
 
 ```kotlin
 plugins {
+    kotlin("jvm") version "$KOTLIN_VERSION"
     id("kr.entree.spigradle.nukkit") version "$SPIGRADLE_VERSION"
+}
+
+dependencies {
+    implementation(kotlin("stdlib-jdk8"))
+    compileOnly(bungeecord("1.15"))
 }
 ```
 

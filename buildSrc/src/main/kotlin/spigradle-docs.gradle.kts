@@ -41,6 +41,7 @@ tasks {
             expand(
                     "GRADLE_VERSION" to gradle.gradleVersion,
                     "SPIGRADLE_VERSION" to project.version,
+                    "KOTLIN_VERSION" to "1.3.72",
                     "version" to "\$version"
             )
             filter { line ->
