@@ -3,12 +3,11 @@
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/github": "^7.0.7",
-    "gradle-semantic-release-plugin": "^1.4.1",
     "husky": "^4.2.5",
-    "semantic-release": "^17.1.1",
-    "@semantic-release/exec": "^5.0.0"
+    "semantic-release": "^17.1.1"
   },
   "scripts": {
     "semantic-release": "semantic-release"
