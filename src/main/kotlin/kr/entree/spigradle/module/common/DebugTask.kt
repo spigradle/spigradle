@@ -48,7 +48,7 @@ internal fun File.readYamlDescription(fileName: String) =
             }
         }.getOrNull()
 
-internal fun Project.createDebugConfigurations(name: String, debug: CommonDebug) {
+internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
     val idea: IdeaModel by extensions
     idea.project?.settings {
         runConfigurations {
