@@ -67,7 +67,7 @@ class SpigotPlugin : Plugin<Project> {
             )
             setupGroovyExtensions()
             setupSpigotDebugTasks()
-            createRunConfigurations("Spigot", spigot.debug)
+            createSpigotRunConfiguration(spigot.debug)
             createPaperRunConfiguration(spigot.debug)
         }
     }
@@ -115,8 +115,10 @@ class SpigotPlugin : Plugin<Project> {
             val preparePlugin = registerPrepareSpigotPlugin(spigot).applyToConfigure {
                 dependsOn(build)
             }
+            val acceptsEula = registerAcceptEula(debugOption)
             val runSpigot = registerRunSpigot(debugOption).applyToConfigure {
                 mustRunAfter(preparePlugin)
+                dependsOn(acceptsEula)
             }
             registerDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
@@ -128,6 +130,22 @@ class SpigotPlugin : Plugin<Project> {
             registerDebugRun("Paper").applyToConfigure { // debugPaper
                 dependsOn(preparePlugin, paperClipDownload, runSpigot)
                 runSpigot.get().mustRunAfter(paperClipDownload)
+            }
+        }
+    }
+
+    private fun Project.createSpigotRunConfiguration(debug: SpigotDebug) {
+        createRunConfigurations("Spigot", debug)
+        val idea: IdeaModel by extensions
+        idea.project?.settings {
+            runConfigurations {
+                getByName("RunSpigot", JarApplication::class) {
+                    beforeRun {
+                        create("acceptEula", GradleTask::class) {
+                            task = tasks.getByName("acceptSpigotEula")
+                        }
+                    }
+                }
             }
         }
     }
@@ -145,6 +163,9 @@ class SpigotPlugin : Plugin<Project> {
                         }
                         create("preparePlugins", GradleTask::class) {
                             task = tasks.getByName("prepareSpigotPlugins")
+                        }
+                        create("acceptsEula", GradleTask::class) {
+                            task = tasks.getByName("acceptSpigotEula")
                         }
                     }
                 }
