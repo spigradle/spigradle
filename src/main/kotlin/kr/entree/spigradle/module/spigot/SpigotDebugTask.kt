@@ -95,6 +95,16 @@ object SpigotDebugTask {
         }
     }
 
+    fun Project.registerAcceptEula(debug: SpigotDebug): TaskProvider<Task> {
+        return tasks.register("acceptSpigotEula") {
+            group = TASK_GROUP_DEBUG
+            description = "Accepts Mojang EULA."
+            doLast {
+                ensureMinecraftEULA(debug.serverDirectory, debug.eula)
+            }
+        }
+    }
+
     fun Project.registerRunSpigot(debug: SpigotDebug): TaskProvider<JavaExec> {
         val serverJar = debug.serverJar
         return registerRunServer("Spigot", debug).applyToConfigure {
@@ -102,9 +112,6 @@ object SpigotDebugTask {
             description = "Startup the Spigot server."
             classpath = files(provider { serverJar })
             setWorkingDir(provider { debug.serverDirectory })
-            doFirst {
-                ensureMinecraftEULA(workingDir, debug.eula)
-            }
         }
     }
 
