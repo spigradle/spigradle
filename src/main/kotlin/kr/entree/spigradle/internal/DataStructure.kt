@@ -40,4 +40,6 @@ interface CommonDebug {
     var serverJar: File
     var serverDirectory: File
     var agentPort: Int
+    var programArgs: List<Any>
+    var jvmArgs: List<Any>
 }
