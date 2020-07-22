@@ -59,11 +59,13 @@ internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
             register("Run$name", JarApplication::class) {
                 jarPath = debug.serverJar.absolutePath
                 workingDirectory = debug.serverDirectory.absolutePath
+                programParameters = debug.programArgs.joinToString(" ")
+                jvmArgs = debug.jvmArgs.joinToString(" ")
                 beforeRun {
-                    create("prepareServer", GradleTask::class) {
+                    register("prepareServer", GradleTask::class) {
                         task = tasks.getByName("prepare$name")
                     }
-                    create("preparePlugins", GradleTask::class) {
+                    register("preparePlugins", GradleTask::class) {
                         task = tasks.getByName("prepare${name}Plugins")
                     }
                 }
@@ -78,7 +80,8 @@ object DebugTask {
             standardInput = System.`in`
             logging.captureStandardOutput(LogLevel.LIFECYCLE)
             jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}" })
-            args("nogui")
+            jvmArgs(debug.jvmArgs)
+            args(debug.programArgs)
             doFirst {
                 if (!debug.serverJar.isFile) {
                     throw GradleException("""

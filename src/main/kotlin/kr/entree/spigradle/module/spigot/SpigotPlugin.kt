@@ -139,9 +139,9 @@ class SpigotPlugin : Plugin<Project> {
         val idea: IdeaModel by extensions
         idea.project?.settings {
             runConfigurations {
-                getByName("RunSpigot", JarApplication::class) {
+                named("RunSpigot", JarApplication::class).configure {
                     beforeRun {
-                        create("acceptEula", GradleTask::class) {
+                        register("acceptEula", GradleTask::class) {
                             task = tasks.getByName("acceptSpigotEula")
                         }
                     }
@@ -157,14 +157,16 @@ class SpigotPlugin : Plugin<Project> {
                 register("RunPaper", JarApplication::class) {
                     jarPath = debug.serverJar.absolutePath
                     workingDirectory = debug.serverDirectory.absolutePath
+                    programParameters = debug.programArgs.joinToString(" ")
+                    jvmArgs = debug.jvmArgs.joinToString(" ")
                     beforeRun {
-                        create("downloadPaper", GradleTask::class) {
+                        register("downloadPaper", GradleTask::class) {
                             task = tasks.getByName("downloadPaper")
                         }
-                        create("preparePlugins", GradleTask::class) {
+                        register("preparePlugins", GradleTask::class) {
                             task = tasks.getByName("prepareSpigotPlugins")
                         }
-                        create("acceptsEula", GradleTask::class) {
+                        register("acceptsEula", GradleTask::class) {
                             task = tasks.getByName("acceptSpigotEula")
                         }
                     }
