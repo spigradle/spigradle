@@ -135,18 +135,20 @@ The `debugSpigot` performs to build Spigot using BuildTools, copy it with your p
 
 The `debugPaper` performs to download Paperclip, copy it with your plugins into the same path `debug/spigot/server.jar`, and run it.
 
-> Those tasks copy your plugin and its dependency plugins.
+> These tasks copy your plugin and its dependency plugins.
 
 You can pass (jvm)arguments:
 
 ```groovy
-runSpigot {
-    args '--nojline', '--max-players', '100'
-    jvmArgs '-Xmx16G'
+spigot {
+    debug {
+        args '--nojline', '--max-players', '100'
+        jvmArgs '-Xmx16G'
+    }
 }
 ```
 
-It affects both tasks `debugSpigot`, `debugPaper`.
+This affects both tasks `debugSpigot`, `debugPaper`, also to [IDEA RunConfigurations](https://www.jetbrains.com/help/idea/run-debug-configuration-application.html) `RunSpigot`, `RunPaper`.
 
 More information: [Tasks](#tasks)
 
@@ -156,7 +158,7 @@ More information: [Tasks](#tasks)
 
 The description of your plugin for a `plugin.yml`.
 
-[The 'main' property will be set to the class auto-detected or presented by `@kr.entree.spigradle.annotations.PluginMain`.](#main-class-detection)
+The 'main' property will be set to the class [auto-detected](#main-class-detection) or presented by `@kr.entree.spigradle.annotations.PluginMain`.
 
 About the `plugin.yml`, See [plugin-yml wiki](https://www.spigotmc.org/wiki/plugin-yml/)
 
@@ -321,6 +323,8 @@ Prepares Spigot for ready to run.
 
 ### runSpigot - [JavaExec](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html)
 
+*Depends on: `acceptSpigotEula`
+
 Just runs the server jar at configured path even there's no executable file.
 
 NOTE: Use `debugSpigot` or `debugPaper` instead of `runSpigot` if you need prepare process like download server jar, copy plugins.
@@ -332,6 +336,10 @@ Downloads Spigot BuildTools.
 ### buildSpigot - [JavaExec](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html)
 
 Builds Spigot using BuildTools.
+
+### acceptSpigotEula
+
+Accepts the Mojang EULA, used in `runSpigot` task and IDEA RunConfiguration.
 
 ### downloadPaper - [Download](TODO)
 
