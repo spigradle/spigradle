@@ -118,18 +118,20 @@ Run your plugin with just execute single gradle task.
 
 The `debugBungee` performs to download Bungeecord, copy it with your plugins into the default path `debug/bungee`, and run Bungeecord.
 
-> Those tasks copy your plugin and its dependency plugins.
+> These tasks copy your plugin and its dependency plugins.
 
 You can pass (jvm)arguments:
 
 ```groovy
-runBungee {
-    args '--nojline', '--max-players', '100'
-    jvmArgs '-Xmx16G'
+bungeecord {
+    debug {
+        args '--nojline', '--max-players', '100'
+        jvmArgs '-Xmx16G'
+    }
 }
 ```
 
-It affects to `debugBungee`.
+This affects to `debugBungee`, also `RunBungee` [IDEA RunConfiguration](https://www.jetbrains.com/help/idea/run-debug-configuration-application.html).
 
 More information: [Tasks](#tasks)
 
