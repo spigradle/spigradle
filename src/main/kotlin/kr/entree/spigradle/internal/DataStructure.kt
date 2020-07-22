@@ -42,4 +42,18 @@ interface CommonDebug {
     var agentPort: Int
     var programArgs: List<Any>
     var jvmArgs: List<Any>
+
+    /**
+     * Groovy DSL helper for the [programArgs] configuration.
+     */
+    fun programArgs(vararg programArgs: String) {
+        this.programArgs = programArgs.toList()
+    }
+
+    /**
+     * Groovy DSL helper for the [jvmArgs] configuration.
+     */
+    fun jvmArgs(vararg jvmArgs: String) {
+        this.jvmArgs = jvmArgs.toList()
+    }
 }
