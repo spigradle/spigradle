@@ -52,7 +52,7 @@ internal fun Project.createDebugConfigurations(name: String, debug: CommonDebug)
     val idea: IdeaModel by extensions
     idea.project?.settings {
         runConfigurations {
-            register("Debug$name", Remote::class) {
+            register("Remote$name", Remote::class) {
                 host = "localhost"
                 port = debug.agentPort
             }
