@@ -28,6 +28,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.*
 import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.jetbrains.gradle.ext.GradleTask
 import org.jetbrains.gradle.ext.JarApplication
 import org.jetbrains.gradle.ext.Remote
 import java.io.File
@@ -58,6 +59,14 @@ internal fun Project.createDebugConfigurations(name: String, debug: CommonDebug)
             register("Run$name", JarApplication::class) {
                 jarPath = debug.serverJar.absolutePath
                 workingDirectory = debug.serverDirectory.absolutePath
+                beforeRun {
+                    create("prepareServer", GradleTask::class) {
+                        task = tasks.getByName("prepare$name")
+                    }
+                    create("preparePlugins", GradleTask::class) {
+                        task = tasks.getByName("prepare${name}Plugins")
+                    }
+                }
             }
         }
     }
