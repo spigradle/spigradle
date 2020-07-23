@@ -21,13 +21,21 @@ import org.gradle.api.Project
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 /**
  * Created by JunHyung Lim on 2020-06-06
  */
 internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
     File(directory, "eula.txt").takeIf { eulaFile ->
-        !eulaFile.isFile && (eula || logger.run {
+        val accepted = runCatching {
+            Properties().apply {
+                eulaFile.reader().use { reader ->
+                    load(reader)
+                }
+            }.getProperty("eula", "false")?.toBoolean()
+        }.getOrNull()
+        accepted != true && (eula || logger.run {
             quiet("""
                 Are you agree the Mojang EULA? (https://account.mojang.com/documents/minecraft_eula)
                 Your input (y)es or (n)o:
