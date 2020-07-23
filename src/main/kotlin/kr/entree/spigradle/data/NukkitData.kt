@@ -31,7 +31,8 @@ object NukkitDependencies {
     val NUKKIT = Dependency(
             "cn.nukkit",
             "nukkit",
-            "1.0-SNAPSHOT",
+            "2.0.0-SNAPSHOT",
+            false,
             VersionModifier.SNAPSHOT_APPENDER
     )
     val NUKKIT_X = NUKKIT

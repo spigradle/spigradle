@@ -30,6 +30,8 @@ The [Spigot](https://www.spigotmc.org/wiki/about-spigot/) plugin provides you to
 
 - [Migration Tips](#migration-tips)
 
+- [Templates](#templates)
+
 - [See also](#see-also)
 
 ## Requirements

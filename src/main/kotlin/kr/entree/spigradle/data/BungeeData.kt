@@ -33,7 +33,8 @@ object BungeeDependencies {
     val BUNGEE_CORD = Dependency(
             "net.md-5",
             "bungeecord-api",
-            "1.15-SNAPSHOT",
+            "1.16-R0.4-SNAPSHOT",
+            false,
             VersionModifier.SNAPSHOT_APPENDER
     )
 }

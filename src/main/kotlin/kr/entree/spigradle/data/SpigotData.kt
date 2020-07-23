@@ -105,32 +105,34 @@ object SpigotDependencies {
     val SPIGOT = Dependency(
             "org.spigotmc",
             "spigot-api",
-            "1.15.2-R0.1-SNAPSHOT",
+            "1.16.1-R0.1-SNAPSHOT",
+            false,
             VersionModifier.SPIGOT_ADJUSTER
     )
-    val SPIGOT_ALL = Dependency(SPIGOT, name = "spigot")
+    val SPIGOT_ALL = Dependency(SPIGOT, name = "spigot", isLocal = true)
     val MINECRAFT_SERVER = Dependency(
             SPIGOT.group,
             "minecraft-server",
-            "1.15.2-SNAPSHOT",
+            "1.16.1-SNAPSHOT",
+            true,
             VersionModifier.SNAPSHOT_APPENDER
     )
     val PAPER = Dependency(SPIGOT, "com.destroystokyo.paper", "paper-api")
-    val BUKKIT = Dependency(SPIGOT, group = "org.bukkit", name = "bukkit")
+    val BUKKIT = Dependency(SPIGOT, group = "org.bukkit", name = "bukkit", isLocal = true)
 
     @SerialName("craftbukkit")
-    val CRAFT_BUKKIT = Dependency(BUKKIT, name = "craftbukkit")
+    val CRAFT_BUKKIT = Dependency(BUKKIT, name = "craftbukkit", isLocal = true)
     val PROTOCOL_LIB = Dependency(
             "com.comphenix.protocol",
             "ProtocolLib",
-            "4.5.0"
+            "4.5.1"
     )
     val VAULT = Dependency(
             "com.github.MilkBowl",
             "VaultAPI",
             "1.7"
     )
-    val VAULT_ALL = Dependency(VAULT, name = "Vault", version = "1.7.2")
+    val VAULT_ALL = Dependency(VAULT, name = "Vault", version = "1.7.3")
     val LUCK_PERMS = Dependency(
             "net.luckperms",
             "api",
@@ -148,7 +150,7 @@ object SpigotDependencies {
     val WORLD_GUARD = Dependency(
             "com.sk89q.worldguard",
             "worldguard-bukkit",
-            "7.0.2"
+            "7.0.3"
     )
     val ESSENTIALS_X = Dependency(
             "net.ess3",
@@ -158,7 +160,7 @@ object SpigotDependencies {
     val BAN_MANAGER = Dependency(
             "me.confuser.banmanager",
             "BanManagerBukkit",
-            "7.1.0-SNAPSHOT"
+            "7.3.0-SNAPSHOT"
     )
 
     @SerialName("commandhelper")
