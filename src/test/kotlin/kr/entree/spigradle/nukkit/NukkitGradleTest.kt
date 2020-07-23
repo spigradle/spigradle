@@ -1,7 +1,7 @@
 package kr.entree.spigradle.nukkit
 
 import kr.entree.spigradle.module.nukkit.NukkitPlugin
-import kr.entree.spigradle.util.testGradleScript
+import kr.entree.spigradle.util.testGradleScriptWithResource
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test
 class NukkitGradleTest {
     @Test
     fun kotlin() {
-        testGradleScript("/nukkit/kotlin", NukkitPlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/nukkit/kotlin", NukkitPlugin.DESC_GEN_TASK_NAME)
     }
 
     @Test
     fun groovy() {
-        testGradleScript("/nukkit/groovy", NukkitPlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/nukkit/groovy", NukkitPlugin.DESC_GEN_TASK_NAME)
     }
 }

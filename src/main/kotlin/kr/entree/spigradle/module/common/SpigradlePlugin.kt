@@ -19,10 +19,10 @@ package kr.entree.spigradle.module.common
 import groovy.lang.Closure
 import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
 import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_RESULT_PATH_KEY
-import kr.entree.spigradle.data.*
+import kr.entree.spigradle.data.Dependencies
+import kr.entree.spigradle.data.Repositories
 import kr.entree.spigradle.data.Repositories.SONATYPE
 import kr.entree.spigradle.internal.groovyExtension
-import kr.entree.spigradle.internal.toFieldEntries
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -98,12 +98,7 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupRepositoryExtensions() {
         val ext = repositories.groovyExtension
-        listOf(
-                Repositories, SpigotRepositories,
-                BungeeRepositories, NukkitRepositories
-        ).flatMap {
-            it.toFieldEntries<String>()
-        }.forEach { (name, url) ->
+        Repositories.ALL.forEach { (name, url) ->
             ext.set(name, object : Closure<Any>(this, this) {
                 fun doCall() = repositories.maven(url)
             })
@@ -115,12 +110,7 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupDependencyExtensions() {
         val ext = dependencies.groovyExtension
-        listOf(
-                Dependencies, SpigotDependencies,
-                BungeeDependencies, NukkitDependencies
-        ).flatMap {
-            it.toFieldEntries<Dependency>()
-        }.forEach { (name, dependency) ->
+        Dependencies.ALL.forEach { (name, dependency) ->
             ext.set(name, object : Closure<Any>(this, this) {
                 fun doCall(version: String?) = dependency.format(version)
             })
