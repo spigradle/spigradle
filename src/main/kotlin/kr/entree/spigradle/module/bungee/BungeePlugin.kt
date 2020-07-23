@@ -19,7 +19,7 @@ package kr.entree.spigradle.module.bungee
 import kr.entree.spigradle.data.Repositories
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.module.common.applySpigradlePlugin
-import kr.entree.spigradle.module.common.createDebugConfigurations
+import kr.entree.spigradle.module.common.createRunConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -57,7 +57,7 @@ class BungeePlugin : Plugin<Project> {
                     PLUGIN_SUPER_CLASS
             )
             setupBungeeDebugTasks()
-            createDebugConfigurations("Bungee", bungee.debug)
+            createRunConfigurations("Bungee", bungee.debug)
         }
     }
 

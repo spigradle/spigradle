@@ -17,6 +17,7 @@
 package kr.entree.spigradle.data
 
 import kr.entree.spigradle.SpigradleMeta
+import kr.entree.spigradle.internal.toFieldEntries
 
 /**
  * Created by JunHyung Lim on 2020-05-22
@@ -25,17 +26,28 @@ object Dependencies {
     val LOMBOK = Dependency("org.projectlombok", "lombok", "1.18.12")
     val SPIGRADLE = Dependency("kr.entree", "spigradle", SpigradleMeta.VERSION)
     val SPIGRADLE_ANNOTATIONS = Dependency(SPIGRADLE, name = "spigradle-annotations", version = "2.0.1")
+    val ALL: List<Pair<String, Dependency>>
+        get() = listOf(
+                Dependencies, SpigotDependencies,
+                BungeeDependencies, NukkitDependencies
+        ).flatMap { it.toFieldEntries() }
 }
 
 object Repositories {
     val SONATYPE = "https://oss.sonatype.org/content/repositories/snapshots/"
     val JITPACK = "https://jitpack.io"
+    val ALL: List<Pair<String, String>>
+        get() = listOf(
+                Repositories, SpigotRepositories,
+                BungeeRepositories, NukkitRepositories
+        ).flatMap { it.toFieldEntries() }
 }
 
 data class Dependency(
         val group: String,
         val name: String,
         val version: String,
+        var isLocal: Boolean = false,
         val versionModifier: (String) -> String = { it }
 ) {
     fun adjustVersion(inputVersion: String?) = inputVersion?.run(versionModifier) ?: version
@@ -51,8 +63,9 @@ inline fun Dependency(
         name: String = dependency.name,
         version: String = dependency.version,
         noinline versionModifier: (String) -> String = dependency.versionModifier,
+        isLocal: Boolean = dependency.isLocal,
         configure: Dependency.() -> Unit = {}
-) = Dependency(group, name, version, versionModifier).apply(configure)
+) = Dependency(group, name, version, isLocal, versionModifier).apply(configure)
 
 object VersionModifier {
     val SNAPSHOT_APPENDER = createAdjuster("SNAPSHOT")

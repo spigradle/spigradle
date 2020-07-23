@@ -96,7 +96,7 @@ open class SubclassDetection : DefaultTask() {
         inputChanges.getFileChanges(classDirectories).asSequence().takeWhile {
             context.detectedMainClass == null
         }.map { it.file }.filter {
-            it.extension == "class"
+            it.extension == "class" && it.isFile
         }.forEach { classFile ->
             classFile.inputStream().buffered().use {
                 ClassReader(it).accept(SubclassDetector(context), options)

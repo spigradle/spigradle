@@ -18,19 +18,22 @@ package kr.entree.spigradle.module.spigot
 
 import groovy.lang.Closure
 import kr.entree.spigradle.data.Load
+import kr.entree.spigradle.data.SpigotDebug
 import kr.entree.spigradle.data.SpigotRepositories
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.internal.groovyExtension
+import kr.entree.spigradle.internal.runConfigurations
+import kr.entree.spigradle.internal.settings
 import kr.entree.spigradle.kotlin.mockBukkit
 import kr.entree.spigradle.module.common.applySpigradlePlugin
-import kr.entree.spigradle.module.common.createDebugConfigurations
+import kr.entree.spigradle.module.common.createRunConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getByName
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.provideDelegate
+import org.gradle.kotlin.dsl.*
+import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.jetbrains.gradle.ext.GradleTask
+import org.jetbrains.gradle.ext.JarApplication
 
 /**
  * The Spigot plugin that adds:
@@ -64,7 +67,8 @@ class SpigotPlugin : Plugin<Project> {
             )
             setupGroovyExtensions()
             setupSpigotDebugTasks()
-            createDebugConfigurations("Spigot", spigot.debug)
+            createSpigotRunConfiguration(spigot.debug)
+            createPaperRunConfiguration(spigot.debug)
         }
     }
 
@@ -111,8 +115,10 @@ class SpigotPlugin : Plugin<Project> {
             val preparePlugin = registerPrepareSpigotPlugin(spigot).applyToConfigure {
                 dependsOn(build)
             }
+            val acceptsEula = registerAcceptEula(debugOption)
             val runSpigot = registerRunSpigot(debugOption).applyToConfigure {
                 mustRunAfter(preparePlugin)
+                dependsOn(acceptsEula)
             }
             registerDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
@@ -124,6 +130,47 @@ class SpigotPlugin : Plugin<Project> {
             registerDebugRun("Paper").applyToConfigure { // debugPaper
                 dependsOn(preparePlugin, paperClipDownload, runSpigot)
                 runSpigot.get().mustRunAfter(paperClipDownload)
+            }
+        }
+    }
+
+    private fun Project.createSpigotRunConfiguration(debug: SpigotDebug) {
+        createRunConfigurations("Spigot", debug)
+        val idea: IdeaModel by extensions
+        idea.project?.settings {
+            runConfigurations {
+                named("RunSpigot", JarApplication::class).configure {
+                    beforeRun {
+                        register("acceptEula", GradleTask::class) {
+                            task = tasks.getByName("acceptSpigotEula")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun Project.createPaperRunConfiguration(debug: SpigotDebug) {
+        val idea: IdeaModel by extensions
+        idea.project?.settings {
+            runConfigurations {
+                register("RunPaper", JarApplication::class) {
+                    jarPath = debug.serverJar.absolutePath
+                    workingDirectory = debug.serverDirectory.absolutePath
+                    programParameters = debug.args.joinToString(" ")
+                    jvmArgs = debug.jvmArgs.joinToString(" ")
+                    beforeRun {
+                        register("downloadPaper", GradleTask::class) {
+                            task = tasks.getByName("downloadPaper")
+                        }
+                        register("preparePlugins", GradleTask::class) {
+                            task = tasks.getByName("prepareSpigotPlugins")
+                        }
+                        register("acceptsEula", GradleTask::class) {
+                            task = tasks.getByName("acceptSpigotEula")
+                        }
+                    }
+                }
             }
         }
     }
