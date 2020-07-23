@@ -59,7 +59,7 @@ internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
             register("Run$name", JarApplication::class) {
                 jarPath = debug.serverJar.absolutePath
                 workingDirectory = debug.serverDirectory.absolutePath
-                programParameters = debug.programArgs.joinToString(" ")
+                programParameters = debug.args.joinToString(" ")
                 jvmArgs = debug.jvmArgs.joinToString(" ")
                 beforeRun {
                     register("prepareServer", GradleTask::class) {
@@ -81,7 +81,7 @@ object DebugTask {
             logging.captureStandardOutput(LogLevel.LIFECYCLE)
             jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}" })
             jvmArgs(debug.jvmArgs)
-            args(debug.programArgs)
+            args(debug.args)
             doFirst {
                 if (!debug.serverJar.isFile) {
                     throw GradleException("""
