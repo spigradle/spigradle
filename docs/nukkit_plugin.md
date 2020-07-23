@@ -52,14 +52,14 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle.nukkit' version '2.0.1'
+    id 'kr.entree.spigradle.nukkit' version '2.1.0'
 }
 ```
 Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.nukkit") version "2.0.1"
+    id("kr.entree.spigradle.nukkit") version "2.1.0"
 }
 ```
 
@@ -72,7 +72,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.0.1'
+        classpath 'kr.entree:spigradle:2.1.0'
     }
 }
 
@@ -90,7 +90,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.0.1")
+        classpath("kr.entree:spigradle:2.1.0")
     }
 }
 
@@ -132,18 +132,20 @@ Run your plugin with just execute single gradle task.
 
 The `debugNukkit` performs to download Nukkit, copy it with your plugins into the default path `debug/nukkit`, and run it.
 
-> Those tasks copy your plugin and its dependency plugins.
+> These tasks copy your plugin and its dependency plugins.
 
 You can pass (jvm)arguments:
 
 ```groovy
-runNukkit {
-    args '--nojline', '--max-players', '100'
-    jvmArgs '-Xmx16G'
+nukkit {
+    debug {
+        args '--nojline', '--max-players', '100'
+        jvmArgs '-Xmx16G'
+    }
 }
 ```
 
-It affects to `debugNukkit`.
+This affects to `debugNukkit`, also `RunNukkit` [IDEA RunConfiguration](https://www.jetbrains.com/help/idea/run-debug-configuration-application.html).
 
 More information: [Tasks](#tasks)
 

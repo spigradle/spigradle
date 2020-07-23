@@ -1,3 +1,22 @@
+# [2.1.0](https://github.com/spigradle/spigradle/compare/v2.0.1...v2.1.0) (2020-07-23)
+
+
+### Bug Fixes
+
+* improve eula accepter to cover disagreed case ([10bfffa](https://github.com/spigradle/spigradle/commit/10bfffa84aea886cdec22cfeba4f7820b0ae7f81))
+* **deps:** bump up mc version to 1.16.1 ([0154ecc](https://github.com/spigradle/spigradle/commit/0154ecc1fc170a333afd80bcfe64181c7fdf653e))
+* check File#isFile for multi-situation in SubclassDetection ([809020c](https://github.com/spigradle/spigradle/commit/809020cf6619d2d610aef62170faf9b1f743754b))
+
+
+### Features
+
+* **debug-run:** add eula accept gradle task for general purpose ([4935493](https://github.com/spigradle/spigradle/commit/4935493c43f43e14985549b02968398741f65657))
+* **debug-run:** add groovy helper for programArgs, jvmArgs ([891740b](https://github.com/spigradle/spigradle/commit/891740bf41b4f6c12eb673e6716e252d76a13dc1))
+* **debug-run:** add properties `programArgs` and `vmArgs` in Debug configuration ([e5a4c9e](https://github.com/spigradle/spigradle/commit/e5a4c9e2a848428123b40993c9aed1a39f6bee48))
+* **ide-idea:** add ability to generate Paper JarApp RunConfiguration ([78b9076](https://github.com/spigradle/spigradle/commit/78b9076ba5ab95d28b3282976e4d643e74d9a658))
+* add ability to generate `RunServer` JarApp RunConfiguration for IDEA ([9b3a73b](https://github.com/spigradle/spigradle/commit/9b3a73b5f1e438a5b3dada92ee44928f25b2d34b))
+* generate server.jar run configuration for IDEA ([496817b](https://github.com/spigradle/spigradle/commit/496817b41418fab685c514fd428b3a65b6927c29))
+
 ## [2.0.1](https://github.com/spigradle/spigradle/compare/v2.0.0...v2.0.1) (2020-07-08)
 
 
