@@ -19,7 +19,7 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.0.1'
+    id 'kr.entree.spigradle' version '2.1.0'
 }
 
 group 'org.sample'
@@ -65,7 +65,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.0.1'
+    id 'kr.entree.spigradle' version '2.1.0'
 }
 
 dependencies {
@@ -81,7 +81,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle") version "2.0.1"
+    id("kr.entree.spigradle") version "2.1.0"
 }
 
 dependencies {
@@ -101,7 +101,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.0.1'
+        classpath 'kr.entree:spigradle:2.1.0'
     }
 }
 
@@ -119,7 +119,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.0.1")
+        classpath("kr.entree:spigradle:2.1.0")
     }
 }
 
@@ -143,7 +143,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.bungee' version '2.0.1'
+    id 'kr.entree.spigradle.bungee' version '2.1.0'
 }
 
 dependencies {
@@ -157,7 +157,7 @@ dependencies {
 ```kotlin
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.bungee") version "2.0.1"
+    id("kr.entree.spigradle.bungee") version "2.1.0"
 }
 
 dependencies {
@@ -177,7 +177,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.0.1'
+        classpath 'kr.entree:spigradle:2.1.0'
     }
 }
 
@@ -195,7 +195,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.0.1")
+        classpath("kr.entree:spigradle:2.1.0")
     }
 }
 
@@ -220,7 +220,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.nukkit' version '2.0.1'
+    id 'kr.entree.spigradle.nukkit' version '2.1.0'
 }
 
 dependencies {
@@ -234,7 +234,7 @@ dependencies {
 ```kotlin
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.nukkit") version "2.0.1"
+    id("kr.entree.spigradle.nukkit") version "2.1.0"
 }
 
 dependencies {
@@ -254,7 +254,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.0.1'
+        classpath 'kr.entree:spigradle:2.1.0'
     }
 }
 
@@ -272,7 +272,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.0.1")
+        classpath("kr.entree:spigradle:2.1.0")
     }
 }
 
@@ -299,9 +299,9 @@ gradlew wrapper --gradle-version 6.4.1 --distribution-type all
 
 |  Name         |  URL                                                           | Relations                               | Aliases       |
 |---------------|----------------------------------------------------------------|-----------------------------------------|---------------|
-| spigot()      | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         |               |
-| bungeecord()  | https://oss.sonatype.org/content/repositories/snapshots/       |                                         |               |
-| paper()       | https://papermc.io/repo/repository/maven-public/               |                                         |               |
+| spigotmc()    | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         | spigot()      |
+| sonaytype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
+| papermc()     | https://papermc.io/repo/repository/maven-public/               |                                         | paper()       |
 | jitpack()     | https://jitpack.io                                             | Vault                                   | vault()       |
 | protocolLib() | https://repo.dmulloy2.net/nexus/repository/public/             |                                         |               |
 | enginehub()   | https://maven.enginehub.org/repo/                              | worldguard, worldedit, commandhelper... |               |
@@ -334,27 +334,27 @@ repositories {
 
 |  Name             |  Signature                                       | Default version          |
 |-------------------|--------------------------------------------------|--------------------------|
-| spigot(version)   | org.spigotmc:spigot-api:$version                 | 1.15.2-R0.1-SNAPSHOT     |
-| spigotAll()       | org.spigotmc:spigot:$version                     | 1.15.2-R0.1-SNAPSHOT     |
-| bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.15-SNAPSHOT            |
-| minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.15.2-SNAPSHOT          |
-| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.15.2-R0.1-SNAPSHOT     |
-| bukkit()          | org.bukkit:bukkit:$version                       | 1.15.2-R0.1-SNAPSHOT     |
-| craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.15.2-R0.1-SNAPSHOT     |
+| spigot(version)   | org.spigotmc:spigot-api:$version                 | 1.16.1-R0.1-SNAPSHOT     |
+| spigotAll()       | org.spigotmc:spigot:$version                     | 1.16.1-R0.1-SNAPSHOT     |
+| bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.16-R0.4-SNAPSHOT       |
+| minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.16.1-SNAPSHOT          |
+| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     |
+| bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     |
+| craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
-| spigradle()       | kr.entree:spigradle:$version                     | 2.0.1       |
-| protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.4.0                    |
+| spigradle()       | kr.entree:spigradle:$version                     | 2.1.0       |
+| protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.5.1                    |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
-| vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.2                    |
+| vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.3                    |
 | luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.1                      |
 | worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version    | 7.1.0                    |
-| worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.2                    |
+| worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.3                    |
 | essentialsX()     | net.ess3:EssentialsX:$version                    | 2.17.2                   |
-| banManager()      | me.confuser.banmanager:BanManagerBukkit:$version | 7.1.0-SNAPSHOT           |
+| banManager()      | me.confuser.banmanager:BanManagerBukkit:$version | 7.3.0-SNAPSHOT           |
 | commandhelper()   | com.sk89q:commandhelper:$version                 | 3.3.4-SNAPSHOT           |
 | bStats()          | org.bstats:bstats-bukkit:$version                | 1.7                      |
 | bStatsLite()      | org.bstats:bstats-bukkit-lite:$version           | 1.7                      |
-| nukkit            | cn.nukkit:nukkit:$version                        | 1.0-SNAPSHOT             |
+| nukkit            | cn.nukkit:nukkit:$version                        | 2.0.0-SNAPSHOT           |
 
 #### Groovy usage
 
