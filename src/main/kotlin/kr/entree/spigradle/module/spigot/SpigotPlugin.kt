@@ -157,7 +157,7 @@ class SpigotPlugin : Plugin<Project> {
                 register("RunPaper", JarApplication::class) {
                     jarPath = debug.serverJar.absolutePath
                     workingDirectory = debug.serverDirectory.absolutePath
-                    programParameters = debug.programArgs.joinToString(" ")
+                    programParameters = debug.args.joinToString(" ")
                     jvmArgs = debug.jvmArgs.joinToString(" ")
                     beforeRun {
                         register("downloadPaper", GradleTask::class) {

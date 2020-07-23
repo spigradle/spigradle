@@ -44,7 +44,7 @@ open class BungeeDebug(
         override var serverDirectory: File,
         override var agentPort: Int
 ) : CommonDebug {
-    override var programArgs: List<Any> = listOf("nogui")
+    override var args: List<Any> = listOf("nogui")
     override var jvmArgs: List<Any> = emptyList()
 
     @Inject

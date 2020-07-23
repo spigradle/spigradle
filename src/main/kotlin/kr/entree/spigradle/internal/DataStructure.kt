@@ -40,14 +40,22 @@ interface CommonDebug {
     var serverJar: File
     var serverDirectory: File
     var agentPort: Int
-    var programArgs: List<Any>
+
+    /**
+     * Program arguments for the server.
+     */
+    var args: List<Any>
+
+    /**
+     * JVM Arguments for the server.
+     */
     var jvmArgs: List<Any>
 
     /**
-     * Groovy DSL helper for the [programArgs] configuration.
+     * Groovy DSL helper for the [args] configuration.
      */
-    fun programArgs(vararg programArgs: String) {
-        this.programArgs = programArgs.toList()
+    fun args(vararg args: String) {
+        this.args = args.toList()
     }
 
     /**

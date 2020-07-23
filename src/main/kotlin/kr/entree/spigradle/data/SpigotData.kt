@@ -36,7 +36,7 @@ open class SpigotDebug(
         var eula: Boolean,
         var buildVersion: String
 ) : CommonDebug {
-    override var programArgs: List<Any> = listOf("nogui")
+    override var args: List<Any> = listOf("nogui")
     override var jvmArgs: List<Any> = emptyList()
 
     @Inject
