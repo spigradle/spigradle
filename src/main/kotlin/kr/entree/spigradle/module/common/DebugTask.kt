@@ -28,6 +28,8 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.*
 import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.plugins.ide.idea.model.IdeaModel
+import org.jetbrains.gradle.ext.GradleTask
+import org.jetbrains.gradle.ext.JarApplication
 import org.jetbrains.gradle.ext.Remote
 import java.io.File
 import java.util.jar.JarFile
@@ -46,13 +48,27 @@ internal fun File.readYamlDescription(fileName: String) =
             }
         }.getOrNull()
 
-internal fun Project.createDebugConfigurations(name: String, debug: CommonDebug) {
+internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
     val idea: IdeaModel by extensions
     idea.project?.settings {
         runConfigurations {
-            register("Debug$name", Remote::class) {
+            register("Remote$name", Remote::class) {
                 host = "localhost"
                 port = debug.agentPort
+            }
+            register("Run$name", JarApplication::class) {
+                jarPath = debug.serverJar.absolutePath
+                workingDirectory = debug.serverDirectory.absolutePath
+                programParameters = debug.args.joinToString(" ")
+                jvmArgs = debug.jvmArgs.joinToString(" ")
+                beforeRun {
+                    register("prepareServer", GradleTask::class) {
+                        task = tasks.getByName("prepare$name")
+                    }
+                    register("preparePlugins", GradleTask::class) {
+                        task = tasks.getByName("prepare${name}Plugins")
+                    }
+                }
             }
         }
     }
@@ -64,7 +80,8 @@ object DebugTask {
             standardInput = System.`in`
             logging.captureStandardOutput(LogLevel.LIFECYCLE)
             jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}" })
-            args("nogui")
+            jvmArgs(debug.jvmArgs)
+            args(debug.args)
             doFirst {
                 if (!debug.serverJar.isFile) {
                     throw GradleException("""

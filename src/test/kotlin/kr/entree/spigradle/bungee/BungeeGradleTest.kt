@@ -1,7 +1,7 @@
 package kr.entree.spigradle.bungee
 
 import kr.entree.spigradle.module.bungee.BungeePlugin
-import kr.entree.spigradle.util.testGradleScript
+import kr.entree.spigradle.util.testGradleScriptWithResource
 import org.junit.jupiter.api.Test
 
 /**
@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test
 class BungeeGradleTest {
     @Test
     fun kotlin() {
-        testGradleScript("/bungee/kotlin", BungeePlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/bungee/kotlin", BungeePlugin.DESC_GEN_TASK_NAME)
     }
 
     @Test
     fun groovy() {
-        testGradleScript("/bungee/groovy", BungeePlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/bungee/groovy", BungeePlugin.DESC_GEN_TASK_NAME)
     }
 }

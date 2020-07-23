@@ -33,7 +33,8 @@ object BungeeDependencies {
     val BUNGEE_CORD = Dependency(
             "net.md-5",
             "bungeecord-api",
-            "1.15-SNAPSHOT",
+            "1.16-R0.4-SNAPSHOT",
+            false,
             VersionModifier.SNAPSHOT_APPENDER
     )
 }
@@ -43,6 +44,9 @@ open class BungeeDebug(
         override var serverDirectory: File,
         override var agentPort: Int
 ) : CommonDebug {
+    override var args: List<Any> = listOf("nogui")
+    override var jvmArgs: List<Any> = emptyList()
+
     @Inject
     constructor(serverJar: File) : this(serverJar, serverJar.parentFile, 5005)
 }
