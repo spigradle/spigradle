@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/spigradle/spigradle/compare/v2.1.0...v2.1.1) (2020-07-24)
+
+
+### Bug Fixes
+
+* **debug-run:** task `prepareSpigotPlugins` depends on `assemble` instead of `build` ([28c2f7f](https://github.com/spigradle/spigradle/commit/28c2f7f5b1cdd730cc0db88226211e4f544f3d73))
+
 # [2.1.0](https://github.com/spigradle/spigradle/compare/v2.0.1...v2.1.0) (2020-07-23)
 
 
