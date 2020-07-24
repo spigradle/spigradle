@@ -111,9 +111,9 @@ class SpigotPlugin : Plugin<Project> {
             val prepareSpigot = registerPrepareSpigot(debugOption).applyToConfigure {
                 dependsOn(buildToolDownload, buildSpigot)
             }
-            val build by tasks
+            val assemble by tasks
             val preparePlugin = registerPrepareSpigotPlugin(spigot).applyToConfigure {
-                dependsOn(build)
+                dependsOn(assemble)
             }
             val acceptsEula = registerAcceptEula(debugOption)
             val runSpigot = registerRunSpigot(debugOption).applyToConfigure {
