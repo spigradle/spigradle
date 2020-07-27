@@ -1,4 +1,4 @@
-# Nukkit Plugin - Spigradle
+# Nukkit Plugin
 
 The [NukkitX](https://github.com/NukkitX/Nukkit#introduction) plugin provides you to:
 
