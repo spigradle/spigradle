@@ -1,4 +1,4 @@
-# Spigot plugin - Spigradle
+# Spigot plugin
 
 The [Spigot](https://www.spigotmc.org/wiki/about-spigot/) plugin provides you to:
 

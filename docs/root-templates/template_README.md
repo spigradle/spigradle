@@ -120,7 +120,7 @@ apply(plugin = "kr.entree.spigradle")
 
 ### Bungeecord
 
-[Documentation](docs/spigot_plugin.md)
+[Documentation](docs/bungeecord_plugin.md)
 
 #### Demo
 - [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord/bungeecord.gradle)

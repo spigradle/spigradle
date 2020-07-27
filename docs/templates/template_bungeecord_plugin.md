@@ -1,4 +1,4 @@
-# Bungeecord Plugin - Spigradle
+# Bungeecord Plugin
 
 The [Bungeecord](https://www.spigotmc.org/wiki/about-bungeecord/) plugin provides you to:
 
