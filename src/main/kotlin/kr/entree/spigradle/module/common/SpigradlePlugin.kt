@@ -62,7 +62,7 @@ class SpigradlePlugin : Plugin<Project> {
     @Suppress("UnstableApiUsage")
     private fun Project.setupPlugins() {
         pluginManager.apply(JavaPlugin::class)
-        pluginManager.apply(IdeaPlugin::class)
+        rootProject.pluginManager.apply(IdeaPlugin::class)
         pluginManager.apply(IdeaExtPlugin::class)
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
             plugins.apply("org.jetbrains.kotlin.kapt")
