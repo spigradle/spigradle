@@ -37,10 +37,10 @@ import java.util.jar.JarFile
 /**
  * Created by JunHyung Lim on 2020-06-07
  */
-internal fun File.readYamlDescription(fileName: String) =
+internal fun readYamlDescription(jarFile: File, configFileName: String) =
         runCatching {
-            JarFile(this).run {
-                getEntry(fileName)?.run {
+            JarFile(jarFile).run {
+                getEntry(configFileName)?.run {
                     getInputStream(this)
                 }
             }?.useToRun {
@@ -109,7 +109,7 @@ object DebugTask {
                 destinationDir.listFiles { _, name ->
                     name.endsWith(".jar")
                 }?.asSequence()?.mapNotNull {
-                    it.readYamlDescription(descFileName)?.get(nameProperty)?.toString()
+                    readYamlDescription(it, descFileName)?.get(nameProperty)?.toString()
                 }?.takeWhile {
                     !readyPlugins.containsAll(needPlugins)
                 }?.forEach { readyPlugins += it }
@@ -117,7 +117,7 @@ object DebugTask {
                 project.withConvention(JavaPluginConvention::class) {
                     sourceSets["main"].compileClasspath
                 }.asSequence().mapNotNull { depFile ->
-                    depFile.readYamlDescription(descFileName)
+                    readYamlDescription(depFile, descFileName)
                             ?.let { desc -> depFile to desc }
                 }.takeWhile {
                     !readyPlugins.containsAll(needPlugins)
