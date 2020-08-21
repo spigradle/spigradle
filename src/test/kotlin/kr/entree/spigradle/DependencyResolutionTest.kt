@@ -26,7 +26,7 @@ class DependencyResolutionTest {
     }
 
     @Test
-    fun `validate dependencies`(@TempDir tempDir: File) {
+    fun `validate dependencies`() {
         val dependencies = Dependencies.ALL.mapNotNull { nameToDep ->
             val (name, dependency) = nameToDep
             if (name != "spigradle" && !dependency.isLocal)

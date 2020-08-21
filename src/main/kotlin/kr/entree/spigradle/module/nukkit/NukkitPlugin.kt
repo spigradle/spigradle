@@ -79,12 +79,12 @@ class NukkitPlugin : Plugin<Project> {
     private fun Project.setupNukkitDebugTasks() {
         val nukkit: NukkitExtension by extensions
         val debug = nukkit.debug
-        val build by tasks
+        val assemble by tasks
         with(NukkitDebugTask) {
             val nukkitDownload = registerDownloadNukkit(debug)
             val runNukkit = registerRunNukkit(debug)
             val preparePlugin = registerPrepareNukkitPlugins(nukkit).applyToConfigure {
-                dependsOn(build)
+                dependsOn(assemble)
             }
             registerDebugNukkit().applyToConfigure {
                 dependsOn(preparePlugin, nukkitDownload, runNukkit)
