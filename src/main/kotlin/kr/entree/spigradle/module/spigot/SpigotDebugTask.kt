@@ -118,9 +118,9 @@ object SpigotDebugTask {
     fun Project.registerPrepareSpigotPlugin(spigot: SpigotExtension): TaskProvider<Copy> {
         return registerPreparePlugins(
                 "prepareSpigotPlugins",
-                "name",
-                "plugin.yml"
-        ) { spigot.depends + spigot.softDepends }.applyToConfigure {
+                "plugin.yml",
+                provider { spigot.depends + spigot.softDepends }
+        ).applyToConfigure {
             group = TASK_GROUP_DEBUG
             into(provider { File(spigot.debug.serverDirectory, "plugins") })
         }

@@ -57,9 +57,9 @@ object NukkitDebugTask {
     fun Project.registerPrepareNukkitPlugins(nukkit: NukkitExtension): TaskProvider<Copy> {
         return registerPreparePlugins(
                 "prepareNukkitPlugin",
-                "name",
-                "plugin.yml"
-        ) { nukkit.depends + nukkit.softDepends }.applyToConfigure {
+                "plugin.yml",
+                provider { nukkit.depends + nukkit.softDepends }
+        ).applyToConfigure {
             group = TASK_GROUP_DEBUG
             into(provider { File(nukkit.debug.serverDirectory, "plugins") })
         }

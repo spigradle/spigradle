@@ -17,13 +17,14 @@
 package kr.entree.spigradle
 
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 /**
  * Created by JunHyung Im on 2020-08-18
@@ -42,6 +43,8 @@ class GradleFunctionalTest {
     lateinit var settingsFile: File
     lateinit var subBuildFile: File
     lateinit var subSettingsFile: File
+    lateinit var javaFile: File
+    lateinit var subJavaFile: File
 
     private fun createGradleRunner() = GradleRunner.create()
             .withProjectDir(dir)
@@ -51,13 +54,13 @@ class GradleFunctionalTest {
     fun setup() {
         buildFile = dir.resolve("build.gradle").create()
         settingsFile = dir.resolve("settings.gradle").create().writeGroovy("""
-            rootProject.name = 'abc'
+            rootProject.name = 'main'
             include('sub')
         """.trimIndent())
         subBuildFile = dir.resolve("sub/build.gradle").create()
-        subSettingsFile = dir.resolve("sub/settings.gradle").create().writeGroovy("""
-            rootProject.name = 'functional-test-sub'
-        """.trimIndent())
+        subSettingsFile = dir.resolve("sub/settings.gradle").create()
+        javaFile = dir.resolve("src/main/java/Main.java").create()
+        subJavaFile = dir.resolve("sub/src/main/java/Main.java").create()
     }
 
     @Test
@@ -67,10 +70,74 @@ class GradleFunctionalTest {
                 id 'scala'
                 id 'kr.entree.spigradle'
             }
-            spigot.main = 'empty'
+            spigot.main = 'Main'
         """.trimIndent())
         assertDoesNotThrow {
             createGradleRunner().build()
         }
+    }
+
+    @Test
+    fun `transitive prepare plugins`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java-library'
+                id 'kr.entree.spigradle'
+            }
+            spigot {
+                main 'Main'
+                depends 'WorldEdit', 'WorldGuard'
+            }
+            repositories {
+                enginehub() 
+            }
+            dependencies {
+                compileOnly worldedit('7.1.0')
+                compileOnly worldguard('7.0.3')
+            }
+        """.trimIndent())
+        //language=Groovy
+        subBuildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            spigot {
+                main 'Sub'
+                depends 'main', 'CommandHelper'
+            }
+            repositories {
+                enginehub()
+            }
+            dependencies {
+                compileOnly rootProject
+                compileOnly commandhelper('3.3.4-SNAPSHOT')
+            }
+            prepareSpigotPlugins {
+                doLast {
+                    def baseDir = file("${'$'}{spigot.debug.serverDirectory}/plugins")
+                    [
+                        'main', 
+                        'worldguard-bukkit-7.0.3', 
+                        'commandhelper-3.3.4-SNAPSHOT',
+                        ['worldedit-bukkit-7.1.0', 'worldedit-bukkit-7.1.0-SNAPSHOT']
+                    ].each { name ->
+                        def names = name instanceof List<?>
+                            ? name as List<String>
+                            : [name.toString()]
+                        assert names.collect { 
+                            file("${'$'}baseDir/${'$'}{it}.jar")
+                        }.any {
+                            it.isFile()
+                        }
+                    }
+                }
+            }
+        """.trimIndent())
+        subJavaFile.writeText("""
+            public class Main {}
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("prepareSpigotPlugins").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":sub:prepareSpigotPlugins")?.outcome)
     }
 }
