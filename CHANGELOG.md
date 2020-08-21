@@ -1,3 +1,12 @@
+## [2.1.2](https://github.com/spigradle/spigradle/compare/v2.1.1...v2.1.2) (2020-08-21)
+
+
+### Bug Fixes
+
+* make debug tasks depends on `assemble` instead of `build` for avoid test ([a52b0a1](https://github.com/spigradle/spigradle/commit/a52b0a1b33ace660dd486827710145c0996b48d2))
+* only apply IdeaPlugin on rootProject for scala ([01f3496](https://github.com/spigradle/spigradle/commit/01f3496198be209e0dcfba32946820f5e1d64a60))
+* **debug-run:** transitive `preparePlugins` task ([5cb321e](https://github.com/spigradle/spigradle/commit/5cb321e7f9110b5bb8b94241ee7a6f1fbb8ccca7))
+
 ## [2.1.1](https://github.com/spigradle/spigradle/compare/v2.1.0...v2.1.1) (2020-07-24)
 
 
