@@ -57,9 +57,9 @@ object BungeeDebugTask {
     fun Project.registerPrepareBungeePlugins(bungee: BungeeExtension): TaskProvider<Copy> {
         return registerPreparePlugins(
                 "prepareBungeePlugin",
-                "name",
-                "bungee.yml")
-        { bungee.depends + bungee.softDepends }.applyToConfigure {
+                "bungee.yml",
+                provider { bungee.depends + bungee.softDepends }
+        ).applyToConfigure {
             group = TASK_GROUP_DEBUG
             into(provider { File(bungee.debug.serverDirectory, "plugins") })
         }

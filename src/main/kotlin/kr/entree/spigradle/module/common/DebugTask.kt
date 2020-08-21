@@ -22,6 +22,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.logging.LogLevel
 import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskProvider
@@ -37,14 +38,36 @@ import java.util.jar.JarFile
 /**
  * Created by JunHyung Lim on 2020-06-07
  */
+private data class PluginData(val description: Map<String, Any>, val file: File)
+private data class PluginDependency(val requires: Set<String> = emptySet(), val options: Set<String> = emptySet()) {
+    val all get() = requires + options
+}
+
+private fun findDependencies(pluginName: String, dataMap: Map<String, PluginData>): PluginDependency {
+    val data = dataMap[pluginName] ?: return PluginDependency()
+    val requires = mutableSetOf<String>()
+    val options = mutableSetOf<String>()
+    val (desc, _) = data
+    listOf("depend", "softdepend").forEach { key ->
+        val depends = (desc[key] as? Collection<*>)?.map { it.toString() } ?: emptyList()
+        val target = if (key == "depend") requires else options
+        depends.forEach {
+            val deep = findDependencies(it, dataMap)
+            requires += deep.requires
+            options += deep.options
+            target += it
+        }
+    }
+    return PluginDependency(requires, options)
+}
+
 internal fun readYamlDescription(jarFile: File, configFileName: String) =
         runCatching {
-            JarFile(jarFile).run {
-                getEntry(configFileName)?.run {
-                    getInputStream(this)
+            JarFile(jarFile).useToRun {
+                val entry = getEntry(configFileName) ?: return null
+                getInputStream(getEntry(configFileName)).useToRun {
+                    Jackson.YAML.readValue<Map<String, Any>>(getInputStream(entry))
                 }
-            }?.useToRun {
-                Jackson.YAML.readValue<Map<String, Any>>(this)
             }
         }.getOrNull()
 
@@ -94,41 +117,39 @@ object DebugTask {
     }
 
     fun Project.registerPreparePlugins(
-            name: String,
-            nameProperty: String,
+            taskName: String,
             descFileName: String,
-            dependPlugins: () -> Iterable<String>
+            dependPlugins: Provider<Iterable<String>>
     ): TaskProvider<Copy> {
-        return tasks.register(name, Copy::class) {
+        return tasks.register(taskName, Copy::class) {
             description = "Copy the plugin jars"
             from(provider { tasks.findArtifactJar() ?: files() })
-            from(cachingProvider {
-                val needPlugins = dependPlugins().toMutableSet()
-                val readyPlugins = mutableSetOf<String>()
-                // Remove already had plugins
-                destinationDir.listFiles { _, name ->
-                    name.endsWith(".jar")
-                }?.asSequence()?.mapNotNull {
-                    readYamlDescription(it, descFileName)?.get(nameProperty)?.toString()
-                }?.takeWhile {
-                    !readyPlugins.containsAll(needPlugins)
-                }?.forEach { readyPlugins += it }
-                // Find depend plugins from classpath
-                project.withConvention(JavaPluginConvention::class) {
-                    sourceSets["main"].compileClasspath
-                }.asSequence().mapNotNull { depFile ->
-                    readYamlDescription(depFile, descFileName)
-                            ?.let { desc -> depFile to desc }
-                }.takeWhile {
-                    !readyPlugins.containsAll(needPlugins)
-                }.filter { (_, desc) ->
-                    val pluginName = desc["name"]?.toString()
-                    pluginName != null && pluginName in needPlugins
-                            && readyPlugins.add(pluginName)
-                }.mapNotNull { it.first }.toList().apply {
-                    (needPlugins - readyPlugins).forEach {
-                        logger.error("Unable to resolve the plugin dependency: $it")
+            from(provider {
+                val pluginDataMap = (rootProject.allprojects.mapNotNull {
+                    it.tasks.findArtifactJar()
+                } + rootProject.allprojects.flatMap {
+                    it.withConvention(JavaPluginConvention::class) {
+                        sourceSets["main"].compileClasspath
                     }
+                }).asSequence().mapNotNull { depFile ->
+                    val desc = readYamlDescription(depFile, descFileName)
+                    if (desc != null && desc["name"] != null)
+                        PluginData(desc, depFile)
+                    else null
+                }.associateBy { (desc, _) -> desc["name"].toString() }
+                val needPlugins = dependPlugins.get().fold(PluginDependency()) { acc, depName ->
+                    val deepDep = findDependencies(depName, pluginDataMap)
+                    PluginDependency(
+                            acc.requires + deepDep.requires + depName,
+                            acc.options + deepDep.options
+                    )
+                }
+                val unresolved = needPlugins.requires.filter { pluginDataMap[it]?.file?.isFile != true }
+                if (unresolved.isNotEmpty()) {
+                    logger.error("Unable to resolve the dependencies: [${unresolved.joinToString()}]")
+                }
+                needPlugins.all.mapNotNull {
+                    pluginDataMap[it]?.file
                 }
             })
         }
