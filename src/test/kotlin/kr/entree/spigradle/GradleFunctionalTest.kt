@@ -140,4 +140,26 @@ class GradleFunctionalTest {
         val result = createGradleRunner().withArguments("prepareSpigotPlugins").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":sub:prepareSpigotPlugins")?.outcome)
     }
+
+    @Test
+    fun `test description default value`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            description 'My awesome plugin'
+            version '3.2.1'
+            spigot.main = 'AwesomePlugin'
+            generateSpigotDescription { doLast {
+                [
+                    "main": "AwesomePlugin",
+                    "version": project.version,
+                    "description": project.description
+                ].each { k, v -> assert properties[k]?.getOrNull() == v }
+            } }
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("generateSpigotDescription").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateSpigotDescription")?.outcome)
+    }
 }
