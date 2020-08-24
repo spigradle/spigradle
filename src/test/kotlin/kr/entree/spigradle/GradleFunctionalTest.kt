@@ -165,7 +165,6 @@ class GradleFunctionalTest {
 
     @Test
     fun `test task configSpigot`() {
-        dir.resolve("debug/spigot/spigot.yml").createDirectories().writeText(javaClass.getResource("/spigot/spigot.yml").readText())
         buildFile.writeGroovy("""
             plugins {
                 id 'java'
@@ -178,12 +177,16 @@ class GradleFunctionalTest {
             configSpigot {
                 properties.put("mykey", "myval")            
                 def file = new File(spigot.debug.serverDirectory, 'spigot.yml')
-                def getter = { Jackson.YAML.readValue(file, new TypeReference<Map<String, Object>>() { }) }
-                doFirst { assert getter()["settings"]["restart-on-crash"] == true }
+                def getter = { file.isFile() ? Jackson.YAML.readValue(file, new TypeReference<Map<String, Object>>() { }) : [:] }
+                doFirst { assert getter()["settings"]?.get("restart-on-crash") != false }
                 doLast { assert getter()["settings"]["restart-on-crash"] == false }
                 doLast { assert getter()["mykey"] == "myval" }
             }
         """.trimIndent())
+        val noFileResult = createGradleRunner().withArguments("configSpigot", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, noFileResult.task(":configSpigot")?.outcome)
+        dir.resolve("debug/spigot/spigot.yml").createDirectories()
+                .writeText(javaClass.getResource("/spigot/spigot.yml").readText())
         val result = createGradleRunner().withArguments("configSpigot", "-s").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":configSpigot")?.outcome)
     }
