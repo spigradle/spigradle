@@ -154,13 +154,12 @@ object SpigotDebugTask {
             description = "Configuration for the spigot.yml"
             outputFiles.from(spigotConfigFile)
             properties.set(provider {
-                runCatching {
+                val fileYaml = runCatching {
                     Jackson.YAML.readValue<Map<String, Any>>(spigotConfigFile)
-                }.map { configMap ->
-                    configMap + ("settings" to mapOf(
-                            "restart-on-crash" to false
-                    ))
                 }.getOrNull() ?: emptyMap()
+                fileYaml + ("settings" to mapOf(
+                        "restart-on-crash" to false
+                ))
             })
         }
     }
