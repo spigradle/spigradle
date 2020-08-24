@@ -11,8 +11,6 @@ import org.gradle.kotlin.dsl.closureOf
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.testfixtures.ProjectBuilder
-import org.junit.jupiter.api.io.TempDir
-import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
