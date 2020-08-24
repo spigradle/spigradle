@@ -325,7 +325,7 @@ Prepares Spigot for ready to run.
 
 ### runSpigot - [JavaExec](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html)
 
-*Depends on: `acceptSpigotEula`
+*Depends on: `acceptSpigotEula`, `configSpigot`
 
 Just runs the server jar at configured path even there's no executable file.
 
@@ -342,6 +342,10 @@ Builds Spigot using BuildTools.
 ### acceptSpigotEula
 
 Accepts the Mojang EULA, used in `runSpigot` task and IDEA RunConfiguration.
+
+### configSpigot
+
+Configure the `spigot.yml`, used to set `settings.restart-on-crash` to false as default.
 
 ### downloadPaper - [Download](TODO)
 

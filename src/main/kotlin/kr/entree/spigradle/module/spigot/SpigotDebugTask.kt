@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
+@file:Suppress("UnstableApiUsage")
+
 package kr.entree.spigradle.module.spigot
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import kr.entree.spigradle.data.SpigotDebug
+import kr.entree.spigradle.internal.Jackson
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.internal.lazyString
 import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
 import kr.entree.spigradle.module.common.Download
+import kr.entree.spigradle.module.common.YamlGenerate
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.logging.LogLevel
@@ -139,6 +144,20 @@ object SpigotDebugTask {
             description = "Download the Paperclip."
             source.set(provider { "https://papermc.io/api/v1/paper/${debug.buildVersion}/latest/download" })
             destination.set(provider { debug.serverJar })
+        }
+    }
+
+    fun Project.registerSpigotConfiguration(serverDir: File): TaskProvider<YamlGenerate> {
+        val spigotConfigFile = serverDir.resolve("spigot.yml")
+        return tasks.register("configSpigot", YamlGenerate::class) {
+            group = TASK_GROUP_DEBUG
+            description = "Configuration for the spigot.yml"
+            outputFiles.from(spigotConfigFile)
+            properties.set(provider {
+                val properties = Jackson.YAML.readValue<Map<String, Any>>(spigotConfigFile)
+                (properties["settings"] as? MutableMap<String, Any>)?.set("restart-on-crash", false)
+                properties
+            })
         }
     }
 }
