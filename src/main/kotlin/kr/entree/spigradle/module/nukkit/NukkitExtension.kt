@@ -24,6 +24,7 @@ import kr.entree.spigradle.data.NukkitDebug
 import kr.entree.spigradle.data.Permission
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
+import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project

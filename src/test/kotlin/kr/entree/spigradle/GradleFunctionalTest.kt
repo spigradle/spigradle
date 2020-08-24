@@ -190,4 +190,44 @@ class GradleFunctionalTest {
         val result = createGradleRunner().withArguments("configSpigot", "-s").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":configSpigot")?.outcome)
     }
+
+    @Test
+    fun `serialize bungee description`() {
+        val bungeeDescFile = dir.resolve("build/tmp/generateBungeeDescription/bungee.yml")
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle.bungee'
+            }
+            version = '1.0'
+            bungee.main = 'MyPlugin'
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("generateBungeeDescription", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateBungeeDescription")?.outcome)
+        assertEquals("""
+            |main: MyPlugin
+            |name: main
+            |version: 1.0
+        |""".trimMargin(), bungeeDescFile.readText())
+    }
+
+    @Test
+    fun `serialize nukkit description`() {
+        val bungeeDescFile = dir.resolve("build/tmp/generateNukkitDescription/plugin.yml")
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle.nukkit'
+            }
+            version = '1.0'
+            nukkit.main = 'MyPlugin'
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("generateNukkitDescription", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateNukkitDescription")?.outcome)
+        assertEquals("""
+            |main: MyPlugin
+            |name: main
+            |version: 1.0
+         |""".trimMargin(), bungeeDescFile.readText())
+    }
 }

@@ -19,6 +19,7 @@ package kr.entree.spigradle.module.bungee
 import groovy.lang.Closure
 import kr.entree.spigradle.data.BungeeDebug
 import kr.entree.spigradle.internal.StandardDescription
+import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.newInstance
