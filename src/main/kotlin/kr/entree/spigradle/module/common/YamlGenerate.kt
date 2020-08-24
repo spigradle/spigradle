@@ -91,7 +91,7 @@ open class YamlGenerate : DefaultTask() {
     val encoding: Property<String> = project.objects.property<String>().convention("UTF-8")
 
     /**
-     * The options of yaml feature. the key is Enum#name() of [com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature].
+     * The yaml options. the key is Enum#name() of [com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature].
      */
     @Input
     val yamlOptions: MapProperty<String, Boolean> = project.objects.mapProperty()

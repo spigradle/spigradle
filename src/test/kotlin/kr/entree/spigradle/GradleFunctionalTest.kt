@@ -29,7 +29,7 @@ import kotlin.test.assertEquals
 /**
  * Created by JunHyung Im on 2020-08-18
  */
-internal fun File.create(): File = apply {
+internal fun File.createDirectories(): File = apply {
     parentFile.mkdirs()
     createNewFile()
 }
@@ -52,15 +52,15 @@ class GradleFunctionalTest {
 
     @BeforeTest
     fun setup() {
-        buildFile = dir.resolve("build.gradle").create()
-        settingsFile = dir.resolve("settings.gradle").create().writeGroovy("""
+        buildFile = dir.resolve("build.gradle").createDirectories()
+        settingsFile = dir.resolve("settings.gradle").createDirectories().writeGroovy("""
             rootProject.name = 'main'
             include('sub')
         """.trimIndent())
-        subBuildFile = dir.resolve("sub/build.gradle").create()
-        subSettingsFile = dir.resolve("sub/settings.gradle").create()
-        javaFile = dir.resolve("src/main/java/Main.java").create()
-        subJavaFile = dir.resolve("sub/src/main/java/Main.java").create()
+        subBuildFile = dir.resolve("sub/build.gradle").createDirectories()
+        subSettingsFile = dir.resolve("sub/settings.gradle").createDirectories()
+        javaFile = dir.resolve("src/main/java/Main.java").createDirectories()
+        subJavaFile = dir.resolve("sub/src/main/java/Main.java").createDirectories()
     }
 
     @Test
@@ -161,5 +161,30 @@ class GradleFunctionalTest {
         """.trimIndent())
         val result = createGradleRunner().withArguments("generateSpigotDescription").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":generateSpigotDescription")?.outcome)
+    }
+
+    @Test
+    fun `test task configSpigot`() {
+        dir.resolve("debug/spigot/spigot.yml").createDirectories().writeText(javaClass.getResource("/spigot/spigot.yml").readText())
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            spigot.main = 'AwesomePlugin'
+            spigot.debug.eula = true
+            import com.fasterxml.jackson.core.type.TypeReference
+            import kr.entree.spigradle.internal.Jackson
+            configSpigot {
+                properties.put("mykey", "myval")            
+                def file = new File(spigot.debug.serverDirectory, 'spigot.yml')
+                def getter = { Jackson.YAML.readValue(file, new TypeReference<Map<String, Object>>() { }) }
+                doFirst { assert getter()["settings"]["restart-on-crash"] == true }
+                doLast { assert getter()["settings"]["restart-on-crash"] == false }
+                doLast { assert getter()["mykey"] == "myval" }
+            }
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("configSpigot", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":configSpigot")?.outcome)
     }
 }
