@@ -89,7 +89,7 @@ internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
                         task = tasks.getByName("prepare$name")
                     }
                     register("preparePlugins", GradleTask::class) {
-                        task = tasks.getByName("prepare${name}Plugins")
+                        task = tasks.findByName("prepare${name}Plugins") ?: tasks.getByName("prepare${name}Plugin") // TODO: Remove
                     }
                 }
             }
