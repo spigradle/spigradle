@@ -213,7 +213,7 @@ class GradleFunctionalTest {
 
     @Test
     fun `serialize nukkit description`() {
-        val bungeeDescFile = dir.resolve("build/tmp/generateNukkitDescription/plugin.yml")
+        val nukkitDescFile = dir.resolve("build/tmp/generateNukkitDescription/plugin.yml")
         buildFile.writeGroovy("""
             plugins {
                 id 'java'
@@ -228,6 +228,23 @@ class GradleFunctionalTest {
             |main: MyPlugin
             |name: main
             |version: 1.0
-         |""".trimMargin(), bungeeDescFile.readText())
+         |""".trimMargin(), nukkitDescFile.readText())
+    }
+
+    @Test
+    fun `apply IDEA ext plugin`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+                id 'kr.entree.spigradle.bungee'
+            }
+            spigot.main = 'MySpigotPlugin'
+            bungee.main = 'MyBungeePlugin'
+            idea.project.settings.toString()
+        """.trimIndent())
+        assertDoesNotThrow {
+            createGradleRunner().withArguments("-s").build()
+        }
     }
 }
