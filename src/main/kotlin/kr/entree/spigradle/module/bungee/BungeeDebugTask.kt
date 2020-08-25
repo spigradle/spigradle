@@ -54,9 +54,16 @@ object BungeeDebugTask {
         }
     }
 
+    fun Project.registerPrepareBungee(): TaskProvider<Task> {
+        return tasks.register("prepareBungee") {
+            group = TASK_GROUP_DEBUG
+            description = "Prepare the Bungeecord."
+        }
+    }
+
     fun Project.registerPrepareBungeePlugins(bungee: BungeeExtension): TaskProvider<Copy> {
         return registerPreparePlugins(
-                "prepareBungeePlugin",
+                "prepareBungeePlugin", // TODO: Rename to `prepareBungeePlugins`
                 "bungee.yml",
                 provider { bungee.depends + bungee.softDepends }
         ).applyToConfigure {

@@ -81,14 +81,18 @@ class NukkitPlugin : Plugin<Project> {
         val debug = nukkit.debug
         val assemble by tasks
         with(NukkitDebugTask) {
-            val nukkitDownload = registerDownloadNukkit(debug)
-            val runNukkit = registerRunNukkit(debug)
+            val downloadNukkit = registerDownloadNukkit(debug)
+            val prepareNukkit = registerPrepareNukkit().applyToConfigure {
+                dependsOn(downloadNukkit)
+            }
+            val runNukkit = registerRunNukkit(debug).applyToConfigure {
+                mustRunAfter(prepareNukkit)
+            }
             val preparePlugin = registerPrepareNukkitPlugins(nukkit).applyToConfigure {
                 dependsOn(assemble)
             }
             registerDebugNukkit().applyToConfigure {
-                dependsOn(preparePlugin, nukkitDownload, runNukkit)
-                runNukkit.get().mustRunAfter(nukkitDownload)
+                dependsOn(preparePlugin, prepareNukkit, runNukkit)
             }
         }
     }

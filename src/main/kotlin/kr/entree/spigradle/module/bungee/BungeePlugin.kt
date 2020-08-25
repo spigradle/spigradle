@@ -71,13 +71,17 @@ class BungeePlugin : Plugin<Project> {
         val assemble by tasks
         with(BungeeDebugTask) {
             val bungeeDownload = registerDownloadBungee(debugOption)
-            val runBungee = registerRunBungee(debugOption)
+            val prepareBungee = registerPrepareBungee().applyToConfigure {
+                dependsOn(bungeeDownload)
+            }
+            val runBungee = registerRunBungee(debugOption).applyToConfigure {
+                mustRunAfter(prepareBungee)
+            }
             val preparePlugin = registerPrepareBungeePlugins(bungee).applyToConfigure {
                 dependsOn(assemble)
             }
             registerDebugBungee().applyToConfigure {
-                dependsOn(preparePlugin, bungeeDownload, runBungee)
-                runBungee.get().mustRunAfter(bungeeDownload)
+                dependsOn(preparePlugin, prepareBungee, runBungee)
             }
         }
     }

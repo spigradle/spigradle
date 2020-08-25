@@ -88,6 +88,7 @@ object SpigotDebugTask {
         }
     }
 
+    // TODO: Need to change `Copy` to just `Task`
     fun Project.registerPrepareSpigot(options: SpigotDebug): TaskProvider<Copy> {
         return tasks.register("prepareSpigot", Copy::class) {
             group = TASK_GROUP_DEBUG

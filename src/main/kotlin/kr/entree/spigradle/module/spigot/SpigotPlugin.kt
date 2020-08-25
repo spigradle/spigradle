@@ -118,12 +118,11 @@ class SpigotPlugin : Plugin<Project> {
             val acceptsEula = registerAcceptEula(debugOption)
             val configSpigot = registerSpigotConfiguration(debugOption.serverDirectory)
             val runSpigot = registerRunSpigot(debugOption).applyToConfigure {
-                mustRunAfter(preparePlugin)
+                mustRunAfter(preparePlugin, prepareSpigot)
                 dependsOn(acceptsEula, configSpigot)
             }
             registerDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
-                runSpigot.get().mustRunAfter(prepareSpigot)
             }
             registerCleanSpigotBuild(debugOption)
             // Paper
