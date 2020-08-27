@@ -38,6 +38,7 @@ open class SpigotDebug(
 ) : CommonDebug {
     override var args: List<Any> = listOf("nogui")
     override var jvmArgs: List<Any> = emptyList()
+    var serverPort: Int = -1
 
     @Inject
     constructor(serverJar: File, buildToolJar: File) : this(
