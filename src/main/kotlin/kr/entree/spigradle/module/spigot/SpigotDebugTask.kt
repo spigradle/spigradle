@@ -41,7 +41,7 @@ import java.io.File
  * Created by JunHyung Lim on 2020-06-03
  */
 object SpigotDebugTask {
-    const val TASK_GROUP_DEBUG = "${SpigotPlugin.TASK_GROUP} debug"
+    val TASK_GROUP_DEBUG = "${SpigotPlugin.SPIGOT_TYPE.taskGroup} debug"
     const val BUILD_TOOLS_URL = "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
 
     fun Project.registerDownloadBuildTool(debugOption: SpigotDebug): TaskProvider<Download> {

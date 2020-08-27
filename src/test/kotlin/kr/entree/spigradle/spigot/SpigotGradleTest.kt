@@ -10,11 +10,11 @@ import kotlin.test.Test
 class SpigotGradleTest {
     @Test
     fun kotlin() {
-        testGradleScriptWithResource("/spigot/kotlin", SpigotPlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/spigot/kotlin", SpigotPlugin.SPIGOT_TYPE.descGenTask)
     }
 
     @Test
     fun groovy() {
-        testGradleScriptWithResource("/spigot/groovy", SpigotPlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/spigot/groovy", SpigotPlugin.SPIGOT_TYPE.descGenTask)
     }
 }

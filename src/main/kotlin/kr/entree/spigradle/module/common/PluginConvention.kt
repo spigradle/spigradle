@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.internal
+package kr.entree.spigradle.module.common
+
+import kr.entree.spigradle.annotations.PluginType
 
 /**
- * Created by JunHyung Lim on 2020-05-18
+ * Created by JunHyung Im on 2020-08-25
  */
-internal object Messages {
-    fun noMainFound(extensionName: String, taskName: String) = """
-        Spigradle couldn't find main class automatically!
-        Please present your main class using the annotation @PluginMain or: @SpigotPlugin, @BungeePlugin, @NukkitPlugin,
-        or set the 'main' property in $extensionName {} block on build.gradle,
-        or just disable $taskName task: 'tasks.$taskName.enabled = false'
-    """.trimIndent()
-}
+data class PluginConvention(
+        val serverName: String,
+        val descFile: String,
+        val mainType: PluginType,
+        val mainSuperClass: String = "",
+        val descGenTask: String = "generate${serverName.capitalize()}Description",
+        val mainDetectTask: String = "detect${serverName.capitalize()}Main",
+        val descExtension: String = serverName,
+        val taskGroup: String = serverName
+)

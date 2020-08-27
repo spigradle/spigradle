@@ -16,7 +16,7 @@
 
 package kr.entree.spigradle.module.common
 
-import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
+    import kr.entree.spigradle.annotations.PluginType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
@@ -87,7 +87,6 @@ open class SubclassDetection : DefaultTask() {
      */
     @get:OutputFile
     val outputFile = project.objects.property<File>()
-            .convention(File(project.buildDir, PLUGIN_APT_DEFAULT_PATH))
 
     @TaskAction
     fun inspect(inputChanges: InputChanges) {
@@ -109,13 +108,14 @@ open class SubclassDetection : DefaultTask() {
     }
 
     companion object {
-        fun register(project: Project, taskName: String, superName: String): TaskProvider<SubclassDetection> {
+        fun register(project: Project, taskName: String, type: PluginType): TaskProvider<SubclassDetection> {
             val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
             return project.tasks.register(taskName, SubclassDetection::class) {
-                superClassName.set(superName)
+                val pathFile = project.getPluginMainPathFile(type)
                 classDirectories.from(sourceSets["main"].output.classesDirs)
+                outputFile.convention(pathFile)
                 onlyIf {
-                    !File(project.buildDir, PLUGIN_APT_DEFAULT_PATH).isFile
+                    !pathFile.isFile
                 }
             }
         }

@@ -31,7 +31,7 @@ interface StandardDescription : MainProvider {
     var version: String?
     var description: String?
 
-    fun init(project: Project) {
+    fun setDefault(project: Project) {
         name = name ?: project.name
         version = version ?: project.version.toString()
         description = description ?: project.description
