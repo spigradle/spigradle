@@ -1,3 +1,10 @@
+## [2.2.1](https://github.com/spigradle/spigradle/compare/v2.2.0...v2.2.1) (2020-08-27)
+
+
+### Bug Fixes
+
+* update spigradle-annotations to avoid APT warning message ([f9d9419](https://github.com/spigradle/spigradle/commit/f9d9419b0fb07d6e3e8267a48ee0cb4fbd8ba06f))
+
 # [2.2.0](https://github.com/spigradle/spigradle/compare/v2.1.2...v2.2.0) (2020-08-27)
 
 
