@@ -166,7 +166,7 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
                     detectResultFile.readText()
                 }.getOrNull() ?: runCatching {
                     generalResultFile.readText()
-                }.onFailure { it.printStackTrace() }.getOrNull()
+                }.getOrNull()
             }
         })
         doFirst {

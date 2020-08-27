@@ -51,7 +51,7 @@ class DependencyResolutionTest {
         compileOnlyConfig.incoming.resolutionResult.allDependencies.forEach {
             val name = it.toString()
             assertTrue("Couldn't resolved dependency: $name") {
-                name in dependencies && it is ResolvedDependencyResult
+                name !in dependencies || it is ResolvedDependencyResult
             }
         }
     }
