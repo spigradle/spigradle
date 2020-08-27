@@ -16,8 +16,10 @@
 
 package kr.entree.spigradle.module.bungee
 
+import kr.entree.spigradle.annotations.PluginType
 import kr.entree.spigradle.data.Repositories
 import kr.entree.spigradle.internal.applyToConfigure
+import kr.entree.spigradle.module.common.PluginConvention
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.createRunConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
@@ -36,11 +38,12 @@ import org.gradle.kotlin.dsl.provideDelegate
  */
 class BungeePlugin : Plugin<Project> {
     companion object {
-        const val DESC_GEN_TASK_NAME = "generateBungeeDescription"
-        const val MAIN_DETECTION_TASK_NAME = "detectBungeeMain"
-        const val EXTENSION_NAME = "bungee"
-        const val DESC_FILE_NAME = "bungee.yml"
-        const val PLUGIN_SUPER_CLASS = "net/md_5/bungee/api/plugin/Plugin"
+        val BUNGEE_TYPE = PluginConvention(
+                serverName = "bungee",
+                descFile = "bungee.yml",
+                mainSuperClass = "net/md_5/bungee/api/plugin/Plugin",
+                mainType = PluginType.BUNGEE
+        )
     }
 
     val Project.bungee get() = extensions.getByName<BungeeExtension>("bungee")
@@ -49,13 +52,7 @@ class BungeePlugin : Plugin<Project> {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
-            registerDescGenTask<BungeeExtension>(
-                    EXTENSION_NAME,
-                    DESC_GEN_TASK_NAME,
-                    MAIN_DETECTION_TASK_NAME,
-                    DESC_FILE_NAME,
-                    PLUGIN_SUPER_CLASS
-            )
+            registerDescGenTask<BungeeExtension>(BUNGEE_TYPE)
             setupBungeeDebugTasks()
             createRunConfigurations("Bungee", bungee.debug)
         }

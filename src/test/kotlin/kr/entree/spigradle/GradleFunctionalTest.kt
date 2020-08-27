@@ -16,6 +16,7 @@
 
 package kr.entree.spigradle
 
+import kr.entree.spigradle.annotations.PluginType
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
@@ -25,6 +26,7 @@ import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Created by JunHyung Im on 2020-08-18
@@ -246,5 +248,39 @@ class GradleFunctionalTest {
         assertDoesNotThrow {
             createGradleRunner().withArguments("-s").build()
         }
+    }
+
+    @Test
+    fun `apply both plugins spigot and bungee`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+                id 'kr.entree.spigradle.bungee'
+            }
+            
+            generateSpigotDescription {
+                doLast {
+                    assert properties["main"].get() == "MySpigotMain"
+                }
+            }
+            generateBungeeDescription {
+                doLast {
+                    assert properties["main"].get() == "MyBungeeMain"
+                }
+            }
+        """.trimIndent())
+        val spigotMainFile = dir.resolve(PluginType.SPIGOT.defaultPath).createDirectories().apply { writeText("MySpigotMain") }
+        dir.resolve(PluginType.BUNGEE.defaultPath).createDirectories().apply { writeText("MyBungeeMain") }
+        val result = createGradleRunner().withArguments("generateSpigotDescription", "generateBungeeDescription").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateSpigotDescription")?.outcome)
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateBungeeDescription")?.outcome)
+        // check general main detection (@PluginMain)
+        assertTrue { spigotMainFile.delete() }
+        dir.resolve(PluginType.GENERAL.defaultPath).createDirectories().apply { writeText("MySpigotMain") }
+        dir.resolve(PluginType.BUNGEE.defaultPath).createDirectories().apply { writeText("MyBungeeMain") }
+        val resultB = createGradleRunner().withArguments("generateSpigotDescription", "generateBungeeDescription").build()
+        assertEquals(TaskOutcome.SUCCESS, resultB.task(":generateSpigotDescription")?.outcome)
+        assertEquals(TaskOutcome.SUCCESS, resultB.task(":generateBungeeDescription")?.outcome)
     }
 }

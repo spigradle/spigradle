@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.convertValue
-import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
+import kr.entree.spigradle.annotations.PluginType
 import kr.entree.spigradle.internal.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
@@ -148,50 +148,57 @@ open class YamlGenerate : DefaultTask() {
     }
 }
 
-internal inline fun <reified T : StandardDescription> Project.registerDescGenTask(
-        extensionName: String,
-        yamlTaskName: String,
-        detectionTaskName: String,
-        descFileName: String,
-        pluginSuperClass: String,
-        taskGroupName: String = extensionName
-) {
-    val description = extensions.create<T>(extensionName, this)
-    val detectionTask = SubclassDetection.register(this, detectionTaskName, pluginSuperClass).applyToConfigure {
-        group = taskGroupName
+internal inline fun <reified T : StandardDescription> Project.registerDescGenTask(type: PluginConvention) {
+    val detectResultFile = getPluginMainPathFile(type.mainType)
+    val generalResultFile = getPluginMainPathFile(PluginType.GENERAL)
+    val description = extensions.create<T>(type.descExtension, this)
+    val detectionTask = SubclassDetection.register(this, type.mainDetectTask, type.mainType).applyToConfigure {
+        group = type.taskGroup
+        superClassName.set(type.mainSuperClass)
+        outputFile.set(detectResultFile)
     }
-    val generationTask = registerYamlGenTask(yamlTaskName, extensionName, descFileName, description).applyToConfigure {
-        group = taskGroupName
+    val generationTask = registerYamlGenTask(type).applyToConfigure {
+        inputs.files(detectResultFile, generalResultFile)
+        group = type.taskGroup
+        serialize(provider {
+            description.apply {
+                main = main ?: runCatching {
+                    detectResultFile.readText()
+                }.getOrNull() ?: runCatching {
+                    generalResultFile.readText()
+                }.onFailure { it.printStackTrace() }.getOrNull()
+            }
+        })
+        doFirst {
+            notNull(description.main) {
+                Messages.noMainFound(type.descExtension, type.descGenTask)
+            }
+        }
     }
     val classes: Task by tasks
     project.afterEvaluate {
-        description.init(this)
+        description.setDefault(this)
     }
     // classes -> detectionTask -> generateTask
     generationTask.configure { dependsOn(detectionTask) }
     classes.finalizedBy(generationTask)
 }
 
-internal fun Project.registerYamlGenTask(taskName: String, extensionName: String, fileName: String, data: MainProvider): TaskProvider<YamlGenerate> {
-    return project.tasks.register(taskName, YamlGenerate::class) {
-        val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
-        listOf("main", "test").mapNotNull {
-            sourceSets[it].output.resourcesDir
-        }.forEach { resourceDir ->
-            outputFiles.from(File(resourceDir, fileName))
-        }
-        outputFiles.from(File(temporaryDir, fileName))
-        serialize(provider {
-            data.apply {
-                if (main == null) {
-                    main = runCatching {
-                        File(project.buildDir, PLUGIN_APT_DEFAULT_PATH).readText()
-                    }.getOrNull()
-                }
-            }
-        })
-        doFirst {
-            notNull(data.main) { Messages.noMainFound(extensionName, taskName) }
-        }
+internal fun Project.findResourceDirs(fileName: String): List<File> {
+    val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
+    return listOf("main", "test").mapNotNull {
+        sourceSets[it].output.resourcesDir
+    }.map {
+        File(it, fileName)
     }
 }
+
+internal fun Project.registerYamlGenTask(taskName: String, fileName: String): TaskProvider<YamlGenerate> {
+    return project.tasks.register(taskName, YamlGenerate::class) {
+        outputFiles.from(findResourceDirs(fileName))
+        outputFiles.from(temporaryDir.resolve(fileName))
+    }
+}
+
+internal fun Project.registerYamlGenTask(type: PluginConvention): TaskProvider<YamlGenerate> =
+        registerYamlGenTask(type.descGenTask, type.descFile)
