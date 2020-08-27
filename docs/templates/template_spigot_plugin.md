@@ -111,23 +111,19 @@ You can configure all properties of `plugin.yml` in [spigot {} block](#configura
 
 The plugin automatically finds the main class extends [JavaPlugin]((https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/plugin/java/JavaPlugin.html)), and set the 'main' property to the class found.  
 
-You may present the main class using `@kr.entree.spigradle.annotations.PluginMain`:
+You may present the main class using `@SpigotMain` or `@PluginMain`:
 
 ```java
-import kr.entree.spigradle.annotations.PluginMain;
+import kr.entree.spigradle.annotations.SpigotPlugin;
 
-@PluginMain
+@SpigotPlugin
 public class SamplePlugin extends JavaPlugin { }
 ```  
 
-In Kotlin, you can use `@Plugin` typealias linked to `@PluginMain`.
-
 ```kotlin
-@Plugin
+@SpigotPlugin
 class SamplePlugin : JavaPlugin()
 ``` 
-
-The reason of naming `@PluginMain` instead of `@Plugin`, the name `Plugin` already used at Bungeecord and Nukkit. For support those, I had to avoid the name conflict. But the name conflict doesn't a matter in Kotlin, so I provided the `@Plugin` typealias for Kotlin user.
 
 ## Debug your plugin
 
@@ -146,6 +142,7 @@ spigot {
     debug {
         args '--nojline', '--max-players', '100'
         jvmArgs '-Xmx16G'
+        serverPort 25564
     }
 }
 ```
@@ -160,7 +157,7 @@ More information: [Tasks](#tasks)
 
 The description of your plugin for a `plugin.yml`.
 
-The 'main' property will be set to the class [auto-detected](#main-class-detection) or presented by `@kr.entree.spigradle.annotations.PluginMain`.
+The 'main' property will be set to the class [auto-detected](#main-class-detection) or presented by `@kr.entree.spigradle.annotations.SpigotMain`.
 
 About the `plugin.yml`, See [plugin-yml wiki](https://www.spigotmc.org/wiki/plugin-yml/)
 
@@ -417,6 +414,8 @@ tasks.test.dependsOn(copyPluginYaml)
 ```
 
 ## Migration Tips
+
+### 2.x <- 1.x
 
 - The task `spigotPluginYaml` renamed to `generateSpigotDescription`
 - The annotation `@Plugin` repackaged to `@kr.entree.spigradle.annotations.Plugin`.
