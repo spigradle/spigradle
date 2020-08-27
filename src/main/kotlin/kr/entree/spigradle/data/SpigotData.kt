@@ -47,6 +47,15 @@ open class SpigotDebug(
             File(buildToolJar.parentFile, "outputs"),
             5005, false, "1.15.2"
     )
+
+    /**
+     * Groovy DSL helper for the [serverPort] configuration.
+     */
+    fun serverPort(serverPort: Any) {
+        this.serverPort = if (serverPort is Number) {
+            serverPort.toInt()
+        } else serverPort.toString().toIntOrNull() ?: -1
+    }
 }
 
 enum class Load {
