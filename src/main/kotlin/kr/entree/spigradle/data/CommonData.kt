@@ -25,7 +25,7 @@ import kr.entree.spigradle.internal.toFieldEntries
 object Dependencies {
     val LOMBOK = Dependency("org.projectlombok", "lombok", "1.18.12")
     val SPIGRADLE = Dependency("kr.entree", "spigradle", SpigradleMeta.VERSION)
-    val SPIGRADLE_ANNOTATIONS = Dependency(SPIGRADLE, name = "spigradle-annotations", version = "2.1.0")
+    val SPIGRADLE_ANNOTATIONS = Dependency(SPIGRADLE, name = "spigradle-annotations", version = "2.1.1")
     val ALL: List<Pair<String, Dependency>>
         get() = listOf(
                 Dependencies, SpigotDependencies,
