@@ -117,6 +117,9 @@ object SpigotDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Startup the Spigot server."
             classpath = files(provider { serverJar })
+            if (debug.serverPort >= 0) {
+                args("--port", lazyString { debug.serverPort })
+            }
             setWorkingDir(provider { debug.serverDirectory })
         }
     }
