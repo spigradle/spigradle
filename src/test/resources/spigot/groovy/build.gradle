@@ -38,6 +38,9 @@ spigot {
             children 'test.foo': true
         }
     }
+    debug {
+        serverPort 25564
+    }
 }
 
 build.doLast {

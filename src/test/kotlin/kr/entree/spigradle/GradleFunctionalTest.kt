@@ -271,7 +271,7 @@ class GradleFunctionalTest {
             }
         """.trimIndent())
         val spigotMainFile = dir.resolve(PluginType.SPIGOT.defaultPath).createDirectories().apply { writeText("MySpigotMain") }
-        val bungeeMainFile = dir.resolve(PluginType.BUNGEE.defaultPath).createDirectories().apply { writeText("MyBungeeMain") }
+        dir.resolve(PluginType.BUNGEE.defaultPath).createDirectories().apply { writeText("MyBungeeMain") }
         val result = createGradleRunner().withArguments("generateSpigotDescription", "generateBungeeDescription").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":generateSpigotDescription")?.outcome)
         assertEquals(TaskOutcome.SUCCESS, result.task(":generateBungeeDescription")?.outcome)
