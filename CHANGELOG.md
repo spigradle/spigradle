@@ -1,3 +1,26 @@
+# [2.2.0](https://github.com/spigradle/spigradle/compare/v2.1.2...v2.2.0) (2020-08-27)
+
+
+### Bug Fixes
+
+* **debug-run:** fix again `configSpigot` ([2a5e034](https://github.com/spigradle/spigradle/commit/2a5e03429602ca0ffc106e5596ef9b41acf09cd5))
+* **debug-run:** ignore exception for `configSpigot` ([696eee7](https://github.com/spigradle/spigradle/commit/696eee7cd8ea16edc9e8411815040ec94f1667ee))
+* **debug-run:** NoPluginFoundException for `preparePlugins` ([42a1789](https://github.com/spigradle/spigradle/commit/42a1789a42a9872f3db44a2e107592574da957d9))
+* apt output file name, dep resolution test condition ([9f15100](https://github.com/spigradle/spigradle/commit/9f15100e5d70033d333c46b4d36e22c3ade07c53))
+* compile error ([0dbf677](https://github.com/spigradle/spigradle/commit/0dbf677104e94f8f9993665bcc7a5caa80eae70a))
+* create `prepare$name` task for bungee, nukkit [#31](https://github.com/spigradle/spigradle/issues/31) ([6bec2cb](https://github.com/spigradle/spigradle/commit/6bec2cb4a37467005aba102b024d09e9d4955be7))
+* find both tasks `preparePlugins`, `preparePlugin` ([082d73a](https://github.com/spigradle/spigradle/commit/082d73aa3cdf258ece8814c9d2deb2f369dc3163))
+* support apply multi plugin spigot, bungee ([6e80231](https://github.com/spigradle/spigradle/commit/6e80231fb1e0a2bcc9b663b727112597b322200b))
+* transient debug field for bungee, nukkit [#32](https://github.com/spigradle/spigradle/issues/32) ([f4b3a82](https://github.com/spigradle/spigradle/commit/f4b3a822cbf02b4ab5f95055fae0c3cb040a7599))
+
+
+### Features
+
+* new task `configSpigot` ([7649368](https://github.com/spigradle/spigradle/commit/76493685004cd2b7a47e12847e62c795b8586e65))
+* set default the `description` to `project.description` ([89c8ead](https://github.com/spigradle/spigradle/commit/89c8ead1ca5e8b882e473a579ee42f2081c805a5))
+* **spigot:** add `serverPort` in SpigotDebug ([2e77a2c](https://github.com/spigradle/spigradle/commit/2e77a2c07663b29f1c0b8df9540376f964e53e7a))
+* **spigot:** add groovy helper for the `serverPort` ([73b2714](https://github.com/spigradle/spigradle/commit/73b27142b4e751d839694cde4c636150c5623a13))
+
 ## [2.1.2](https://github.com/spigradle/spigradle/compare/v2.1.1...v2.1.2) (2020-08-21)
 
 
