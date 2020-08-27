@@ -16,6 +16,7 @@
 
 package kr.entree.spigradle
 
+import kr.entree.spigradle.annotations.PluginType
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
@@ -25,11 +26,12 @@ import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Created by JunHyung Im on 2020-08-18
  */
-internal fun File.create(): File = apply {
+internal fun File.createDirectories(): File = apply {
     parentFile.mkdirs()
     createNewFile()
 }
@@ -52,15 +54,15 @@ class GradleFunctionalTest {
 
     @BeforeTest
     fun setup() {
-        buildFile = dir.resolve("build.gradle").create()
-        settingsFile = dir.resolve("settings.gradle").create().writeGroovy("""
+        buildFile = dir.resolve("build.gradle").createDirectories()
+        settingsFile = dir.resolve("settings.gradle").createDirectories().writeGroovy("""
             rootProject.name = 'main'
             include('sub')
         """.trimIndent())
-        subBuildFile = dir.resolve("sub/build.gradle").create()
-        subSettingsFile = dir.resolve("sub/settings.gradle").create()
-        javaFile = dir.resolve("src/main/java/Main.java").create()
-        subJavaFile = dir.resolve("sub/src/main/java/Main.java").create()
+        subBuildFile = dir.resolve("sub/build.gradle").createDirectories()
+        subSettingsFile = dir.resolve("sub/settings.gradle").createDirectories()
+        javaFile = dir.resolve("src/main/java/Main.java").createDirectories()
+        subJavaFile = dir.resolve("sub/src/main/java/Main.java").createDirectories()
     }
 
     @Test
@@ -139,5 +141,146 @@ class GradleFunctionalTest {
         """.trimIndent())
         val result = createGradleRunner().withArguments("prepareSpigotPlugins").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":sub:prepareSpigotPlugins")?.outcome)
+    }
+
+    @Test
+    fun `test description default value`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            description 'My awesome plugin'
+            version '3.2.1'
+            spigot.main = 'AwesomePlugin'
+            generateSpigotDescription { doLast {
+                [
+                    "main": "AwesomePlugin",
+                    "version": project.version,
+                    "description": project.description
+                ].each { k, v -> assert properties[k]?.getOrNull() == v }
+            } }
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("generateSpigotDescription").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateSpigotDescription")?.outcome)
+    }
+
+    @Test
+    fun `test task configSpigot`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            spigot.main = 'AwesomePlugin'
+            spigot.debug.eula = true
+            import com.fasterxml.jackson.core.type.TypeReference
+            import kr.entree.spigradle.internal.Jackson
+            configSpigot {
+                properties.put("mykey", "myval")            
+                def file = new File(spigot.debug.serverDirectory, 'spigot.yml')
+                def getter = { file.isFile() ? Jackson.YAML.readValue(file, new TypeReference<Map<String, Object>>() { }) : [:] }
+                doFirst { assert getter()["settings"]?.get("restart-on-crash") != false }
+                doLast { assert getter()["settings"]["restart-on-crash"] == false }
+                doLast { assert getter()["mykey"] == "myval" }
+            }
+        """.trimIndent())
+        val noFileResult = createGradleRunner().withArguments("configSpigot", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, noFileResult.task(":configSpigot")?.outcome)
+        dir.resolve("debug/spigot/spigot.yml").createDirectories()
+                .writeText(javaClass.getResource("/spigot/spigot.yml").readText())
+        val result = createGradleRunner().withArguments("configSpigot", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":configSpigot")?.outcome)
+    }
+
+    @Test
+    fun `serialize bungee description`() {
+        val bungeeDescFile = dir.resolve("build/tmp/generateBungeeDescription/bungee.yml")
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle.bungee'
+            }
+            version = '1.0'
+            bungee.main = 'MyPlugin'
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("generateBungeeDescription", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateBungeeDescription")?.outcome)
+        assertEquals("""
+            |main: MyPlugin
+            |name: main
+            |version: 1.0
+        |""".trimMargin(), bungeeDescFile.readText())
+    }
+
+    @Test
+    fun `serialize nukkit description`() {
+        val nukkitDescFile = dir.resolve("build/tmp/generateNukkitDescription/plugin.yml")
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle.nukkit'
+            }
+            version = '1.0'
+            nukkit.main = 'MyPlugin'
+        """.trimIndent())
+        val result = createGradleRunner().withArguments("generateNukkitDescription", "-s").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateNukkitDescription")?.outcome)
+        assertEquals("""
+            |main: MyPlugin
+            |name: main
+            |version: 1.0
+         |""".trimMargin(), nukkitDescFile.readText())
+    }
+
+    @Test
+    fun `apply IDEA ext plugin`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+                id 'kr.entree.spigradle.bungee'
+            }
+            spigot.main = 'MySpigotPlugin'
+            bungee.main = 'MyBungeePlugin'
+            idea.project.settings.toString()
+        """.trimIndent())
+        assertDoesNotThrow {
+            createGradleRunner().withArguments("-s").build()
+        }
+    }
+
+    @Test
+    fun `apply both plugins spigot and bungee`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+                id 'kr.entree.spigradle.bungee'
+            }
+            
+            generateSpigotDescription {
+                doLast {
+                    assert properties["main"].get() == "MySpigotMain"
+                }
+            }
+            generateBungeeDescription {
+                doLast {
+                    assert properties["main"].get() == "MyBungeeMain"
+                }
+            }
+        """.trimIndent())
+        val spigotMainFile = dir.resolve(PluginType.SPIGOT.defaultPath).createDirectories().apply { writeText("MySpigotMain") }
+        dir.resolve(PluginType.BUNGEE.defaultPath).createDirectories().apply { writeText("MyBungeeMain") }
+        val result = createGradleRunner().withArguments("generateSpigotDescription", "generateBungeeDescription").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateSpigotDescription")?.outcome)
+        assertEquals(TaskOutcome.SUCCESS, result.task(":generateBungeeDescription")?.outcome)
+        // check general main detection (@PluginMain)
+        assertTrue { spigotMainFile.delete() }
+        dir.resolve(PluginType.GENERAL.defaultPath).createDirectories().apply { writeText("MySpigotMain") }
+        dir.resolve(PluginType.BUNGEE.defaultPath).createDirectories().apply { writeText("MyBungeeMain") }
+        val resultB = createGradleRunner().withArguments("generateSpigotDescription", "generateBungeeDescription").build()
+        assertEquals(TaskOutcome.SUCCESS, resultB.task(":generateSpigotDescription")?.outcome)
+        assertEquals(TaskOutcome.SUCCESS, resultB.task(":generateBungeeDescription")?.outcome)
     }
 }

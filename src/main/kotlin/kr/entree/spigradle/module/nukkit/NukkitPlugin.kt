@@ -16,10 +16,12 @@
 
 package kr.entree.spigradle.module.nukkit
 
+import kr.entree.spigradle.annotations.PluginType
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.NukkitRepositories
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.internal.groovyExtension
+import kr.entree.spigradle.module.common.PluginConvention
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.createRunConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
@@ -38,26 +40,21 @@ import org.gradle.kotlin.dsl.provideDelegate
  */
 class NukkitPlugin : Plugin<Project> {
     companion object {
-        const val DESC_GEN_TASK_NAME = "generateNukkitDescription"
-        const val MAIN_DETECTION_TASK_NAME = "detectNukkitMain"
-        const val EXTENSION_NAME = "nukkit"
-        const val DESC_FILE_NAME = "plugin.yml"
-        const val PLUGIN_SUPER_CLASS = "cn/nukkit/plugin/PluginBase"
+        val NUKKIT_TYPE = PluginConvention(
+                serverName = "nukkit",
+                descFile = "plugin.yml",
+                mainSuperClass = "cn/nukkit/plugin/PluginBase",
+                mainType = PluginType.NUKKIT
+        )
     }
 
-    val Project.nukkit get() = extensions.getByName<NukkitExtension>(EXTENSION_NAME)
+    val Project.nukkit get() = extensions.getByName<NukkitExtension>(NUKKIT_TYPE.descExtension)
 
     override fun apply(project: Project) {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
-            registerDescGenTask<NukkitExtension>(
-                    EXTENSION_NAME,
-                    DESC_GEN_TASK_NAME,
-                    MAIN_DETECTION_TASK_NAME,
-                    DESC_FILE_NAME,
-                    PLUGIN_SUPER_CLASS
-            )
+            registerDescGenTask<NukkitExtension>(NUKKIT_TYPE)
             setupGroovyExtensions()
             setupNukkitDebugTasks()
             createRunConfigurations("Nukkit", nukkit.debug)
@@ -69,7 +66,7 @@ class NukkitPlugin : Plugin<Project> {
     }
 
     private fun Project.setupGroovyExtensions() {
-        extensions.getByName(EXTENSION_NAME).groovyExtension.apply {
+        extensions.getByName(NUKKIT_TYPE.descExtension).groovyExtension.apply {
             set("POST_WORLD", Load.POST_WORLD)
             set("POSTWORLD", Load.POST_WORLD)
             set("STARTUP", Load.STARTUP)
@@ -81,14 +78,18 @@ class NukkitPlugin : Plugin<Project> {
         val debug = nukkit.debug
         val assemble by tasks
         with(NukkitDebugTask) {
-            val nukkitDownload = registerDownloadNukkit(debug)
-            val runNukkit = registerRunNukkit(debug)
+            val downloadNukkit = registerDownloadNukkit(debug)
+            val prepareNukkit = registerPrepareNukkit().applyToConfigure {
+                dependsOn(downloadNukkit)
+            }
+            val runNukkit = registerRunNukkit(debug).applyToConfigure {
+                mustRunAfter(prepareNukkit)
+            }
             val preparePlugin = registerPrepareNukkitPlugins(nukkit).applyToConfigure {
                 dependsOn(assemble)
             }
             registerDebugNukkit().applyToConfigure {
-                dependsOn(preparePlugin, nukkitDownload, runNukkit)
-                runNukkit.get().mustRunAfter(nukkitDownload)
+                dependsOn(preparePlugin, prepareNukkit, runNukkit)
             }
         }
     }

@@ -1,8 +1,8 @@
 import groovy.lang.GroovyObject
 import kr.entree.spigradle.build.*
-import org.gradle.jvm.tasks.Jar
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import java.util.*
+import org.gradle.api.tasks.bundling.Jar
 
 plugins {
     id("com.jfrog.bintray")
@@ -67,14 +67,18 @@ val spigradleDocsJar by tasks.registering(Jar::class) {
     from("$projectDir/CHANGELOG.md")
 }
 
+val spigradleSourcesJar by tasks.registering(Jar::class) {
+    group = "spigradle build"
+    archiveClassifier.set("sources")
+    from(sourceSets["main"].allSource)
+}
+
 publishing {
     publications {
         create("spigradle", MavenPublication::class) {
             from(components["java"])
             artifact(spigradleDocsJar.get())
-            afterEvaluate {
-                artifact(tasks.getByName<Jar>("kotlinSourcesJar"))
-            }
+            artifact(spigradleSourcesJar.get())
         }
     }
 }

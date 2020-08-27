@@ -89,7 +89,7 @@ internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
                         task = tasks.getByName("prepare$name")
                     }
                     register("preparePlugins", GradleTask::class) {
-                        task = tasks.getByName("prepare${name}Plugins")
+                        task = tasks.findByName("prepare${name}Plugins") ?: tasks.getByName("prepare${name}Plugin") // TODO: Remove
                     }
                 }
             }
@@ -128,9 +128,9 @@ object DebugTask {
                 val pluginDataMap = (rootProject.allprojects.mapNotNull {
                     it.tasks.findArtifactJar()
                 } + rootProject.allprojects.flatMap {
-                    it.withConvention(JavaPluginConvention::class) {
+                    it.convention.findPlugin(JavaPluginConvention::class)?.run {
                         sourceSets["main"].compileClasspath
-                    }
+                    } ?: emptyList()
                 }).asSequence().mapNotNull { depFile ->
                     val desc = readYamlDescription(depFile, descFileName)
                     if (desc != null && desc["name"] != null)

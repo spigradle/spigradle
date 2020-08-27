@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
+@file:Suppress("UnstableApiUsage")
+
 package kr.entree.spigradle.module.spigot
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import kr.entree.spigradle.data.SpigotDebug
+import kr.entree.spigradle.internal.Jackson
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.internal.lazyString
 import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
 import kr.entree.spigradle.module.common.Download
+import kr.entree.spigradle.module.common.YamlGenerate
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.logging.LogLevel
@@ -36,7 +41,7 @@ import java.io.File
  * Created by JunHyung Lim on 2020-06-03
  */
 object SpigotDebugTask {
-    const val TASK_GROUP_DEBUG = "${SpigotPlugin.TASK_GROUP} debug"
+    val TASK_GROUP_DEBUG = "${SpigotPlugin.SPIGOT_TYPE.taskGroup} debug"
     const val BUILD_TOOLS_URL = "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
 
     fun Project.registerDownloadBuildTool(debugOption: SpigotDebug): TaskProvider<Download> {
@@ -83,6 +88,7 @@ object SpigotDebugTask {
         }
     }
 
+    // TODO: Need to change `Copy` to just `Task`
     fun Project.registerPrepareSpigot(options: SpigotDebug): TaskProvider<Copy> {
         return tasks.register("prepareSpigot", Copy::class) {
             group = TASK_GROUP_DEBUG
@@ -111,6 +117,9 @@ object SpigotDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Startup the Spigot server."
             classpath = files(provider { serverJar })
+            if (debug.serverPort >= 0) {
+                args("--port", lazyString { debug.serverPort })
+            }
             setWorkingDir(provider { debug.serverDirectory })
         }
     }
@@ -139,6 +148,23 @@ object SpigotDebugTask {
             description = "Download the Paperclip."
             source.set(provider { "https://papermc.io/api/v1/paper/${debug.buildVersion}/latest/download" })
             destination.set(provider { debug.serverJar })
+        }
+    }
+
+    fun Project.registerSpigotConfiguration(serverDir: File): TaskProvider<YamlGenerate> {
+        val spigotConfigFile = serverDir.resolve("spigot.yml")
+        return tasks.register("configSpigot", YamlGenerate::class) {
+            group = TASK_GROUP_DEBUG
+            description = "Configuration for the spigot.yml"
+            outputFiles.from(spigotConfigFile)
+            properties.set(provider {
+                val fileYaml = runCatching {
+                    Jackson.YAML.readValue<Map<String, Any>>(spigotConfigFile)
+                }.getOrNull() ?: emptyMap()
+                fileYaml + ("settings" to mapOf(
+                        "restart-on-crash" to false
+                ))
+            })
         }
     }
 }
