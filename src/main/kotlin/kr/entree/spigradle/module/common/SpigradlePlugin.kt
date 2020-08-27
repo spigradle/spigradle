@@ -17,8 +17,7 @@
 package kr.entree.spigradle.module.common
 
 import groovy.lang.Closure
-import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_DEFAULT_PATH
-import kr.entree.spigradle.annotations.processor.PluginAnnotationProcessor.PLUGIN_APT_RESULT_PATH_KEY
+import kr.entree.spigradle.annotations.PluginType
 import kr.entree.spigradle.data.Dependencies
 import kr.entree.spigradle.data.Repositories
 import kr.entree.spigradle.data.Repositories.SONATYPE
@@ -45,6 +44,11 @@ fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
 val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, "spigot-buildtools")
 
 val Project.debugDir get() = File(projectDir, "debug")
+
+// TODO: Remove in Spigradle 3.0
+private val PluginType.internalName get() = if (this == PluginType.GENERAL) "plugin" else name.toLowerCase()
+
+fun Project.getPluginMainPathFile(type: PluginType) = File(buildDir, "spigradle/${type.internalName}_main")
 
 class SpigradlePlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -119,8 +123,9 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupAnnotationProcessorOptions() {
         val compileJava: JavaCompile by tasks
-        val path = File(buildDir, PLUGIN_APT_DEFAULT_PATH)
-        compileJava.options.compilerArgs.add("-A$PLUGIN_APT_RESULT_PATH_KEY=${path.absolutePath}")
+        PluginType.values().forEach { type ->
+            compileJava.options.compilerArgs.add("-A${type.pathKey}=${getPluginMainPathFile(type)}")
+        }
     }
 
     private fun Project.markExcludeDirectories() {

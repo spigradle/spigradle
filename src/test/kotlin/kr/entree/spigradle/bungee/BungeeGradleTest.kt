@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test
 class BungeeGradleTest {
     @Test
     fun kotlin() {
-        testGradleScriptWithResource("/bungee/kotlin", BungeePlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/bungee/kotlin", BungeePlugin.BUNGEE_TYPE.descGenTask)
     }
 
     @Test
     fun groovy() {
-        testGradleScriptWithResource("/bungee/groovy", BungeePlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/bungee/groovy", BungeePlugin.BUNGEE_TYPE.descGenTask)
     }
 }

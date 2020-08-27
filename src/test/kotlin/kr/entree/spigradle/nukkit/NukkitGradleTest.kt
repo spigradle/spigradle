@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test
 class NukkitGradleTest {
     @Test
     fun kotlin() {
-        testGradleScriptWithResource("/nukkit/kotlin", NukkitPlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/nukkit/kotlin", NukkitPlugin.NUKKIT_TYPE.descGenTask)
     }
 
     @Test
     fun groovy() {
-        testGradleScriptWithResource("/nukkit/groovy", NukkitPlugin.DESC_GEN_TASK_NAME)
+        testGradleScriptWithResource("/nukkit/groovy", NukkitPlugin.NUKKIT_TYPE.descGenTask)
     }
 }

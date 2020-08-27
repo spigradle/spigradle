@@ -45,6 +45,13 @@ object NukkitDebugTask {
         }
     }
 
+    fun Project.registerPrepareNukkit(): TaskProvider<Task> {
+        return tasks.register("prepareNukkit") {
+            group = TASK_GROUP_DEBUG
+            description = "Prepare the Nukkit"
+        }
+    }
+
     fun Project.registerRunNukkit(debug: NukkitDebug): TaskProvider<JavaExec> {
         return registerRunServer("Nukkit", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
@@ -56,7 +63,7 @@ object NukkitDebugTask {
 
     fun Project.registerPrepareNukkitPlugins(nukkit: NukkitExtension): TaskProvider<Copy> {
         return registerPreparePlugins(
-                "prepareNukkitPlugin",
+                "prepareNukkitPlugin", // TODO: Rename to `prepareNukkitplugins`
                 "plugin.yml",
                 provider { nukkit.depends + nukkit.softDepends }
         ).applyToConfigure {

@@ -71,6 +71,8 @@ object Jackson {
             .registerModules(KotlinModule(), GRADLE_MODULE)
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
     val YAML = ObjectMapper(YAMLFactory())
+            .registerModules(KotlinModule(), GRADLE_MODULE)
+            .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
 }
 
 // It breaks property order, related: com.fasterxml.jackson.databind.introspect.POJOPropertiesCollector#_renameProperties()

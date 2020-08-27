@@ -17,6 +17,7 @@
 package kr.entree.spigradle.module.spigot
 
 import groovy.lang.Closure
+import kr.entree.spigradle.annotations.PluginType
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.SpigotDebug
 import kr.entree.spigradle.data.SpigotRepositories
@@ -25,6 +26,7 @@ import kr.entree.spigradle.internal.groovyExtension
 import kr.entree.spigradle.internal.runConfigurations
 import kr.entree.spigradle.internal.settings
 import kr.entree.spigradle.kotlin.mockBukkit
+import kr.entree.spigradle.module.common.PluginConvention
 import kr.entree.spigradle.module.common.applySpigradlePlugin
 import kr.entree.spigradle.module.common.createRunConfigurations
 import kr.entree.spigradle.module.common.registerDescGenTask
@@ -43,28 +45,22 @@ import org.jetbrains.gradle.ext.JarApplication
  */
 class SpigotPlugin : Plugin<Project> {
     companion object {
-        const val DESC_GEN_TASK_NAME = "generateSpigotDescription"
-        const val MAIN_DETECTION_TASK_NAME = "detectSpigotMain"
-        const val EXTENSION_NAME = "spigot"
-        const val DESC_FILE_NAME = "plugin.yml"
-        const val PLUGIN_SUPER_CLASS = "org/bukkit/plugin/java/JavaPlugin"
-        const val TASK_GROUP = "spigot"
+        val SPIGOT_TYPE = PluginConvention(
+                serverName = "spigot",
+                descFile = "plugin.yml",
+                mainSuperClass = "org/bukkit/plugin/java/JavaPlugin",
+                mainType = PluginType.SPIGOT
+        )
     }
 
-    private val Project.spigot get() = extensions.getByName<SpigotExtension>(EXTENSION_NAME)
+    private val Project.spigot get() = extensions.getByName<SpigotExtension>(SPIGOT_TYPE.descExtension)
 
     override fun apply(project: Project) {
         with(project) {
             applySpigradlePlugin()
             setupDefaultRepositories()
             setupDefaultDependencies()
-            registerDescGenTask<SpigotExtension>(
-                    EXTENSION_NAME,
-                    DESC_GEN_TASK_NAME,
-                    MAIN_DETECTION_TASK_NAME,
-                    DESC_FILE_NAME,
-                    PLUGIN_SUPER_CLASS
-            )
+            registerDescGenTask<SpigotExtension>(SPIGOT_TYPE)
             setupGroovyExtensions()
             setupSpigotDebugTasks()
             createSpigotRunConfiguration(spigot.debug)
@@ -116,13 +112,13 @@ class SpigotPlugin : Plugin<Project> {
                 dependsOn(assemble)
             }
             val acceptsEula = registerAcceptEula(debugOption)
+            val configSpigot = registerSpigotConfiguration(debugOption.serverDirectory)
             val runSpigot = registerRunSpigot(debugOption).applyToConfigure {
-                mustRunAfter(preparePlugin)
-                dependsOn(acceptsEula)
+                mustRunAfter(preparePlugin, prepareSpigot)
+                dependsOn(acceptsEula, configSpigot)
             }
             registerDebugRun("Spigot").applyToConfigure { // debugSpigot
                 dependsOn(preparePlugin, prepareSpigot, runSpigot)
-                runSpigot.get().mustRunAfter(prepareSpigot)
             }
             registerCleanSpigotBuild(debugOption)
             // Paper

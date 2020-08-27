@@ -136,7 +136,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
      * See: [https://www.spigotmc.org/wiki/plugin-yml/]
      */
     override var version: String? = null
-    var description: String? = null
+    override var description: String? = null
     var website: String? = null
     var authors: List<String> = emptyList()
 

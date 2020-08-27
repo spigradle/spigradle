@@ -103,12 +103,12 @@ You can configure all properties of `plugin.yml` in [bungee {} block](#configura
 
 The plugin automatically finds the main class extends [Plugin](https://ci.md-5.net/job/BungeeCord/ws/api/target/apidocs/net/md_5/bungee/api/plugin/Plugin.html), and set the 'main' property to the class found.
 
-You may present the main class using `@kr.entree.spigradle.annotations.PluginMain`:
+You may present the main class using `@BungeePlugin` or `@PluginMain`:
 
 ```java
-import kr.entree.spigradle.annotations.PluginMain;
+import kr.entree.spigradle.annotations.BungeePlugin;
 
-@PluginMain
+@BungeePlugin
 public class SamplePlugin extends Plugin { }
 ```  
 
