@@ -41,9 +41,9 @@ import java.io.File
  */
 fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
 
-val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, "spigot-buildtools")
+val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, SpigradlePlugin.SPIGOT_BUILD_TOOLS_DIR)
 
-val Project.debugDir get() = File(projectDir, "debug")
+val Project.debugDir get() = File(projectDir, SpigradlePlugin.DEBUG_DIR)
 
 // TODO: Remove in Spigradle 3.0
 private val PluginType.internalName get() = if (this == PluginType.GENERAL) "plugin" else name.toLowerCase()
@@ -51,6 +51,11 @@ private val PluginType.internalName get() = if (this == PluginType.GENERAL) "plu
 fun Project.getPluginMainPathFile(type: PluginType) = File(buildDir, "spigradle/${type.internalName}_main")
 
 class SpigradlePlugin : Plugin<Project> {
+    companion object {
+        const val DEBUG_DIR = "debug"
+        const val SPIGOT_BUILD_TOOLS_DIR = "spigot-buildtools"
+    }
+
     override fun apply(project: Project) {
         with(project) {
             setupPlugins()

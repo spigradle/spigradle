@@ -68,6 +68,9 @@ object BungeeDebugTask {
                 provider { bungee.depends + bungee.softDepends }
         ).applyToConfigure {
             group = TASK_GROUP_DEBUG
+            outputs.files(fileTree(bungee.debug.serverDirectory.resolve("plugins")) {
+                include("*.jar")
+            })
             into(provider { File(bungee.debug.serverDirectory, "plugins") })
         }
     }

@@ -39,7 +39,7 @@ internal inline fun <T> notNull(any: T?, message: () -> String = { "" }): T {
 internal fun TaskContainer.findArtifactJar() =
         listOf("shadowJar", "jar").asSequence()
                 .mapNotNull { findByName(it) }
-                .filter { it.didWork }
+                .filter { it.enabled }
                 .filterIsInstance<Jar>()
                 .mapNotNull { it.archiveFile.orNull?.asFile }
                 .firstOrNull()
