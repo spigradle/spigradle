@@ -68,6 +68,9 @@ object NukkitDebugTask {
                 provider { nukkit.depends + nukkit.softDepends }
         ).applyToConfigure {
             group = TASK_GROUP_DEBUG
+            outputs.files(fileTree(nukkit.debug.serverDirectory.resolve("plugins")) {
+                include("*.jar")
+            })
             into(provider { File(nukkit.debug.serverDirectory, "plugins") })
         }
     }

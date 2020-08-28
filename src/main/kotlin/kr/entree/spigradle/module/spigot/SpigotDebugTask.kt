@@ -131,6 +131,9 @@ object SpigotDebugTask {
                 provider { spigot.depends + spigot.softDepends }
         ).applyToConfigure {
             group = TASK_GROUP_DEBUG
+            outputs.files(fileTree(spigot.debug.serverDirectory.resolve("plugins")) {
+                include("*.jar")
+            })
             into(provider { File(spigot.debug.serverDirectory, "plugins") })
         }
     }

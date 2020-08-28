@@ -17,6 +17,7 @@
 package kr.entree.spigradle
 
 import kr.entree.spigradle.annotations.PluginType
+import kr.entree.spigradle.module.common.SpigradlePlugin.Companion.DEBUG_DIR
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
@@ -144,6 +145,23 @@ class GradleFunctionalTest {
     }
 
     @Test
+    fun `test incremental prepare plugins`() {
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            spigot.main = 'MySpigotMain'
+        """.trimIndent())
+        assertDoesNotThrow { createGradleRunner().withArguments("prepareSpigotPlugins").build() }
+        val preparedJar = dir.resolve("$DEBUG_DIR/spigot/plugins/main.jar")
+        assertTrue { preparedJar.isFile }
+        preparedJar.delete()
+        createGradleRunner().withArguments("prepareSpigotPlugins").build()
+        assertTrue { preparedJar.isFile }
+    }
+
+    @Test
     fun `test description default value`() {
         buildFile.writeGroovy("""
             plugins {
@@ -187,7 +205,7 @@ class GradleFunctionalTest {
         """.trimIndent())
         val noFileResult = createGradleRunner().withArguments("configSpigot", "-s").build()
         assertEquals(TaskOutcome.SUCCESS, noFileResult.task(":configSpigot")?.outcome)
-        dir.resolve("debug/spigot/spigot.yml").createDirectories()
+        dir.resolve("$DEBUG_DIR/spigot/spigot.yml").createDirectories()
                 .writeText(javaClass.getResource("/spigot/spigot.yml").readText())
         val result = createGradleRunner().withArguments("configSpigot", "-s").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":configSpigot")?.outcome)
