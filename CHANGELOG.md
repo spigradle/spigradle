@@ -1,3 +1,10 @@
+## [2.2.2](https://github.com/spigradle/spigradle/compare/v2.2.1...v2.2.2) (2020-08-28)
+
+
+### Bug Fixes
+
+* artifact finder and Task#outputs for preparePlugins ([2fbb869](https://github.com/spigradle/spigradle/commit/2fbb869ea74ea08774d319edb7033f5eff80dc27))
+
 ## [2.2.1](https://github.com/spigradle/spigradle/compare/v2.2.0...v2.2.1) (2020-08-27)
 
 
