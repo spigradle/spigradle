@@ -24,6 +24,8 @@ import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import java.util.jar.JarEntry
+import java.util.jar.JarOutputStream
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -34,11 +36,11 @@ import kotlin.test.assertTrue
  */
 internal fun File.createDirectories(): File = apply {
     parentFile.mkdirs()
-    createNewFile()
 }
 
 internal fun File.writeGroovy(@Language("Groovy") contents: String): File = apply { writeText(contents) }
 
+@ExperimentalStdlibApi
 class GradleFunctionalTest {
     @TempDir
     lateinit var dir: File
@@ -142,6 +144,54 @@ class GradleFunctionalTest {
         """.trimIndent())
         val result = createGradleRunner().withArguments("prepareSpigotPlugins").build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":sub:prepareSpigotPlugins")?.outcome)
+    }
+
+    @Test
+    fun `prepare bigger plugin`() {
+        val libsDir = dir.resolve("libs").createDirectories()
+        val runtimeJar = dir.resolve("runtime-dep.jar")
+        val prepareDir = dir.resolve("prepare")
+        fun writeJar(path: File, entries: List<Pair<String, String>>) {
+            path.createDirectories()
+            JarOutputStream(path.outputStream()).use { out ->
+                entries.forEach { (name, content) ->
+                    val entry = JarEntry(name)
+                    out.putNextEntry(entry)
+                    out.write(content.encodeToByteArray())
+                    out.closeEntry()
+                }
+            }
+        }
+        buildFile.writeGroovy("""
+            plugins {
+                id 'java'
+                id 'kr.entree.spigradle'
+            }
+            spigot {
+                main 'Main'
+                depends 'MyDependency', 'MyRuntimeDependency'
+            }
+            dependencies {
+                compileOnly fileTree(include: '*.jar', dir: 'libs')
+                runtimeOnly files('runtime-dep.jar')
+            }
+            prepareSpigotPlugins {
+                into('${prepareDir.absolutePath.replace("\\", "/")}')
+            }
+        """.trimIndent())
+        listOf(
+                "a.jar" to listOf("plugin.yml" to "name: MyDependency", "dummy" to "dummy"),
+                "z.jar" to listOf("plugin.yml" to "name: MyDependency")
+        ).forEach { (name, contents) ->
+            writeJar(libsDir.resolve(name), contents)
+        }
+        writeJar(runtimeJar, listOf("plugin.yml" to "name: MyRuntimeDependency"))
+        val result = createGradleRunner().withArguments("prepareSpigotPlugins").build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":prepareSpigotPlugins")?.outcome)
+        listOf("a.jar", "runtime-dep.jar").forEach {
+            val file = prepareDir.resolve(it)
+            assertTrue(file.absolutePath) { file.isFile }
+        }
     }
 
     @Test

@@ -89,7 +89,8 @@ internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
                         task = tasks.getByName("prepare$name")
                     }
                     register("preparePlugins", GradleTask::class) {
-                        task = tasks.findByName("prepare${name}Plugins") ?: tasks.getByName("prepare${name}Plugin") // TODO: Remove
+                        task = tasks.findByName("prepare${name}Plugins")
+                                ?: tasks.getByName("prepare${name}Plugin") // TODO: Remove in 3.0
                     }
                 }
             }
@@ -129,14 +130,18 @@ object DebugTask {
                     it.tasks.findArtifactJar()
                 } + rootProject.allprojects.flatMap {
                     it.convention.findPlugin(JavaPluginConvention::class)?.run {
-                        sourceSets["main"].compileClasspath
+                        sourceSets["main"].run { runtimeClasspath + compileClasspath }
                     } ?: emptyList()
                 }).asSequence().mapNotNull { depFile ->
                     val desc = readYamlDescription(depFile, descFileName)
                     if (desc != null && desc["name"] != null)
                         PluginData(desc, depFile)
                     else null
-                }.associateBy { (desc, _) -> desc["name"].toString() }
+                }.groupingBy { (desc, _) ->
+                    desc["name"].toString()
+                }.reduce { _, acc, element ->
+                    if (element.file.length() > acc.file.length()) element else acc
+                }
                 val needPlugins = dependPlugins.get().fold(PluginDependency()) { acc, depName ->
                     val deepDep = findDependencies(depName, pluginDataMap)
                     PluginDependency(
@@ -146,7 +151,7 @@ object DebugTask {
                 }
                 val unresolved = needPlugins.requires.filter { pluginDataMap[it]?.file?.isFile != true }
                 if (unresolved.isNotEmpty()) {
-                    logger.error("Unable to resolve the dependencies: [${unresolved.joinToString()}]")
+                    logger.error("Unable to resolve the plugin dependencies: [${unresolved.joinToString()}]")
                 }
                 needPlugins.all.mapNotNull {
                     pluginDataMap[it]?.file
