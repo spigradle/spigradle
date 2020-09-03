@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/spigradle/spigradle/compare/v2.2.2...v2.2.3) (2020-09-03)
+
+
+### Bug Fixes
+
+* **debug-run:** also find in runtimeClasspath and bigger one for prepare plugins ([975d289](https://github.com/spigradle/spigradle/commit/975d289eae8d66f146ba5b1fb2c2b436d132bdee))
+
 ## [2.2.2](https://github.com/spigradle/spigradle/compare/v2.2.1...v2.2.2) (2020-08-28)
 
 
