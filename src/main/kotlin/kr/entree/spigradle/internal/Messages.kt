@@ -26,4 +26,5 @@ internal object Messages {
         or set the 'main' property in $extensionName {} block on build.gradle,
         or just disable $taskName task: 'tasks.$taskName.enabled = false'
     """.trimIndent()
+    const val UNRESOLVED_DEPENDENCIES: String = "Unable to resolve the plugin dependencies"
 }
