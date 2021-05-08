@@ -49,7 +49,7 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
-    implementation("org.ow2.asm:asm:8.0.1")
+    implementation("org.ow2.asm:asm:9.1")
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.8.1")
     implementation("kr.entree:spigradle-annotations:2.1.0")
     kapt("com.google.auto.service:auto-service:1.0-rc7")
