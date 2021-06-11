@@ -89,7 +89,7 @@ open class SubclassDetection : DefaultTask() {
 
     @TaskAction
     fun inspect(inputChanges: InputChanges) {
-        val superClassesR = AtomicReference<Set<String>>(emptySet())
+        val superClassesR = AtomicReference(setOf(superClassName.get()))
         val detectedClassR = AtomicReference<String?>(null)
         val options = ClassReader.SKIP_CODE and ClassReader.SKIP_DEBUG and ClassReader.SKIP_FRAMES
         inputChanges.getFileChanges(classDirectories).asSequence().takeWhile {
