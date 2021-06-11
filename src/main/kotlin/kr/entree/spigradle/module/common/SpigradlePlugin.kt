@@ -129,7 +129,9 @@ class SpigradlePlugin : Plugin<Project> {
     private fun Project.setupAnnotationProcessorOptions() {
         val compileJava: JavaCompile by tasks
         PluginType.values().forEach { type ->
-            compileJava.options.compilerArgs.add("-A${type.pathKey}=${getPluginMainPathFile(type)}")
+            compileJava.options.compilerArgs.addAll(listOf(
+                    "-A${type.pathKey}=${getPluginMainPathFile(type)}"
+            ))
         }
     }
 
