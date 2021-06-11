@@ -101,10 +101,14 @@ open class SubclassDetection : DefaultTask() {
                 ClassReader(it).accept(SubclassDetector(superClassesR, detectedClassR), options)
             }
         }
-        val detectedClass = detectedClassR.get() ?: return
-        outputFile.get().apply {
-            parentFile.mkdirs()
-        }.writeText(detectedClass.replace('/', '.'))
+        val detectedClass = detectedClassR.get()
+        // Add `-i` option to see this log!
+        logger.info("detected: ${detectedClass?.plus(".java")}")
+        if (detectedClass != null) {
+            outputFile.get().apply {
+                parentFile.mkdirs()
+            }.writeText(detectedClass.replace('/', '.'))
+        }
     }
 
     companion object {
@@ -121,6 +125,9 @@ open class SubclassDetection : DefaultTask() {
                  */
                 classDirectories.from(sourceSets["main"].output.classesDirs.files)
                 outputFile.convention(pathFile) // defaults to pathFile
+                onlyIf {
+                    !pathFile.isFile
+                }
             }
         }
     }
