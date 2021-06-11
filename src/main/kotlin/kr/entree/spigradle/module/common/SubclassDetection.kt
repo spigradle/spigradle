@@ -23,10 +23,8 @@ import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
-import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.property
-import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.withConvention
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.kotlin.dsl.*
 import org.gradle.work.InputChanges
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
@@ -112,11 +110,15 @@ open class SubclassDetection : DefaultTask() {
             val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
             return project.tasks.register(taskName, SubclassDetection::class) {
                 val pathFile = project.getPluginMainPathFile(type)
-                classDirectories.from(sourceSets["main"].output.classesDirs)
-                outputFile.convention(pathFile)
-                onlyIf {
-                    !pathFile.isFile
-                }
+                val compileJava = project.tasks.named<JavaCompile>("compileJava")
+                dependsOn(compileJava)
+                /*
+                NOTE:
+                If put a FileCollection into the `from` makes this task ordered after `classes`.
+                Therefore put List<File> instead.
+                 */
+                classDirectories.from(sourceSets["main"].output.classesDirs.files)
+                outputFile.convention(pathFile) // defaults to pathFile
             }
         }
     }
