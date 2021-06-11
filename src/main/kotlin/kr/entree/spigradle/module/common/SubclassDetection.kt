@@ -139,7 +139,7 @@ internal fun findSubclass(
     access: Int, name: String, superName: String?
 ): Pair<String?, Set<String>> {
     return if (superName in supers) {
-        val sub = if (access.isPublic) name else null
+        val sub = if (access.isPublic && !access.isAbstract) name else null
         val newSupers = if (access.isAbstract) supers + name else supers
         (sub to newSupers)
     } else (null to supers)

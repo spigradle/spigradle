@@ -36,11 +36,11 @@ class MainDetectionTest {
     }
 
     @Test
-    fun `when received a wanted but not a public`() {
+    fun `when received a wanted but a abstract`() {
         val middleClass = "MiddleClass"
         assertEquals(
             null to (supersInit + middleClass),
-            findSubclass(supersInit, ACC_ABSTRACT, middleClass, superName)
+            findSubclass(supersInit, ACC_PUBLIC or ACC_ABSTRACT, middleClass, superName)
         )
     }
 
