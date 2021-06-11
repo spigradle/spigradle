@@ -1,3 +1,20 @@
+## [2.2.4](https://github.com/spigradle/spigradle/compare/v2.2.3...v2.2.4) (2021-06-11)
+
+
+### Bug Fixes
+
+* make main detection function to pure ([8c68318](https://github.com/spigradle/spigradle/commit/8c683183d467ba963873f2fe8b0b4c879b93cb2a))
+* **bungee:** update bungee version `1.16-R0.4` to stable `1.15-SNAPSHOT` ([9318ab6](https://github.com/spigradle/spigradle/commit/9318ab6fc1ce762fe9e0790fb37f470e54a4b84f))
+* **spigot:** bump up the default buildVersion to `1.16.5` ([56ee790](https://github.com/spigradle/spigradle/commit/56ee790ce6632229548b0bbd95243a0978c9250e))
+* bump up asm to 9.1 for support JDK 16 ([77d4b41](https://github.com/spigradle/spigradle/commit/77d4b41375652b252869a9cfbfdcd55423589805))
+* fix super classes init ([6946599](https://github.com/spigradle/spigradle/commit/6946599beb5c5efae314b058d1e392ee441f8edf))
+* make yaml outputs to `build/resources` ([4f7b4c2](https://github.com/spigradle/spigradle/commit/4f7b4c262e6640e845ac4a1e6d5868ed953d6d60))
+* new task ordering for Gradle 7.0 ([e17eea9](https://github.com/spigradle/spigradle/commit/e17eea9e1d51f0127b46368228f0ec92f79e8a1d))
+* pass APT args to kapt for Kotlin ([2a9e1dc](https://github.com/spigradle/spigradle/commit/2a9e1dc25dc19e7aaf6b66994af3c8850019a402))
+* resolve circular depended tasks ([e898cf0](https://github.com/spigradle/spigradle/commit/e898cf087e9816dad43077c6309e0c7e0d3394a9))
+* skip detect task if the output file is exist ([99d6591](https://github.com/spigradle/spigradle/commit/99d659135cd837bd1a1b3d6e4563bde33e674a26))
+* wrong main detection when a public abstract ([f2129d7](https://github.com/spigradle/spigradle/commit/f2129d727d9c8d1fff3560ec8740f783476e05f7))
+
 ## [2.2.3](https://github.com/spigradle/spigradle/compare/v2.2.2...v2.2.3) (2020-09-03)
 
 
