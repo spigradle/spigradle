@@ -43,6 +43,8 @@ spigot {
     }
 }
 
+detectSpigotMain.enabled = false
+
 build.doLast {
     def pluginFile = new File(sourceSets.main.output.resourcesDir, 'plugin.yml')
     if (pluginFile.isFile()) {
