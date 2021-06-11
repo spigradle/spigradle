@@ -213,6 +213,7 @@ internal fun Project.findResourceDirs(fileName: String): List<File> {
 internal fun Project.registerYamlGenTask(taskName: String, fileName: String): TaskProvider<YamlGenerate> {
     return project.tasks.register(taskName, YamlGenerate::class) {
         outputFiles.from(temporaryDir.resolve(fileName))
+        outputFiles.from(findResourceDirs(fileName))
     }
 }
 
