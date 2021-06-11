@@ -1,8 +1,8 @@
 import kr.entree.spigradle.kotlin.nukkit
 
 plugins {
-    id("kr.entree.spigradle.nukkit")
     kotlin("jvm") version "1.3.72"
+    id("kr.entree.spigradle.nukkit")
 }
 
 repositories {
@@ -11,6 +11,10 @@ repositories {
 
 dependencies {
     compileOnly(nukkit())
+}
+
+tasks {
+    detectNukkitMain.get().enabled = false
 }
 
 nukkit {

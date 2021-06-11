@@ -75,10 +75,22 @@ class SpigradlePlugin : Plugin<Project> {
         pluginManager.apply(IdeaExtPlugin::class)
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
             plugins.apply("org.jetbrains.kotlin.kapt")
+            // Give annotation processor arguments for Kotlin
+            val kapt = extensions.getByName("kapt")
+            val kaptArgs = PluginType.values()
+                .map { type -> type.pathKey to getPluginMainPathFile(type) }
+            kapt.withGroovyBuilder {
+                "arguments" {
+                    kaptArgs.forEach { (k, v) ->
+                        "arg"(k, v)
+                    }
+                }
+            }
             afterEvaluate {
+                // Task ordering
                 val kaptKotlin: Task by tasks
                 tasks.withType(YamlGenerate::class) {
-                    kaptKotlin.finalizedBy(this) // For proper task ordering
+                    kaptKotlin.finalizedBy(this)
                 }
             }
         }
@@ -128,9 +140,10 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupAnnotationProcessorOptions() {
         val compileJava: JavaCompile by tasks
-        PluginType.values().forEach { type ->
-            compileJava.options.compilerArgs.add("-A${type.pathKey}=${getPluginMainPathFile(type)}")
+        val aptArgs = PluginType.values().map { type ->
+            "-A${type.pathKey}=${getPluginMainPathFile(type)}"
         }
+        compileJava.options.compilerArgs.addAll(aptArgs)
     }
 
     private fun Project.markExcludeDirectories() {

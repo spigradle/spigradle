@@ -179,9 +179,26 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
     project.afterEvaluate {
         description.setDefault(this)
     }
-    // classes -> detectionTask -> generateTask
+    /*
+    NOTE: Task ordering part
+    https://docs.gradle.org/current/userguide/java_plugin.html
+
+    compileJava       dependsOn: all tasks which contribute to the compilation classpath
+    processResources
+    *classes          dependsOn: compileJava, processResources
+    jar               dependsOn: classes
+    *assemble         dependsOn: jar
+    *build            dependsOn: assemble
+
+    detectionTask     dependsOn: classes
+    generateTask      dependsOn: detectionTask
+    *assemble         dependsOn: +generateTask
+
+    Our generate task is part of compilation, thus depends by `classes` which describes compilation.
+    Expected ordering: compileJava, ... -> detectionTask -> generateTask -> classes
+     */
     generationTask.configure { dependsOn(detectionTask) }
-    classes.finalizedBy(generationTask)
+    classes.dependsOn(generationTask)
 }
 
 internal fun Project.findResourceDirs(fileName: String): List<File> {
@@ -195,8 +212,8 @@ internal fun Project.findResourceDirs(fileName: String): List<File> {
 
 internal fun Project.registerYamlGenTask(taskName: String, fileName: String): TaskProvider<YamlGenerate> {
     return project.tasks.register(taskName, YamlGenerate::class) {
-        outputFiles.from(findResourceDirs(fileName))
         outputFiles.from(temporaryDir.resolve(fileName))
+        outputFiles.from(findResourceDirs(fileName))
     }
 }
 
