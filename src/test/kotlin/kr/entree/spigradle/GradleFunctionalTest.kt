@@ -422,21 +422,22 @@ class GradleFunctionalTest {
             """
             import kr.entree.spigradle.kotlin.spigot
             plugins {
+                kotlin("jvm") version "1.3.72"
                 id("kr.entree.spigradle")
             }
             dependencies {
-                compileOnly(spigot("1.15.2"))                                                            
+                compileOnly(spigot("1.15.2"))
             }
         """.trimIndent()
         )
         kotlinFile.writeText(
             """
             import org.bukkit.plugin.java.JavaPlugin
-            class Main extends JavaPlugin()
+            class Main : JavaPlugin()
         """.trimIndent()
         )
         assertDoesNotThrow {
-            val result = createGradleRunner().withArguments("assemble", "-i").build()
+            val result = createGradleRunner().withArguments("assemble", "-s").build()
             assertEquals(TaskOutcome.SUCCESS, result.task(":assemble")?.outcome)
         }
     }
