@@ -1,8 +1,8 @@
 import kr.entree.spigradle.kotlin.bungeecord
 
 plugins {
-    id("kr.entree.spigradle.bungee")
     kotlin("jvm") version "1.3.72"
+    id("kr.entree.spigradle.bungee")
 }
 
 repositories {
@@ -11,6 +11,10 @@ repositories {
 
 dependencies {
     compileOnly(bungeecord())
+}
+
+tasks {
+    detectBungeeMain.get().enabled = false
 }
 
 bungee {

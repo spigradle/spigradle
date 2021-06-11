@@ -13,11 +13,8 @@ dependencies {
     compileOnly(spigot())
 }
 
-spigot {
-    main = "ABC"
-}
-
 tasks {
+    detectSpigotMain.get().enabled = false
     build.get().doLast {
         val pluginFile = File(sourceSets["main"].output.resourcesDir, "plugin.yml")
         if (pluginFile.isFile) {
