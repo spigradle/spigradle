@@ -30,6 +30,7 @@ import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
 import java.io.File
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Finds the main class that extends the given super-class.
@@ -88,18 +89,19 @@ open class SubclassDetection : DefaultTask() {
 
     @TaskAction
     fun inspect(inputChanges: InputChanges) {
-        val context = SubclassDetectionContext().apply { superClasses += superClassName.get() }
+        val superClassesR = AtomicReference<Set<String>>(emptySet())
+        val detectedClassR = AtomicReference<String?>(null)
         val options = ClassReader.SKIP_CODE and ClassReader.SKIP_DEBUG and ClassReader.SKIP_FRAMES
         inputChanges.getFileChanges(classDirectories).asSequence().takeWhile {
-            context.detectedMainClass == null
+            detectedClassR.get() == null
         }.map { it.file }.filter {
             it.extension == "class" && it.isFile
         }.forEach { classFile ->
             classFile.inputStream().buffered().use {
-                ClassReader(it).accept(SubclassDetector(context), options)
+                ClassReader(it).accept(SubclassDetector(superClassesR, detectedClassR), options)
             }
         }
-        val detectedClass = context.detectedMainClass ?: return
+        val detectedClass = detectedClassR.get() ?: return
         outputFile.get().apply {
             parentFile.mkdirs()
         }.writeText(detectedClass.replace('/', '.'))
@@ -124,22 +126,35 @@ open class SubclassDetection : DefaultTask() {
     }
 }
 
-class SubclassDetectionContext {
-    val superClasses = mutableSetOf<String>()
-    var detectedMainClass: String? = null
+// TODO: Optimize scheduled in 2.3.0!
+internal fun findSubclass(
+    supers: Set<String>,
+    access: Int, name: String, superName: String?
+): Pair<String?, Set<String>> {
+    return if (superName in supers) {
+        val sub = if (access.isPublic) name else null
+        val newSupers = if (access.isAbstract) supers + name else supers
+        (sub to newSupers)
+    } else (null to supers)
 }
 
-class SubclassDetector(private val context: SubclassDetectionContext) : ClassVisitor(Opcodes.ASM8) {
-    override fun visit(version: Int, access: Int, name: String, signature: String?, superName: String?, interfaces: Array<out String>?) {
-        if (superName != null && superName in context.superClasses) {
-            if (access.isAbstract) {
-                context.superClasses += name
-            } else if (access.isPublic) {
-                context.detectedMainClass = name
-            }
-        }
-    }
+internal val Int.isPublic get() = (this and Opcodes.ACC_PUBLIC) != 0
+internal val Int.isAbstract get() = (this and Opcodes.ACC_ABSTRACT) != 0
 
-    private val Int.isPublic get() = (this and Opcodes.ACC_PUBLIC) != 0
-    private val Int.isAbstract get() = (this and Opcodes.ACC_ABSTRACT) != 0
+class SubclassDetector(
+    private val supersR: AtomicReference<Set<String>>,
+    private val detectedR: AtomicReference<String?>
+) : ClassVisitor(Opcodes.ASM8) {
+    override fun visit(
+        version: Int,
+        access: Int,
+        name: String,
+        signature: String?,
+        superName: String?,
+        interfaces: Array<out String>?
+    ) {
+        val (sub, supers) = findSubclass(supersR.get(), access, name, superName)
+        supersR.set(supers)
+        detectedR.updateAndGet { it ?: sub }
+    }
 }
