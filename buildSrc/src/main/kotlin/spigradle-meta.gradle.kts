@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm")
 }
 
-val generatedSourceDir = File("$buildDir/generated/source/spigradle/kotlin/main")
+val generatedSourceDir = File("$buildDir/generated/source/spigradle-build/kotlin/main")
 
 sourceSets["main"].withConvention(KotlinSourceSet::class) {
     kotlin.srcDir(generatedSourceDir)

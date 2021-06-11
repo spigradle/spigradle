@@ -10,6 +10,8 @@ dependencies {
     compileOnly nukkit()
 }
 
+detectNukkitMain.enabled = false
+
 nukkit {
     authors = ['EntryPoint']
 }
