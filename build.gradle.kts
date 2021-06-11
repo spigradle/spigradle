@@ -51,7 +51,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
     implementation("org.ow2.asm:asm:9.1")
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.8.1")
-    implementation("kr.entree:spigradle-annotations:2.1.0")
+    implementation("kr.entree:spigradle-annotations:2.1.1")
     kapt("com.google.auto.service:auto-service:1.0-rc7")
     compileOnly("org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
