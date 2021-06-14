@@ -46,10 +46,10 @@ import org.jetbrains.gradle.ext.JarApplication
 class SpigotPlugin : Plugin<Project> {
     companion object {
         val SPIGOT_TYPE = PluginConvention(
-                serverName = "spigot",
-                descFile = "plugin.yml",
-                mainSuperClass = "org/bukkit/plugin/java/JavaPlugin",
-                mainType = PluginType.SPIGOT
+            serverName = "spigot",
+            descFile = "plugin.yml",
+            mainSuperClass = "org/bukkit/plugin/java/JavaPlugin",
+            mainType = PluginType.SPIGOT
         )
     }
 
@@ -80,7 +80,7 @@ class SpigotPlugin : Plugin<Project> {
         val ext = dependencies.groovyExtension
         ext.set("mockBukkit", object : Closure<Any>(this, this) {
             fun doCall(vararg arguments: String) =
-                    dependencies.mockBukkit(arguments.getOrNull(0), arguments.getOrNull(1))
+                dependencies.mockBukkit(arguments.getOrNull(0), arguments.getOrNull(1))
         }) // Can be replaced by reflection to SpigotExtensionsKt
     }
 

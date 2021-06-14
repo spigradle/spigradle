@@ -12,6 +12,9 @@ softdepend:
  - ProtocolLib
 loadbefore:
  - ABC
+libraries:
+ - "com.squareup.okhttp3:okhttp:4.9.0"
+ - "a:b:1.0.0"
 commands:
   give:
     description: Give command.
