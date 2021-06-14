@@ -28,8 +28,8 @@ object Dependencies {
     val SPIGRADLE_ANNOTATIONS = Dependency(SPIGRADLE, name = "spigradle-annotations", version = "2.1.1")
     val ALL: List<Pair<String, Dependency>>
         get() = listOf(
-                Dependencies, SpigotDependencies,
-                BungeeDependencies, NukkitDependencies
+            Dependencies, SpigotDependencies,
+            BungeeDependencies, NukkitDependencies
         ).flatMap { it.toFieldEntries() }
 }
 
@@ -38,17 +38,17 @@ object Repositories {
     val JITPACK = "https://jitpack.io"
     val ALL: List<Pair<String, String>>
         get() = listOf(
-                Repositories, SpigotRepositories,
-                BungeeRepositories, NukkitRepositories
+            Repositories, SpigotRepositories,
+            BungeeRepositories, NukkitRepositories
         ).flatMap { it.toFieldEntries() }
 }
 
 data class Dependency(
-        val group: String,
-        val name: String,
-        val version: String,
-        var isLocal: Boolean = false,
-        val versionModifier: (String) -> String = { it }
+    val group: String,
+    val name: String,
+    val version: String,
+    var isLocal: Boolean = false,
+    val versionModifier: (String) -> String = { it }
 ) {
     fun adjustVersion(inputVersion: String?) = inputVersion?.run(versionModifier) ?: version
 
@@ -58,13 +58,13 @@ data class Dependency(
 }
 
 inline fun Dependency(
-        dependency: Dependency,
-        group: String = dependency.group,
-        name: String = dependency.name,
-        version: String = dependency.version,
-        noinline versionModifier: (String) -> String = dependency.versionModifier,
-        isLocal: Boolean = dependency.isLocal,
-        configure: Dependency.() -> Unit = {}
+    dependency: Dependency,
+    group: String = dependency.group,
+    name: String = dependency.name,
+    version: String = dependency.version,
+    noinline versionModifier: (String) -> String = dependency.versionModifier,
+    isLocal: Boolean = dependency.isLocal,
+    configure: Dependency.() -> Unit = {}
 ) = Dependency(group, name, version, isLocal, versionModifier).apply(configure)
 
 object VersionModifier {

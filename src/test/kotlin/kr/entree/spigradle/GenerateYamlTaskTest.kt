@@ -63,6 +63,10 @@ class GenerateYamlTaskTest {
             prefix = "Its prefix"
             softDepends = listOf("ProtocolLib")
             loadBefore = listOf("ABC")
+            libraries = listOf(
+                "com.squareup.okhttp3:okhttp:4.9.0",
+                "a:b:1.0.0"
+            )
             commands.apply {
                 create("give").apply {
                     description = "Give command."
@@ -89,7 +93,8 @@ class GenerateYamlTaskTest {
             serialize(extension)
             generate()
         }
-        val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
+        val expected =
+            javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
         assertEquals(expected, file.readText())
     }
 }
