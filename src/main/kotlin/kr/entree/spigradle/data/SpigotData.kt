@@ -115,7 +115,7 @@ object SpigotDependencies {
     val SPIGOT = Dependency(
             "org.spigotmc",
             "spigot-api",
-            "1.16.1-R0.1-SNAPSHOT",
+            "1.16.5-R0.1-SNAPSHOT",
             false,
             VersionModifier.SPIGOT_ADJUSTER
     )
@@ -123,7 +123,7 @@ object SpigotDependencies {
     val MINECRAFT_SERVER = Dependency(
             SPIGOT.group,
             "minecraft-server",
-            "1.16.1-SNAPSHOT",
+            "1.16.5-SNAPSHOT",
             true,
             VersionModifier.SNAPSHOT_APPENDER
     )
