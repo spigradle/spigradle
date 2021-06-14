@@ -45,7 +45,7 @@ open class SpigotDebug(
             serverJar, buildToolJar,
             serverJar.parentFile, buildToolJar.parentFile,
             File(buildToolJar.parentFile, "outputs"),
-            5005, false, "1.16.5"
+            5005, false, ""
     )
 
     /**
