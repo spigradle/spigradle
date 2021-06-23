@@ -105,9 +105,10 @@ import java.io.File
  * See: [https://www.spigotmc.org/wiki/plugin-yml/]
  */
 @JsonPropertyOrder(
-        "main", "name", "version", "description", "website",
-        "authors", "api-version", "load", "prefix", "depend",
-        "softdepend", "loadbefore", "commands", "permissions"
+    "main", "name", "version", "description", "website",
+    "authors", "api-version", "load", "prefix", "depend",
+    "softdepend", "loadbefore", "libraries", "commands",
+    "permissions"
 )
 open class SpigotExtension(project: Project) : StandardDescription {
     /**
@@ -178,6 +179,16 @@ open class SpigotExtension(project: Project) : StandardDescription {
     var loadBefore: List<String> = emptyList()
 
     /**
+     * Runtime libraries of your plugin that will be loaded without shading(fat-jar) by Spigot 1.17 or higher.
+     *
+     * Example: `com.squareup.okhttp3:okhttp:4.9.0`
+     *
+     * See also: [Spigot & BungeeCord 1.17](https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317)
+     */
+    // TODO: determine and filter?
+    var libraries: List<String> = emptyList()
+
+    /**
      * DSL container for the [commands] configuration.
      *
      * Groovy Example:
@@ -245,8 +256,8 @@ open class SpigotExtension(project: Project) : StandardDescription {
      */
     @Transient
     val debug: SpigotDebug = project.objects.newInstance(
-            File(project.debugDir, "spigot/server.jar"),
-            File(project.gradle.spigotBuildToolDir, "BuildTools.jar")
+        File(project.debugDir, "spigot/server.jar"),
+        File(project.gradle.spigotBuildToolDir, "BuildTools.jar")
     )
 
     /**

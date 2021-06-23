@@ -121,9 +121,9 @@ open class YamlGenerate : DefaultTask() {
     @TaskAction
     fun generate() {
         val yaml = YAMLFactory().disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
-                .enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)
-                .enable(YAMLGenerator.Feature.INDENT_ARRAYS)
-                .applyUserOptions()
+            .enable(YAMLGenerator.Feature.MINIMIZE_QUOTES)
+            .enable(YAMLGenerator.Feature.INDENT_ARRAYS)
+            .applyUserOptions()
         val mapper = ObjectMapper(yaml)
         val encoding = Charset.forName(encoding.get())
         val contents = properties.orNull?.run { mapper.writeValueAsString(this) } ?: ""
@@ -148,7 +148,10 @@ open class YamlGenerate : DefaultTask() {
     }
 }
 
-internal inline fun <reified T : StandardDescription> Project.registerDescGenTask(type: PluginConvention) {
+// TODO: Too complex! Should whole refactor in 3.0
+internal inline fun <reified T : StandardDescription> Project.registerDescGenTask(
+    type: PluginConvention, crossinline mapDesc: (T) -> T = { it }
+) {
     val detectResultFile = getPluginMainPathFile(type.mainType)
     val generalResultFile = getPluginMainPathFile(PluginType.GENERAL)
     val description = extensions.create<T>(type.descExtension, this)
@@ -161,13 +164,13 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
         inputs.files(detectResultFile, generalResultFile)
         group = type.taskGroup
         serialize(provider {
-            description.apply {
+            mapDesc(description.apply {
                 main = main ?: runCatching {
                     detectResultFile.readText()
                 }.getOrNull() ?: runCatching {
                     generalResultFile.readText()
                 }.getOrNull()
-            }
+            })
         })
         doFirst {
             notNull(description.main) {
@@ -218,4 +221,4 @@ internal fun Project.registerYamlGenTask(taskName: String, fileName: String): Ta
 }
 
 internal fun Project.registerYamlGenTask(type: PluginConvention): TaskProvider<YamlGenerate> =
-        registerYamlGenTask(type.descGenTask, type.descFile)
+    registerYamlGenTask(type.descGenTask, type.descFile)
