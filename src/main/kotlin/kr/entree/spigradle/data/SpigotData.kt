@@ -127,7 +127,9 @@ object SpigotDependencies {
             true,
             VersionModifier.SNAPSHOT_APPENDER
     )
-    val PAPER = Dependency(SPIGOT, "com.destroystokyo.paper", "paper-api")
+    //val PAPER = Dependency(SPIGOT, "com.destroystokyo.paper", "paper-api")
+    val PAPER_OLD = Dependency(SPIGOT, "com.destroystokyo.paper", "paper-api")
+    val PAPER = Dependency(SPIGOT, "io.papermc.paper", "paper-api")
     val BUKKIT = Dependency(SPIGOT, group = "org.bukkit", name = "bukkit", isLocal = true)
 
     @SerialName("craftbukkit")
