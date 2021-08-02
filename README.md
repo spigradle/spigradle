@@ -338,7 +338,8 @@ repositories {
 | spigotAll()       | org.spigotmc:spigot:$version                     | 1.16.1-R0.1-SNAPSHOT     |
 | bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.16-R0.4-SNAPSHOT       |
 | minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.16.1-SNAPSHOT          |
-| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     |
+| paper()           | io.papermc.paper:paper-api:$version              | 1.16.1-R0.1-SNAPSHOT     |
+| paperAll()        | io.papermc.paper:paper:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     |
 | craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
