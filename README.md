@@ -300,7 +300,7 @@ gradlew wrapper --gradle-version 6.9 --distribution-type all
 |  Name         |  URL                                                           | Relations                               | Aliases       |
 |---------------|----------------------------------------------------------------|-----------------------------------------|---------------|
 | spigotmc()    | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         | spigot()      |
-| sonaytype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
+| sonatype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
 | papermc()     | https://papermc.io/repo/repository/maven-public/               |                                         | paper()       |
 | jitpack()     | https://jitpack.io                                             | Vault                                   | vault()       |
 | protocolLib() | https://repo.dmulloy2.net/nexus/repository/public/             |                                         |               |
