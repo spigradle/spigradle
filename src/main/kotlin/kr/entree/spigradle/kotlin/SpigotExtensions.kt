@@ -116,6 +116,13 @@ fun DependencyHandler.minecraftServer(version: String? = null) = SpigotDependenc
 fun DependencyHandler.paper(version: String? = null) = SpigotDependencies.PAPER.format(version)
 
 /**
+ * The dependency shortcut for Paper, requires repository mavenLocal() published by paperclip install.
+ *
+ * @param version Defaults to [SpigotDependencies.PAPER_ALL].version
+ */
+fun DependencyHandler.paperAll(version: String? = null) = SpigotDependencies.PAPER_ALL.format(version)
+
+/**
  * The dependency shortcut for Bukkit, requires repository mavenLocal() published by BuildTools.
  *
  * @param version Defaults to [SpigotDependencies.BUKKIT].version
