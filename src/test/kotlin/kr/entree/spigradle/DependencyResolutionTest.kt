@@ -48,6 +48,7 @@ class DependencyResolutionTest {
         }
         // https://docs.gradle.org/current/userguide/dependency_resolution.html#sec:programmatic_api
         val compileOnlyConfig = testProject.configurations["compileOnly"]
+        compileOnlyConfig.isCanBeResolved = true
         compileOnlyConfig.incoming.resolutionResult.allDependencies.forEach {
             val name = it.toString()
             assertTrue("Couldn't resolved dependency: $name") {
