@@ -69,7 +69,7 @@ plugins {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:2.2.4'
@@ -87,7 +87,7 @@ apply plugin: 'kr.entree.spigradle.bungee'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:2.2.4")
