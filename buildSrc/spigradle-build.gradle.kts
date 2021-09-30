@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin", version = "1.4.20"))
+    implementation(kotlin("gradle-plugin", version = "1.5.21"))
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:0.10.0")
     implementation("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5")
     implementation("org.jfrog.buildinfo:build-info-extractor-gradle:4.15.2")
