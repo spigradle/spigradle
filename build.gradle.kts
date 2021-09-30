@@ -35,7 +35,7 @@ gradlePlugin {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     gradlePluginPortal()
     maven { setUrl("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
     maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
@@ -49,11 +49,12 @@ dependencies {
     implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
-    implementation("org.ow2.asm:asm:9.1")
+    implementation("org.ow2.asm:asm:9.2")
     implementation("gradle.plugin.org.jetbrains.gradle.plugin.idea-ext:gradle-idea-ext:0.8.1")
     implementation("kr.entree:spigradle-annotations:2.1.1")
     kapt("com.google.auto.service:auto-service:1.0-rc7")
     compileOnly("org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT")
+    compileOnly(gradleKotlinDsl())
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation(kotlin("test"))
