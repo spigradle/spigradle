@@ -47,7 +47,8 @@ object SpigotDebugTask {
     val DEFAULT_SPIGOT_BUILD_VERSION = "1.16.5"
     val spigotGroups = mapOf(
         "org.spigotmc" to setOf("spigot-api", "spigot"),
-        "com.destroystokyo.paper" to setOf("paper-api")
+        "com.destroystokyo.paper" to setOf("paper-api"),
+        "io.papermc.paper" to setOf("paper-api")
     )
     val listComparator =
         Comparator<List<Int>> { a, b ->
