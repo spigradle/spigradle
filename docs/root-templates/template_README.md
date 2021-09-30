@@ -88,7 +88,7 @@ dependencies {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:$SPIGRADLE_VERSION'
@@ -106,7 +106,7 @@ apply plugin: 'kr.entree.spigradle'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:$SPIGRADLE_VERSION")
@@ -162,7 +162,7 @@ dependencies {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:$SPIGRADLE_VERSION'
@@ -180,7 +180,7 @@ apply plugin: 'kr.entree.spigradle.bungee'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:$SPIGRADLE_VERSION")
@@ -237,7 +237,7 @@ dependencies {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:$SPIGRADLE_VERSION'
@@ -255,7 +255,7 @@ apply plugin: 'kr.entree.spigradle.nukkit'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:$SPIGRADLE_VERSION")
