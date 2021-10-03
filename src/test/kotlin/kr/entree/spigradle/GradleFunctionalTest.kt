@@ -77,6 +77,69 @@ class GradleFunctionalTest {
     }
 
     @Test
+    fun `jdk16 java`() {
+        buildFile.writeText("""
+            plugins {
+                id 'kr.entree.spigradle'
+            }
+            dependencies {
+                compileOnly(spigot("1.17.1"))
+            }
+            java {
+                toolchain {
+                    languageVersion.set(JavaLanguageVersion.of(16))
+                    vendor.set(JvmVendorSpec.ADOPTOPENJDK)
+                }
+            }
+        """.trimIndent())
+        javaFile.writeText("""
+            import org.bukkit.plugin.java.JavaPlugin;
+            public class Main extends JavaPlugin {}
+        """.trimIndent())
+        assertDoesNotThrow {
+            val result = createGradleRunner().withArguments("assemble", "-s", "-i").build()
+            assertEquals(TaskOutcome.SUCCESS, result.task(":assemble")?.outcome)
+        }
+    }
+
+    @Test
+    fun `jdk16 kotlin`() {
+        buildFileKt.writeText("""
+            import kr.entree.spigradle.kotlin.spigot
+            plugins {
+                id("java")
+                kotlin("jvm") version "1.5.31"
+                id("kr.entree.spigradle")
+            }
+            repositories {
+                mavenCentral()
+            }
+            dependencies {
+                compileOnly(spigot("1.17.1"))
+                implementation(kotlin("stdlib"))
+            }
+            spigot {
+                description = "A test plugin"
+            }
+            kotlin {
+                target.compilations.all {
+                    kotlinOptions {
+                        jvmTarget = "16"
+                    }
+                }
+            }
+        """.trimIndent())
+        kotlinFile.writeText("""
+            import org.bukkit.plugin.java.JavaPlugin
+            class Main : JavaPlugin()
+        """.trimIndent())
+        assertDoesNotThrow {
+            val result = createGradleRunner().withArguments("assemble", "-s").build()
+            assertEquals(TaskOutcome.SUCCESS, result.task(":assemble")?.outcome)
+        }
+    }
+
+    @Test
     fun `apply scala and spigradle on a subproject`() {
         subBuildFile.writeGroovy(
             """ 
