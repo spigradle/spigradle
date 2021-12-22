@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
+import kr.entree.spigradle.module.spigot.SpigotDebugTask
 import java.io.File
 import javax.inject.Inject
 
@@ -56,6 +57,8 @@ open class SpigotDebug(
             serverPort.toInt()
         } else serverPort.toString().toIntOrNull() ?: -1
     }
+
+    fun getBuildVersionOrDefault(): String = buildVersion.ifEmpty { SpigotDebugTask.DEFAULT_SPIGOT_BUILD_VERSION }
 }
 
 enum class Load {
