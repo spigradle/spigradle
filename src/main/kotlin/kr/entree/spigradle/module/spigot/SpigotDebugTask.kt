@@ -18,24 +18,30 @@
 
 package kr.entree.spigradle.module.spigot
 
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import de.undercouch.gradle.tasks.download.Download
 import kr.entree.spigradle.data.SpigotDebug
 import kr.entree.spigradle.internal.Jackson
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.internal.lazyString
 import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
-import kr.entree.spigradle.module.common.Download
+
 import kr.entree.spigradle.module.common.YamlGenerate
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.logging.LogLevel
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.register
 import java.io.File
+import java.util.concurrent.atomic.AtomicReference
 
 /**
  * Created by JunHyung Lim on 2020-06-03
@@ -44,7 +50,7 @@ object SpigotDebugTask {
     const val BUILD_TOOLS_URL =
         "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
     val TASK_GROUP_DEBUG = "${SpigotPlugin.SPIGOT_TYPE.taskGroup} debug"
-    val DEFAULT_SPIGOT_BUILD_VERSION = "1.16.5"
+    val DEFAULT_SPIGOT_BUILD_VERSION = "1.18.1"
     val spigotGroups = mapOf(
         "org.spigotmc" to setOf("spigot-api", "spigot"),
         "com.destroystokyo.paper" to setOf("paper-api"),
@@ -57,12 +63,18 @@ object SpigotDebugTask {
             }.firstOrNull { it != 0 } ?: 0
         }
 
+    val paperBuildsJsonFilename: String = "paper-builds.json"
+    val paperDownloadsJsonFilename: String = "paper-downloads.json"
+    val getPaperBuildsTaskname: String = "getPaperBuilds"
+    val getPaperDownloadsTaskname: String = "getPaperDownloads"
+    val downloadPaperTaskname: String = "downloadPaper"
+
     fun Project.registerDownloadBuildTool(debugOption: SpigotDebug): TaskProvider<Download> {
         return tasks.register("downloadSpigotBuildTools", Download::class) {
             group = TASK_GROUP_DEBUG
             description = "Download the BuildTools."
-            source.set(BUILD_TOOLS_URL)
-            destination.set(provider { debugOption.buildToolJar })
+            src(BUILD_TOOLS_URL)
+            dest(provider { debugOption.buildToolJar })
         }
     }
 
@@ -158,15 +170,64 @@ object SpigotDebugTask {
         }
     }
 
+    fun Project.registerGetPaperBuilds(version: Provider<String>): TaskProvider<Download> {
+        return tasks.register(getPaperBuildsTaskname, Download::class) {
+            src(provider { "https://papermc.io/api/v2/projects/paper/versions/${version.get()}" })
+            dest(temporaryDir.resolve(paperBuildsJsonFilename))
+        }
+    }
+
+    fun parseLatestPaperBuildsJson(json: JsonNode): Long? =
+        json.get("builds").elements().asSequence().map { it.longValue() }.max()
+
+    fun Project.registerGetPaperDownloads(build: Provider<Long>, version: Provider<String>): TaskProvider<Download> {
+        return tasks.register(getPaperDownloadsTaskname, Download::class) {
+            src(provider {
+                "https://papermc.io/api/v2/projects/paper/versions/${version.get()}/builds/${build.get()}"
+            })
+            dest(temporaryDir.resolve(paperDownloadsJsonFilename))
+            dependsOn(getPaperBuildsTaskname)
+        }
+    }
+
+    fun parsePaperDownloadsNameJson(json: JsonNode): String? =
+        json.get("downloads")?.get("application")?.get("name")?.textValue()
+
     fun Project.registerDownloadPaper(debug: SpigotDebug): TaskProvider<Download> {
-        return tasks.register("downloadPaper", Download::class) {
+        val buildR = AtomicReference<Long>()
+        val filenameR = AtomicReference<String>()
+
+        val getPaperBuildsTask = registerGetPaperBuilds(provider { debug.getBuildVersionOrDefault() })
+        getPaperBuildsTask.configure {
+            doLast {
+                val jsonFile = getPaperBuildsTask.get().temporaryDir.resolve(paperBuildsJsonFilename)
+                val json = ObjectMapper().readTree(jsonFile)
+                val latest = parseLatestPaperBuildsJson(json)
+                    ?: throw GradleException("Wrong json while get paper builds: ${json.toPrettyString()}")
+                buildR.set(latest)
+            }
+        }
+        val getPaperDownloadsTask =
+            registerGetPaperDownloads(provider { buildR.get() }, provider { debug.getBuildVersionOrDefault() })
+        getPaperDownloadsTask.configure {
+            doLast {
+                val jsonFile = getPaperDownloadsTask.get().temporaryDir.resolve(paperDownloadsJsonFilename)
+                val json = ObjectMapper().readTree(jsonFile)
+                val filename = parsePaperDownloadsNameJson(json)
+                    ?: throw GradleException("Wrong json while get paper downloads: ${json.toPrettyString()}")
+                filenameR.set(filename)
+            }
+        }
+        val downloadPaperTask = tasks.register(downloadPaperTaskname, Download::class) {
             group = TASK_GROUP_DEBUG
             description = "Download the Paperclip."
-            source.set(provider {
-                "https://papermc.io/api/v1/paper/${getBuildVersion(debug)}/latest/download"
+            src(provider {
+                "https://papermc.io/api/v2/projects/paper/versions/${debug.getBuildVersionOrDefault()}/builds/${buildR.get()}/downloads/${filenameR.get()}"
             })
-            destination.set(provider { debug.serverJar })
+            dest(provider { debug.serverJar })
+            dependsOn(getPaperBuildsTask, getPaperDownloadsTask)
         }
+        return downloadPaperTask
     }
 
     fun Project.registerSpigotConfiguration(serverDir: File): TaskProvider<YamlGenerate> {
