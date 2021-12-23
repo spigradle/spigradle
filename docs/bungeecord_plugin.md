@@ -52,14 +52,14 @@ Groovy DSL
 
 ```groovy
 plugins {
-    id 'kr.entree.spigradle.bungee' version '2.3.1'
+    id 'kr.entree.spigradle.bungee' version '2.3.2'
 }
 ```
 Kotlin DSL
 
 ```kotlin
 plugins {
-    id("kr.entree.spigradle.bungee") version "2.3.1"
+    id("kr.entree.spigradle.bungee") version "2.3.2"
 }
 ```
 
@@ -72,7 +72,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.3.1'
+        classpath 'kr.entree:spigradle:2.3.2'
     }
 }
 
@@ -90,7 +90,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.3.1")
+        classpath("kr.entree:spigradle:2.3.2")
     }
 }
 
