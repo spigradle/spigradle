@@ -151,6 +151,32 @@ This affects both tasks `debugSpigot`, `debugPaper`, also to [IDEA RunConfigurat
 
 More information: [Tasks](#tasks)
 
+### Exclusion
+
+If you want to exclude some plugins, this is an example,
+
+Kotlin:
+
+```kotlin
+tasks {
+    prepareSpigotPlugins {
+        exclude("**/worldedit*.jar")
+        exclude("**/worldguard*.jar")
+    }
+}
+```
+
+Groovy:
+
+```groovy
+prepareSpigotPlugins {
+    exclude '**/worldedit*.jar' // or exclude 'worldedit*.jar'?
+    exclude '**/worldguard*.jar'
+}
+```
+
+Then WorldEdit and WorldGuard will be excluded by the `prepareSpigotPlugins` which a [Copy](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) task, you can use all the `Copy` features.
+
 ## Configuration
 
 ### spigot - [SpigotExtension](TODO Javadoc)
