@@ -58,7 +58,10 @@ internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
 
 internal fun findRuntimeDependencyNotations(p: Project): List<String> {
     return listOf("runtimeClasspath", "runtime").flatMap {
-        p.configurations[it]?.resolvedConfiguration?.firstLevelModuleDependencies ?: emptyList()
+        val cfg = p.configurations[it]
+        if (cfg?.isCanBeResolved == true) {
+            cfg.resolvedConfiguration.firstLevelModuleDependencies
+        } else emptyList()
     }.map {
         "${it.moduleGroup}:${it.moduleName}:${it.moduleVersion}"
     }
