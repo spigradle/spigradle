@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/spigradle/spigradle/compare/v2.3.0...v2.3.1) (2021-12-23)
+
+
+### Reverts
+
+* Revert "chore(release): 2.3.0 [skip ci]" ([c2c1d73](https://github.com/spigradle/spigradle/commit/c2c1d73eabca5e821f214bca72f6e2e3a1755b5a))
+
 ## [2.2.4](https://github.com/spigradle/spigradle/compare/v2.2.3...v2.2.4) (2021-06-11)
 
 
