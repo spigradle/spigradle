@@ -98,7 +98,7 @@ dependencies {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:2.2.4'
@@ -116,7 +116,7 @@ apply plugin: 'kr.entree.spigradle'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:2.2.4")
@@ -174,7 +174,7 @@ dependencies {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:2.2.4'
@@ -192,7 +192,7 @@ apply plugin: 'kr.entree.spigradle.bungee'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:2.2.4")
@@ -251,7 +251,7 @@ dependencies {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:2.2.4'
@@ -269,7 +269,7 @@ apply plugin: 'kr.entree.spigradle.nukkit'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:2.2.4")
@@ -300,7 +300,7 @@ gradlew wrapper --gradle-version 6.9 --distribution-type all
 |  Name         |  URL                                                           | Relations                               | Aliases       |
 |---------------|----------------------------------------------------------------|-----------------------------------------|---------------|
 | spigotmc()    | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         | spigot()      |
-| sonaytype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
+| sonatype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
 | papermc()     | https://papermc.io/repo/repository/maven-public/               |                                         | paper()       |
 | jitpack()     | https://jitpack.io                                             | Vault                                   | vault()       |
 | protocolLib() | https://repo.dmulloy2.net/nexus/repository/public/             |                                         |               |
@@ -338,7 +338,8 @@ repositories {
 | spigotAll()       | org.spigotmc:spigot:$version                     | 1.16.1-R0.1-SNAPSHOT     |
 | bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.16-R0.4-SNAPSHOT       |
 | minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.16.1-SNAPSHOT          |
-| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     |
+| paper()           | io.papermc.paper:paper-api:$version              | 1.16.1-R0.1-SNAPSHOT     |
+| paperAll()        | io.papermc.paper:paper:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     |
 | craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |

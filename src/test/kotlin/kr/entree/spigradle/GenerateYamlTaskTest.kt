@@ -51,7 +51,7 @@ class GenerateYamlTaskTest {
 
     @Test
     fun `detail serialization`() {
-        val extension = project.extensions.create<SpigotExtension>("spigot", project).apply {
+        val ext = project.extensions.create<SpigotExtension>("spigot", project).apply {
             main = "kr.entree.spigradle.Main"
             name = "Spigradle"
             version = "1.1"
@@ -63,6 +63,10 @@ class GenerateYamlTaskTest {
             prefix = "Its prefix"
             softDepends = listOf("ProtocolLib")
             loadBefore = listOf("ABC")
+            libraries = listOf(
+                "com.squareup.okhttp3:okhttp:4.9.0",
+                "a:b:1.0.0"
+            )
             commands.apply {
                 create("give").apply {
                     description = "Give command."
@@ -86,10 +90,11 @@ class GenerateYamlTaskTest {
         }
         yamlTask.apply {
             outputFiles.from(file)
-            serialize(extension)
+            serialize(ext)
             generate()
         }
-        val expected = javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
+        val expected =
+            javaClass.getResourceAsStream("/spigot/plugin.yml").bufferedReader().readText().normaliseLineSeparators()
         assertEquals(expected, file.readText())
     }
 }

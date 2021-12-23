@@ -35,7 +35,7 @@ import java.net.URL
  * Groovy Example:
  *
  * ```groovy
- * import kr.entree.spigradle.module.common.Download
+ * 
  *
  * task downloadSomething(type: Download) {
  *   source = 'https://newurl.com'
@@ -47,7 +47,7 @@ import java.net.URL
  * Kotlin Example:
  *
  * ```kotiln
- * import kr.entree.spigradle.module.common.Download
+ * 
  *
  * tasks {
  *   val downloadSomething by registering(Download::class) {
@@ -60,6 +60,7 @@ import java.net.URL
  *
  * @since 1.3.0
  */
+@Deprecated("Use the external plugin `de.undercouch.download`.")
 open class Download : DefaultTask() {
     init {
         group = "spigradle"

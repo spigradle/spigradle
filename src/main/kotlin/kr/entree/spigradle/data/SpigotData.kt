@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import kr.entree.spigradle.internal.CommonDebug
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.Transient
+import kr.entree.spigradle.module.spigot.SpigotDebugTask
 import java.io.File
 import javax.inject.Inject
 
@@ -45,7 +46,7 @@ open class SpigotDebug(
             serverJar, buildToolJar,
             serverJar.parentFile, buildToolJar.parentFile,
             File(buildToolJar.parentFile, "outputs"),
-            5005, false, "1.16.5"
+            5005, false, ""
     )
 
     /**
@@ -56,6 +57,8 @@ open class SpigotDebug(
             serverPort.toInt()
         } else serverPort.toString().toIntOrNull() ?: -1
     }
+
+    fun getBuildVersionOrDefault(): String = buildVersion.ifEmpty { SpigotDebugTask.DEFAULT_SPIGOT_BUILD_VERSION }
 }
 
 enum class Load {
@@ -89,6 +92,10 @@ open class Permission @Inject constructor(@Transient val name: String) {
 }
 
 object SpigotRepositories {
+    @SerialName("purpurmc")
+    val PURPUR_MC = "https://repo.purpurmc.org/snapshots"
+    val PURPUR = PURPUR_MC
+
     @SerialName("spigotmc")
     val SPIGOT_MC = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     val SPIGOT = SPIGOT_MC
@@ -112,10 +119,17 @@ object SpigotRepositories {
 }
 
 object SpigotDependencies {
+    val PURPUR = Dependency(
+        "org.purpurmc.purpur",
+        "purpur-api",
+        "1.18.1-R0.1-SNAPSHOT",
+        false,
+        VersionModifier.SPIGOT_ADJUSTER
+    )
     val SPIGOT = Dependency(
             "org.spigotmc",
             "spigot-api",
-            "1.16.1-R0.1-SNAPSHOT",
+            "1.18.1-R0.1-SNAPSHOT",
             false,
             VersionModifier.SPIGOT_ADJUSTER
     )
@@ -123,13 +137,12 @@ object SpigotDependencies {
     val MINECRAFT_SERVER = Dependency(
             SPIGOT.group,
             "minecraft-server",
-            "1.16.1-SNAPSHOT",
+            "1.18.1-SNAPSHOT",
             true,
             VersionModifier.SNAPSHOT_APPENDER
     )
-    //val PAPER = Dependency(SPIGOT, "com.destroystokyo.paper", "paper-api")
-    val PAPER_OLD = Dependency(SPIGOT, "com.destroystokyo.paper", "paper-api")
     val PAPER = Dependency(SPIGOT, "io.papermc.paper", "paper-api")
+    val PAPER_ALL = Dependency(PAPER, name = "paper", isLocal = true)
     val BUKKIT = Dependency(SPIGOT, group = "org.bukkit", name = "bukkit", isLocal = true)
 
     @SerialName("craftbukkit")
