@@ -1,3 +1,10 @@
+## [2.3.2](https://github.com/spigradle/spigradle/compare/v2.3.1...v2.3.2) (2021-12-23)
+
+
+### Bug Fixes
+
+* NPE on ConfigurationContainer#get ([210996e](https://github.com/spigradle/spigradle/commit/210996eaf351698bec8d27bb3fabf618e032e5c1))
+
 ## [2.3.1](https://github.com/spigradle/spigradle/compare/v2.3.0...v2.3.1) (2021-12-23)
 
 
