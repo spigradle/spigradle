@@ -92,6 +92,10 @@ open class Permission @Inject constructor(@Transient val name: String) {
 }
 
 object SpigotRepositories {
+    @SerialName("purpurmc")
+    val PURPUR_MC = "https://repo.purpurmc.org/snapshots"
+    val PURPUR = PURPUR_MC
+
     @SerialName("spigotmc")
     val SPIGOT_MC = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     val SPIGOT = SPIGOT_MC
@@ -115,10 +119,17 @@ object SpigotRepositories {
 }
 
 object SpigotDependencies {
+    val PURPUR = Dependency(
+        "org.purpurmc.purpur",
+        "purpur-api",
+        "1.18.1-R0.1-SNAPSHOT",
+        false,
+        VersionModifier.SPIGOT_ADJUSTER
+    )
     val SPIGOT = Dependency(
             "org.spigotmc",
             "spigot-api",
-            "1.16.5-R0.1-SNAPSHOT",
+            "1.18.1-R0.1-SNAPSHOT",
             false,
             VersionModifier.SPIGOT_ADJUSTER
     )
@@ -126,7 +137,7 @@ object SpigotDependencies {
     val MINECRAFT_SERVER = Dependency(
             SPIGOT.group,
             "minecraft-server",
-            "1.16.5-SNAPSHOT",
+            "1.18.1-SNAPSHOT",
             true,
             VersionModifier.SNAPSHOT_APPENDER
     )
