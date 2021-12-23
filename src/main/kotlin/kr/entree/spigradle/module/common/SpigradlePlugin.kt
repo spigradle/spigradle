@@ -16,7 +16,6 @@
 
 package kr.entree.spigradle.module.common
 
-import de.undercouch.gradle.tasks.download.Download
 import de.undercouch.gradle.tasks.download.DownloadTaskPlugin
 import groovy.lang.Closure
 import kr.entree.spigradle.annotations.PluginType

@@ -60,7 +60,12 @@ class SpigotPlugin : Plugin<Project> {
             applySpigradlePlugin()
             setupDefaultRepositories()
             setupDefaultDependencies()
-            registerDescGenTask<SpigotExtension>(SPIGOT_TYPE)
+            registerDescGenTask<SpigotExtension>(SPIGOT_TYPE) { desc ->
+                if (desc.libraries.isEmpty()) {
+                    desc.libraries = findRuntimeDependencyNotations(project)
+                }
+                desc
+            }
             setupGroovyExtensions()
             setupSpigotDebugTasks()
             createSpigotRunConfiguration(spigot.debug)

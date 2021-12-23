@@ -185,7 +185,6 @@ open class SpigotExtension(project: Project) : StandardDescription {
      *
      * See also: [Spigot & BungeeCord 1.17](https://www.spigotmc.org/threads/spigot-bungeecord-1-17.510208/#post-4184317)
      */
-    // TODO: determine and filter?
     var libraries: List<String> = emptyList()
 
     /**

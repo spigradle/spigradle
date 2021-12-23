@@ -51,7 +51,7 @@ class GenerateYamlTaskTest {
 
     @Test
     fun `detail serialization`() {
-        val extension = project.extensions.create<SpigotExtension>("spigot", project).apply {
+        val ext = project.extensions.create<SpigotExtension>("spigot", project).apply {
             main = "kr.entree.spigradle.Main"
             name = "Spigradle"
             version = "1.1"
@@ -90,7 +90,7 @@ class GenerateYamlTaskTest {
         }
         yamlTask.apply {
             outputFiles.from(file)
-            serialize(extension)
+            serialize(ext)
             generate()
         }
         val expected =

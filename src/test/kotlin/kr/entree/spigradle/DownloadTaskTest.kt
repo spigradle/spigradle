@@ -16,33 +16,15 @@
 
 package kr.entree.spigradle
 
-import kr.entree.spigradle.module.spigot.SpigotDebugTask
 import kr.entree.spigradle.module.spigot.SpigotDebugTask.downloadPaperTaskname
 import kr.entree.spigradle.module.spigot.SpigotDebugTask.getPaperBuildsTaskname
 import kr.entree.spigradle.module.spigot.SpigotDebugTask.getPaperDownloadsTaskname
-import org.gradle.testkit.runner.GradleRunner
-import org.gradle.testkit.runner.TaskOutcome
+import kr.entree.spigradle.util.testGradleTask
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class DownloadTaskTest {
-    fun testGradleTask(taskName: String, dir: File, buildscript: String = """
-        plugins {
-            id 'kr.entree.spigradle'
-        }
-    """.trimIndent()) {
-        File(dir, "build.gradle").writeText(buildscript)
-        val result = GradleRunner.create()
-            .withProjectDir(dir)
-            .withArguments(taskName, "-s")
-            .withPluginClasspath()
-            .build()
-        assertEquals(TaskOutcome.SUCCESS, result.task(":${taskName}")?.outcome)
-    }
-
     @Test
     fun `get latest paper build`(@TempDir dir: File) {
         testGradleTask(getPaperBuildsTaskname, dir)
