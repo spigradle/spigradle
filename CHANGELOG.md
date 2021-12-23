@@ -1,3 +1,23 @@
+# [2.3.0](https://github.com/spigradle/spigradle/compare/v2.2.4...v2.3.0) (2021-12-23)
+
+
+### Bug Fixes
+
+* download paper from the latest paper api ([85be379](https://github.com/spigradle/spigradle/commit/85be37949c81fed5c712ed847e8ff6123c74ceff))
+* filter `canBeResolved` in progress of finding runtime deps ([91eeb1c](https://github.com/spigradle/spigradle/commit/91eeb1c53240992f6d08ac8b436170160ac32217))
+* new paper module id ([8a8b2de](https://github.com/spigradle/spigradle/commit/8a8b2de66563287b2595ff6231355bef94215c75))
+* update paper dep group name ([c536fd3](https://github.com/spigradle/spigradle/commit/c536fd3b73e176be2c5f36cd9b52352eea0f1366))
+* update papermc repository url ([26c0f7b](https://github.com/spigradle/spigradle/commit/26c0f7b07f39d6d381226fa4315bf11b64021d4e))
+* update spigradle-annotations 2.1.1 to 2.2.0 ([ec3f7d0](https://github.com/spigradle/spigradle/commit/ec3f7d0479fce873a00846812d92c44e0fa59846))
+
+
+### Features
+
+* **debug:** determine `buildVersion` from dependencies [#37](https://github.com/spigradle/spigradle/issues/37) ([6c91ed6](https://github.com/spigradle/spigradle/commit/6c91ed6be482f6c225f7f13d00966b77e09ae127))
+* **spigot:** add purpur repo/dep ([804ec46](https://github.com/spigradle/spigradle/commit/804ec46bbf2b479ab68d28fef4a55ac9f8cc9ae6))
+* **spigot:** new plugin option `libraries` [#59](https://github.com/spigradle/spigradle/issues/59) ([f9d5d0e](https://github.com/spigradle/spigradle/commit/f9d5d0e39a87f6cc56cc1cf2c2297ac62e7cdbe4))
+* **spigot:** put `libraries` into plugin yaml from runtime dependencies [#59](https://github.com/spigradle/spigradle/issues/59) ([a87c9de](https://github.com/spigradle/spigradle/commit/a87c9de5c130a3a78b979af92b3114d3c5f02d7c))
+
 ## [2.2.4](https://github.com/spigradle/spigradle/compare/v2.2.3...v2.2.4) (2021-06-11)
 
 

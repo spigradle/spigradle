@@ -19,7 +19,7 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.2.4'
+    id 'kr.entree.spigradle' version '2.3.0'
 }
 
 group 'org.sample'
@@ -65,7 +65,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.2.4'
+    id 'kr.entree.spigradle' version '2.3.0'
 }
 
 dependencies {
@@ -81,7 +81,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle") version "2.2.4"
+    id("kr.entree.spigradle") version "2.3.0"
 }
 
 dependencies {
@@ -101,7 +101,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.2.4'
+        classpath 'kr.entree:spigradle:2.3.0'
     }
 }
 
@@ -119,7 +119,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.2.4")
+        classpath("kr.entree:spigradle:2.3.0")
     }
 }
 
@@ -143,7 +143,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.bungee' version '2.2.4'
+    id 'kr.entree.spigradle.bungee' version '2.3.0'
 }
 
 dependencies {
@@ -157,7 +157,7 @@ dependencies {
 ```kotlin
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.bungee") version "2.2.4"
+    id("kr.entree.spigradle.bungee") version "2.3.0"
 }
 
 dependencies {
@@ -177,7 +177,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.2.4'
+        classpath 'kr.entree:spigradle:2.3.0'
     }
 }
 
@@ -195,7 +195,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.2.4")
+        classpath("kr.entree:spigradle:2.3.0")
     }
 }
 
@@ -220,7 +220,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.nukkit' version '2.2.4'
+    id 'kr.entree.spigradle.nukkit' version '2.3.0'
 }
 
 dependencies {
@@ -234,7 +234,7 @@ dependencies {
 ```kotlin
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.nukkit") version "2.2.4"
+    id("kr.entree.spigradle.nukkit") version "2.3.0"
 }
 
 dependencies {
@@ -254,7 +254,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.2.4'
+        classpath 'kr.entree:spigradle:2.3.0'
     }
 }
 
@@ -272,7 +272,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.2.4")
+        classpath("kr.entree:spigradle:2.3.0")
     }
 }
 
@@ -290,7 +290,7 @@ All the plugins requires Gradle 5.4.2+, recommends the latest.
 To update your gradle wrapper:
 
 ```
-gradlew wrapper --gradle-version 6.9 --distribution-type all
+gradlew wrapper --gradle-version 6.9.1 --distribution-type all
 ```
 
 ## Repositories
@@ -300,7 +300,7 @@ gradlew wrapper --gradle-version 6.9 --distribution-type all
 |  Name         |  URL                                                           | Relations                               | Aliases       |
 |---------------|----------------------------------------------------------------|-----------------------------------------|---------------|
 | spigotmc()    | https://hub.spigotmc.org/nexus/content/repositories/snapshots/ |                                         | spigot()      |
-| sonatype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
+| sonaytype()   | https://oss.sonatype.org/content/repositories/snapshots/       |                                         | bungeecord()  |
 | papermc()     | https://papermc.io/repo/repository/maven-public/               |                                         | paper()       |
 | jitpack()     | https://jitpack.io                                             | Vault                                   | vault()       |
 | protocolLib() | https://repo.dmulloy2.net/nexus/repository/public/             |                                         |               |
@@ -338,12 +338,11 @@ repositories {
 | spigotAll()       | org.spigotmc:spigot:$version                     | 1.16.1-R0.1-SNAPSHOT     |
 | bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.16-R0.4-SNAPSHOT       |
 | minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.16.1-SNAPSHOT          |
-| paper()           | io.papermc.paper:paper-api:$version              | 1.16.1-R0.1-SNAPSHOT     |
-| paperAll()        | io.papermc.paper:paper:$version                  | 1.16.1-R0.1-SNAPSHOT     |
+| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     |
 | bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     |
 | craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
-| spigradle()       | kr.entree:spigradle:$version                     | 2.2.4       |
+| spigradle()       | kr.entree:spigradle:$version                     | 2.3.0       |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.5.1                    |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
 | vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.3                    |
