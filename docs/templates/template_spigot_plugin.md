@@ -69,7 +69,7 @@ plugins {
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'kr.entree:spigradle:$SPIGRADLE_VERSION'
@@ -87,7 +87,7 @@ apply plugin: 'kr.entree.spigradle'
 ```groovy
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath("kr.entree:spigradle:$SPIGRADLE_VERSION")

@@ -16,11 +16,11 @@
 
 package kr.entree.spigradle.module.bungee
 
+import de.undercouch.gradle.tasks.download.Download
 import kr.entree.spigradle.data.BungeeDebug
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
-import kr.entree.spigradle.module.common.Download
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.Copy
@@ -40,8 +40,8 @@ object BungeeDebugTask {
         return tasks.register("downloadBungee", Download::class) {
             group = TASK_GROUP_DEBUG
             description = "Download the Bungeecord."
-            source.set(BUNGEECORD_URL)
-            destination.set(provider { debug.serverJar })
+            src(BUNGEECORD_URL)
+            dest(provider { debug.serverJar })
         }
     }
 

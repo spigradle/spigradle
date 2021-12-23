@@ -16,6 +16,7 @@
 
 package kr.entree.spigradle.module.common
 
+import de.undercouch.gradle.tasks.download.DownloadTaskPlugin
 import groovy.lang.Closure
 import kr.entree.spigradle.annotations.PluginType
 import kr.entree.spigradle.data.Dependencies
@@ -73,6 +74,7 @@ class SpigradlePlugin : Plugin<Project> {
         pluginManager.apply(JavaPlugin::class)
         rootProject.pluginManager.apply(IdeaPlugin::class)
         pluginManager.apply(IdeaExtPlugin::class)
+        pluginManager.apply(DownloadTaskPlugin::class)
         if (plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
             plugins.apply("org.jetbrains.kotlin.kapt")
             // Give annotation processor arguments for Kotlin

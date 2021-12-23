@@ -16,11 +16,12 @@
 
 package kr.entree.spigradle.module.nukkit
 
+import de.undercouch.gradle.tasks.download.Download
 import kr.entree.spigradle.data.NukkitDebug
 import kr.entree.spigradle.internal.applyToConfigure
 import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
 import kr.entree.spigradle.module.common.DebugTask.registerRunServer
-import kr.entree.spigradle.module.common.Download
+
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.Copy
@@ -40,8 +41,8 @@ object NukkitDebugTask {
         return tasks.register("downloadNukkit", Download::class) {
             group = TASK_GROUP_DEBUG
             description = "Download the NukkitX"
-            source.set(NUKKIT_X_URL)
-            destination.set(provider { debug.serverJar })
+            src(NUKKIT_X_URL)
+            dest(provider { debug.serverJar })
         }
     }
 
