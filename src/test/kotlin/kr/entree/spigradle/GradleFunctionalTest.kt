@@ -107,8 +107,7 @@ class GradleFunctionalTest {
         buildFileKt.writeText("""
             import kr.entree.spigradle.kotlin.spigot
             plugins {
-                id("java")
-                kotlin("jvm") version "1.5.31"
+                kotlin("jvm") version "1.6.10"
                 id("kr.entree.spigradle")
             }
             repositories {

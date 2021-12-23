@@ -18,7 +18,6 @@ package kr.entree.spigradle.module.spigot
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.get
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -58,7 +57,7 @@ internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
 
 internal fun findRuntimeDependencyNotations(p: Project): List<String> {
     return listOf("runtimeClasspath", "runtime").flatMap {
-        val cfg = p.configurations[it]
+        val cfg = p.configurations.findByName(it)
         if (cfg?.isCanBeResolved == true) {
             cfg.resolvedConfiguration.firstLevelModuleDependencies
         } else emptyList()
