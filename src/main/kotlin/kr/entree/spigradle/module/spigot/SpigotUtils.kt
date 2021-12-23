@@ -18,6 +18,7 @@ package kr.entree.spigradle.module.spigot
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.get
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -52,5 +53,13 @@ internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
             # ${DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(LocalDateTime.now())}
             eula=true
         """.trimIndent())
+    }
+}
+
+internal fun findRuntimeDependencyNotations(p: Project): List<String> {
+    return listOf("runtimeClasspath", "runtime").flatMap {
+        p.configurations[it]?.resolvedConfiguration?.firstLevelModuleDependencies ?: emptyList()
+    }.map {
+        "${it.moduleGroup}:${it.moduleName}:${it.moduleVersion}"
     }
 }

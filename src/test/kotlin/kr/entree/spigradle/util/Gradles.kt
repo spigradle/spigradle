@@ -3,6 +3,7 @@ package kr.entree.spigradle.util
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 /**
@@ -34,3 +35,21 @@ fun testGradleScript(
         .withPluginClasspath()
         .withArguments("build", "--stacktrace")
         .withGradleVersion("5.4.1")
+
+
+fun testGradleTask(taskName: String, dir: File, buildscript: String = """
+        plugins {
+            id 'kr.entree.spigradle'
+        }
+    """.trimIndent()) {
+    File(dir, "build.gradle").writeText(buildscript)
+    val result = GradleRunner.create()
+        .withProjectDir(dir)
+        .withArguments(taskName, "-s")
+        .withPluginClasspath()
+        .build()
+    println("#### GradleRunner start")
+    println(result.output)
+    println("#### GradleRunner end")
+    assertEquals(TaskOutcome.SUCCESS, result.task(":${taskName}")?.outcome)
+}
