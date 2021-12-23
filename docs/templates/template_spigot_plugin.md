@@ -168,6 +168,7 @@ About the `plugin.yml`, See [plugin-yml wiki](https://www.spigotmc.org/wiki/plug
 spigot {
     authors 'Me'
     depends 'ProtocolLib', 'Vault'
+    softDepends 'WorldEdit'
     apiVersion '1.15'
     load STARTUP
     commands {
@@ -202,6 +203,7 @@ spigot {
 spigot {
     authors = listOf("Me")
     depends = listOf("ProtocolLib")
+    softDepends = listOf("WorldEdit")
     apiVersion = "1.15"
     load = Load.STARTUP
     commands {
