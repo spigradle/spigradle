@@ -18,9 +18,6 @@ package kr.entree.spigradle.build
 
 import groovy.lang.GroovyObject
 
-/**
- * Created by JunHyung Lim on 2020-06-22
- */
 var GroovyObject.repoKey
     get() = getProperty("repoKey")
     set(value) = setProperty("repoKey", value)

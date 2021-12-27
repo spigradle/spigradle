@@ -5,32 +5,33 @@ plugins {
 }
 
 tasks {
-    dokka {
-        outputFormat = "html"
-        outputDirectory = "$buildDir/kdoc"
-        configuration {
-            moduleName = project.name
-            jdkVersion = 8
-            sourceLink {
-                path = "src/main/kotlin"
-                url = "https://github.com/spigradle/spigradle/tree/master/src/main/kotlin"
-                lineSuffix = "#L"
-            }
-            externalDocumentationLink {
-                url = URL("https://docs.gradle.org/current/javadoc/")
-                packageListUrl = URL("https://docs.gradle.org/current/javadoc/package-list")
-            }
-            externalDocumentationLink {
-                url = URL("https://docs.groovy-lang.org/latest/html/gapi/")
-                packageListUrl = URL("https://docs.groovy-lang.org/latest/html/gapi/package-list")
-            }
-            externalDocumentationLink {
-                url = URL("https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/latest/")
-                packageListUrl = URL("https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/latest/package-list")
-            }
-            externalDocumentationLink {
-                url = URL("https://hub.spigotmc.org/javadocs/spigot/")
-                packageListUrl = URL("https://hub.spigotmc.org/javadocs/spigot/package-list")
+    dokkaHtml {
+        outputDirectory.set(buildDir.resolve("kdoc"))
+        dokkaSourceSets {
+            named("main") {
+                moduleName.set(project.name)
+                jdkVersion.set(8)
+                sourceLink {
+                    localDirectory.set(file("src/main/kotlin"))
+                    remoteUrl.set(URL("https://github.com/spigradle/spigradle/tree/master/src/main/kotlin"))
+                    remoteLineSuffix.set("#L")
+                }
+                externalDocumentationLink {
+                    url.set(URL("https://docs.groovy-lang.org/latest/html/gapi/"))
+                    packageListUrl.set(URL("https://docs.groovy-lang.org/latest/html/gapi/package-list"))
+                }
+                externalDocumentationLink {
+                    url.set(URL("https://docs.groovy-lang.org/latest/html/gapi/"))
+                    packageListUrl.set(URL("https://docs.gradle.org/current/javadoc/package-list"))
+                }
+                externalDocumentationLink {
+                    url.set(URL("https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/latest/"))
+                    packageListUrl.set(URL("https://javadoc.io/doc/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/latest/package-list"))
+                }
+                externalDocumentationLink {
+                    url.set(URL("https://hub.spigotmc.org/javadocs/spigot/"))
+                    packageListUrl.set(URL("https://hub.spigotmc.org/javadocs/spigot/package-list"))
+                }
             }
         }
     }

@@ -37,9 +37,6 @@ import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.jetbrains.gradle.ext.IdeaExtPlugin
 import java.io.File
 
-/**
- * Created by JunHyung Lim on 2020-05-18
- */
 fun Project.applySpigradlePlugin() = pluginManager.apply(SpigradlePlugin::class)
 
 val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, SpigradlePlugin.SPIGOT_BUILD_TOOLS_DIR)

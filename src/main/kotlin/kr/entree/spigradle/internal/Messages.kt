@@ -16,9 +16,6 @@
 
 package kr.entree.spigradle.internal
 
-/**
- * Created by JunHyung Lim on 2020-05-18
- */
 internal object Messages {
     fun noMainFound(extensionName: String, taskName: String) = """
         Spigradle couldn't find main class automatically!

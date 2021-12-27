@@ -6,9 +6,6 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-/**
- * Created by JunHyung Lim on 2020-05-23
- */
 fun Any.testGradleScriptWithResource(path: String, taskName: String) {
     val result = GradleRunner.create()
             .withProjectDir(File(javaClass.getResource(path)!!.file))

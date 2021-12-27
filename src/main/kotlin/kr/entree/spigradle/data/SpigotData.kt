@@ -24,9 +24,6 @@ import kr.entree.spigradle.module.spigot.SpigotDebugTask
 import java.io.File
 import javax.inject.Inject
 
-/**
- * Created by JunHyung Lim on 2020-05-22
- */
 open class SpigotDebug(
         override var serverJar: File,
         var buildToolJar: File,

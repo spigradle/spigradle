@@ -4,9 +4,6 @@ import kr.entree.spigradle.data.VersionModifier
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Created by JunHyung Lim on 2020-05-12
- */
 class VersionModifierTest {
     @Test
     fun `snapshot appender`() {

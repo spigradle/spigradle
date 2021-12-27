@@ -43,9 +43,6 @@ import org.gradle.kotlin.dsl.register
 import java.io.File
 import java.util.concurrent.atomic.AtomicReference
 
-/**
- * Created by JunHyung Lim on 2020-06-03
- */
 object SpigotDebugTask {
     const val BUILD_TOOLS_URL =
         "https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar"
