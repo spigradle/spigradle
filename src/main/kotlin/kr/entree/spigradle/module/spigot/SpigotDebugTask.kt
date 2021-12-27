@@ -194,7 +194,7 @@ object SpigotDebugTask {
         val buildR = AtomicReference<Long>()
         val filenameR = AtomicReference<String>()
 
-        val getPaperBuildsTask = registerGetPaperBuilds(provider { debug.getBuildVersionOrDefault() })
+        val getPaperBuildsTask = registerGetPaperBuilds(provider { getBuildVersion(debug) })
         getPaperBuildsTask.configure {
             doLast {
                 val jsonFile = getPaperBuildsTask.get().temporaryDir.resolve(paperBuildsJsonFilename)
@@ -205,7 +205,7 @@ object SpigotDebugTask {
             }
         }
         val getPaperDownloadsTask =
-            registerGetPaperDownloads(provider { buildR.get() }, provider { debug.getBuildVersionOrDefault() })
+            registerGetPaperDownloads(provider { buildR.get() }, provider { getBuildVersion(debug) })
         getPaperDownloadsTask.configure {
             doLast {
                 val jsonFile = getPaperDownloadsTask.get().temporaryDir.resolve(paperDownloadsJsonFilename)
@@ -219,7 +219,7 @@ object SpigotDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Download the Paperclip."
             src(provider {
-                "https://papermc.io/api/v2/projects/paper/versions/${debug.getBuildVersionOrDefault()}/builds/${buildR.get()}/downloads/${filenameR.get()}"
+                "https://papermc.io/api/v2/projects/paper/versions/${getBuildVersion(debug)}/builds/${buildR.get()}/downloads/${filenameR.get()}"
             })
             dest(provider { debug.serverJar })
             dependsOn(getPaperBuildsTask, getPaperDownloadsTask)
@@ -244,15 +244,20 @@ object SpigotDebugTask {
         }
     }
 
+    fun findDependedSpigotVersion(p: Project): String? =
+        sortDescendingVersion(p.configurations.flatMap { cfg ->
+            cfg.dependencies.filter {
+                (spigotGroups[it.group] ?: emptySet()).contains(it.name)
+            }.mapNotNull {
+                it.version
+            }
+        }).firstOrNull()
+
     fun Project.getBuildVersion(debug: SpigotDebug): String {
         return debug.buildVersion.ifEmpty {
-            sortDescendingVersion(configurations.flatMap { cfg ->
-                cfg.dependencies.filter {
-                    (spigotGroups[it.group] ?: emptySet()).contains(it.name)
-                }.mapNotNull {
-                    it.version
-                }
-            }).firstOrNull() ?: DEFAULT_SPIGOT_BUILD_VERSION
+            val depended = findDependedSpigotVersion(this)
+            val tagless = depended?.substringBefore("-")
+            tagless ?: DEFAULT_SPIGOT_BUILD_VERSION
         }
     }
 

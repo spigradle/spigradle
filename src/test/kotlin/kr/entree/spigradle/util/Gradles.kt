@@ -1,5 +1,6 @@
 package kr.entree.spigradle.util
 
+import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import java.io.File
@@ -38,7 +39,7 @@ fun testGradleTask(taskName: String, dir: File, buildscript: String = """
         plugins {
             id 'kr.entree.spigradle'
         }
-    """.trimIndent()) {
+    """.trimIndent()): BuildResult {
     File(dir, "build.gradle").writeText(buildscript)
     val result = GradleRunner.create()
         .withProjectDir(dir)
@@ -49,4 +50,5 @@ fun testGradleTask(taskName: String, dir: File, buildscript: String = """
     println(result.output)
     println("#### GradleRunner end")
     assertEquals(TaskOutcome.SUCCESS, result.task(":${taskName}")?.outcome)
+    return result
 }

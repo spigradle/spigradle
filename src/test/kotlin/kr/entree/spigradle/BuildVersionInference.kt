@@ -82,15 +82,15 @@ class BuildVersionInference {
                     dependencies {
                         add(it, dep.format(ver))
                     }
-                    assertEquals(ver, SpigotDebugTask.run { getBuildVersion(debug) }, "$it ${dep.format(ver)}")
+                    assertEquals(ver.substringBefore('-'), SpigotDebugTask.run { getBuildVersion(debug) }, "$it ${dep.format(ver)}")
                     dependencies {
                         add(it, dep.format(bigVer))
                     }
-                    assertEquals(bigVer, SpigotDebugTask.run { getBuildVersion(debug) }, "$it ${dep.format(bigVer)}")
+                    assertEquals(bigVer.substringBefore('-'), SpigotDebugTask.run { getBuildVersion(debug) }, "$it ${dep.format(bigVer)}")
                     dependencies {
                         add(it, dep.format(smallVer))
                     }
-                    assertEquals(bigVer, SpigotDebugTask.run { getBuildVersion(debug) }, "$it ${dep.format(bigVer)}")
+                    assertEquals(bigVer.substringBefore('-'), SpigotDebugTask.run { getBuildVersion(debug) }, "$it ${dep.format(bigVer)}")
                 }
             }
         }

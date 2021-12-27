@@ -16,13 +16,16 @@
 
 package kr.entree.spigradle
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import kr.entree.spigradle.module.spigot.SpigotDebugTask.downloadPaperTaskname
 import kr.entree.spigradle.module.spigot.SpigotDebugTask.getPaperBuildsTaskname
 import kr.entree.spigradle.module.spigot.SpigotDebugTask.getPaperDownloadsTaskname
+import kr.entree.spigradle.module.spigot.SpigotDebugTask.paperBuildsJsonFilename
 import kr.entree.spigradle.util.testGradleTask
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import kotlin.test.assertEquals
 
 class DownloadTaskTest {
     @Test
@@ -36,7 +39,25 @@ class DownloadTaskTest {
     }
 
     @Test
-    fun `downloader latest paper`(@TempDir dir: File) {
+    fun `download latest paper`(@TempDir dir: File) {
         testGradleTask(downloadPaperTaskname, dir)
+    }
+
+    @Test
+    fun `get depended version of paper`(@TempDir dir: File) {
+        val version = "1.16.5"
+        testGradleTask(getPaperBuildsTaskname, dir, """
+            plugins {
+                id 'kr.entree.spigradle'
+            }
+            
+            dependencies {
+                compileOnly(spigot('${version}'))
+            }
+        """.trimIndent())
+        val jsonFile = dir.resolve("build").resolve("tmp").resolve(getPaperBuildsTaskname)
+            .resolve(paperBuildsJsonFilename)
+        val json = ObjectMapper().readTree(jsonFile)
+        assertEquals(version, json.get("version").textValue())
     }
 }
