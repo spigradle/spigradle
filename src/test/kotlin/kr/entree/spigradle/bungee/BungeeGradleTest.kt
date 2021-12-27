@@ -4,9 +4,6 @@ import kr.entree.spigradle.module.bungee.BungeePlugin
 import kr.entree.spigradle.util.testGradleScriptWithResource
 import org.junit.jupiter.api.Test
 
-/**
- * Created by JunHyung Lim on 2020-05-23
- */
 class BungeeGradleTest {
     @Test
     fun kotlin() {
@@ -15,6 +12,7 @@ class BungeeGradleTest {
 
     @Test
     fun groovy() {
+        // NOTE: This will crash if versioning up Kotlin! maybe conflicts Kotlin 1.5+ on JVM 8.
         testGradleScriptWithResource("/bungee/groovy", BungeePlugin.BUNGEE_TYPE.descGenTask)
     }
 }
