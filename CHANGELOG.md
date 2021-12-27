@@ -1,3 +1,10 @@
+## [2.3.3](https://github.com/spigradle/spigradle/compare/v2.3.2...v2.3.3) (2021-12-27)
+
+
+### Bug Fixes
+
+* **spigot-debug:** build version inference on `debugPaper`, `debugSpigot` ([a02f7e3](https://github.com/spigradle/spigradle/commit/a02f7e38a14a582bf3de2c46bd4178c10dd74ef9))
+
 ## [2.3.2](https://github.com/spigradle/spigradle/compare/v2.3.1...v2.3.2) (2021-12-23)
 
 
