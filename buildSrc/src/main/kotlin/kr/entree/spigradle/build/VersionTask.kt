@@ -24,9 +24,6 @@ import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.property
 import java.io.File
 
-/**
- * Created by JunHyung Lim on 2020-06-30
- */
 open class VersionTask : DefaultTask() {
     companion object {
         fun getVersionFile(project: Project) = File("${project.projectDir}/version.txt")

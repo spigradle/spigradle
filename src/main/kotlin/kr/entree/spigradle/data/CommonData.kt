@@ -19,9 +19,6 @@ package kr.entree.spigradle.data
 import kr.entree.spigradle.SpigradleMeta
 import kr.entree.spigradle.internal.toFieldEntries
 
-/**
- * Created by JunHyung Lim on 2020-05-22
- */
 object Dependencies {
     val LOMBOK = Dependency("org.projectlombok", "lombok", "1.18.12")
     val SPIGRADLE = Dependency("kr.entree", "spigradle", SpigradleMeta.VERSION)

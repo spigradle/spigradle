@@ -30,9 +30,6 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.internal.GeneratedSubclass
 
-/**
- * Created by JunHyung Lim on 2020-05-16
- */
 class NamedDomainObjectContainerSerializer : StdSerializer<NamedDomainObjectContainer<*>>(NamedDomainObjectContainer::class.java) {
     override fun serialize(
             value: NamedDomainObjectContainer<*>,

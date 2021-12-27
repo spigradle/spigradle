@@ -10,9 +10,6 @@ import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Created by JunHyung Lim on 2020-05-13
- */
 class GenerateYamlTaskTest {
     val project = ProjectBuilder.builder().build()
     val yamlTask = project.tasks.create("yaml", YamlGenerate::class)

@@ -35,9 +35,6 @@ import org.jetbrains.gradle.ext.Remote
 import java.io.File
 import java.util.jar.JarFile
 
-/**
- * Created by JunHyung Lim on 2020-06-07
- */
 private data class PluginData(val description: Map<String, Any>, val file: File)
 private data class PluginDependency(val requires: Set<String> = emptySet(), val options: Set<String> = emptySet()) {
     val all get() = requires + options

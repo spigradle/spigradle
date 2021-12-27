@@ -20,9 +20,6 @@ import kr.entree.spigradle.internal.CommonDebug
 import java.io.File
 import javax.inject.Inject
 
-/**
- * Created by JunHyung Lim on 2020-05-23
- */
 object NukkitRepositories {
     val NUKKIT_X = "https://repo.nukkitx.com/maven-snapshots"
 }

@@ -21,9 +21,6 @@ import kr.entree.spigradle.internal.SerialName
 import java.io.File
 import javax.inject.Inject
 
-/**
- * Created by JunHyung Lim on 2020-05-23
- */
 object BungeeRepositories {
     val BUNGEECORD = Repositories.SONATYPE
 }

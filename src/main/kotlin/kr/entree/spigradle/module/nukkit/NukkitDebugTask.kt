@@ -30,9 +30,6 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.register
 import java.io.File
 
-/**
- * Created by JunHyung Lim on 2020-06-08
- */
 object NukkitDebugTask {
     const val TASK_GROUP_DEBUG = "nukkit debug"
     const val NUKKIT_X_URL = "https://ci.nukkitx.com/job/NukkitX/job/Nukkit/job/master/lastSuccessfulBuild/artifact/target/nukkit-1.0-SNAPSHOT.jar"
