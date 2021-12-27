@@ -23,9 +23,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-/**
- * Created by JunHyung Lim on 2020-06-06
- */
 internal fun Project.ensureMinecraftEULA(directory: File, eula: Boolean) {
     File(directory, "eula.txt").takeIf { eulaFile ->
         val accepted = runCatching {
