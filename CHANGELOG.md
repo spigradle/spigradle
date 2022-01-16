@@ -1,3 +1,10 @@
+## [2.3.4](https://github.com/spigradle/spigradle/compare/v2.3.3...v2.3.4) (2022-01-16)
+
+
+### Bug Fixes
+
+* remove jcenter from default repo ([d2f9490](https://github.com/spigradle/spigradle/commit/d2f94908c8d69b097626cd90bac2203c7550db9d))
+
 ## [2.3.3](https://github.com/spigradle/spigradle/compare/v2.3.2...v2.3.3) (2021-12-27)
 
 
