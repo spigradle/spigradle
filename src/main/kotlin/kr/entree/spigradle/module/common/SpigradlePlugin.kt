@@ -26,7 +26,6 @@ import kr.entree.spigradle.internal.groovyExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
-import org.gradle.api.internal.artifacts.dsl.DefaultRepositoryHandler.BINTRAY_JCENTER_URL
 import org.gradle.api.invocation.Gradle
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.Delete
@@ -109,6 +108,8 @@ class SpigradlePlugin : Plugin<Project> {
 
     private fun Project.setupDefaultRepositories() {
         repositories.gradlePluginPortal() // For avoid APT errors
+        repositories.mavenCentral()
+        repositories.maven(SONATYPE)
     }
 
     private fun Project.setupGroovyExtensions() {
@@ -122,9 +123,6 @@ class SpigradlePlugin : Plugin<Project> {
             ext.set(name, object : Closure<Any>(this, this) {
                 fun doCall() = repositories.maven(url)
             })
-        }
-        listOf(SONATYPE, BINTRAY_JCENTER_URL).forEach {
-            repositories.maven(it)
         }
     }
 
