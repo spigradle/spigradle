@@ -5,7 +5,7 @@
 
 An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and NukkitX.
 
-## Benefits
+# Benefits
 
 - [Description file](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.spigot/-spigot-extension/index.html) generation: `plugin.yml` and/or `bungee.yml`
 
@@ -39,9 +39,12 @@ spigot {
 }
 ```
 
-## Table of contents
+# Table of contents
 
 - [Plugins](#plugins)
+  - [Spigot](#spigot)
+  - [Bungeecord](#bungeecord)
+  - [NukkitX](#nukkitx)
 - [Requirements](#requirements)
 - [Repositories](#repositories)
 - [Dependencies](#dependencies)
@@ -52,13 +55,13 @@ spigot {
 - [The Nukkit plugin](docs/nukkit_plugin.md)
 - [Sample](https://github.com/spigradle/spigradle-sample)
 
-## Plugins
+# Plugins
 
-### Spigot
+## Spigot
 
 [Documentation](docs/spigot_plugin.md)
 
-#### Demo
+### Demo
 
 - [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/spigot/spigot.gradle)
 - [Kotlin - build.gradle.kts](https://github.com/spigradle/spigradle-sample/tree/master/spigot-kotlin/spigot-kotlin.gradle.kts)
@@ -131,11 +134,11 @@ apply(plugin = "kr.entree.spigradle")
 
 </details>
 
-### Bungeecord
+## Bungeecord
 
 [Documentation](docs/bungeecord_plugin.md)
 
-#### Demo
+### Demo
 - [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord/bungeecord.gradle)
 - [Kotlin - build.gradle.kts](https://github.com/spigradle/spigradle-sample/tree/master/bungeecord-kotlin/bungeecord-kotlin.gradle.kts)
 
@@ -205,11 +208,11 @@ apply(plugin = "kr.entree.spigradle.bungee")
 
 </details>
 
-### NukkitX
+## NukkitX
 
 [Documentation](docs/nukkit_plugin.md)
 
-#### Demo
+### Demo
 
 - [Groovy - build.gradle](https://github.com/spigradle/spigradle-sample/tree/master/nukkit/nukkit.gradle)
 - [Kotlin - build.gradle.kts](https://github.com/spigradle/spigradle-sample/tree/master/nukkit-kotlin/nukkit-kotlin.gradle.kts)
@@ -280,7 +283,7 @@ apply(plugin = "kr.entree.spigradle.nukkit")
 
 </details>
 
-## Requirements
+# Requirements
 
 All the plugins requires Gradle 5.4.2+, recommends the latest.
 
@@ -290,7 +293,7 @@ To update your gradle wrapper:
 gradlew wrapper --gradle-version $GRADLE_VERSION --distribution-type all
 ```
 
-## Repositories
+# Repositories
 
 |  Name         |  URL                                                           | Relations                               | Aliases       |
 |---------------|----------------------------------------------------------------|-----------------------------------------|---------------|
@@ -305,7 +308,7 @@ gradlew wrapper --gradle-version $GRADLE_VERSION --distribution-type all
 | frostcast()   | https://ci.frostcast.net/plugin/repository/everything          | BanManager                              | banManager()  |
 | nukkitX()     | https://repo.nukkitx.com/maven-snapshots                       | NukkitX                                 |               |
 
-#### Groovy usage
+### Groovy usage
 
 ```groovy
 repositories {
@@ -313,7 +316,7 @@ repositories {
 }
 ```
 
-#### Kotiln usage
+### Kotiln usage
 
 ```kotlin
 import kr.entree.spigradle.kotlin.*
@@ -323,7 +326,7 @@ repositories {
 }
 ```
 
-## Dependencies
+# Dependencies
 
 |  Name             |  Signature                                       | Default version          |
 |-------------------|--------------------------------------------------|--------------------------|
@@ -349,7 +352,7 @@ repositories {
 | bStatsLite()      | org.bstats:bstats-bukkit-lite:$version           | 1.7                      |
 | nukkit            | cn.nukkit:nukkit:$version                        | 2.0.0-SNAPSHOT           |
 
-#### Groovy usage
+### Groovy usage
 
 ```groovy
 dependencies {
@@ -357,7 +360,7 @@ dependencies {
 }
 ```
 
-#### Kotlin usage
+### Kotlin usage
 
 ```kotlin
 import kr.entree.spigradle.kotlin.*
@@ -367,14 +370,14 @@ dependencies {
 }
 ```
 
-## See also
+# See also
 
 - [The Spigot plugin](docs/spigot_plugin.md)
 - [The Bungeecord plugin](docs/bungeecord_plugin.md)
 - [The Nukkit plugin](docs/nukkit_plugin.md)
 - [Gradle Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 
-## Supporters
+# Supporters
 
 <a href="https://www.jetbrains.com/?from=Spigradle"> 
     <img src="assets/jetbrains.svg" alt="JetBrains OS License"/>
