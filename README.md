@@ -31,6 +31,16 @@ version '1.0-SNAPSHOT'
 dependencies {
     compileOnly spigot('1.16.5')
 }
+
+spigot {
+    depends 'ProtocolLib'
+    softDepends 'SomeLibrary'
+    commands {
+        create('mycmd') {
+            aliases 'cmd'
+        }
+    }
+}
 ```
 
 ## Table of contents
