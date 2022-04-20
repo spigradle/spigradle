@@ -1,4 +1,7 @@
-# Spigradle &middot; [![License](https://img.shields.io/github/license/EntryPointKR/Spigradle.svg)](https://github.com/EntryPointKR/Spigradle/blob/master/LICENSE)
+# Spigradle
+[![License](https://img.shields.io/github/license/EntryPointKR/Spigradle.svg)](https://github.com/EntryPointKR/Spigradle/blob/master/LICENSE)
+[![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/kr.entree.spigradle)](https://plugins.gradle.org/plugin/kr.entree.spigradle)
+[![TeamCity CI](https://ci.entree.dev/app/rest/builds/buildType(id:Spigradle_Build)/statusIcon)](https://ci.entree.dev/buildConfiguration/Spigradle_Build?branch=%3Cdefault%3E&buildTypeTab=overview&mode=builds&guest=1)
 
 An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and NukkitX.
 
@@ -22,7 +25,7 @@ group 'org.sample'
 version '1.0-SNAPSHOT'
 
 dependencies {
-    compileOnly spigot('1.15.2')
+    compileOnly spigot('1.16.5')
 }
 ```
 
@@ -59,7 +62,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly spigot('1.15.2')
+    compileOnly spigot('1.16.5')
 }
 ```
 
@@ -76,7 +79,7 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    compileOnly(spigot("1.15.2"))
+    compileOnly(spigot("1.16.5"))
 }
 ```
 
@@ -340,7 +343,7 @@ repositories {
 
 ```groovy
 dependencies {
-    compileOnly spigot("1.15.2") // or just spigot()
+    compileOnly spigot("1.16.5") // or just spigot()
 }
 ```
 
@@ -350,7 +353,7 @@ dependencies {
 import kr.entree.spigradle.kotlin.*
 
 dependencies {
-    compileOnly(spigot("1.15.2")) // or just spigot()
+    compileOnly(spigot("1.16.5")) // or just spigot()
 }
 ```
 

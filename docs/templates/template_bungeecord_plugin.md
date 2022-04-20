@@ -137,7 +137,7 @@ More information: [Tasks](#tasks)
 
 ## Configuration
 
-### bungee - [BungeeExtension](TODO Javadoc)
+### bungee - [BungeeExtension](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.bungee/-bungee-extension/index.html)
 
 The description of your plugin for a 'bungee.yml'.
 
@@ -227,11 +227,11 @@ tasks {
 
 </details>
 
-### detectBungeeMain - [SubclassDetection](TODO)
+### detectBungeeMain - [SubclassDetection](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-subclass-detection/index.html)
 
 Finds the main class extends [net.md_5.bungee.api.plugin.Plugin](https://ci.md-5.net/job/BungeeCord/ws/api/target/apidocs/net/md_5/bungee/api/plugin/Plugin.html).
 
-### generateBungeeDescription - [YamlGenerate](TODO)
+### generateBungeeDescription - [YamlGenerate](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-yaml-generate/index.html)
 
 *Depends on: `detectBungeeMain`*
 
@@ -249,7 +249,7 @@ Downloads Bungeecord and runs it with your plugin and dependency plugins.
 
 Copies project plugin jar and its dependency plugins into the server plugins directory.
 
-### downloadBungee - [Download](TODO)
+### downloadBungee - [Download](https://github.com/michel-kraemer/gradle-download-task#usage)
 
 Downloads Bungeecord.
 

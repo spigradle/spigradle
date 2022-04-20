@@ -179,7 +179,7 @@ Then WorldEdit and WorldGuard will be excluded by the `prepareSpigotPlugins` whi
 
 ## Configuration
 
-### spigot - [SpigotExtension](TODO Javadoc)
+### spigot - [SpigotExtension](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.spigot/-spigot-extension/index.html)
 
 The description of your plugin for a `plugin.yml`.
 
@@ -314,11 +314,11 @@ tasks {
 
 </details>
 
-### detectSpigotMain - [SubclassDetection](TODO)
+### detectSpigotMain - [SubclassDetection](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-subclass-detection/index.html)
 
 Finds the main class extends [org.bukkit.plugin.java.JavaPlugin](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/plugin/java/JavaPlugin.html).
 
-### generateSpigotDescription - [YamlGenerate](TODO)
+### generateSpigotDescription - [YamlGenerate](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-yaml-generate/index.html)
 
 *Depends on: `detectSpigotMain`*
 
@@ -356,7 +356,7 @@ Just runs the server jar at configured path even there's no executable file.
 
 NOTE: Use `debugSpigot` or `debugPaper` instead of `runSpigot` if you need prepare process like download server jar, copy plugins.
 
-### downloadSpigotBuildTools - [Download](TODO)
+### downloadSpigotBuildTools - [Download](https://github.com/michel-kraemer/gradle-download-task#usage)
 
 Downloads Spigot BuildTools.
 
@@ -372,7 +372,7 @@ Accepts the Mojang EULA, used in `runSpigot` task and IDEA RunConfiguration.
 
 Configure the `spigot.yml`, used to set `settings.restart-on-crash` to false as default.
 
-### downloadPaper - [Download](TODO)
+### downloadPaper - [Download](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-download/index.html)
 
 Downloads Paperclip.
 

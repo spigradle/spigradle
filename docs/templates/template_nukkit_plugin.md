@@ -137,7 +137,7 @@ More information: [Tasks](#tasks)
 
 ## Configuration
 
-### nukkit - [NukkitExtension](TODO Javadoc)
+### nukkit - [NukkitExtension](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.nukkit/-nukkit-extension/index.html)
 
 The description of your plugin for a 'plugin.yml'.
 
@@ -268,11 +268,11 @@ tasks {
 
 </details>
 
-### detectNukkitMain - [SubclassDetection](TODO)
+### detectNukkitMain - [SubclassDetection](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-subclass-detection/index.html)
 
 Finds the main class extends [cn.nukkit.plugin.PluginBase](https://ci.nukkitx.com/job/NukkitX/job/Nukkit/job/master/javadoc/index.html?overview-summary.html).
 
-### generateNukkitDescription - [YamlGenerate](TODO)
+### generateNukkitDescription - [YamlGenerate](https://entree.dev/spigradle/docs/spigradle/kr.entree.spigradle.module.common/-yaml-generate/index.html)
 
 *Depends on: `detectNukkitMain`*
 
@@ -290,7 +290,7 @@ Downloads NukkitX and runs it with your plugin and dependency plugins.
 
 Copies project plugin jar and its dependency plugins into the server plugins directory.
 
-### downloadNukkit - [Download](TODO)
+### downloadNukkit - [Download](https://github.com/michel-kraemer/gradle-download-task#usage)
 
 Downloads NukkitX.
 
