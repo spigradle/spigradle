@@ -22,7 +22,7 @@ An intelligent Gradle plugin used to develop plugins for Spigot, Bungeecord and 
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.3.4'
+    id 'kr.entree.spigradle' version '1.0.0'
 }
 
 group 'org.sample'
@@ -83,7 +83,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle' version '2.3.4'
+    id 'kr.entree.spigradle' version '1.0.0'
 }
 
 dependencies {
@@ -99,7 +99,7 @@ import kr.entree.spigradle.kotlin.*
 
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle") version "2.3.4"
+    id("kr.entree.spigradle") version "1.0.0"
 }
 
 dependencies {
@@ -119,7 +119,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.3.4'
+        classpath 'kr.entree:spigradle:1.0.0'
     }
 }
 
@@ -137,7 +137,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.3.4")
+        classpath("kr.entree:spigradle:1.0.0")
     }
 }
 
@@ -163,7 +163,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.bungee' version '2.3.4'
+    id 'kr.entree.spigradle.bungee' version '1.0.0'
 }
 
 dependencies {
@@ -177,7 +177,7 @@ dependencies {
 ```kotlin
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.bungee") version "2.3.4"
+    id("kr.entree.spigradle.bungee") version "1.0.0"
 }
 
 dependencies {
@@ -197,7 +197,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.3.4'
+        classpath 'kr.entree:spigradle:1.0.0'
     }
 }
 
@@ -215,7 +215,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.3.4")
+        classpath("kr.entree:spigradle:1.0.0")
     }
 }
 
@@ -242,7 +242,7 @@ Groovy DSL
 ```groovy
 plugins {
     id 'java'
-    id 'kr.entree.spigradle.nukkit' version '2.3.4'
+    id 'kr.entree.spigradle.nukkit' version '1.0.0'
 }
 
 dependencies {
@@ -256,7 +256,7 @@ dependencies {
 ```kotlin
 plugins {
     kotlin("jvm") version "1.3.72"
-    id("kr.entree.spigradle.nukkit") version "2.3.4"
+    id("kr.entree.spigradle.nukkit") version "1.0.0"
 }
 
 dependencies {
@@ -276,7 +276,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'kr.entree:spigradle:2.3.4'
+        classpath 'kr.entree:spigradle:1.0.0'
     }
 }
 
@@ -294,7 +294,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("kr.entree:spigradle:2.3.4")
+        classpath("kr.entree:spigradle:1.0.0")
     }
 }
 
@@ -368,7 +368,7 @@ repositories {
 | bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     |
 | craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     |
 | lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
-| spigradle()       | kr.entree:spigradle:$version                     | 2.3.4       |
+| spigradle()       | kr.entree:spigradle:$version                     | 1.0.0       |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.5.1                    |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
 | vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.3                    |
