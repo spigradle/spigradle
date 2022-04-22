@@ -42,6 +42,7 @@ import java.io.File
  * spigot {
  *   authors 'Me', 'Someone'
  *   depends 'ProtocolLib', 'Vault'
+ *   softDepends 'MySoftLib'
  *   apiVersion '1.15'
  *   load STARTUP
  *   commands {
@@ -77,6 +78,7 @@ import java.io.File
  * spigot {
  *   authors = "Me"
  *   depends = listOf("ProtocolLib", "Vault")
+ *   softDepends = listOf("MySoftLib")
  *   apiVersion = "1.15"
  *   load = Load.STARTUP
  *   commands {
