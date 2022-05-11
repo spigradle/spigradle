@@ -19,8 +19,10 @@ package kr.entree.spigradle
 import kr.entree.spigradle.detection.ClassDefinition
 import kr.entree.spigradle.detection.findSubClass
 import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 import kotlin.test.assertEquals
 
+@Ignore
 class NewMainDetectionTest {
     @Test
     fun unit() {
