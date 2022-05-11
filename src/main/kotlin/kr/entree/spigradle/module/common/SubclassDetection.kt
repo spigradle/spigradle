@@ -94,7 +94,9 @@ open class SubclassDetection : DefaultTask() {
         val options = ClassReader.SKIP_CODE and ClassReader.SKIP_DEBUG and ClassReader.SKIP_FRAMES
         inputChanges.getFileChanges(classDirectories).asSequence().takeWhile {
             detectedClassR.get() == null
-        }.map { it.file }.filter {
+        }.map {
+            it.file
+        }.filter {
             it.extension == "class" && it.isFile
         }.forEach { classFile ->
             classFile.inputStream().buffered().use {
