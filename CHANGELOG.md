@@ -1,3 +1,16 @@
+# [2.4.0](https://github.com/spigradle/spigradle/compare/v2.3.4...v2.4.0) (2022-05-11)
+
+
+### Features
+
+* fastest built-in main detection ([1da3f2c](https://github.com/spigradle/spigradle/commit/1da3f2cc3fdb906769df7d5dfa81994038e7180c))
+* **spigot:** add `excludeLibraries` to exclude `libraries` ([e6c100a](https://github.com/spigradle/spigradle/commit/e6c100a4737a5c0ac87df157dd19df552686104f))
+
+
+### Reverts
+
+* Revert "chore(release): 1.0.0 [skip ci]" ([65145d4](https://github.com/spigradle/spigradle/commit/65145d4216ee95847e8173f4babb209018ebdaf1))
+
 ## [2.3.4](https://github.com/spigradle/spigradle/compare/v2.3.3...v2.3.4) (2022-01-16)
 
 
