@@ -198,6 +198,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
      * - `okhttp`
      * - `com.squareup.okhttp3:okhttp`
      * - `com.squareup.okhttp3:okhttp:4.9.0`
+     * - `*`
      *
      * See also: [libraries]
      */

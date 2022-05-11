@@ -16,7 +16,7 @@ def spigotKeyword = 'spigot'
 def bungeeKeyword = 'bungeecord'
 
 spigot {
-    shadowLibraries spigotKeyword, bungeeKeyword
+    shadowLibraries '*'
 }
 
 build.doLast {
