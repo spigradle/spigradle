@@ -1,3 +1,10 @@
+## [2.4.1](https://github.com/spigradle/spigradle/compare/v2.4.0...v2.4.1) (2022-05-11)
+
+
+### Bug Fixes
+
+* support `*` in `excludeLibraries` ([2818a98](https://github.com/spigradle/spigradle/commit/2818a986511874946fadd4e68e9c8ac3ad956400))
+
 # [2.4.0](https://github.com/spigradle/spigradle/compare/v2.3.4...v2.4.0) (2022-05-11)
 
 
