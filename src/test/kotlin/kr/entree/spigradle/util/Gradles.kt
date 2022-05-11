@@ -7,7 +7,7 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-fun Any.testGradleScriptWithResource(path: String, taskName: String) {
+fun Any.testGradleTaskWithResource(path: String, taskName: String) {
     val result = GradleRunner.create()
             .withProjectDir(File(javaClass.getResource(path)!!.file))
             .withPluginClasspath()

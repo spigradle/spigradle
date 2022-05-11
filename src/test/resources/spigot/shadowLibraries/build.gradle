@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'kr.entree.spigradle'
+}
+
+repositories {
+    mavenLocal()
+}
+
+dependencies {
+    implementation spigot()
+    implementation bungeecord()
+}
+
+def spigotKeyword = 'spigot'
+def bungeeKeyword = 'bungeecord'
+
+spigot {
+    shadowLibraries spigotKeyword, bungeeKeyword
+}
+
+build.doLast {
+    def pluginFile = new File(sourceSets.main.output.resourcesDir, 'plugin.yml')
+    def text = pluginFile.isFile() ? pluginFile.text : ""
+    if (!text.isEmpty() && !text.contains(spigotKeyword) && !text.contains(bungeeKeyword)) {
+        println(pluginFile.absolutePath)
+        println(text)
+    } else {
+        throw new GradleException("Error!")
+    }
+}

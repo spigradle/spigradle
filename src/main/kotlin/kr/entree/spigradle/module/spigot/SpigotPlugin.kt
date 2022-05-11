@@ -62,7 +62,11 @@ class SpigotPlugin : Plugin<Project> {
             setupDefaultDependencies()
             registerDescGenTask<SpigotExtension>(SPIGOT_TYPE) { desc ->
                 if (desc.libraries.isEmpty()) {
-                    desc.libraries = findRuntimeDependencyNotations(project)
+                    desc.libraries =
+                        findRuntimeDependencyNotations(project)
+                            .filter { depNot ->
+                                desc.excludeLibraries.none { key -> depNot.contains(key) }
+                            }
                 }
                 desc
             }

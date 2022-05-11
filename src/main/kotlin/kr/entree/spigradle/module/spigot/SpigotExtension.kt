@@ -190,6 +190,21 @@ open class SpigotExtension(project: Project) : StandardDescription {
     var libraries: List<String> = emptyList()
 
     /**
+     * Exclude libraries from the [libraries].
+     *
+     * This will be 'contains' matching with [libraries], it's ok just piece of keyword.
+     *
+     * Example:
+     * - `okhttp`
+     * - `com.squareup.okhttp3:okhttp`
+     * - `com.squareup.okhttp3:okhttp:4.9.0`
+     *
+     * See also: [libraries]
+     */
+    @Transient
+    var excludeLibraries: List<String> = emptyList()
+
+    /**
      * DSL container for the [commands] configuration.
      *
      * Groovy Example:
@@ -323,5 +338,12 @@ open class SpigotExtension(project: Project) : StandardDescription {
      */
     fun loadBefore(vararg loadBefore: String) {
         this.loadBefore = loadBefore.toList()
+    }
+
+    /**
+     * Groovy DSL helper for the [excludeLibraries] configuration.
+     */
+    fun shadowLibraries(vararg dependencyNotations: String) {
+        this.excludeLibraries = listOf(*dependencyNotations)
     }
 }
