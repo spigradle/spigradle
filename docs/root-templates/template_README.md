@@ -87,7 +87,7 @@ spigot {
     }
   }
   // if you want to exclude all [spigot.libraries]:
-  // `excludeLibraries = listOf("*")`
+  // `excludeLibraries = ['*']`
 }
 ```
 
@@ -105,6 +105,18 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     compileOnly(spigot("1.16.5"))
+}
+
+spigot {
+  depends = listOf("ProtocolLib")
+  softDepends = listOf("SomeLibrary")
+  commands {
+    create("mycmd") {
+      aliases = listOf("cmd")
+    }
+  }
+  // if you want to exclude all [spigot.libraries]:
+  // `excludeLibraries = listOf("*")`
 }
 ```
 
