@@ -346,7 +346,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
      */
     @Deprecated(
         message = "Use `excludeLibraries` instead",
-        replaceWith = ReplaceWith("this.excludeLibraries = listOf(*dependencyNotations)")
+        replaceWith = ReplaceWith("this.excludeLibraries(*dependencyNotations)")
     )
     fun shadowLibraries(vararg dependencyNotations: String) {
         this.excludeLibraries = listOf(*dependencyNotations)
