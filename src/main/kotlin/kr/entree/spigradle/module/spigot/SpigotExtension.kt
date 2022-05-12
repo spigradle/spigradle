@@ -344,7 +344,18 @@ open class SpigotExtension(project: Project) : StandardDescription {
     /**
      * Groovy DSL helper for the [excludeLibraries] configuration.
      */
+    @Deprecated(
+        message = "Use `excludeLibraries` instead",
+        replaceWith = ReplaceWith("this.excludeLibraries = listOf(*dependencyNotations)")
+    )
     fun shadowLibraries(vararg dependencyNotations: String) {
+        this.excludeLibraries = listOf(*dependencyNotations)
+    }
+
+    /**
+     * Groovy DSL helper for the [excludeLibraries] configuration.
+     */
+    fun excludeLibraries(vararg dependencyNotations: String) {
         this.excludeLibraries = listOf(*dependencyNotations)
     }
 }
