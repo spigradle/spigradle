@@ -77,6 +77,18 @@ plugins {
 dependencies {
     compileOnly spigot('1.16.5')
 }
+
+spigot {
+  depends 'ProtocolLib'
+  softDepends 'SomeLibrary'
+  commands {
+    create('mycmd') {
+      aliases 'cmd'
+    }
+  }
+  // if you want to exclude all [spigot.libraries]:
+  // `excludeLibraries = listOf("*")`
+}
 ```
 
 <details>
