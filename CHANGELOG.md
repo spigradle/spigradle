@@ -1,3 +1,10 @@
+## [2.4.2](https://github.com/spigradle/spigradle/compare/v2.4.1...v2.4.2) (2022-05-12)
+
+
+### Bug Fixes
+
+* rename wrong `shadowLibraries` to `excludeLibraries` ([351199a](https://github.com/spigradle/spigradle/commit/351199ac7c06e32b8384e87860a652c3f616b9fb))
+
 ## [2.4.1](https://github.com/spigradle/spigradle/compare/v2.4.0...v2.4.1) (2022-05-11)
 
 
