@@ -352,29 +352,29 @@ repositories {
 
 # Dependencies
 
-|  Name             |  Signature                                       | Default version          |
-|-------------------|--------------------------------------------------|--------------------------|
-| spigot(version)   | org.spigotmc:spigot-api:$version                 | 1.16.1-R0.1-SNAPSHOT     |
-| spigotAll()       | org.spigotmc:spigot:$version                     | 1.16.1-R0.1-SNAPSHOT     |
-| bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.16-R0.4-SNAPSHOT       |
-| minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.16.1-SNAPSHOT          |
-| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     |
-| bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     |
-| craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     |
-| lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  |
-| spigradle()       | kr.entree:spigradle:$version                     | $SPIGRADLE_VERSION       |
-| protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.5.1                    |
-| vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      |
-| vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.3                    |
-| luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.1                      |
-| worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version    | 7.1.0                    |
-| worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.3                    |
-| essentialsX()     | net.ess3:EssentialsX:$version                    | 2.17.2                   |
-| banManager()      | me.confuser.banmanager:BanManagerBukkit:$version | 7.3.0-SNAPSHOT           |
-| commandhelper()   | com.sk89q:commandhelper:$version                 | 3.3.4-SNAPSHOT           |
-| bStats()          | org.bstats:bstats-bukkit:$version                | 1.7                      |
-| bStatsLite()      | org.bstats:bstats-bukkit-lite:$version           | 1.7                      |
-| nukkit            | cn.nukkit:nukkit:$version                        | 2.0.0-SNAPSHOT           |
+|  Name             |  Signature                                       | Default version          | Official repository      |
+|-------------------|--------------------------------------------------|--------------------------|--------------------------|
+| spigot(version)   | org.spigotmc:spigot-api:$version                 | 1.16.1-R0.1-SNAPSHOT     | spigotmc()               |
+| spigotAll()       | org.spigotmc:spigot:$version                     | 1.16.1-R0.1-SNAPSHOT     | spigotmc()               |
+| bungeecord()      | net.md-5:bungeecord-api:$version                 | 1.16-R0.4-SNAPSHOT       | spigotmc()               |
+| minecraftServer() | org.spigotmc:minecraft-server:$version           | 1.16.1-SNAPSHOT          | mavenLocal(), BuildTools |
+| paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     | papermc()                |
+| bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     | mavenLocal(), BuildTools |
+| craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     | mavenLocal(), BuildTools |
+| lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  | mavenCentral()           |
+| spigradle()       | kr.entree:spigradle:$version                     | $SPIGRADLE_VERSION       | mavenCentral()           |
+| protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.5.1                    | protocolLib()            |
+| vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      | jitpack()                |
+| vaultAll()        | com.github.MilkBowl:Vault:$version               | 1.7.3                    | jitpack()                |
+| luckPerms()       | me.lucko.luckperms:luckperms-api:$version        | 5.1                      | mavenCentral()           |
+| worldedit()       | com.sk89q.worldedit:worldedit-bukkit:$version    | 7.1.0                    | enginehub()              |
+| worldguard()      | com.sk89q.worldguard:worldguard-bukkit:$version  | 7.0.3                    | enginehub()              |
+| essentialsX()     | net.ess3:EssentialsX:$version                    | 2.17.2                   | enderZone()              |
+| banManager()      | me.confuser.banmanager:BanManagerBukkit:$version | 7.3.0-SNAPSHOT           | frostcast()              |
+| commandhelper()   | com.sk89q:commandhelper:$version                 | 3.3.4-SNAPSHOT           | enginehub()              |
+| bStats()          | org.bstats:bstats-bukkit:$version                | 1.7                      | codemc()                 |
+| bStatsLite()      | org.bstats:bstats-bukkit-lite:$version           | 1.7                      | codemc()                 |
+| nukkit            | cn.nukkit:nukkit:$version                        | 2.0.0-SNAPSHOT           | nukkitX()                |
 
 ### Groovy usage
 
