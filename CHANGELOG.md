@@ -1,3 +1,10 @@
+## [2.4.3](https://github.com/spigradle/spigradle/compare/v2.4.2...v2.4.3) (2022-11-01)
+
+
+### Bug Fixes
+
+* matches kotlin stdlib version with Jackson and Spigradle ([e2d497d](https://github.com/spigradle/spigradle/commit/e2d497d56f8bd8d6e464c2b8b88919b07a1ab19d))
+
 ## [2.4.2](https://github.com/spigradle/spigradle/compare/v2.4.1...v2.4.2) (2022-05-12)
 
 
