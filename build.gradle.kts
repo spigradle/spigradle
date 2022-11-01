@@ -41,7 +41,7 @@ repositories {
     maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
 }
 
-val jacksonVersion = "2.13.1"
+val jacksonVersion = "2.12.7"
 val kotlinVersion = "1.5.21"
 
 dependencies {
