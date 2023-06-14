@@ -16,8 +16,8 @@
 
 package kr.entree.spigradle
 
+import kr.entree.spigradle.SpigradlePlugin.Companion.DEBUG_DIR
 import kr.entree.spigradle.annotations.PluginType
-import kr.entree.spigradle.module.common.SpigradlePlugin.Companion.DEBUG_DIR
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.intellij.lang.annotations.Language
@@ -327,7 +327,7 @@ class GradleFunctionalTest {
             spigot.main = 'AwesomePlugin'
             spigot.debug.eula = true
             import com.fasterxml.jackson.core.type.TypeReference
-            import kr.entree.spigradle.internal.Jackson
+            import kr.entree.spigradle.Jackson
             configSpigot {
                 properties.put("mykey", "myval")            
                 def file = new File(spigot.debug.serverDirectory, 'spigot.yml')

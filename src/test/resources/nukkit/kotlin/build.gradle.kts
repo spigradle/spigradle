@@ -1,4 +1,4 @@
-import kr.entree.spigradle.kotlin.nukkit
+import kr.entree.spigradle.nukkit.nukkit
 
 plugins {
     kotlin("jvm") version "1.4.20"

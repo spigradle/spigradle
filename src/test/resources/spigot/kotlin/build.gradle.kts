@@ -1,4 +1,4 @@
-import kr.entree.spigradle.kotlin.spigot
+import kr.entree.spigradle.spigot.spigot
 
 plugins {
     kotlin("jvm") version "1.4.20"

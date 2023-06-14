@@ -1,4 +1,4 @@
-import kr.entree.spigradle.kotlin.bungeecord
+import kr.entree.spigradle.bungee.bungeecord
 
 plugins {
     kotlin("jvm") version "1.4.20"
