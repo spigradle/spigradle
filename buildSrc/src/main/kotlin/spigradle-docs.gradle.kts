@@ -6,7 +6,7 @@ plugins {
 
 tasks {
     dokkaHtml {
-        outputDirectory.set(buildDir.resolve("kdoc"))
+        outputDirectory.set(layout.buildDirectory.dir("kdoc"))
         dokkaSourceSets {
             named("main") {
                 moduleName.set(project.name)

@@ -2,7 +2,7 @@ import kr.entree.spigradle.build.VersionTask
 
 plugins {
     `kotlin-dsl`
-    `kotlin-kapt`
+    kotlin("kapt") version "1.9.22" // version follows `kotlin-dsl`
     `java-gradle-plugin`
     `spigradle-meta`
     `spigradle-publish`
@@ -13,26 +13,6 @@ group = "kr.entree"
 version = VersionTask.readVersion(project)
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
-gradlePlugin {
-    plugins {
-        create("spigradle") {
-            id = "kr.entree.spigradle.base"
-            implementationClass = "kr.entree.spigradle.module.common.SpigradlePlugin"
-        }
-        create("spigot") {
-            id = "kr.entree.spigradle"
-            implementationClass = "kr.entree.spigradle.module.spigot.SpigotPlugin"
-        }
-        create("bungee") {
-            id = "kr.entree.spigradle.bungee"
-            implementationClass = "kr.entree.spigradle.module.bungee.BungeePlugin"
-        }
-        create("nukkit") {
-            id = "kr.entree.spigradle.nukkit"
-            implementationClass = "kr.entree.spigradle.module.nukkit.NukkitPlugin"
-        }
-    }
-}
 
 repositories {
     mavenCentral()
@@ -42,7 +22,7 @@ repositories {
 }
 
 val jacksonVersion = "2.12.7"
-val kotlinVersion = "1.5.21"
+val kotlinVersion = "1.9.23"
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
@@ -84,3 +64,15 @@ tasks {
         dependsOn(getByName("publishToMavenLocal"))
     }
 }
+
+//afterEvaluate {
+//    gradle.taskGraph.whenReady {
+//        println("Tasks")
+//        getAllTasks().forEachIndexed { n, task ->
+//            println("${n + 1} $task")
+//            task.dependsOn.forEachIndexed { m, depObj ->
+//                println("  ${ m + 1 } $depObj")
+//            }
+//        }
+//    }
+//}

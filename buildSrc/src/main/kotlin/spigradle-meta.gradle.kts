@@ -1,33 +1,28 @@
 @file:Suppress("UnstableApiUsage")
 
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
+import kr.entree.spigradle.build.CodeGenerationTask
+
 
 plugins {
-    kotlin("jvm")
+    id("java")
 }
 
-val generatedSourceDir = File("$buildDir/generated/source/spigradle-build/kotlin/main")
-
-sourceSets["main"].withConvention(KotlinSourceSet::class) {
-    kotlin.srcDir(generatedSourceDir)
+// https://docs.gradle.org/current/userguide/validation_problems.html#implicit_dependency
+val genDir = layout.buildDirectory.dir("generated/source/spigradle-build/main/java")
+val generateSpigradleMeta by tasks.registering(CodeGenerationTask::class) {
+    outputDir.convention(genDir)
 }
 
 tasks {
-    val metaFile = generatedSourceDir.resolve("kr/entree/spigradle/SpigradleMeta.kt")
-    val generateSpigradleMeta by registering {
-        group = "spigradle build"
-        outputs.files(metaFile)
-        doLast {
-            metaFile.apply {
-                parentFile.mkdirs()
-            }.writeText("""
-                package kr.entree.spigradle
+    classes {
+        dependsOn(generateSpigradleMeta)
+    }
+}
 
-                object SpigradleMeta {
-                    const val VERSION = "${project.version}"
-                }
-            """.trimIndent())
+sourceSets {
+    main {
+        java {
+            srcDir(generateSpigradleMeta.flatMap { it.outputDir })
         }
     }
-    compileKotlin { dependsOn(generateSpigradleMeta) }
 }

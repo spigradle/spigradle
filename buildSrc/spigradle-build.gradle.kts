@@ -1,6 +1,7 @@
 plugins {
-    java
+    `java-library`
     `kotlin-dsl`
+    `java-gradle-plugin`
 }
 
 repositories {
@@ -8,15 +9,11 @@ repositories {
     gradlePluginPortal()
 }
 
-dependencies {
-    implementation(kotlin("gradle-plugin", version = "1.4.20"))
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.4.32")
-    implementation("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5")
-    implementation("org.jfrog.buildinfo:build-info-extractor-gradle:4.15.2")
-    implementation("gradle.plugin.com.eden:orchidPlugin:0.21.0")
-    implementation("com.gradle.publish:plugin-publish-plugin:0.12.0")
-}
+// TODO(composite): https://docs.gradle.org/current/userguide/writing_plugins.html#binary_plugins
 
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
+dependencies {
+    // Dependencies for applying external plugins in convention plugins
+    // Reference: https://docs.gradle.org/current/samples/sample_sharing_convention_plugins_with_build_logic.html
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.20")
+    implementation("com.gradle.publish:plugin-publish-plugin:1.2.1")
 }
