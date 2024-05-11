@@ -7,10 +7,9 @@ plugins {
     id("java")
 }
 
-// https://docs.gradle.org/current/userguide/validation_problems.html#implicit_dependency
-val genDir = layout.buildDirectory.dir("generated/source/spigradle-build/main/java")
+val defaultGenDir = layout.buildDirectory.dir("generated/source/spigradle-build/main/java")
 val generateSpigradleMeta by tasks.registering(CodeGenerationTask::class) {
-    outputDir.convention(genDir)
+    outputDir.convention(defaultGenDir)
 }
 
 tasks {
@@ -22,7 +21,9 @@ tasks {
 sourceSets {
     main {
         java {
-            srcDir(generateSpigradleMeta.flatMap { it.outputDir })
+            // https://docs.gradle.org/current/userguide/validation_problems.html#implicit_dependency
+            val genDir = generateSpigradleMeta.flatMap { it.outputDir }
+            srcDir(genDir)
         }
     }
 }

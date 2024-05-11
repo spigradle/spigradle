@@ -63,29 +63,4 @@ gradlePlugin {
     }
 }
 
-//pluginBundle {
-//    website = "https://github.com/spigradle/spigradle"
-//    vcsUrl = spigradleVcsUrl
-//    tags = listOf("minecraft", "paper", "spigot", "bukkit", "bungeecord", "nukkit", "nukkitX")
-//    fun formatDesc(name: String) = "An intelligent Gradle plugin for developing $name plugin."
-//    plugins {
-//        create("spigradle") {
-//            displayName = "Spigradle Base Plugin"
-//            description = "The base plugin of Spigradle"
-//        }
-//        create("spigot") {
-//            displayName = "Spigradle Spigot Plugin"
-//            description = formatDesc("Spigot")
-//        }
-//        create("bungee") {
-//            displayName = "Spigradle Bungeecord Plugin"
-//            description = formatDesc("Bungeecord")
-//        }
-//        create("nukkit") {
-//            displayName = "Spigradle NukkitX Plugin"
-//            description = formatDesc("NukkitX")
-//        }
-//    }
-//}
-
 tasks.register<VersionTask>("setVersion")

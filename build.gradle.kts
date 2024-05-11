@@ -64,15 +64,3 @@ tasks {
         dependsOn(getByName("publishToMavenLocal"))
     }
 }
-
-//afterEvaluate {
-//    gradle.taskGraph.whenReady {
-//        println("Tasks")
-//        getAllTasks().forEachIndexed { n, task ->
-//            println("${n + 1} $task")
-//            task.dependsOn.forEachIndexed { m, depObj ->
-//                println("  ${ m + 1 } $depObj")
-//            }
-//        }
-//    }
-//}
