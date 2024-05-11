@@ -18,10 +18,15 @@ package kr.entree.spigradle.build
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
 abstract class CodeGenerationTask : DefaultTask() {
+    @get:Input
+    abstract val version: Property<String>
+
     @get:OutputDirectory
     abstract val outputDir: DirectoryProperty
 
@@ -35,7 +40,7 @@ abstract class CodeGenerationTask : DefaultTask() {
                 package kr.entree.spigradle;
 
                 public class SpigradleMeta {
-                    public static final String VERSION = "${project.version}";
+                    public static final String VERSION = "${version.get()}";
                 }
             """.trimIndent()
         )

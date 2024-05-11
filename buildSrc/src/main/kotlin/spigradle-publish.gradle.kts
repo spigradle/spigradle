@@ -1,7 +1,4 @@
-import groovy.lang.GroovyObject
-import kr.entree.spigradle.build.*
-import java.util.*
-import org.gradle.api.tasks.bundling.Jar
+import kr.entree.spigradle.build.VersionTask
 
 plugins {
     id("java")
@@ -10,27 +7,24 @@ plugins {
 
 val spigradleVcsUrl = "https://github.com/spigradle/spigradle.git"
 
-val spigradleDocsJar by tasks.registering(Jar::class) {
-    group = "spigradle build"
-    archiveClassifier.set("docs")
-    from("$projectDir/docs") {
-        include("*.md")
-    }
-    from("$projectDir/CHANGELOG.md")
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
-val spigradleSourcesJar by tasks.registering(Jar::class) {
-    group = "spigradle build"
-    archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
+tasks {
+    named<Jar>("javadocJar") {
+        from("$projectDir/docs") {
+            include("*.md")
+        }
+        from("$projectDir/CHANGELOG.md")
+    }
 }
 
 publishing {
     publications {
         create("spigradle", MavenPublication::class) {
             from(components["java"])
-            artifact(spigradleDocsJar.get())
-            artifact(spigradleSourcesJar.get())
         }
     }
 }

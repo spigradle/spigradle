@@ -13,7 +13,6 @@ group = "kr.entree"
 version = VersionTask.readVersion(project)
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
-
 repositories {
     mavenCentral()
     gradlePluginPortal()

@@ -9,6 +9,7 @@ plugins {
 
 val defaultGenDir = layout.buildDirectory.dir("generated/source/spigradle-build/main/java")
 val generateSpigradleMeta by tasks.registering(CodeGenerationTask::class) {
+    version.convention(project.version.toString())
     outputDir.convention(defaultGenDir)
 }
 
