@@ -98,7 +98,7 @@ object SpigotRepositories {
     val SPIGOT = SPIGOT_MC
 
     @SerialName("papermc")
-    val PAPER_MC = "https://papermc.io/repo/repository/maven-public/"
+    val PAPER_MC = "https://repo.papermc.io/repository/maven-public/"
     val PAPER = PAPER_MC
     val PROTOCOL_LIB = "https://repo.dmulloy2.net/nexus/repository/public/"
     val VAULT = Repositories.JITPACK
