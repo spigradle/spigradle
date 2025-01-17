@@ -169,7 +169,7 @@ object SpigotDebugTask {
 
     fun Project.registerGetPaperBuilds(version: Provider<String>): TaskProvider<Download> {
         return tasks.register(getPaperBuildsTaskname, Download::class) {
-            src(provider { "https://papermc.io/api/v2/projects/paper/versions/${version.get()}" })
+            src(provider { "https://api.papermc.io/v2/projects/paper/versions/${version.get()}" })
             dest(temporaryDir.resolve(paperBuildsJsonFilename))
         }
     }
@@ -180,7 +180,7 @@ object SpigotDebugTask {
     fun Project.registerGetPaperDownloads(build: Provider<Long>, version: Provider<String>): TaskProvider<Download> {
         return tasks.register(getPaperDownloadsTaskname, Download::class) {
             src(provider {
-                "https://papermc.io/api/v2/projects/paper/versions/${version.get()}/builds/${build.get()}"
+                "https://api.papermc.io/v2/projects/paper/versions/${version.get()}/builds/${build.get()}"
             })
             dest(temporaryDir.resolve(paperDownloadsJsonFilename))
             dependsOn(getPaperBuildsTaskname)
@@ -219,7 +219,7 @@ object SpigotDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Download the Paperclip."
             src(provider {
-                "https://papermc.io/api/v2/projects/paper/versions/${getBuildVersion(debug)}/builds/${buildR.get()}/downloads/${filenameR.get()}"
+                "https://api.papermc.io/v2/projects/paper/versions/${getBuildVersion(debug)}/builds/${buildR.get()}/downloads/${filenameR.get()}"
             })
             dest(provider { debug.serverJar })
             dependsOn(getPaperBuildsTask, getPaperDownloadsTask)
