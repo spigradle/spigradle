@@ -20,7 +20,6 @@ import kr.entree.spigradle.annotations.PluginType
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.file.ConfigurableFileCollection
-import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
 import org.gradle.api.tasks.compile.JavaCompile
@@ -115,7 +114,7 @@ open class SubclassDetection : DefaultTask() {
 
     companion object {
         fun register(project: Project, taskName: String, type: PluginType): TaskProvider<SubclassDetection> {
-            val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
+            val sourceSets = project.extensions.getByType(SourceSetContainer::class)
             return project.tasks.register(taskName, SubclassDetection::class) {
                 val pathFile = project.getPluginMainPathFile(type)
                 val compileJava = project.tasks.named<JavaCompile>("compileJava")

@@ -26,14 +26,10 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.file.ConfigurableFileCollection
-import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.OutputFiles
-import org.gradle.api.tasks.TaskAction
-import org.gradle.api.tasks.TaskProvider
+import org.gradle.api.tasks.*
 import org.gradle.kotlin.dsl.*
 import java.io.File
 import java.nio.charset.Charset
@@ -205,7 +201,7 @@ internal inline fun <reified T : StandardDescription> Project.registerDescGenTas
 }
 
 internal fun Project.findResourceDirs(fileName: String): List<File> {
-    val sourceSets = project.withConvention(JavaPluginConvention::class) { sourceSets }
+    val sourceSets = project.extensions.getByType(SourceSetContainer::class)
     return listOf("main", "test").mapNotNull {
         sourceSets[it].output.resourcesDir
     }.map {
