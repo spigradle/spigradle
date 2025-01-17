@@ -1,62 +1,15 @@
 import groovy.lang.GroovyObject
 import kr.entree.spigradle.build.*
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import java.util.*
 import org.gradle.api.tasks.bundling.Jar
 
 plugins {
-    id("com.jfrog.bintray")
-    id("com.jfrog.artifactory")
     id("com.gradle.plugin-publish")
     id("com.eden.orchidPlugin")
     `maven-publish`
 }
 
 val spigradleVcsUrl = "https://github.com/spigradle/spigradle.git"
-
-bintray {
-    user = findProperty("bintray.publish.user")?.toString()
-    key = findProperty("bintray.publish.key")?.toString()
-    setPublications("spigradle")
-    publish = true
-    pkg.apply {
-        repo = "Spigradle"
-        name = project.name
-        desc = project.description
-        websiteUrl = "https://github.com/spigradle/spigradle"
-        githubRepo = "https://github.com/spigradle/spigradle"
-        issueTrackerUrl = "https://github.com/spigradle/spigradle/issues"
-        setLicenses("Apache-2.0")
-        vcsUrl = spigradleVcsUrl
-    }
-    project.afterEvaluate {
-        pkg.version.apply {
-            name = project.version.toString()
-            released = Date().toString()
-            vcsTag = project.version.toString()
-        }
-    }
-}
-
-artifactory {
-    setContextUrl("https://oss.jfrog.org/artifactory")
-    publish(closureOf<PublisherConfig> {
-        repository(closureOf<GroovyObject> {
-            repoKey = if (version.toString().endsWith("-SNAPSHOT")) "oss-snapshot-local" else "oss-release-local"
-            username = findProperty("bintray.publish.user")
-            password = findProperty("bintray.publish.key")
-        })
-        defaults(closureOf<GroovyObject> {
-            publications("spigradle")
-            publishArtifacts = true
-            publishPom = true
-        })
-    })
-    resolve(closureOf<GroovyObject> {
-        repoKey = "jcenter"
-    })
-    clientConfig.info.buildNumber = findProperty("build.number")?.toString()
-}
 
 val spigradleDocsJar by tasks.registering(Jar::class) {
     group = "spigradle build"
