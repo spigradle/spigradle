@@ -361,7 +361,7 @@ repositories {
 | paper()           | com.destroystokyo.paper:paper-api:$version       | 1.16.1-R0.1-SNAPSHOT     | papermc()                |
 | bukkit()          | org.bukkit:bukkit:$version                       | 1.16.1-R0.1-SNAPSHOT     | mavenLocal(), BuildTools |
 | craftbukkit()     | org.bukkit:craftbukkit:$version                  | 1.16.1-R0.1-SNAPSHOT     | mavenLocal(), BuildTools |
-| lombok()          | org.projectlombok:lombok:$version                | 1.18.12                  | mavenCentral()           |
+| lombok()          | org.projectlombok:lombok:$version                | 1.18.36                  | mavenCentral()           |
 | spigradle()       | kr.entree:spigradle:$version                     | $SPIGRADLE_VERSION       | mavenCentral()           |
 | protocolLib()     | com.comphenix.protocol:ProtocolLib:$version      | 4.5.1                    | protocolLib()            |
 | vault()           | com.github.MilkBowl:VaultAPI:$version            | 1.7                      | jitpack()                |
