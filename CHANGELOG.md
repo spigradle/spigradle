@@ -1,3 +1,9 @@
+## [2.4.4](https://github.com/spigradle/spigradle/compare/v2.4.4...v2.4.5) (2024-01-18)
+
+### Bug Fixes
+
+* update lombok to 1.18.36
+
 ## [2.4.4](https://github.com/spigradle/spigradle/compare/v2.4.3...v2.4.4) (2024-01-17)
 
 ### Bug Fixes
