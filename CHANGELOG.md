@@ -1,3 +1,12 @@
+## [2.4.4](https://github.com/spigradle/spigradle/compare/v2.4.3...v2.4.4) (2024-01-17)
+
+### Bug Fixes
+ 
+* paper api url #92
+* paper repo url
+* drop legacy bintray
+* drop legacy convention #90
+
 ## [2.4.3](https://github.com/spigradle/spigradle/compare/v2.4.2...v2.4.3) (2022-11-01)
 
 
