@@ -13,27 +13,6 @@ group = "kr.entree"
 version = VersionTask.readVersion(project)
 description = "An intelligent Gradle plugin for developing Minecraft resources."
 
-gradlePlugin {
-    plugins {
-        create("spigradle") {
-            id = "kr.entree.spigradle.base"
-            implementationClass = "kr.entree.spigradle.module.common.SpigradlePlugin"
-        }
-        create("spigot") {
-            id = "kr.entree.spigradle"
-            implementationClass = "kr.entree.spigradle.module.spigot.SpigotPlugin"
-        }
-        create("bungee") {
-            id = "kr.entree.spigradle.bungee"
-            implementationClass = "kr.entree.spigradle.module.bungee.BungeePlugin"
-        }
-        create("nukkit") {
-            id = "kr.entree.spigradle.nukkit"
-            implementationClass = "kr.entree.spigradle.module.nukkit.NukkitPlugin"
-        }
-    }
-}
-
 repositories {
     mavenCentral()
     gradlePluginPortal()
