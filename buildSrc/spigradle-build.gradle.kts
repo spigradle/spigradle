@@ -14,7 +14,3 @@ dependencies {
     implementation("gradle.plugin.com.eden:orchidPlugin:0.21.0")
     implementation("com.gradle.publish:plugin-publish-plugin:1.2.1")
 }
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
-}

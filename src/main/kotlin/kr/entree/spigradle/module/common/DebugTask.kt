@@ -26,6 +26,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskProvider
+import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.*
 import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.plugins.ide.idea.model.IdeaModel
@@ -121,6 +122,12 @@ object DebugTask {
     ): TaskProvider<Copy> {
         return tasks.register(taskName, Copy::class) {
             description = "Copy the plugin jars"
+
+            // Ensure this task runs after all tasks producing potential plugin jars
+            rootProject.allprojects.forEach { project ->
+                mustRunAfter(project.tasks.withType<Jar>())
+            }
+
             from(provider { tasks.findArtifactJar() ?: files() })
             from(provider {
                 val pluginDataMap = (rootProject.allprojects.mapNotNull {

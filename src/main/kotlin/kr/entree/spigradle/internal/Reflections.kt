@@ -20,7 +20,7 @@ import com.google.common.base.CaseFormat
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
-inline fun <reified T : Annotation> Field.findAnnotation(): T? {
+internal inline fun <reified T : Annotation> Field.findAnnotation(): T? {
     return runCatching { getAnnotation(T::class.java) as T }.getOrNull()
 }
 

@@ -54,7 +54,7 @@ data class Dependency(
     }
 }
 
-inline fun Dependency(
+internal inline fun Dependency(
     dependency: Dependency,
     group: String = dependency.group,
     name: String = dependency.name,
