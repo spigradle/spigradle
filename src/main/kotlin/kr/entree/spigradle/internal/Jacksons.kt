@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.internal.GeneratedSubclass
 
@@ -65,10 +65,12 @@ object Jackson {
             .addSerializer(NamedDomainObjectContainerSerializer())
             .addSerializer(GeneratedSubclassSerializer())
     val JSON = ObjectMapper()
-            .registerModules(KotlinModule(), GRADLE_MODULE)
+            .registerKotlinModule()
+            .registerModule(GRADLE_MODULE)
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
     val YAML = ObjectMapper(YAMLFactory())
-            .registerModules(KotlinModule(), GRADLE_MODULE)
+            .registerKotlinModule()
+            .registerModule(GRADLE_MODULE)
             .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
 }
 
