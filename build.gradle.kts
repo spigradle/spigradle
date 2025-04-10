@@ -48,6 +48,10 @@ configurations {
     testImplementation.get().dependencies += implementation.get().dependencies
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 tasks {
     compileKotlin {
         kotlinOptions {
