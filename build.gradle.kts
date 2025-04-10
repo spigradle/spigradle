@@ -57,6 +57,8 @@ kotlin {
         // See: https://docs.gradle.org/current/userguide/compatibility.html#kotlin
         apiVersion = KotlinVersion.KOTLIN_1_8
         languageVersion = KotlinVersion.KOTLIN_1_8
+
+        allWarningsAsErrors = true
     }
 }
 

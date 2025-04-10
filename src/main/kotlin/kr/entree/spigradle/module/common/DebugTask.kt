@@ -21,7 +21,7 @@ import kr.entree.spigradle.internal.*
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.logging.LogLevel
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.JavaExec
@@ -133,7 +133,7 @@ object DebugTask {
                 val pluginDataMap = (rootProject.allprojects.mapNotNull {
                     it.tasks.findArtifactJar()
                 } + rootProject.allprojects.flatMap {
-                    it.convention.findPlugin(JavaPluginConvention::class)?.run {
+                    it.extensions.findByType<JavaPluginExtension>()?.run {
                         sourceSets["main"].run { runtimeClasspath + compileClasspath }
                     } ?: emptyList()
                 }).asSequence().mapNotNull { depFile ->

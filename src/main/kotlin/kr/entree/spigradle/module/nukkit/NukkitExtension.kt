@@ -18,19 +18,16 @@ package kr.entree.spigradle.module.nukkit
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import groovy.lang.Closure
-import kr.entree.spigradle.data.Command
-import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.data.NukkitDebug
-import kr.entree.spigradle.data.Permission
+import kr.entree.spigradle.data.*
 import kr.entree.spigradle.internal.SerialName
 import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.container
 import org.gradle.kotlin.dsl.newInstance
-import org.gradle.util.ConfigureUtil
 import java.io.File
 
 /**
@@ -134,11 +131,9 @@ open class NukkitExtension(project: Project) : StandardDescription {
     @Transient
     val debug: NukkitDebug = project.objects.newInstance(File(project.debugDir, "nukkit/nukkit.jar"))
 
-    fun debug(configure: Closure<*>) {
-        ConfigureUtil.configure(configure, debug)
+    fun debug(configure: Action<NukkitDebug>) {
+        configure.execute(debug)
     }
-
-    fun debug(configure: NukkitDebug.() -> Unit) = configure(debug)
 
     fun authors(authors: Array<String>) {
         this.authors = authors.toList()

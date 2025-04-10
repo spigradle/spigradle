@@ -4,6 +4,7 @@ import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.module.common.YamlGenerate
 import kr.entree.spigradle.module.spigot.SpigotExtension
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.support.normaliseLineSeparators
 import org.gradle.testfixtures.ProjectBuilder
 import java.io.File
@@ -12,7 +13,7 @@ import kotlin.test.assertEquals
 
 class GenerateYamlTaskTest {
     val project = ProjectBuilder.builder().build()
-    val yamlTask = project.tasks.create("yaml", YamlGenerate::class)
+    val yamlTask = project.tasks.register<YamlGenerate>("yaml").get()
     val file get() = File(yamlTask.temporaryDir, "plugin.yml")
 
     init {

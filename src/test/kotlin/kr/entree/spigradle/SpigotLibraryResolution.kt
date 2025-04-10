@@ -47,7 +47,7 @@ class SpigotLibraryResolution {
         """.trimIndent())
         val ymlFile = dir.resolve("build").resolve("tmp").resolve("generateSpigotDescription").resolve("plugin.yml")
         val yaml = Yaml().load<Map<String, Any>>(ymlFile.readText())
-        val libs = yaml["libraries"] as? List<String>
+        val libs = yaml["libraries"] as? List<*>
         assertEquals(okhttp, libs?.get(0))
         assertEquals(1, libs?.size ?: 0)
     }
@@ -76,7 +76,7 @@ class SpigotLibraryResolution {
         """.trimIndent())
         val ymlFile = dir.resolve("build").resolve("tmp").resolve("generateSpigotDescription").resolve("plugin.yml")
         val yaml = Yaml().load<Map<String, Any>>(ymlFile.readText())
-        val libs = yaml["libraries"] as? List<String>
+        val libs = yaml["libraries"] as? List<*>
         assertEquals(dep, libs?.get(0))
         assertEquals(1, libs?.size ?: 0)
     }
