@@ -110,12 +110,12 @@ spigot {
 import kr.entree.spigradle.kotlin.*
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "2.1.20"
     id("kr.entree.spigradle") version "2.4.5"
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(spigot("1.16.5"))
 }
 
@@ -200,12 +200,12 @@ dependencies {
 
 ```kotlin
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "2.1.20"
     id("kr.entree.spigradle.bungee") version "2.4.5"
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(bungeecord("1.15"))
 }
 ```
@@ -279,12 +279,12 @@ dependencies {
 
 ```kotlin
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "2.1.20"
     id("kr.entree.spigradle.nukkit") version "2.4.5"
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(bungeecord("1.15"))
 }
 ```

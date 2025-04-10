@@ -103,7 +103,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(spigot("1.16.5"))
 }
 
@@ -189,7 +189,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(bungeecord("1.15"))
 }
 ```
@@ -264,7 +264,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(bungeecord("1.15"))
 }
 ```

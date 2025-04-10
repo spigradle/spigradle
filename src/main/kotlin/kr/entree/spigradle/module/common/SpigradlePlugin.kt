@@ -43,7 +43,7 @@ val Gradle.spigotBuildToolDir get() = File(gradleUserHomeDir, SpigradlePlugin.SP
 val Project.debugDir get() = File(projectDir, SpigradlePlugin.DEBUG_DIR)
 
 // TODO: Remove in Spigradle 3.0
-private val PluginType.internalName get() = if (this == PluginType.GENERAL) "plugin" else name.toLowerCase()
+private val PluginType.internalName get() = if (this == PluginType.GENERAL) "plugin" else name.lowercase()
 
 fun Project.getPluginMainPathFile(type: PluginType) = File(buildDir, "spigradle/${type.internalName}_main")
 

@@ -1,4 +1,5 @@
 import kr.entree.spigradle.build.VersionTask
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     `kotlin-dsl`
@@ -21,10 +22,10 @@ repositories {
 }
 
 val jacksonVersion = "2.12.7"
-val kotlinVersion = "1.5.21"
+val kotlinVersion = "2.1.20"
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}")
     implementation("com.google.guava:guava:31.0.1-jre")
     implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
     implementation("com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion")
@@ -50,14 +51,16 @@ configurations {
 
 kotlin {
     jvmToolchain(17)
+
+    compilerOptions {
+        // Set lower API and language version to make the plugins compatible with Gradle 8.0+
+        // See: https://docs.gradle.org/current/userguide/compatibility.html#kotlin
+        apiVersion = KotlinVersion.KOTLIN_1_8
+        languageVersion = KotlinVersion.KOTLIN_1_8
+    }
 }
 
 tasks {
-    compileKotlin {
-        kotlinOptions {
-            freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
-        }
-    }
     test {
         useJUnitPlatform()
         maxParallelForks = 4
