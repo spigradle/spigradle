@@ -2,7 +2,6 @@ import kr.entree.spigradle.build.VersionTask
 
 plugins {
     id("com.gradle.plugin-publish")
-    id("com.eden.orchidPlugin")
     `maven-publish`
 }
 
