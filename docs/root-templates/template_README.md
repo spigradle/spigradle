@@ -103,7 +103,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(spigot("1.16.5"))
 }
 
@@ -189,7 +189,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(bungeecord("1.15"))
 }
 ```
@@ -264,7 +264,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib"))
     compileOnly(bungeecord("1.15"))
 }
 ```
@@ -309,7 +309,7 @@ apply(plugin = "kr.entree.spigradle.nukkit")
 
 # Requirements
 
-All the plugins requires Gradle 5.4.2+, recommends the latest.
+All the plugins require Gradle 8.0+, the latest version is recommended.
 
 To update your gradle wrapper:
 

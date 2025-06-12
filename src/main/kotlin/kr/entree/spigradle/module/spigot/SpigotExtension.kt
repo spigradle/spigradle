@@ -17,7 +17,6 @@
 package kr.entree.spigradle.module.spigot
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import groovy.lang.Closure
 import kr.entree.spigradle.data.Command
 import kr.entree.spigradle.data.Load
 import kr.entree.spigradle.data.Permission
@@ -27,11 +26,11 @@ import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
 import kr.entree.spigradle.module.common.spigotBuildToolDir
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.container
 import org.gradle.kotlin.dsl.newInstance
-import org.gradle.util.ConfigureUtil
 import java.io.File
 
 /**
@@ -278,40 +277,25 @@ open class SpigotExtension(project: Project) : StandardDescription {
     )
 
     /**
-     * Groovy DSL helper for [commands] configuration.
+     * DSL helper for [commands] configuration.
      */
-    fun commands(closure: Closure<*>) {
-        ConfigureUtil.configure(closure, commands)
+    fun commands(configure: Action<NamedDomainObjectContainer<Command>>) {
+        configure.execute(commands)
     }
 
     /**
-     * Kotlin DSL helper for [commands] configuration.
+     * DSL helper for [permissions] configuration.
      */
-    fun commands(configure: NamedDomainObjectContainer<Command>.() -> Unit) = configure(commands)
-
-    /**
-     * Groovy DSL helper for [permissions] configuration.
-     */
-    fun permissions(closure: Closure<*>) {
-        ConfigureUtil.configure(closure, permissions)
+    fun permissions(configure: Action<NamedDomainObjectContainer<Permission>>) {
+        configure.execute(permissions)
     }
 
     /**
-     * Kotlin DSL helper for [permissions] configuration.
+     * DSL helper for [debug] configuration.
      */
-    fun permissions(configure: NamedDomainObjectContainer<Permission>.() -> Unit) = configure(permissions)
-
-    /**
-     * Groovy DSL helper for [debug] configuration.
-     */
-    fun debug(configure: Closure<*>) {
-        ConfigureUtil.configure(configure, debug)
+    fun debug(configure: Action<SpigotDebug>) {
+        configure.execute(debug)
     }
-
-    /**
-     * Kotlin DSL helper for [debug] configuration.
-     */
-    fun debug(configure: SpigotDebug.() -> Unit) = configure(debug)
 
     /**
      * Groovy DSL helper for the [authors] configuration.

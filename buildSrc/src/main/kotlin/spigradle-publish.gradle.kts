@@ -1,11 +1,7 @@
-import groovy.lang.GroovyObject
-import kr.entree.spigradle.build.*
-import java.util.*
-import org.gradle.api.tasks.bundling.Jar
+import kr.entree.spigradle.build.VersionTask
 
 plugins {
     id("com.gradle.plugin-publish")
-    id("com.eden.orchidPlugin")
     `maven-publish`
 }
 
@@ -20,43 +16,47 @@ val spigradleDocsJar by tasks.registering(Jar::class) {
     from("$projectDir/CHANGELOG.md")
 }
 
-val spigradleSourcesJar by tasks.registering(Jar::class) {
-    group = "spigradle build"
-    archiveClassifier.set("sources")
-    from(sourceSets["main"].allSource)
-}
-
 publishing {
     publications {
-        create("spigradle", MavenPublication::class) {
-            from(components["java"])
-            artifact(spigradleDocsJar.get())
-            artifact(spigradleSourcesJar.get())
+        create<MavenPublication>("pluginMaven") {
+            artifact(spigradleDocsJar)
         }
     }
 }
 
-pluginBundle {
+gradlePlugin {
     website = "https://github.com/spigradle/spigradle"
     vcsUrl = spigradleVcsUrl
-    tags = listOf("minecraft", "paper", "spigot", "bukkit", "bungeecord", "nukkit", "nukkitX")
     fun formatDesc(name: String) = "An intelligent Gradle plugin for developing $name plugin."
+
     plugins {
         create("spigradle") {
             displayName = "Spigradle Base Plugin"
             description = "The base plugin of Spigradle"
+            id = "kr.entree.spigradle.base"
+            implementationClass = "kr.entree.spigradle.module.common.SpigradlePlugin"
+            tags = listOf("minecraft", "paper", "spigot", "bukkit", "bungeecord", "nukkit", "nukkitX")
         }
         create("spigot") {
             displayName = "Spigradle Spigot Plugin"
             description = formatDesc("Spigot")
+            id = "kr.entree.spigradle"
+            implementationClass = "kr.entree.spigradle.module.spigot.SpigotPlugin"
+            tags = listOf("minecraft", "paper", "spigot", "bukkit")
         }
         create("bungee") {
             displayName = "Spigradle Bungeecord Plugin"
             description = formatDesc("Bungeecord")
+            id = "kr.entree.spigradle.bungee"
+            implementationClass = "kr.entree.spigradle.module.bungee.BungeePlugin"
+            tags = listOf("minecraft", "bungeecord")
         }
         create("nukkit") {
             displayName = "Spigradle NukkitX Plugin"
             description = formatDesc("NukkitX")
+            id = "kr.entree.spigradle.nukkit"
+            implementationClass = "kr.entree.spigradle.module.nukkit.NukkitPlugin"
+            tags = listOf("minecraft", "nukkit", "nukkitX")
         }
     }
 }

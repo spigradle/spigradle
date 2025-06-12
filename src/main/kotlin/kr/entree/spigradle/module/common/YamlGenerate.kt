@@ -133,7 +133,7 @@ open class YamlGenerate : DefaultTask() {
     private fun YAMLFactory.applyUserOptions() = apply {
         yamlOptions.orNull?.forEach { (featureEnumKey, turnOn) ->
             runCatching {
-                YAMLGenerator.Feature.valueOf(featureEnumKey.toUpperCase())
+                YAMLGenerator.Feature.valueOf(featureEnumKey.uppercase())
             }.onSuccess {
                 if (turnOn) enable(it)
                 else disable(it)

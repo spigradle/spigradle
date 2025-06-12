@@ -21,9 +21,9 @@ import kr.entree.spigradle.data.BungeeDebug
 import kr.entree.spigradle.internal.StandardDescription
 import kr.entree.spigradle.internal.Transient
 import kr.entree.spigradle.module.common.debugDir
+import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.newInstance
-import org.gradle.util.ConfigureUtil
 import java.io.File
 
 /**
@@ -67,11 +67,9 @@ open class BungeeExtension(project: Project) : StandardDescription {
     @Transient
     val debug: BungeeDebug = project.objects.newInstance(File(project.debugDir, "bungee/bungee.jar"))
 
-    fun debug(configure: Closure<*>) {
-        ConfigureUtil.configure(configure, debug)
+    fun debug(configure: Action<BungeeDebug>) {
+        configure.execute(debug)
     }
-
-    fun debug(configure: BungeeDebug.() -> Unit) = configure(debug)
 
     fun depends(vararg depends: String) {
         this.depends = depends.toList()

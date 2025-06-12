@@ -17,6 +17,7 @@
 package kr.entree.spigradle.module.common
 
 import kr.entree.spigradle.annotations.PluginType
+import kr.entree.spigradle.internal.capitalized
 
 /**
  * Created by JunHyung Im on 2020-08-25
@@ -26,8 +27,8 @@ data class PluginConvention(
         val descFile: String,
         val mainType: PluginType,
         val mainSuperClass: String = "",
-        val descGenTask: String = "generate${serverName.capitalize()}Description",
-        val mainDetectTask: String = "detect${serverName.capitalize()}Main",
+        val descGenTask: String = "generate${serverName.capitalized()}Description",
+        val mainDetectTask: String = "detect${serverName.capitalized()}Main",
         val descExtension: String = serverName,
         val taskGroup: String = serverName
 )
