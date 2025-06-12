@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.bungee
+package kr.entree.spigradle.bungee
 
 import de.undercouch.gradle.tasks.download.Download
-import kr.entree.spigradle.data.BungeeDebug
-import kr.entree.spigradle.internal.applyToConfigure
-import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
-import kr.entree.spigradle.module.common.DebugTask.registerRunServer
+import kr.entree.spigradle.applyToConfigure
+import kr.entree.spigradle.DebugTask.registerPreparePlugins
+import kr.entree.spigradle.DebugTask.registerRunServer
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.Copy
@@ -46,7 +45,7 @@ object BungeeDebugTask {
         return registerRunServer("Bungee", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the Bungeecord server."
-            classpath = files(provider { debug.serverJar })
+            JavaExec.setClasspath = files(provider { debug.serverJar })
             setWorkingDir(provider { debug.serverDirectory })
         }
     }

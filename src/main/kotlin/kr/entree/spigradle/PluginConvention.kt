@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle
 
 import kr.entree.spigradle.annotations.PluginType
-import kr.entree.spigradle.internal.capitalized
 
 /**
  * Created by JunHyung Im on 2020-08-25

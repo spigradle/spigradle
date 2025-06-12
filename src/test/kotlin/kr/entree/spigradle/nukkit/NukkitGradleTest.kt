@@ -1,6 +1,5 @@
 package kr.entree.spigradle.nukkit
 
-import kr.entree.spigradle.module.nukkit.NukkitPlugin
 import kr.entree.spigradle.util.testGradleTaskWithResource
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore

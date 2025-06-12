@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,6 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.internal
+package kr.entree.spigradle
 
-internal object Messages {
-    fun noMainFound(extensionName: String, taskName: String) = """
-        Spigradle couldn't find main class automatically!
-        Please present your main class using the annotation @PluginMain or: @SpigotPlugin, @BungeePlugin, @NukkitPlugin,
-        or set the 'main' property in $extensionName {} block on build.gradle,
-        or just disable $taskName task: 'tasks.$taskName.enabled = false'
-    """.trimIndent()
-}
+internal fun String.capitalized() = replaceFirstChar { it.uppercase() }

@@ -16,7 +16,7 @@
 
 package kr.entree.spigradle.kotlin
 
-import kr.entree.spigradle.data.BungeeDependencies
+import kr.entree.spigradle.bungee.BungeeDependencies
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository

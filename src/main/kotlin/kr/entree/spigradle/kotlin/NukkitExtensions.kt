@@ -16,8 +16,8 @@
 
 package kr.entree.spigradle.kotlin
 
-import kr.entree.spigradle.data.NukkitDependencies
-import kr.entree.spigradle.data.NukkitRepositories
+import kr.entree.spigradle.nukkit.NukkitDependencies
+import kr.entree.spigradle.nukkit.NukkitRepositories
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.artifacts.dsl.RepositoryHandler
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.data
+package kr.entree.spigradle
 
-import kr.entree.spigradle.SpigradleMeta
-import kr.entree.spigradle.internal.toFieldEntries
+import kr.entree.spigradle.bungee.BungeeDependencies
+import kr.entree.spigradle.bungee.BungeeRepositories
+import kr.entree.spigradle.nukkit.NukkitDependencies
+import kr.entree.spigradle.nukkit.NukkitRepositories
+import kr.entree.spigradle.spigot.SpigotDependencies
+import kr.entree.spigradle.spigot.SpigotRepositories
 
 object Dependencies {
     val LOMBOK = Dependency("org.projectlombok", "lombok", "1.18.36")

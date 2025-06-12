@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.convertValue
 import kr.entree.spigradle.annotations.PluginType
-import kr.entree.spigradle.internal.*
 import org.gradle.api.DefaultTask
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -31,6 +30,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.*
 import org.gradle.kotlin.dsl.*
+import org.gradle.kotlin.dsl.get
 import java.io.File
 import java.nio.charset.Charset
 
@@ -40,7 +40,7 @@ import java.nio.charset.Charset
  * Groovy Example:
  *
  * ```groovy
- * import kr.entree.spigradle.module.common.YamlGenerate
+ * import kr.entree.spigradle.YamlGenerate
  *
  * task generateYaml(type: YamlGenerate) {
  *   properties.put('someProperty', 'AnyTypeOfValue')
@@ -53,7 +53,7 @@ import java.nio.charset.Charset
  * Kotlin Example:
  *
  * ```kotlin
- * import kr.entree.spigradle.module.common.YamlGenerate
+ * import kr.entree.spigradle.YamlGenerate
  *
  * tasks {
  *   val generateYaml by registering(YamlGenerate) {
@@ -87,7 +87,7 @@ open class YamlGenerate : DefaultTask() {
     val encoding: Property<String> = project.objects.property<String>().convention("UTF-8")
 
     /**
-     * The yaml options. the key is Enum#name() of [com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature].
+     * The yaml options. the key is Enum#name() of [YAMLGenerator.Feature].
      */
     @Input
     val yamlOptions: MapProperty<String, Boolean> = project.objects.mapProperty()
@@ -101,14 +101,14 @@ open class YamlGenerate : DefaultTask() {
     /**
      * Sets the value that will be serialized.
      *
-     * @param provider The lazy provider of the value, pass to using `[org.gradle.api.Project.provider] { value }`
+     * @param provider The lazy provider of the value, pass to using `[Project.provider] { value }`
      */
     fun serialize(provider: Provider<Any>) = properties.set(provider.map {
         Jackson.JSON.convertValue<Map<String, Any>>(it)
     })
 
     /**
-     * Sets the value that will be serialized. it simply calls `serialize([org.gradle.api.Project.provider] { [any] }`
+     * Sets the value that will be serialized. it simply calls `serialize([Project.provider] { [any] }`
      *
      * @param any The value that will be serialized.
      */

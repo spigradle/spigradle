@@ -1,6 +1,5 @@
 package kr.entree.spigradle.bungee
 
-import kr.entree.spigradle.module.bungee.BungeePlugin
 import kr.entree.spigradle.util.testGradleTaskWithResource
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore

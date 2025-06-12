@@ -16,7 +16,6 @@
 
 package kr.entree.spigradle
 
-import kr.entree.spigradle.module.common.findSubclass
 import org.junit.jupiter.api.Test
 import org.objectweb.asm.Opcodes.ACC_ABSTRACT
 import org.objectweb.asm.Opcodes.ACC_PUBLIC

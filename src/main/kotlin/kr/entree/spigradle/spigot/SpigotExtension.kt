@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.spigot
+package kr.entree.spigradle.spigot
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import kr.entree.spigradle.data.Command
-import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.data.Permission
-import kr.entree.spigradle.data.SpigotDebug
-import kr.entree.spigradle.internal.SerialName
-import kr.entree.spigradle.internal.StandardDescription
-import kr.entree.spigradle.internal.Transient
-import kr.entree.spigradle.module.common.debugDir
-import kr.entree.spigradle.module.common.spigotBuildToolDir
+import kr.entree.spigradle.SerialName
+import kr.entree.spigradle.StandardDescription
+import kr.entree.spigradle.Transient
+import kr.entree.spigradle.debugDir
+import kr.entree.spigradle.spigotBuildToolDir
 import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
@@ -72,7 +68,7 @@ import java.io.File
  *
  * Kotlin Example:
  * ```kotlin
- * import kr.entree.spigradle.data.Load
+ * import kr.entree.spigradle.spigot.Load
  *
  * spigot {
  *   authors = "Me"
@@ -115,7 +111,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
     /**
      * The name of main class that extends [org.bukkit.plugin.java.JavaPlugin].
      *
-     * Defaults to the class that auto-detected by [kr.entree.spigradle.module.common.SubclassDetection] or presented by [kr.entree.spigradle.annotations.Plugin].
+     * Defaults to the class that auto-detected by [kr.entree.spigradle.SubclassDetection] or presented by [kr.entree.spigradle.annotations.Plugin].
      *
      * See: [https://www.spigotmc.org/wiki/plugin-yml/]
      */
@@ -124,7 +120,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
     /**
      * The name of your plugin.
      *
-     * Defaults to [org.gradle.api.Project.getName].
+     * Defaults to [Project.getName].
      *
      * See: [https://www.spigotmc.org/wiki/plugin-yml/]
      */
@@ -133,7 +129,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
     /**
      * The version of your plugin.
      *
-     * Defaults to [org.gradle.api.Project.getVersion]
+     * Defaults to [Project.getVersion]
      *
      * See: [https://www.spigotmc.org/wiki/plugin-yml/]
      */
@@ -158,7 +154,7 @@ open class SpigotExtension(project: Project) : StandardDescription {
      * Kotlin Example:
      *
      * ```kotlin
-     * import kr.entree.spigradle.data.Load
+     * import kr.entree.spigradle.spigot.Load
      *
      * spigot {
      *   load = Load.STARTUP // or Load.POST_WORLD

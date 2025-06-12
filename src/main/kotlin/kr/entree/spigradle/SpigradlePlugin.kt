@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle
 
 import de.undercouch.gradle.tasks.download.DownloadTaskPlugin
 import groovy.lang.Closure
 import kr.entree.spigradle.annotations.PluginType
-import kr.entree.spigradle.data.Dependencies
-import kr.entree.spigradle.data.Repositories
-import kr.entree.spigradle.data.Repositories.SONATYPE
-import kr.entree.spigradle.internal.groovyExtension
+import kr.entree.spigradle.Repositories.SONATYPE
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task

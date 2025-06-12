@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.internal
+package kr.entree.spigradle
 
 import com.google.common.base.CaseFormat
 import java.lang.reflect.Field

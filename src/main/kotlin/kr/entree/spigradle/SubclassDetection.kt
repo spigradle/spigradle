@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle
 
 import kr.entree.spigradle.annotations.PluginType
 import org.gradle.api.DefaultTask
@@ -24,6 +24,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.*
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.*
+import org.gradle.kotlin.dsl.get
 import org.gradle.work.InputChanges
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
@@ -37,7 +38,7 @@ import java.util.concurrent.atomic.AtomicReference
  * Groovy Example:
  *
  * ```groovy
- * import kr.entree.spigradle.module.common.SubclassDetection
+ * import kr.entree.spigradle.SubclassDetection
  *
  * task findSubclass(type: SubclassDetection) {
  *   superClassName = 'com.my.sample.SuperType'
@@ -47,7 +48,7 @@ import java.util.concurrent.atomic.AtomicReference
  * ```
  *
  * ```kotiln
- * import kr.entree.spigradle.module.common.SubclassDetection
+ * import kr.entree.spigradle.SubclassDetection
  *
  * tasks {
  *   val findSubclass(type: SubclassDetection) {

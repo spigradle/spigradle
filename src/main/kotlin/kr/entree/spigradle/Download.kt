@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
 
 @file:Suppress("UnstableApiUsage")
 
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle
 
-import kr.entree.spigradle.SpigradleMeta
 import org.gradle.api.DefaultTask
 import org.gradle.api.internal.tasks.TaskExecutionOutcome
 import org.gradle.api.provider.Property

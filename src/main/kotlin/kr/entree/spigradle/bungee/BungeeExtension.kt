@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.bungee
+package kr.entree.spigradle.bungee
 
-import groovy.lang.Closure
-import kr.entree.spigradle.data.BungeeDebug
-import kr.entree.spigradle.internal.StandardDescription
-import kr.entree.spigradle.internal.Transient
-import kr.entree.spigradle.module.common.debugDir
+import kr.entree.spigradle.StandardDescription
+import kr.entree.spigradle.Transient
+import kr.entree.spigradle.debugDir
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.newInstance
@@ -42,7 +40,7 @@ import java.io.File
  *
  * Kotlin Example:
  * ```kotlin
- * import kr.entree.spigradle.data.Load
+ * import kr.entree.spigradle.spigot.Load
  *
  * spigot {
  *   author = "Me"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.spigot
+package kr.entree.spigradle.spigot
 
 import org.gradle.api.GradleException
 import org.gradle.api.Project

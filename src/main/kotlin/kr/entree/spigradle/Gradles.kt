@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.internal
+package kr.entree.spigradle
 
 import groovy.lang.GroovyObject
 import org.gradle.api.GradleException

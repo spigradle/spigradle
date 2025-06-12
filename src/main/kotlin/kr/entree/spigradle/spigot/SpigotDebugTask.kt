@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,19 @@
 
 @file:Suppress("UnstableApiUsage")
 
-package kr.entree.spigradle.module.spigot
+package kr.entree.spigradle.spigot
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.undercouch.gradle.tasks.download.Download
-import kr.entree.spigradle.data.SpigotDebug
-import kr.entree.spigradle.internal.Jackson
-import kr.entree.spigradle.internal.applyToConfigure
-import kr.entree.spigradle.internal.lazyString
-import kr.entree.spigradle.module.common.DebugTask.registerPreparePlugins
-import kr.entree.spigradle.module.common.DebugTask.registerRunServer
+import kr.entree.spigradle.Jackson
+import kr.entree.spigradle.applyToConfigure
+import kr.entree.spigradle.lazyString
+import kr.entree.spigradle.DebugTask.registerPreparePlugins
+import kr.entree.spigradle.DebugTask.registerRunServer
 
-import kr.entree.spigradle.module.common.YamlGenerate
+import kr.entree.spigradle.YamlGenerate
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -42,6 +41,7 @@ import org.gradle.api.tasks.TaskProvider
 import org.gradle.kotlin.dsl.register
 import java.io.File
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.collections.get
 
 object SpigotDebugTask {
     const val BUILD_TOOLS_URL =
@@ -89,7 +89,7 @@ object SpigotDebugTask {
             group = TASK_GROUP_DEBUG
             description = "Build the Spigot using the BuildTools."
             minHeapSize = "512M"
-            classpath = files(provider { options.buildToolJar })
+            JavaExec.setClasspath = files(provider { options.buildToolJar })
             outputs.cacheIf { true }
             outputs.dir(provider { File(options.buildToolDirectory, "CraftBukkit/target/classes") })
             logging.captureStandardOutput(LogLevel.DEBUG)
@@ -138,7 +138,7 @@ object SpigotDebugTask {
         return registerRunServer("Spigot", debug).applyToConfigure {
             group = TASK_GROUP_DEBUG
             description = "Startup the Spigot server."
-            classpath = files(provider { serverJar })
+            JavaExec.setClasspath = files(provider { serverJar })
             if (debug.serverPort >= 0) {
                 args("--port", lazyString { debug.serverPort })
             }

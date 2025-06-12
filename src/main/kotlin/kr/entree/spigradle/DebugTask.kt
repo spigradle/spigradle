@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.common
+package kr.entree.spigradle
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import kr.entree.spigradle.internal.*
@@ -28,6 +28,7 @@ import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.TaskProvider
 import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.*
+import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.support.useToRun
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.jetbrains.gradle.ext.GradleTask
@@ -99,7 +100,7 @@ internal fun Project.createRunConfigurations(name: String, debug: CommonDebug) {
 object DebugTask {
     fun Project.registerRunServer(serverName: String, debug: CommonDebug): TaskProvider<JavaExec> {
         return tasks.register("run$serverName", JavaExec::class) {
-            standardInput = System.`in`
+            JavaExec.setStandardInput = System.`in`
             logging.captureStandardOutput(LogLevel.LIFECYCLE)
             jvmArgs(lazyString { "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${debug.agentPort}" })
             jvmArgs(debug.jvmArgs)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.module.nukkit
+package kr.entree.spigradle.nukkit
 
 import kr.entree.spigradle.annotations.PluginType
-import kr.entree.spigradle.data.Load
-import kr.entree.spigradle.data.NukkitRepositories
-import kr.entree.spigradle.internal.applyToConfigure
-import kr.entree.spigradle.internal.groovyExtension
-import kr.entree.spigradle.module.common.PluginConvention
-import kr.entree.spigradle.module.common.applySpigradlePlugin
-import kr.entree.spigradle.module.common.createRunConfigurations
-import kr.entree.spigradle.module.common.registerDescGenTask
+import kr.entree.spigradle.spigot.Load
+import kr.entree.spigradle.applyToConfigure
+import kr.entree.spigradle.groovyExtension
+import kr.entree.spigradle.PluginConvention
+import kr.entree.spigradle.applySpigradlePlugin
+import kr.entree.spigradle.createRunConfigurations
+import kr.entree.spigradle.registerDescGenTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByName
@@ -34,8 +33,8 @@ import org.gradle.kotlin.dsl.provideDelegate
 
 /**
  * The Nukkit plugin that adds:
- * - [kr.entree.spigradle.module.common.YamlGenerate] task for the 'plugin.yml' generation.
- * - [kr.entree.spigradle.module.common.SubclassDetection] task for the main-class detection.
+ * - [kr.entree.spigradle.YamlGenerate] task for the 'plugin.yml' generation.
+ * - [kr.entree.spigradle.SubclassDetection] task for the main-class detection.
  * - Debug tasks for test your plugin.
  */
 class NukkitPlugin : Plugin<Project> {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.data
+package kr.entree.spigradle.bungee
 
-import kr.entree.spigradle.internal.CommonDebug
-import kr.entree.spigradle.internal.SerialName
+import kr.entree.spigradle.Dependency
+import kr.entree.spigradle.Repositories
+import kr.entree.spigradle.VersionModifier
+import kr.entree.spigradle.CommonDebug
+import kr.entree.spigradle.SerialName
 import java.io.File
 import javax.inject.Inject
 
@@ -28,11 +31,11 @@ object BungeeRepositories {
 object BungeeDependencies {
     @SerialName("bungeecord")
     val BUNGEE_CORD = Dependency(
-            "net.md-5",
-            "bungeecord-api",
-            "1.15-SNAPSHOT",
-            false,
-            VersionModifier.SNAPSHOT_APPENDER
+        "net.md-5",
+        "bungeecord-api",
+        "1.15-SNAPSHOT",
+        false,
+        VersionModifier.SNAPSHOT_APPENDER
     )
 }
 

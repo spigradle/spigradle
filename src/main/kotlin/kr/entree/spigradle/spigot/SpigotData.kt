@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Spigradle contributors.
+ * Copyright (c) 2025 Spigradle contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package kr.entree.spigradle.data
+package kr.entree.spigradle.spigot
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
-import kr.entree.spigradle.internal.CommonDebug
-import kr.entree.spigradle.internal.SerialName
-import kr.entree.spigradle.internal.Transient
-import kr.entree.spigradle.module.spigot.SpigotDebugTask
+import kr.entree.spigradle.CommonDebug
+import kr.entree.spigradle.SerialName
+import kr.entree.spigradle.Transient
+import kr.entree.spigradle.Dependency
+import kr.entree.spigradle.Repositories
+import kr.entree.spigradle.VersionModifier
 import java.io.File
 import javax.inject.Inject
 
@@ -124,19 +126,19 @@ object SpigotDependencies {
         VersionModifier.SPIGOT_ADJUSTER
     )
     val SPIGOT = Dependency(
-            "org.spigotmc",
-            "spigot-api",
-            "1.18.1-R0.1-SNAPSHOT",
-            false,
-            VersionModifier.SPIGOT_ADJUSTER
+        "org.spigotmc",
+        "spigot-api",
+        "1.18.1-R0.1-SNAPSHOT",
+        false,
+        VersionModifier.SPIGOT_ADJUSTER
     )
     val SPIGOT_ALL = Dependency(SPIGOT, name = "spigot", isLocal = true)
     val MINECRAFT_SERVER = Dependency(
-            SPIGOT.group,
-            "minecraft-server",
-            "1.18.1-SNAPSHOT",
-            true,
-            VersionModifier.SNAPSHOT_APPENDER
+        SPIGOT.group,
+        "minecraft-server",
+        "1.18.1-SNAPSHOT",
+        true,
+        VersionModifier.SNAPSHOT_APPENDER
     )
     val PAPER = Dependency(SPIGOT, "io.papermc.paper", "paper-api")
     val PAPER_ALL = Dependency(PAPER, name = "paper", isLocal = true)
@@ -145,56 +147,56 @@ object SpigotDependencies {
     @SerialName("craftbukkit")
     val CRAFT_BUKKIT = Dependency(BUKKIT, name = "craftbukkit", isLocal = true)
     val PROTOCOL_LIB = Dependency(
-            "com.comphenix.protocol",
-            "ProtocolLib",
-            "4.5.1"
+        "com.comphenix.protocol",
+        "ProtocolLib",
+        "4.5.1"
     )
     val VAULT = Dependency(
-            "com.github.MilkBowl",
-            "VaultAPI",
-            "1.7"
+        "com.github.MilkBowl",
+        "VaultAPI",
+        "1.7"
     )
     val VAULT_ALL = Dependency(VAULT, name = "Vault", version = "1.7.3")
     val LUCK_PERMS = Dependency(
-            "net.luckperms",
-            "api",
-            "5.1"
+        "net.luckperms",
+        "api",
+        "5.1"
     )
 
     @SerialName("worldedit")
     val WORLD_EDIT = Dependency(
-            "com.sk89q.worldedit",
-            "worldedit-bukkit",
-            "7.1.0"
+        "com.sk89q.worldedit",
+        "worldedit-bukkit",
+        "7.1.0"
     )
 
     @SerialName("worldguard")
     val WORLD_GUARD = Dependency(
-            "com.sk89q.worldguard",
-            "worldguard-bukkit",
-            "7.0.3"
+        "com.sk89q.worldguard",
+        "worldguard-bukkit",
+        "7.0.3"
     )
     val ESSENTIALS_X = Dependency(
-            "net.ess3",
-            "EssentialsX",
-            "2.17.2"
+        "net.ess3",
+        "EssentialsX",
+        "2.17.2"
     )
     val BAN_MANAGER = Dependency(
-            "me.confuser.banmanager",
-            "BanManagerBukkit",
-            "7.3.0-SNAPSHOT"
+        "me.confuser.banmanager",
+        "BanManagerBukkit",
+        "7.3.0-SNAPSHOT"
     )
 
     @SerialName("commandhelper")
     val COMMAND_HELPER = Dependency(
-            "com.sk89q",
-            "commandhelper",
-            "3.3.4-SNAPSHOT"
+        "com.sk89q",
+        "commandhelper",
+        "3.3.4-SNAPSHOT"
     )
     val B_STATS = Dependency(
-            "org.bstats",
-            "bstats-bukkit",
-            "1.7"
+        "org.bstats",
+        "bstats-bukkit",
+        "1.7"
     )
     val B_STATS_LITE = Dependency(B_STATS, name = "bstats-bukkit-lite")
 }
